@@ -2,7 +2,7 @@ package structure_terrain;
 
 public class Case_1_Bas extends Case_1 {
 	
-	Case Bas;
+	private Case Bas;
 
 	@Override
 	protected void deplacer() {
