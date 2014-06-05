@@ -1,5 +1,7 @@
 package structure_terrain;
 
-public class Case {
+public abstract class Case {
+	
+protected Boolean accessible;
 
 }
