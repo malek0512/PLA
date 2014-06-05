@@ -20,27 +20,40 @@ public class Test
 	/**
 	 * affiche a l'ecran les informations lu, infos sel
 	 */
-	static void afficheTableTransition()
+	static void afficheALL()
 	{
-	   //On crée une List contenant tous les noeuds "tec" "tt" et "tea" de l'Element racine
-	   List<Element> listTEC = racine.getChildren("tec");
-	   List<Element> listTT  = racine.getChildren("tt");
-	   List<Element> listTEA = racine.getChildren("tea");
+	   //On crée la liste des etats
+	   List<Element> listEtat = racine.getChildren("Etat");
 	   
-	   //On crée un Iterator sur nos listes
-	   Iterator<Element> itr_tec = listTEC.iterator();
-	   Iterator<Element> itr_tt  = listTT.iterator();
-	   Iterator<Element> itr_tea = listTEA.iterator();
+	   //On crée un Iterator sur la liste d'etat
+	   Iterator<Element> i = listEtat.iterator();
 	   
 	   while(i.hasNext())
 	   {
 	      //On recupere les trois elements voulue
-	      Element value_tec = (Element)itr_tec.next();
-	      Element value_tt  = (Element)itr_tt.next();
-	      Element value_tea = (Element)itr_tea.next();
+	      Element etat = (Element)i.next();
+	      
+	      //On crée la liste des transition de l'état
+	      List<Element> listTransition = etat.getChildren("Transition");
+	      
+	      //On crée un Iterator sur la liste de transition
+	      Iterator<Element> j = listTransition.iterator();
 	      
 	      //On affiche le nom de l’élément courant
-	      System.out.println(value_tec. //getChild("nom"));
+	      System.out.println("Nom : " + etat.getAttributeValue("Nom"));
+	      System.out.println("Action : " + etat.getAttributeValue("Action"));
+	      System.out.println("Nom : " + etat.getAttributeValue("Nom"));
+	      
+	      while(j.hasNext())
+	      {
+	    	//On recupere les trois elements voulue
+		    Element transition = (Element)j.next();
+		    
+		    //On affiche les infos de transition
+		    System.out.println("Entree : " + transition.getAttributeValue("Entree"));
+		    System.out.println("Etat : " + transition.getAttributeValue("Etat"));
+	      }
+	      
 	   }
 	}
    static org.jdom2.Document document;
@@ -54,7 +67,7 @@ public class Test
       {
          //On crée un nouveau document JDOM avec en argument le fichier XML
          //Le parsing est terminé ;)
-         document = sxb.build(new File("Exercice2.xml"));
+         document = sxb.build(new File("Test.xml"));
       }
       catch(Exception e){}
 
@@ -62,6 +75,6 @@ public class Test
       racine = document.getRootElement();
 
       //Méthode définie dans la partie 3.2. de cet article
-      //afficheALL();
+      afficheALL();
    }
 }
