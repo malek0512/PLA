@@ -4,9 +4,8 @@ public abstract class Case {
 	
 	protected Boolean accessible;
 	
-	protected void deplacer(int ligne, int colonne){
-		
-			
+	public Case(Boolean a){
+		this.accessible=a;
 	}
 	
 	protected abstract void informer();
@@ -17,5 +16,16 @@ public abstract class Case {
 	
 	public Boolean getaccessCase(){
 		return accessible;
+	}
+	
+	public String toString(){
+		String s;
+		
+		if (getaccessCase()){
+			s="-";
+		}
+		else 
+			s="*";
+		return s;
 	}
 }
