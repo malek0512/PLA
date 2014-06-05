@@ -1,5 +1,5 @@
 package structure_terrain;
 
-public class Case_2_Droite_Gauche {
+public class Case_2_Droite_Gauche extends Case_2 {
 
 }
