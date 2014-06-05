@@ -7,11 +7,7 @@ public class Case_4 extends Case{
 	private Case Gauche;
 	private Case Droite;
 
-	@Override
-	protected void deplacer() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	protected void informer() {
