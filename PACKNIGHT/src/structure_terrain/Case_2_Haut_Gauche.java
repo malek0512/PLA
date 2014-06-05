@@ -5,11 +5,7 @@ public class Case_2_Haut_Gauche extends Case_2{
 	private Case Haut;
 	private Case Gauche;
 
-	@Override
-	protected void deplacer() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	protected void informer() {
