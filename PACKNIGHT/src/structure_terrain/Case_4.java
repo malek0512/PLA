@@ -1,5 +1,5 @@
 package structure_terrain;
 
-public abstract class Case_4 extends Case{
+public class Case_4 extends Case{
 
 }
