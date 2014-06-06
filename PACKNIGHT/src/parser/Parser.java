@@ -46,19 +46,20 @@ public class Parser {
 	   
 	   while(i.hasNext())
 	   {
-	      //On recupere les trois elements voulue
-	      Element etat = (Element)i.next();
-	      
-	      //On crée la liste des transition de l'état
-	      List<Element> listTransition = etat.getChildren("Transition");
-	      
-	      //On crée un Iterator sur la liste de transition
-	      Iterator<Element> j = listTransition.iterator();
+		   //Balise du prochain etat a traité
+		   Element etat = (Element)i.next();
+		   
+		   //Balise des infos de transition
+		   List<Element> listTransition = etat.getChildren("Transition");
+		   Iterator<Element> j = listTransition.iterator(); 
+		   Element transition = (Element)j.next();
 	      
 	      //On affiche le nom de l’élément courant
-	      Integer test = Integer.getInteger(etat.getAttributeValue("Nom"));
-	      System.out.println("Nom : " + etat.getAttributeValue("Nom"));
-	      System.out.println("Action : " + etat.getAttributeValue("Action"));
+	      Integer Ientre = Integer.getInteger(etat.getAttributeValue("Nom"));
+	      Integer Ietat = Integer.getInteger(etat.getAttributeValue("Etat"));
+	      String Iaction = etat.getAttributeValue("Etat");
+	      
+	      tabSort
 	      
 	      while(j.hasNext())
 	      {
