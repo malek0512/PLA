@@ -4,8 +4,9 @@ import parser.Parser;
 
 public class Automate {
 
-	int tableTransition[][];
-	String tableSortie[][];
+	private int tableTransition[][];
+	private String tableSortie[][];
+	private int etatCourant;
 	
 	/*
 	 * Prend un fichier XML et remplie les attributs de l'automate
