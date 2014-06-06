@@ -25,21 +25,21 @@ public class Pacman extends Personnage {
 		{
 		case haut :
 			if(est_automate()){
-			x++;
+			x--;
 			}
 			else{
-				if(Personnage.terrain.getTerrain()[x+1][y].getaccessCase()){
-					x++;
+				if(Personnage.terrain.getTerrain()[x-1][y].getaccessCase()){
+					x--;
 				}
 			}
 			break;
 		case bas :
 			if(est_automate()){
-				x--;
+				x++;
 				}
 				else{
-					if(Personnage.terrain.getTerrain()[x-1][y].getaccessCase()){
-						x--;
+					if(Personnage.terrain.getTerrain()[x+1][y].getaccessCase()){
+						x++;
 					}
 				}
 			break;
