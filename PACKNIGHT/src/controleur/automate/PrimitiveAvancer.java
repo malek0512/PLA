@@ -1,4 +1,4 @@
-package automate;
+package controleur.automate;
 
 import personnages.Personnage;
 

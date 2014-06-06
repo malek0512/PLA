@@ -1,4 +1,4 @@
-package interfaceUser;
+package controleur.iu;
 
 import controleur.Controleur;
 
