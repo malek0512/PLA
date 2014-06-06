@@ -1,3 +1,7 @@
+/**
+ * Fonctions static, inutile d'instancier un parseur !
+ * author : Alex
+ */
 package src.parser;
 
 import java.io.File;
@@ -9,14 +13,14 @@ import org.jdom2.input.SAXBuilder;
 
 public class Parser {
 	
-   private org.jdom2.Document document;
-   private Element racine;
+   static private org.jdom2.Document document;
+   static private Element racine;
    
    /**
     * Parse le fichier donnée en argument
     * Prend en argument les infos de l'automate a remplir
     */
-   public void parse(String file, int tabTrans[][],String tabSort[][],int etatInit,List<Integer> etatFin)
+   static public void parse(String file, int tabTrans[][],String tabSort[][],int etatInit,List<Integer> etatFin)
    {
 	
     //On crée une instance de SAXBuilder
@@ -36,7 +40,7 @@ public class Parser {
    }
    
    
-	private void parserAll(int tabTrans[][],String tabSort[][],int etatInit,List<Integer> etatFin)
+	static private void parserAll(int tabTrans[][],String tabSort[][],int etatInit,List<Integer> etatFin)
 	{
 	   //On crée fichierXML la liste des etats
 	   List<Element> listEtat = racine.getChildren("Etat");
@@ -49,28 +53,25 @@ public class Parser {
 		   //Balise du prochain etat a traité
 		   Element etat = (Element)i.next();
 		   
-		   //Balise des infos de transition
+		   //Recup l'indice de l'état pour le tableau Transition
+		   Integer Ietat = Integer.getInteger(etat.getAttributeValue("Nom"));
+		   
+		   //Meme action mais pour transition
 		   List<Element> listTransition = etat.getChildren("Transition");
 		   Iterator<Element> j = listTransition.iterator(); 
-		   Element transition = (Element)j.next();
-	      
-	      //On affiche le nom de l’élément courant
-	      Integer Ientre = Integer.getInteger(etat.getAttributeValue("Nom"));
-	      Integer Ietat = Integer.getInteger(etat.getAttributeValue("Etat"));
-	      String Iaction = etat.getAttributeValue("Etat");
-	      
-	   //   tabSort
-	      
-	      while(j.hasNext())
-	      {
-	    	//On recupere les trois elements voulue
-		 //   Element transition = (Element)j.next();
-		    
-		    //On affiche les infos de transition
-		    System.out.println("Entree : " + transition.getAttributeValue("Entree"));
-		    System.out.println("Etat : " + transition.getAttributeValue("Etat"));
-	      }
-	      
+		  
+		   
+		   while(j.hasNext())
+		   {
+			   Element transition = (Element)j.next(); 
+			   Integer Itest = Integer.getInteger(transition.getAttributeValue("Entree"));
+			   Integer Iarriver = Integer.getInteger(transition.getAttributeValue("Etat"));
+			   String Iaction = transition.getAttributeValue("Action");
+			   
+			   tabSort[Ietat][Itest] = Iaction;
+			   tabTrans[Ietat][Itest] = Iarriver;
+			   
+		   }
 	   }
 	}
 }
