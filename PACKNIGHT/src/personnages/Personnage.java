@@ -1,5 +1,7 @@
 package personnages;
 
+import structure_terrain.Terrain;
+
 public abstract class Personnage {
 
 	protected Terrain terrain;
