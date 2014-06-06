@@ -15,21 +15,52 @@ public class Pacman extends Personnage {
 		this.y = y;
 	}
 	
+	/*Test s'il y a un mur seulement si le packman n'est pas un automate
+	 *et met à jour la position de packman
+	 */
 	public void avancer()
 	{
 		switch(this.direction)
 		{
-		case Direction.haut :
-			
+		case haut :
+			if(est_automate()){
+			x++;
+			}
+			else{
+				if(this.terrain.getTerrain()[x+1][y].getaccessCase()){
+					x++;
+				}
+			}
 			break;
-		case Direction.bas :
-			
+		case bas :
+			if(est_automate()){
+				x--;
+				}
+				else{
+					if(this.terrain.getTerrain()[x-1][y].getaccessCase()){
+						x--;
+					}
+				}
 			break;
-		case Direction.droite :
-			
+		case droite :
+			if(est_automate()){
+				y++;
+				}
+				else{
+					if(this.terrain.getTerrain()[x][y+1].getaccessCase()){
+						y++;
+					}
+				}
 			break;
-		case Direction.gauche :
-			
+		case gauche :
+			if(est_automate()){
+				y--;
+				}
+				else{
+					if(this.terrain.getTerrain()[x][y-1].getaccessCase()){
+						y--;
+					}
+				};
 			break;
 		default :
 			break;
