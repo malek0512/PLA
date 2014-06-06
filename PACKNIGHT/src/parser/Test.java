@@ -42,7 +42,6 @@ public class Test
 	      //On affiche le nom de l’élément courant
 	      System.out.println("Nom : " + etat.getAttributeValue("Nom"));
 	      System.out.println("Action : " + etat.getAttributeValue("Action"));
-	      System.out.println("Nom : " + etat.getAttributeValue("Nom"));
 	      
 	      while(j.hasNext())
 	      {
@@ -67,7 +66,7 @@ public class Test
       {
          //On crée un nouveau document JDOM avec en argument le fichier XML
          //Le parsing est terminé ;)
-         document = sxb.build(new File("Test.xml"));
+         document = sxb.build(new File("Automate/Test.xml"));
       }
       catch(Exception e){}
 

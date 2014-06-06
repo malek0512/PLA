@@ -6,7 +6,6 @@ package personnages;
 
 import structure_terrain.Terrain;
 
-
 public class Pacman extends Personnage {
 	
 	public Pacman(Terrain terrain, int x,int y)
