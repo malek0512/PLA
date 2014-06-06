@@ -1,6 +1,7 @@
 /**
- * author : Alex
+ * author : Alex et Rama
  * Class des pacmans
+ * WARNING : Pensez à initialiser TERRAIN
  */
 package personnages;
 
@@ -10,7 +11,7 @@ public class Pacman extends Personnage {
 	
 	public Pacman(Terrain terrain, int x,int y)
 	{
-		this.terrain = terrain;
+
 		this.x = x;
 		this.y = y;
 	}
@@ -27,7 +28,7 @@ public class Pacman extends Personnage {
 			x++;
 			}
 			else{
-				if(this.terrain.getTerrain()[x+1][y].getaccessCase()){
+				if(Personnage.terrain.getTerrain()[x+1][y].getaccessCase()){
 					x++;
 				}
 			}
@@ -37,7 +38,7 @@ public class Pacman extends Personnage {
 				x--;
 				}
 				else{
-					if(this.terrain.getTerrain()[x-1][y].getaccessCase()){
+					if(Personnage.terrain.getTerrain()[x-1][y].getaccessCase()){
 						x--;
 					}
 				}
@@ -47,7 +48,7 @@ public class Pacman extends Personnage {
 				y++;
 				}
 				else{
-					if(this.terrain.getTerrain()[x][y+1].getaccessCase()){
+					if(Personnage.terrain.getTerrain()[x][y+1].getaccessCase()){
 						y++;
 					}
 				}
@@ -57,7 +58,7 @@ public class Pacman extends Personnage {
 				y--;
 				}
 				else{
-					if(this.terrain.getTerrain()[x][y-1].getaccessCase()){
+					if(Personnage.terrain.getTerrain()[x][y-1].getaccessCase()){
 						y--;
 					}
 				};
