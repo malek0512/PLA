@@ -2,8 +2,8 @@ package structure_terrain;
 
 public class Case {
 	
-	protected Boolean accessible;
-	
+	private Boolean accessible;
+	//private Bonus bonus;
 	public Case(Boolean a){
 		this.accessible=a;
 	}
