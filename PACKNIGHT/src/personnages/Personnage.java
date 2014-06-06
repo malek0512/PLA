@@ -25,51 +25,108 @@ public abstract class Personnage {
 		return automatise;
 	}
 	
-	public void avancer(){
+	/*Test s'il y a un mur seulement si le packman n'est pas un automate
+	 *et met à jour la position de packman
+	 */
+	public void avancer()
+	{
 		switch(this.direction)
 		{
 		case haut :
-			if(est_automate()){
-			x++;
-			}
-			else{
-				if(terrain.getTerrain()[x+1][y].getaccessCase()){
-					x++;
-				}
-			}
-			break;
-		case bas :
-			if(est_automate()){
+			if (x!=0){
+				if(est_automate()){
 				x--;
 				}
 				else{
-					if(terrain.getTerrain()[x-1][y].getaccessCase()){
+					if(Personnage.terrain.getTerrain()[x-1][y].getaccessCase()){
 						x--;
 					}
 				}
+			}
+			else{
+				if(est_automate()){
+					x=terrain.getLargeur();
+					}
+					else{
+						if(Personnage.terrain.getTerrain()[terrain.getLargeur()][y].getaccessCase()){
+							x=terrain.getLargeur();
+						}
+					}
+				
+			}
 			break;
-		case droite :
-			if(est_automate()){
-				y++;
+		case bas :
+			if (x!=terrain.getLargeur()){
+				if(est_automate()){
+				x++;
 				}
 				else{
-					if(terrain.getTerrain()[x][y+1].getaccessCase()){
-						y++;
+					if(Personnage.terrain.getTerrain()[x+1][y].getaccessCase()){
+						x++;
 					}
 				}
+			}
+			else{
+				if(est_automate()){
+					x=0;
+					}
+					else{
+						if(Personnage.terrain.getTerrain()[0][y].getaccessCase()){
+							x=0;
+						}
+					}
+				
+			}
 			break;
 		case gauche :
-			if(est_automate()){
+			if (y!=0){
+				if(est_automate()){
 				y--;
 				}
 				else{
-					if(terrain.getTerrain()[x][y-1].getaccessCase()){
+					if(Personnage.terrain.getTerrain()[x][y-1].getaccessCase()){
 						y--;
 					}
-				};
+				}
+			}
+			else{
+				if(est_automate()){
+					y=terrain.getLongueur();
+					}
+					else{
+						if(Personnage.terrain.getTerrain()[x][terrain.getLongueur()].getaccessCase()){
+							y=terrain.getLongueur();
+						}
+					}
+				
+			}
+			break;
+		case droite :
+			if (y!=terrain.getLongueur()){
+				if(est_automate()){
+				y++;
+				}
+				else{
+					if(Personnage.terrain.getTerrain()[x][y+1].getaccessCase()){
+						y++;
+					}
+				}
+			}
+			else{
+				if(est_automate()){
+					y=0;
+					}
+					else{
+						if(Personnage.terrain.getTerrain()[x][0].getaccessCase()){
+							y=0;
+						}
+					}
+				
+			}
 			break;
 		default :
-			break;
+		
+		
 		}
 	}
 
