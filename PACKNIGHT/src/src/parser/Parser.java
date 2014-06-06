@@ -1,4 +1,4 @@
-package parser;
+package src.parser;
 
 import java.io.File;
 import java.util.Iterator;
@@ -59,12 +59,12 @@ public class Parser {
 	      Integer Ietat = Integer.getInteger(etat.getAttributeValue("Etat"));
 	      String Iaction = etat.getAttributeValue("Etat");
 	      
-	      tabSort
+	   //   tabSort
 	      
 	      while(j.hasNext())
 	      {
 	    	//On recupere les trois elements voulue
-		    Element transition = (Element)j.next();
+		 //   Element transition = (Element)j.next();
 		    
 		    //On affiche les infos de transition
 		    System.out.println("Entree : " + transition.getAttributeValue("Entree"));
