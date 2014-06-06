@@ -1,14 +1,12 @@
 package structure_terrain;
 
-public abstract class Case {
+public class Case {
 	
 	protected Boolean accessible;
 	
 	public Case(Boolean a){
 		this.accessible=a;
 	}
-	
-	protected abstract void informer();
 	
 	protected void setacessCase(Boolean a){
 	accessible=a;
