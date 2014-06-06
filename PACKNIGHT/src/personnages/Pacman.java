@@ -24,17 +24,31 @@ public class Pacman extends Personnage {
 		switch(this.direction)
 		{
 		case haut :
-			if(est_automate()){
-			x--;
+			if (x!=0){
+				if(est_automate()){
+				x--;
+				}
+				else{
+					if(Personnage.terrain.getTerrain()[x-1][y].getaccessCase()){
+						x--;
+					}
+				}
 			}
 			else{
-				if(Personnage.terrain.getTerrain()[x-1][y].getaccessCase()){
-					x--;
-				}
+				if(est_automate()){
+					x=terrain.getLargeur();
+					}
+					else{
+						if(Personnage.terrain.getTerrain()[terrain.getLargeur()][y].getaccessCase()){
+							x=terrain.getLargeur();
+						}
+					}
+				
 			}
 			break;
 		case bas :
-			if(est_automate()){
+			if (x!=terrain.getLargeur()){
+				if(est_automate()){
 				x++;
 				}
 				else{
@@ -42,9 +56,45 @@ public class Pacman extends Personnage {
 						x++;
 					}
 				}
+			}
+			else{
+				if(est_automate()){
+					x=0;
+					}
+					else{
+						if(Personnage.terrain.getTerrain()[0][y].getaccessCase()){
+							x=0;
+						}
+					}
+				
+			}
+			break;
+		case gauche :
+			if (y!=0){
+				if(est_automate()){
+				y--;
+				}
+				else{
+					if(Personnage.terrain.getTerrain()[x][y-1].getaccessCase()){
+						y--;
+					}
+				}
+			}
+			else{
+				if(est_automate()){
+					y=terrain.getLongueur();
+					}
+					else{
+						if(Personnage.terrain.getTerrain()[x][terrain.getLongueur()].getaccessCase()){
+							y=terrain.getLongueur();
+						}
+					}
+				
+			}
 			break;
 		case droite :
-			if(est_automate()){
+			if (y!=terrain.getLongueur()){
+				if(est_automate()){
 				y++;
 				}
 				else{
@@ -52,16 +102,18 @@ public class Pacman extends Personnage {
 						y++;
 					}
 				}
-			break;
-		case gauche :
-			if(est_automate()){
-				y--;
-				}
-				else{
-					if(Personnage.terrain.getTerrain()[x][y-1].getaccessCase()){
-						y--;
+			}
+			else{
+				if(est_automate()){
+					y=0;
 					}
-				};
+					else{
+						if(Personnage.terrain.getTerrain()[x][0].getaccessCase()){
+							y=0;
+						}
+					}
+				
+			}
 			break;
 		default :
 			break;
