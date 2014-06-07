@@ -16,16 +16,25 @@ public abstract class Personnage {
 	protected Controleur c;
 	
 	/**
-	 * Initialise le Personnage Robot 
+	 * Initialise le Personnage Robot. Par defaut automatise
 	 * @author malek
 	 */
 	public Personnage(String nom, int x, int y, Direction d){
-		coord = new Coordonnees(x,y);
+		this.nom = new String(nom);
+		this.coord = new Coordonnees(x,y);
 		this.direction = d;
-		this.nom = nom;
-		terrain = new Terrain(10,10);
+		this.c = new Automate(); //Automate pre defini dans classe Automate
 	}
 	
+	/**
+	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
+	 * @author malek
+	 * @param hauteur_terrain
+	 * @param largeur_terrain
+	 */
+	public void initTerrain(int hauteur_terrain, int largeur_terrain){
+		Personnage.terrain = new Terrain(hauteur_terrain,largeur_terrain); 
+	}
 	
 	/*Test s'il y a un mur seulement si le packman n'est pas un automate
 	 *et met à jour la position de packman
@@ -133,6 +142,18 @@ public abstract class Personnage {
 	}
 
 	/**
+	 * Avance Betement
+	 * @author malek
+	 */
+	public void avancerBetement(){
+		switch (this.direction){
+		case haut : this.coord.y--;  break;
+		case bas : this.coord.y++;   break;
+		case gauche : this.coord.x--;  break;
+		case droite : this.coord.x++;   break;
+		}
+	}
+	/**
 	 * Determine la nouvelle direction du robot selon la direction actuelle 
 	 * @author malek
 	 */
@@ -184,34 +205,15 @@ public abstract class Personnage {
 	 * @param x
 	 * @param y
 	 */
-	public void positionDevant(Coordonnees coord){
+	public Coordonnees positionDevant(){
+		Coordonnees coord = new Coordonnees(0,0);
 		switch (this.direction){
 		case haut : coord.x=this.coord.x; coord.y=this.coord.y-1;   break;
 		case bas : coord.x=this.coord.x; coord.y=this.coord.y+1;    break;
 		case gauche : coord.x=this.coord.x-1; coord.y=this.coord.y; break;
 		case droite : coord.x=this.coord.x+1; coord.y=this.coord.y; break;
 		}
-	}
-
-	/**
-	 * Fonction a terminer
-	 * @author malek
-	 * @return
-	 * 	int CASE_OCCUPEE = 0;
-		int CASE_LIBRE = 1;
-		int CASE_GHOST = 2;
-		int SORTIE_TERRAIN = 3;
-	 */
-	public int configCaseDevant(){
-		positionDevant(this.coord);
-		if (terrain.getCase(coord.x, coord.y).isAccessable()){
-			return Automate.CASE_LIBRE;
-		} else{
-			switch (terrain.getCase(coord.x, coord.y).getObjet()) {
-				case MUR: return Automate.CASE_OCCUPEE; 
-				default: return Automate.CASE_OCCUPEE;
-			}
-		}
+		return coord;
 	}
 
 	/**
@@ -227,15 +229,15 @@ public abstract class Personnage {
 	 * @author malek
 	 */
 	public String toString(){
-		String res=" Personnage " + ((c instanceof Automate)? "non automatisé" : "automatisé");
+		String res=" Personnage " + ((c instanceof Automate)? "automatisé \n" : "non automatisé \n");
 		for(int i=0; i<terrain.getHauteur(); i++){
 			for(int j=0; j<terrain.getLargeur(); j++){
-				if (i == this.coord.x && j == this.coord.y){
+				if (i == this.coord.y && j == this.coord.x){
 					switch (this.direction){
-					case haut : res += "^";
-					case bas : res += "v";
-					case gauche : res += "<";
-					case droite : res += ">";
+					case haut : res += "^";   break;
+					case bas : res += "v";    break;
+					case gauche : res += "<"; break;
+					case droite : res += ">"; break;
 					}
 				}else{
 					if (terrain.getCase(i, j).isAccessable()){
