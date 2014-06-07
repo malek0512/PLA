@@ -32,7 +32,6 @@ public class Automate extends Controleur {
 	private int nbTransitionMax;
 	private int etatInitial;
 	private List<Integer>etatsFinals;
-	private Personnage personnage;
 	
 	/*
 	 * Prend un fichier XML et remplie les attributs de l'automate

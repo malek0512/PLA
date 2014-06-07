@@ -1,5 +1,8 @@
 package controleur;
 
-public abstract class Controleur {
+import personnages.Personnage;
 
+public abstract class Controleur {
+	private Personnage personnage;
+	
 }
