@@ -9,11 +9,9 @@ import structure_terrain.Terrain;
 
 public class Pacman extends Personnage {
 	
-	public Pacman(Terrain terrain, int x,int y)
-	{
-
-		this.x = x;
-		this.y = y;
+	public Pacman(Terrain terrain, int x,int y){
+		super("PM",0,0,Direction.bas);
+		this.terrain = terrain;
 	}
 	
 }

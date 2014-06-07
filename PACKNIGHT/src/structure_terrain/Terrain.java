@@ -10,17 +10,16 @@ public class Terrain {
 	}
 	
 	public Case[][] getTerrain(){
-		
 		return terrain;
 	}
 	
-	public int getLargeur(){
-		
+	public int getHauteur(){
 		return terrain.length;
 	}
 	
-	public int getLongueur(){
-		return terrain[0].length;
+	public int getLargeur(){
+		if (terrain.length == 0) return 0;
+		else return terrain[0].length;
 	}
 	
 	public Case getCase(int ligne, int colonne){
@@ -28,7 +27,6 @@ public class Terrain {
 	}
 	
 	public void setCase(int ligne, int colonne, Case ca){
-		
 		terrain[ligne][colonne]=ca;
 	}
 
