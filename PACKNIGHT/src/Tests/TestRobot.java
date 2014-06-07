@@ -13,7 +13,7 @@ public class TestRobot {
 	
 	public static void main(String[] args) throws Exception {
 		PM = new Pacman(0,0,Direction.bas);
-		Automate a = new Automate("Fichier.xml");
+		Automate a = new Automate("Automate/Test2.xml");
 		PM.insererAutomate(a);
 		PM.initTerrain(5, 5);
 		

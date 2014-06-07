@@ -45,7 +45,7 @@ public class Automate extends Controleur {
 	public Automate(String fichierXML)//, Personnage p)
 	{
 		etatsFinals = new LinkedList<Integer>();
-		Parser.parse("Fichier.xml",tableTransition,tableSortie,etatInitial,etatsFinals);
+		Parser.parse(fichierXML,tableTransition,tableSortie,etatInitial,etatsFinals);
 		this.nbEtat  = tableTransition.length;
 		this.etatCourant = etatInitial;
 		this.nbTransition = 0;
