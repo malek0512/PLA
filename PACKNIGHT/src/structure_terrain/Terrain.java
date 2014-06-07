@@ -1,4 +1,5 @@
 package structure_terrain;
+
 import structure_terrain.Case; 
 
 public class Terrain {
@@ -9,28 +10,11 @@ public class Terrain {
 		terrain=new Case[largeur][longueur];
 	}
 	
-	public Case[][] getTerrain(){
-		return terrain;
+	public void param(int x, int y, int xf, int yf)
+	{
+		terrain[x][y].setAcessCase(true);
+		terrain[xf][yf].setAcessCase(false);
 	}
-	
-	public int getHauteur(){
-		return terrain.length;
-	}
-	
-	public int getLargeur(){
-		if (terrain.length == 0) return 0;
-		else return terrain[0].length;
-	}
-	
-	public Case getCase(int ligne, int colonne){
-		return terrain[ligne][colonne];
-	}
-	
-	public void setCase(int ligne, int colonne, Case ca){
-		terrain[ligne][colonne]=ca;
-	}
-
-	
 	
 	public void afficher(){
 		int i,j;
