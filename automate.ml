@@ -81,15 +81,6 @@ let etat1 = {
   transitions = [(0,0,"Boire")]
 };;
 
-let etat2 = {
-  nom = 0;
-  transitions = [(0,0,"Boire")]
-};;
-
-let etat3 = {
-  nom = 0;
-  transitions = [(0,0,"Boire")]
-};;
 
 let automata = {
   nom1="Fontome";
