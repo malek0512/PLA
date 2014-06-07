@@ -3,16 +3,17 @@ import controleur.automate.Automate;
 import personnages.Direction;
 import personnages.Pacman;
 import personnages.Personnage;
+import personnages.RobotIdiot;
 import structure_terrain.Case;
 import structure_terrain.Terrain;
 
 
 public class TestRobot {
 
-	static Pacman PM;
+	static RobotIdiot PM;
 	
 	public static void main(String[] args) throws Exception {
-		PM = new Pacman(0,0,Direction.bas);
+		PM = new RobotIdiot(0,0,Direction.bas);
 		Automate a = new Automate("Fichier.xml");
 		PM.insererAutomate(a);
 		PM.initTerrain(5, 5);

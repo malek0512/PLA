@@ -33,4 +33,9 @@ public class Coordonnees {
 		this.x = x;
 		this.y = y;
 	}
+	public Coordonnees(Coordonnees c) {
+		super();
+		this.x = c.x;
+		this.y = c.y;
+	}
 }

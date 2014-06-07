@@ -99,7 +99,6 @@ public class Automate extends Controleur {
 		return -1;
 	}
 
-
 	/**
 	 * Reinitialise l'etat courant de l'automate a l'etat initial 0
 	 * @author malek
@@ -108,6 +107,10 @@ public class Automate extends Controleur {
 		etatCourant = 0;
 	}
 	
+	/**
+	 * @return Etat courant
+	 * @author malek
+	 */
 	public int getEtatCourant() {
 		return etatCourant;
 	}

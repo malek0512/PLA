@@ -10,6 +10,7 @@ public abstract class Personnage {
 
 	protected static Terrain terrain;
 	protected String nom;
+	protected int nbVie;
 	Coordonnees coord;
 	protected Direction direction;
 	//protected boolean automatise; Si controleur c instanceof iu alors non automatisé sinon automatisé
@@ -23,12 +24,13 @@ public abstract class Personnage {
 		this.nom = new String(nom);
 		this.coord = new Coordonnees(x,y);
 		this.direction = d;
-		//this.c = new Automate(); //Automate pre defini dans classe Automate
+		this.nbVie = 3; //A modifier ulterieurement
 	}
 	
 	public void insererAutomate(Automate a){
 		this.c = a;
 	}
+	
 	/**
 	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
 	 * @author malek
@@ -156,6 +158,7 @@ public abstract class Personnage {
 		case droite : this.coord.x++;   break;
 		}
 	}
+
 	/**
 	 * Determine la nouvelle direction du robot selon la direction actuelle 
 	 * @author malek
@@ -183,14 +186,11 @@ public abstract class Personnage {
 	}
 	
 	/**
-	 * @return position du robot, dans les variable passées en parametre
+	 * @return {@link Coordonnees}, position du robot
 	 * @author malek
-	 * @param x 
-	 * @param y
 	 */
-	public void position(Coordonnees coord){
-		coord.x = this.coord.x;
-		coord.y = this.coord.y;
+	public Coordonnees position(){
+		return new Coordonnees(this.coord);
 	}
 
 	/**

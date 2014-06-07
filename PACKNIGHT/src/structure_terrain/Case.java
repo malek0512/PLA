@@ -16,6 +16,10 @@ public class Case {
 		else this.objet = Objet.MUR;
 	}
 	
+	public boolean containsObjet(Objet o){
+		return this.objet == o;
+	}
+	
 	protected void setAcessCase(Boolean a){
 		if (a) this.objet = Objet.LIBRE;
 		else this.objet = Objet.MUR;
