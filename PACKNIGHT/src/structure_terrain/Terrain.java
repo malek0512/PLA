@@ -5,8 +5,15 @@ public class Terrain {
 	
 	private Case[][] terrain;
 	
-	public Terrain(int largeur, int longueur){
-		terrain=new Case[largeur][longueur];
+	public Terrain(int hauteur, int largeur){
+		terrain=new Case[hauteur][largeur];
+		
+		//Initialise le terrain a libre
+		for(int i=0; i<hauteur; i++){
+			for(int j=0;j<largeur;j++){
+				terrain[i][j] = new Case(true);
+			}
+		}
 	}
 	
 	public Case[][] getTerrain(){
@@ -41,7 +48,6 @@ public class Terrain {
 			}
 			System.out.print("\n");
 		}
-		
 	}
 
 }
