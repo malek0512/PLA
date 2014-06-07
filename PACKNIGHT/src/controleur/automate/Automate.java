@@ -17,7 +17,6 @@ public class Automate extends Controleur {
 	public final static int SORTIE_TERRAIN = 2;
 	public final static int CASE_GHOST = 3;
 	
-	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
 	public final static int AVANCER = 0;
 	public final static int GAUCHE = 1;
@@ -28,9 +27,6 @@ public class Automate extends Controleur {
 	private int tableTransition[][];
 	private int tableSortie[][];
 	private int etatCourant;
-	
-
-
 	private int nbEtat;
 	private int nbEntree;
 	private int nbSortie;
