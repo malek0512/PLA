@@ -23,9 +23,12 @@ public abstract class Personnage {
 		this.nom = new String(nom);
 		this.coord = new Coordonnees(x,y);
 		this.direction = d;
-		this.c = new Automate(); //Automate pre defini dans classe Automate
+		//this.c = new Automate(); //Automate pre defini dans classe Automate
 	}
 	
+	public void insererAutomate(Automate a){
+		this.c = a;
+	}
 	/**
 	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
 	 * @author malek
