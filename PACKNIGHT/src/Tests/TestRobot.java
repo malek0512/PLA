@@ -14,19 +14,23 @@ public class TestRobot {
 	
 	public static void main(String[] args) throws Exception {
 		PM = new RobotIdiot(0,0,Direction.bas);
-		Automate a = new Automate(); //"Fichier.xml");
-		PM.insererAutomate(a);
+		//Automate a = new Automate(); //"Fichier.xml");
+		Automate a = new Automate(); //"Automate/Test2.xml");
+		//PM.insererAutomate(a);
 		PM.initTerrain(5, 5);
-		
-		while ( !(PM.getControleur().isEtatFinal()) && !(PM.estSortie())){
+		a.setPersonnage(PM);
+		while ( a.getEntree() != Automate.SORTIE_TERRAIN){
 			
 			System.out.println(PM.toString());
-			System.out.println(PM.getControleur().infoAutomate());
-			PM.suivant();
+			System.out.println(a.infoAutomate());
+			//PM.suivant();
+			a.suivant();
 			Thread.sleep(3000); //Attend 3 secondes
 		}
 		System.out.println(PM.toString());
-		System.out.println(PM.getControleur().infoAutomate());
+		System.out.println(a.infoAutomate());
+//		System.out.println(PM.getControleur().infoAutomate());
+		
 	}
 
 }

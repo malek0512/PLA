@@ -1,8 +1,8 @@
 package personnages;
 
 public class Coordonnees {
-	int x;
-	int y;
+	public int x;
+	public int y;
 	/**
 	 * @return the x
 	 */

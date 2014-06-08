@@ -13,38 +13,38 @@ public class RobotIdiot extends Personnage {
 	 *         dans classe Automate
 	 * @author malek
 	 */
-	public int configCaseDevant() {
-		Coordonnees caseDevant = positionDevant();
-		if (caseDevant.x < 0
-				|| caseDevant.x > Personnage.terrain.getLargeur() - 1
-				|| caseDevant.y < 0
-				|| caseDevant.y > Personnage.terrain.getHauteur() - 1) {
-			return Automate.SORTIE_TERRAIN;
-		} else if (terrain.getCase(coord.x, coord.y).isAccessable()) {
-			return Automate.CASE_LIBRE;
-		} else {
-			return Automate.CASE_OCCUPEE;
-		}
-	}
+//	public int configCaseDevant() {
+//		Coordonnees caseDevant = positionDevant();
+//		if (caseDevant.x < 0
+//				|| caseDevant.x > Personnage.terrain.getLargeur() - 1
+//				|| caseDevant.y < 0
+//				|| caseDevant.y > Personnage.terrain.getHauteur() - 1) {
+//			return Automate.SORTIE_TERRAIN;
+//		} else if (terrain.getCase(getCoord().x, getCoord().y).isAccessable()) {
+//			return Automate.CASE_LIBRE;
+//		} else {
+//			return Automate.CASE_OCCUPEE;
+//		}
+//	}
 
-	public void suivant() throws Exception {
-		int entreeAutomate = configCaseDevant();
-		int sortieAutomate = ((Automate) this.c)
-				.effectuerTransition(entreeAutomate);
-
-		switch (sortieAutomate) {
-		case Automate.AVANCER:
-			avancerBetement();
-			break;
-		case Automate.DROIT:
-			tournerDroite();
-			break;
-		case Automate.GAUCHE:
-			tournerGauche();
-			break;
-		}
-		this.getControleur().incrementerTransition();
-	}
+//	public void suivant() throws Exception {
+//		int entreeAutomate = configCaseDevant();
+//		//int sortieAutomate = ((Automate) this.c)
+//		//		.effectuerTransition(entreeAutomate);
+//
+//		switch (sortieAutomate) {
+//		case Automate.AVANCER:
+//			avancerBetement();
+//			break;
+//		case Automate.DROIT:
+//			tournerDroite();
+//			break;
+//		case Automate.GAUCHE:
+//			tournerGauche();
+//			break;
+//		}
+//		this.getControleur().incrementerTransition();
+//	}
 
 	/**
 	 * Selon l'automate pre defini si, l'etat courant est dans un etat final,
@@ -53,12 +53,12 @@ public class RobotIdiot extends Personnage {
 	 * @return True si le PM est sortie
 	 * @author malek
 	 */
-	public boolean estSortie() {
-		return ((Automate) c).isEtatFinal();
-	}
+//	public boolean estSortie() {
+//		return ((Automate) c).isEtatFinal();
+//	}
 
-	public Automate getControleur() {
-		return (Automate) c;
-	}
+//	public Automate getControleur() {
+//		return (Automate) c;
+//	}
 
 }
