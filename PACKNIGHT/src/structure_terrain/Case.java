@@ -1,41 +1,41 @@
+/**
+ * Une case est soit un mur soit du vide
+ * d'autre choix sont prenable, et discutable
+ * notre convention est donc celle ci car utiliser
+ * par tout les dev d'indé
+ * et le chef a choisi ca, et le chef decide
+ * trust me
+ * author : mysterious guy
+ */
+
+
 package structure_terrain;
 
 public class Case {
 	
-	//private Boolean accessible;
-	//private Bonus bonus;
-	public enum Objet {LIBRE,MUR,PM,PGUM,GHOST,BONUS};
-	public Objet objet;
+	// 1 == Vide // 0 == Mur
+	private boolean accessible; 
 	
-	public Case(Objet obj){
-		this.objet = obj;
+	public Case(boolean a){
+		this.accessible = a;
 	}
 	
-	public Case(Boolean a){
-		if (a) this.objet = Objet.LIBRE;
-		else this.objet = Objet.MUR;
-	}
-	
-	protected void setAcessCase(Boolean a){
-		if (a) this.objet = Objet.LIBRE;
-		else this.objet = Objet.MUR;
+	protected void setAcessCase(boolean a){
+		this.accessible = a;
 	}
 	
 	public boolean isAccessable(){
-		return objet != (Objet.MUR);
+		return accessible;
 	}
 	
-	public Objet getObjet(){
-		return objet;
-	}
 	public String toString(){
 		String s;
 		
 		if (isAccessable()){
-			s="-";
+			s=" ";
 		}
 		else 
-			s="*";
+			s="#";
 		return s;
 	}
 }

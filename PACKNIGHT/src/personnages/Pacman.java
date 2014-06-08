@@ -5,19 +5,45 @@
  */
 package personnages;
 
-import controleur.automate.Automate;
-import structure_terrain.Terrain;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Pacman extends Personnage {
+public abstract class Pacman extends Personnage {
 	
-	public Pacman(int x,int y, Direction d){
-		super("PM",0,0,d);
+	/**
+	 * liste des pacmans sur le terrain
+	 */
+	static List<Pacman> liste = new LinkedList<Pacman>();
+	
+	public Pacman(String nom, int x, int y, Direction d){
+		super(nom,x,y,d);
+		Pacman.liste.add((Pacman) this);
 	}
+	
+	/**
+	 * @return true si le pacman peut revivre
+	 * author : alex
+	 */
+	public abstract boolean canRespawn();
+	
+	/**
+	 * le pacman meurt dans d'atroce soufrance
+	 * author : alex
+	 */
+	public abstract void meurtDansDatroceSouffrance();
+	
+	/**
+	 * fait revivre le pacman
+	 * NEED : determiner ou se situe les points de respawn
+	 * author : alex
+	 */
+	public abstract void respawn();
 	
 	/**
 	 * @return Une ENTREE de l'automate. Voir les constante d'ENTREE et SORTIE dans classe Automate
 	 * @author malek
 	 */
+	/*
 	public int configCaseDevant(){
 		Coordonnees caseDevant = positionDevant();
 		if (caseDevant.x < 0 || caseDevant.x>Personnage.terrain.getLargeur()-1 || caseDevant.y <0 || caseDevant.y>Personnage.terrain.getHauteur()-1){
@@ -28,7 +54,9 @@ public class Pacman extends Personnage {
 				return Automate.CASE_OCCUPEE;
 		}
 	}
-
+	*/
+	
+	/*
 	public void suivant() throws Exception{
 		int entreeAutomate = configCaseDevant();
 		int sortieAutomate = ((Automate) this.c).effectuerTransition(entreeAutomate);
@@ -40,12 +68,14 @@ public class Pacman extends Personnage {
 		}
 		this.getControleur().incrementerTransition();
 	}
+	*/
 	
 	/**
 	 * Selon l'automate pre defini si, l'etat courant est dans un etat final, c'est que le robot est sorti
 	 * @return True si le PM est sortie
 	 * @author malek
 	 */
+	/*
 	public boolean estSortie(){
 		return ((Automate) c).isEtatFinal();
 	}
@@ -53,4 +83,5 @@ public class Pacman extends Personnage {
 	public Automate getControleur(){
 		return (Automate) c;
 	}
+	*/
 }

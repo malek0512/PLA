@@ -18,7 +18,7 @@ public class Game {
 	
 	//ajout de l'attribut fini
 	private boolean fini=false;
-	
+	  
 	
 	/**
 	 * Fonction d'initialisation du jeux
@@ -49,8 +49,8 @@ public class Game {
 	{
 		//recuperation des controles du joueurs
 
-		//mis a jours de la p
-		//mis a jouhysique du jeux
+		//mis a jours de la
+		//physique du jeux
 		//deplacement selon l'IU
 		
 		//mis a jours des collisions
@@ -59,9 +59,9 @@ public class Game {
 		
 		
 	}
-	
+	 
 	/**
-	 * Cette fonction met a jourjour s le rendu graphique
+	 * Cette fonction met a jours le rendu graphique
 	 */ 
 	public void render()
 	{
