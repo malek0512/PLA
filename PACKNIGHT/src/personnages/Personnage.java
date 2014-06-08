@@ -23,8 +23,11 @@ public abstract class Personnage{
 	}
 	
 	protected String nom;
-	Coordonnees coord;
+	private Coordonnees coord;
 	protected Direction direction;
+	
+	//protected boolean automatise; Si controleur c instanceof iu alors non automatisé sinon automatisé
+	//protected Controleur c;
 	
 	/**
 	 * Donne un nom, une poisition et une direction au personnage
@@ -32,11 +35,13 @@ public abstract class Personnage{
 	 */
 	public Personnage(String nom, int x, int y, Direction d){
 		this.nom = new String(nom);
-		this.coord = new Coordonnees(x,y);
+		this.setCoord(new Coordonnees(x,y));
 		this.direction = d;
 	}
 	
-
+//	public void insererAutomate(Automate a){
+//		this.c = a;
+//	}
 	
 	/**
 	 * Test si le personnage peut avancer
@@ -103,8 +108,22 @@ public abstract class Personnage{
 		}
 	}
 
+
 	/**
-	 * Gere la collision, dependant de chaque personnage
+	 * Avance Betement
+	 * @author malek
+	 */
+	public void avancerBetement(){
+		switch (this.direction){
+		case haut : this.getCoord().y--;  break;
+		case bas : this.getCoord().y++;   break;
+		case gauche : this.getCoord().x--;  break;
+		case droite : this.getCoord().x++;   break;
+		}
+	}
+
+	/**
+	 * gere la colision en fonction de sa position
 	 * author : alex
 	 */
 	public abstract void gererCollision();
@@ -119,14 +138,18 @@ public abstract class Personnage{
 	}
 	
 	/**
-	 * @return position du personnage, dans les variables passées en parametre
-	 * @author malek
-	 * @param x 
-	 * @param y
+	 * setter coord
 	 */
 	public void positionner(Coordonnees coord){
 		coord.x = this.coord.x;
 		coord.y = this.coord.y;
+	}
+	
+	/**
+	 * getter coord
+	 */
+	public Coordonnees position(){
+		return new Coordonnees(this.getCoord());
 	}
 
 	/**
@@ -148,10 +171,10 @@ public abstract class Personnage{
 	public Coordonnees positionDevant(){
 		Coordonnees coord = new Coordonnees(0,0);
 		switch (this.direction){
-		case haut : coord.x=this.coord.x; coord.y=this.coord.y-1;   break;
-		case bas : coord.x=this.coord.x; coord.y=this.coord.y+1;    break;
-		case gauche : coord.x=this.coord.x-1; coord.y=this.coord.y; break;
-		case droite : coord.x=this.coord.x+1; coord.y=this.coord.y; break;
+		case haut : coord.x=this.getCoord().x; coord.y=this.getCoord().y-1;   break;
+		case bas : coord.x=this.getCoord().x; coord.y=this.getCoord().y+1;    break;
+		case gauche : coord.x=this.getCoord().x-1; coord.y=this.getCoord().y; break;
+		case droite : coord.x=this.getCoord().x+1; coord.y=this.getCoord().y; break;
 		}
 		return coord;
 	}
@@ -172,10 +195,10 @@ public abstract class Personnage{
 	 * @author malek
 	 */
 	public String toString(){
-		String res="";
+		String res=" Personnage \n"; // + ((c instanceof Automate)? "automatisé \n" : "non automatisé \n");
 		for(int i=0; i<terrain.getHauteur(); i++){
 			for(int j=0; j<terrain.getLargeur(); j++){
-				if (i == this.coord.y && j == this.coord.x){
+				if (i == this.getCoord().y && j == this.getCoord().x){
 					switch (this.direction){
 					case haut : res += "^";   break;
 					case bas : res += "v";    break;
@@ -194,5 +217,16 @@ public abstract class Personnage{
 		}
 		res += "\n";
 		return res;
+	}
+
+	public Coordonnees getCoord() {
+		return coord;
+	}
+
+	public void setCoord(Coordonnees coord) {
+		this.coord = coord;
+	}
+	public static Terrain getTerrain() {
+		return terrain;
 	}
 }

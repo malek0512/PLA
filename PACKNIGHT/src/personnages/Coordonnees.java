@@ -3,6 +3,7 @@ package personnages;
 public class Coordonnees {
 	public int x; //les mettres private ou public change rien au vue de ce qu'on a
 	public int y; // "			"			"			"			"			"
+
 	/**
 	 * @return the x
 	 */
@@ -32,5 +33,10 @@ public class Coordonnees {
 		super();
 		this.x = x;
 		this.y = y;
+	}
+	public Coordonnees(Coordonnees c) {
+		super();
+		this.x = c.x;
+		this.y = c.y;
 	}
 }
