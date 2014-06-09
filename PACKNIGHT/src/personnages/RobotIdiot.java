@@ -1,11 +1,15 @@
 package personnages;
 
-import controleur.automate.Automate;
-
 public class RobotIdiot extends Personnage {
 
 	public RobotIdiot(int x, int y, Direction d) {
 		super("RobotIdiot", 0, 0, d);
+	}
+
+	@Override
+	public void gererCollision() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**

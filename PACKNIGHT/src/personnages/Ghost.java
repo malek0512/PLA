@@ -1,11 +1,25 @@
 package personnages;
+import java.util.LinkedList;
+import java.util.List;
 
 import java.util.Map;
+
 
 import personnages.SmartGhost.AvisDeRecherche;
 import structure_terrain.Terrain;
 
+//ajouter le fichier "personnages.SmartGhost.AvisDeRecherche" svp, il a pas était "git add"
+//merci par avance
+//Misterious Guy
 public class Ghost extends Personnage {
+	/**
+	 * liste des fantomes du jeux
+	 * cette liste est utiliser pour gerer les collisions, et pour
+	 * que les fantomes puissent communiquer entre eux
+	 * author : alex
+	 */
+	static List<Ghost> liste = new LinkedList<Ghost>();
+	final int vision = 5;
 
 	// Structure qui repertorie l'ensemble des information d'un PM en fuite
 	public class AvisDeRecherche {
@@ -28,4 +42,9 @@ public class Ghost extends Personnage {
 
 	}
 
+	@Override
+	public void gererCollision() {
+		// TODO Auto-generated method stub
+		
+	}
 }

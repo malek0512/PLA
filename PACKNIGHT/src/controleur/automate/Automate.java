@@ -156,9 +156,15 @@ public class Automate extends Controleur {
 		System.out.println(nbEntreeValide());
 		switch (sortieAutomate) {
 		//TODO Ajouter chaque fonction d'action
-		case Automate.AVANCER: personnage.avancerBetement(); break;
-		case Automate.DROIT: personnage.tournerDroite(); break;
-		case Automate.GAUCHE: personnage.tournerGauche(); break;
+		//Edit : Le personnage peut faire un demi-pour en une seul fois, les fonctions
+		//tourner a droite ou a gauche n'a pas son sens dans un jeux d'arcade
+		//comme pacman, quand tu appuie sur bas, quelque soit ta position, tu passe
+		//a direction bas ^^
+		//utilise la fonction personnage.setDirection(direction);
+		//case Automate.AVANCER: personnage.avancerBetement(); break;
+		//case Automate.DROIT: personnage.tournerDroite(); break;
+		//case Automate.GAUCHE: personnage.tournerGauche(); break;
+		
 		
 		}
 		incrementerTransition();

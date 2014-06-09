@@ -1,30 +1,42 @@
+/**
+ * Edit :
+ * J'ai mit la fonction personnage en abstract, elle doit pas etre instancier
+ * j'ai mit la fonction d'init terrain en final, qu'on puisse l'utiliser sans passer par une instance
+ * d'une fonction ^^ et pour qu'on puisse l'apeler que par Personnage
+ */
+
 package personnages;
 
-import controleur.Controleur;
-import controleur.automate.Automate;
-import controleur.iu.InterfaceUser;
-import structure_terrain.Case;
-import structure_terrain.Terrain;
+import structure_terrain.*;
 
-public abstract class Personnage {
+public abstract class Personnage{
 
 	protected static Terrain terrain;
+	/**
+	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
+	 * @author malek
+	 * @param hauteur_terrain
+	 * @param largeur_terrain
+	 */
+	final public void initTerrain(Terrain terrain){
+		Personnage.terrain = terrain; 
+	}
+	
 	protected String nom;
-	protected int nbVie;
 	private Coordonnees coord;
 	protected Direction direction;
+	
 	//protected boolean automatise; Si controleur c instanceof iu alors non automatisé sinon automatisé
 	//protected Controleur c;
 	
 	/**
-	 * Initialise le Personnage Robot. Par defaut automatise
+	 * Donne un nom, une poisition et une direction au personnage
 	 * @author malek
 	 */
 	public Personnage(String nom, int x, int y, Direction d){
 		this.nom = new String(nom);
 		this.setCoord(new Coordonnees(x,y));
 		this.direction = d;
-		this.nbVie = 3; //A modifier ulterieurement
 	}
 	
 //	public void insererAutomate(Automate a){
@@ -32,119 +44,70 @@ public abstract class Personnage {
 //	}
 	
 	/**
-	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
-	 * @author malek
-	 * @param hauteur_terrain
-	 * @param largeur_terrain
+	 * Test si le personnage peut avancer
+	 * author : alex
 	 */
-	public void initTerrain(int hauteur_terrain, int largeur_terrain){
-		Personnage.terrain = new Terrain(hauteur_terrain,largeur_terrain); 
+	public boolean peutAvancer()
+	{
+		switch(this.direction)
+		{
+		case droite :
+			return Personnage.terrain.getCase(coord.x+1, coord.y).isAccessable();
+			
+		case gauche :
+			return Personnage.terrain.getCase(coord.x-1, coord.y).isAccessable();
+			
+		case haut :
+			return Personnage.terrain.getCase(coord.x, coord.y+1).isAccessable();
+			
+		case bas :
+			return Personnage.terrain.getCase(coord.x, coord.y-1).isAccessable();
+		default :
+			return false; //pour eviter des erreurs de compile...
+		}
 	}
 	
-	/*Test s'il y a un mur seulement si le packman n'est pas un automate
-	 *et met à jour la position de packman
+	/**
+	 * Primitive avancer
+	 * author : alex
 	 */
-//	public void avancer()
-//	{
-//		switch(this.direction)
-//		{
-//		case haut :
-//			if (getCoord().x!=0){
-//				if(isAutomatised()){
-//				getCoord().x--;
-//				}
-//				else{
-//					if(Personnage.terrain.getTerrain()[getCoord().x-1][getCoord().y].isAccessable()){
-//						getCoord().x--;
-//					}
-//				}
-//			}
-//			else{
-//				if(isAutomatised()){
-//					getCoord().x=terrain.getLargeur();
-//					}
-//					else{
-//						if(Personnage.terrain.getTerrain()[terrain.getLargeur()][getCoord().y].isAccessable()){
-//							getCoord().x=terrain.getLargeur();
-//						}
-//					}
-//				
-//			}
-//			break;
-//		case bas :
-//			if (getCoord().x!=terrain.getLargeur()){
-//				if(isAutomatised()){
-//				getCoord().x++;
-//				}
-//				else{
-//					if(Personnage.terrain.getTerrain()[getCoord().x+1][getCoord().y].isAccessable()){
-//						getCoord().x++;
-//					}
-//				}
-//			}
-//			else{
-//				if(isAutomatised()){
-//					getCoord().x=0;
-//					}
-//					else{
-//						if(Personnage.terrain.getTerrain()[0][getCoord().y].isAccessable()){
-//							getCoord().x=0;
-//						}
-//					}
-//				
-//			}
-//			break;
-//		case gauche :
-//			if (getCoord().y!=0){
-//				if(isAutomatised()){
-//				getCoord().y--;
-//				}
-//				else{
-//					if(Personnage.terrain.getTerrain()[getCoord().x][getCoord().y-1].isAccessable()){
-//						getCoord().y--;
-//					}
-//				}
-//			}
-//			else{
-//				if(isAutomatised()){
-//					getCoord().y=terrain.getLargeur();
-//					}
-//					else{
-//						if(Personnage.terrain.getTerrain()[getCoord().x][terrain.getLargeur()].isAccessable()){
-//							getCoord().y=terrain.getLargeur();
-//						}
-//					}
-//				
-//			}
-//			break;
-//		case droite :
-//			if (getCoord().y!=terrain.getLargeur()){
-//				if(isAutomatised()){
-//				getCoord().y++;
-//				}
-//				else{
-//					if(Personnage.terrain.getTerrain()[getCoord().x][getCoord().y+1].isAccessable()){
-//						getCoord().y++;
-//					}
-//				}
-//			}
-//			else{
-//				if(isAutomatised()){
-//					getCoord().y=0;
-//					}
-//					else{
-//						if(Personnage.terrain.getTerrain()[getCoord().x][0].isAccessable()){
-//							getCoord().y=0;
-//						}
-//					}
-//				
-//			}
-//			break;
-//		default :
-//		
-//		
-//		}
-//	}
+	public void avancer()
+	{
+		switch(this.direction)
+		{
+		case droite :
+			if(this.coord.x==terrain.getLargeur()-1)
+				coord.x = 0 ;
+			else
+				coord.x++;
+			break;
+			
+		case gauche :
+			if(this.coord.x==0)
+				coord.x = terrain.getLargeur()-1;
+			else
+				coord.x--;
+			break;
+			
+		case haut :
+			if(this.coord.y==terrain.getHauteur()-1)
+				coord.y = 0;
+			else
+				coord.y++;
+			break;
+			
+		case bas :
+			if(this.coord.y==0)
+				coord.y = terrain.getHauteur()-1;
+			else
+				coord.y--;
+			break;
+			
+		default :
+			break;
+		}
+	}
+
 
 	/**
 	 * Avance Betement
@@ -160,34 +123,30 @@ public abstract class Personnage {
 	}
 
 	/**
-	 * Determine la nouvelle direction du robot selon la direction actuelle 
-	 * @author malek
+	 * gere la colision en fonction de sa position
+	 * author : alex
 	 */
-	public void tournerDroite(){
-		switch (this.direction){
-		case haut : this.direction = Direction.droite;  break;
-		case bas : this.direction = Direction.gauche;   break;
-		case gauche : this.direction = Direction.haut;  break;
-		case droite : this.direction = Direction.bas;   break;
-		}
+	public abstract void gererCollision();
+	
+	/**
+	 * Change la direction du personnage
+	 * author : alex
+	 */
+	public void setDirection(Direction direction)
+	{
+		this.direction = direction;
 	}
 	
 	/**
-	 * Determine la nouvelle direction du robot selon la direction actuelle
-	 * @author malek
+	 * setter coord
 	 */
-	public void tournerGauche(){
-		switch (this.direction){
-		case haut : this.direction = Direction.gauche;  break;
-		case bas : this.direction = Direction.droite;   break;
-		case gauche : this.direction = Direction.bas;   break;
-		case droite : this.direction = Direction.haut;  break;
-		}
+	public void positionner(Coordonnees coord){
+		coord.x = this.coord.x;
+		coord.y = this.coord.y;
 	}
 	
 	/**
-	 * @return {@link Coordonnees}, position du robot
-	 * @author malek
+	 * getter coord
 	 */
 	public Coordonnees position(){
 		return new Coordonnees(this.getCoord());
@@ -208,6 +167,7 @@ public abstract class Personnage {
 	 * @param x
 	 * @param y
 	 */
+	/*
 	public Coordonnees positionDevant(){
 		Coordonnees coord = new Coordonnees(0,0);
 		switch (this.direction){
@@ -218,14 +178,17 @@ public abstract class Personnage {
 		}
 		return coord;
 	}
+	*/
 
 	/**
 	 * @return dans les parametres la case devant le Personnage selon sa direction
 	 * @author malek
 	 */
-//	public boolean isAutomatised(){
-//		return (c instanceof Automate);
-//	}
+	/*
+	public boolean isAutomatised(){
+		return (c instanceof Automate);
+	}
+	*/
 	
 	/**
 	 * @return String contenant le terrain et le personnage
@@ -244,7 +207,7 @@ public abstract class Personnage {
 					}
 				}else{
 					if (terrain.getCase(i, j).isAccessable()){
-						res += "-";
+						res += " ";
 					} else {
 						res += "X";
 					}

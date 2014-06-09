@@ -1,8 +1,9 @@
 package personnages;
 
 public class Coordonnees {
-	public int x;
-	public int y;
+	public int x; //les mettres private ou public change rien au vue de ce qu'on a
+	public int y; // "			"			"			"			"			"
+
 	/**
 	 * @return the x
 	 */

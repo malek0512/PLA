@@ -1,44 +1,65 @@
+/**
+ * author alex
+ * Classe abstract, on ne peut instancier que des terrains dont on connais tout
+ */
+
 package structure_terrain;
 import structure_terrain.Case; 
 
-public class Terrain {
+public abstract class Terrain {
 
 	private Case[][] terrain;
-
+	private int hauteur;
+	private int largeur;
+	
+	/**
+	 * Alloue la mémoire pour un terrain de haut largeur donnée
+	 * @param hauteur
+	 * @param largeur
+	 * @require les paramètre sont >= a 1
+	 * author : alex
+	 */
 	public Terrain(int hauteur, int largeur){
 		terrain=new Case[hauteur][largeur];
-
-		//Initialise le terrain a libre
-		for(int i=0; i<hauteur; i++){
-			for(int j=0;j<largeur;j++){
-				terrain[i][j] = new Case(true);
-			}
-		}
+		this.hauteur = hauteur;
+		this.largeur = largeur;
 	}
 
-	public Case[][] getTerrain(){
-		return terrain;
-	}
-
+	/**
+	 * @return la hauteur du terrain
+	 */
 	public int getHauteur(){
-		return terrain.length;
+		return hauteur;
 	}
 
+	/**
+	 * @return la largeur du terrain
+	 */
 	public int getLargeur(){
-		if (terrain.length == 0) return 0;
-		else return terrain[0].length;
+		return largeur;
 	}
 
+	
 	public Case getCase(int ligne, int colonne){
 		return terrain[ligne][colonne];
 	}
-
-	public void setCase(int ligne, int colonne, Case ca){
-		terrain[ligne][colonne]=ca;
+	
+	/**
+	 * ajoute l'objet au coordonée donnée
+	 * @param ligne
+	 * @param colonne
+	 * @param elt l'objet a mettre
+	 * @require : les coordonée sont juste et l'objet est initialiser
+	 */
+	public void setCase(int ligne, int colonne, Case elt){
+		terrain[ligne][colonne]= elt;
 	}
 
 
-
+	/**
+	 * affiche le terrain
+	 * fonction a ameliorer pour pouvoir voir quelque chose
+	 */
 	public void afficher(){
 		int i,j;
 
