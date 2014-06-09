@@ -8,17 +8,17 @@ import structure_terrain.Case;
 import structure_terrain.Terrain;
 
 
-public class TestRobot {
+public class TestRobot2 {
 
 	static RobotIdiot PM;
 	
 	public static void main(String[] args) throws Exception {
 		PM = new RobotIdiot(0,0,Direction.bas);
 		//Automate a = new Automate(); //"Fichier.xml");
-		Automate a = new Automate(); //"Automate/Test2.xml");
+		Automate a = new Automate("src/Tests/Test2.xml", PM);
 		//PM.insererAutomate(a);
 		PM.initTerrain(5, 5);
-		a.setPersonnage(PM);
+		//a.setPersonnage(PM);
 		while ( a.getEntree() != Automate.SORTIE_TERRAIN || !a.isEtatFinal()){
 			
 			System.out.println(PM.toString());

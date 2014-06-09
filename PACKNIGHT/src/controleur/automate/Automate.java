@@ -11,6 +11,8 @@ import java.util.Set;
 import controleur.Controleur;
 import controleur.automate.TableTransitionSortie.Triplet;
 import src.parser.Parser;
+import src.parser.Parser2;
+import src.parser.Quad;
 import personnages.Coordonnees;
 import personnages.Personnage;
 
@@ -26,6 +28,9 @@ import personnages.Personnage;
  * @author malek
  */
 public class Automate extends Controleur {
+	
+	PrimitivesTest primitivesTest = new PrimitivesTest(this);
+	PrimitivesAction primitivesAction = new PrimitivesAction(this);
 	
 	//ENTREES : CASE_OCCUPE, CASE_LIBRE, SORTIE_TERRAIN, CASE_GHOST
 	public final static int CASE_LIBRE = 0;
@@ -55,26 +60,24 @@ public class Automate extends Controleur {
 	/*
 	 * Prend un fichier XML et remplie les attributs de l'automate
 	 */
-//	public Automate(String fichierXML, Personnage p)
-//	{
-//		int tableTransition[][]; 
-//		int tableSortie[][]; 
-//		boolean tableEntreeValide[][];
-//		
-//		etatsFinals = new LinkedList<Integer>();
-//		Parser.parse(fichierXML,tableTransition,tableSortie,etatInitial,etatsFinals);
-//
-//		//Initialisations des attributs
-//		this.nbEtat  = tableTransition.length;
-//		this.etatCourant = etatInitial;
-//		this.nbTransition = 0;
-//		this.nbTransitionMax = 100;
-//		this.personnage = p;
-//		
-//		//Initialisation des la table d'entree sortie
-//		tableTransitionSortie = new TableTransitionSortie(this.nbEtat);
-//		tableTransitionSortie.initTransitionSortie(tableTransition, tableSortie, tableEntreeValide);
-//	}
+	public Automate(String fichierXML, Personnage p) throws Exception
+	{
+		
+		Parser2 parser = new Parser2(fichierXML);
+		this.etatCourant = parser.parseEtatInitiale();
+		ArrayList<List<Quad>> liste = parser.parseTableau();
+		
+		//Initialisations des attributs
+		this.nbEtat  = liste.size();
+		
+		this.nbTransition = 0;
+		//this.nbTransitionMax = parser.parseTransitionMax();
+		this.personnage = p;
+		
+		//Initialisation des la table d'entree sortie
+		tableTransitionSortie = new TableTransitionSortie(this.nbEtat);
+		tableTransitionSortie.initTransitionSortie(liste);
+	}
 	
 	//Automate pre defini utilisé pour un premier test
 	public Automate()//String fichierXML)//, Personnage p)
@@ -88,12 +91,12 @@ public class Automate extends Controleur {
 		tableEntreeValide = new boolean[3][3];
 		etatsFinals = new LinkedList();
 		
-		tableTransition[0][0] = 0;
-		tableTransition[0][1] = 0;
-		tableTransition[0][2] = 1;
-		tableTransition[1][0] = 1;
-		tableTransition[1][1] = 1;
-		tableTransition[1][2] = 1;
+		tableTransition[0][CASE_LIBRE] = 0;
+		tableTransition[0][CASE_OCCUPEE] = 0;
+		tableTransition[0][SORTIE_TERRAIN] = 1;
+		tableTransition[1][CASE_LIBRE] = 1;
+		tableTransition[1][CASE_OCCUPEE] = 1;
+		tableTransition[1][SORTIE_TERRAIN] = 1;
 		
 		tableSortie[0][0] = AVANCER;
 		tableSortie[0][1] = DROIT;
@@ -103,10 +106,10 @@ public class Automate extends Controleur {
 		tableSortie[1][2] = DROIT;
 		
 		tableEntreeValide[0][0] = true;
-		tableEntreeValide[0][1] = true;
+		tableEntreeValide[0][1] = false;
 		tableEntreeValide[0][2] = true;
 		tableEntreeValide[1][0] = true;
-		tableEntreeValide[1][1] = true;
+		tableEntreeValide[1][1] = false;
 		tableEntreeValide[1][2] = true;
 		
 		this.nbEtat  = 2;
@@ -122,20 +125,22 @@ public class Automate extends Controleur {
 	}
 	
 	/**
-	 * @return Sortie de type automate
+	 * 
+	 * @return la Sortie, correspondant a l'etatCourant et l'entree passé en parametre
 	 * @param Entree
-	 * @throws Exception
+	 * @throws Exception Si le nombre de transition max atteint
+	 * @throws Exception Si l'etatCourant n'est pas censé a avoir a effectuer ce test. Ie le booleen de validité du test == false
 	 * @author malek
 	 */
 	protected int effectuerTransition(int Entree) throws Exception{
 		if (nbTransition < nbTransitionMax){
-			if (Entree >= 0 && Entree<nbEntree){
+			if (tableTransitionSortie.getValide(this.etatCourant, Entree)){
 				this.etatCourant = tableTransitionSortie.getEtatSuiv(this.etatCourant, Entree);
 				return tableTransitionSortie.getSortie(this.etatCourant, Entree);
 			} else
-				throw new Exception("Erreur du numero de l'entree ou de sortie");
+				throw new Exception("Erreur l'etatCourant n'a pas le droit d'effectuer ce test");
 		}
-		return -1;
+		throw new Exception("Erreur le nombre de transition MAX atteint");
 	}
 
 	/**
@@ -148,8 +153,9 @@ public class Automate extends Controleur {
 	public void suivant() throws Exception {
 		int entreeAutomate = getEntree();
 		int sortieAutomate = effectuerTransition(entreeAutomate);
-
+		System.out.println(nbEntreeValide());
 		switch (sortieAutomate) {
+		//TODO Ajouter chaque fonction d'action
 		case Automate.AVANCER: personnage.avancerBetement(); break;
 		case Automate.DROIT: personnage.tournerDroite(); break;
 		case Automate.GAUCHE: personnage.tournerGauche(); break;
@@ -159,27 +165,66 @@ public class Automate extends Controleur {
 	}
 
 
-
 	/**
+	 * A l'etatCourant X,
+	 * Pour chaque entree de l'automate,
+	 * 		si le booleen associé a cette Entree == true, c'est qu'alors l'etat courant possede
+	 * 		une transition avec cette Entree (Test).  
+	 * Rmq : Dans le cas où l'etatCourantX ne possède aucune entree, On leve exception. (Il s'agirait d'un etat Puit)
+	 * Pour chaque Entree de l'etatCourantX, nous appelons, dans l'ordre du parcours de la table de 
+	 * Hashage, chacune des fonctions de test
 	 * 
+	 * Theoriquement, parmis toute les entrees a prtir de l'etatCourantX, une et seulement une fonction 
+	 * est verifiée. La fonction getEntree() ne le verifie pas ! 
+	 * 
+	 * Elle renvoie l'Entree de l'automate, leve exception si aucune Entree n'est verifiée. 
 	 * @return Entree de type automate, fonction a modifier, au fure et a mesure des ajouts de fonction de test
 	 * @author malek
-	 */
-	public int getEntree(){
+	 * @throws Exception 
+	 */ 
+	public int getEntree() throws Exception{
 		Map<Integer, Triplet> entries = tableTransitionSortie.getEtatAll(this.etatCourant);
+		//On parcout l'ensemble des Entree de l'automate, de l'etatCourant
 		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
-			Integer wa = key.next();
-			if ( entries.containsKey(wa) ){//entries.get(key).ok){
-				switch ( wa ){ //key.next()){ //key corrspond a la constante ENTREE predefini plus haut
-				case CASE_LIBRE: return configCaseDevant(); 
-				case CASE_OCCUPEE: return configCaseDevant();
-				case SORTIE_TERRAIN: return configCaseDevant();
+			Integer Entree = key.next();
+			if ( entries.get(Entree).ok ){
+				switch ( Entree ){
+				//TODO Ajouter chaque fonction de test
+				case CASE_LIBRE: return primitivesTest.configCaseDevant(); 
+				case CASE_OCCUPEE: return primitivesTest.configCaseDevant();
+				case SORTIE_TERRAIN: return primitivesTest.configCaseDevant();
+				case PM_DANS_RAYON_X : int X=primitivesTest.dansRayon(3); if (X!=-1) return X; break;
 				}
 			}
 		}
-		return -1;
+		throw new Exception("Erreur dans l'automate. L'etat courant ne possède aucune entree valide");
 	}
-	
+
+	/**
+	 * Fonction qui test le nombre d'entree valide de l'etatCourantX, a complementer au fure est a mesure 
+	 * des ajout de primitive de test 
+	 * En theorie return == 1
+	 * @return le nombre d'entree valide de l'etatCourantX
+	 * @author malek
+	 */
+	public int nbEntreeValide() {
+		int nb = 0;
+		Map<Integer, Triplet> entries = tableTransitionSortie.getEtatAll(this.etatCourant);
+		//On parcout l'ensemble des Entree de l'automate, de l'etatCourant
+		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
+			Integer Entree = key.next();
+			if ( entries.get(Entree).ok ){ 
+				switch ( Entree ){ 
+				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) nb++; break;
+				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) nb++; break;
+				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) nb++; break;
+				case PM_DANS_RAYON_X : if (primitivesTest.dansRayon(3)==PM_DANS_RAYON_X) nb++; break;
+				}
+			}
+		}
+		return nb;
+	}
+
 	/**
 	 * Reinitialise l'etat courant de l'automate a l'etat initial 0
 	 * @author malek
@@ -187,7 +232,6 @@ public class Automate extends Controleur {
 	public void reinitialiserAutomate(){
 		etatCourant = 0;
 	}
-
 	
 	/**
 	 * @return Etat courant
@@ -196,8 +240,9 @@ public class Automate extends Controleur {
 	public int getEtatCourant() {
 		return etatCourant;
 	}	
+
 	/**
-	 * @return True s'il l'automate est dans un etat final, False sinon
+	 * @return True si l'automate est dans un etat final, False sinon
 	 * @author malek
 	 */
 	public boolean isEtatFinal() {
@@ -236,22 +281,6 @@ public class Automate extends Controleur {
 	/******************** FONCTIONS DE TEST ***********************/
 	/**************************************************************/
 	
-	/**
-	 * @return Une ENTREE de l'automate. Selon la configuratoin de la case devant le robot
-	 * @author malek
-	 */
-	public int configCaseDevant() {
-		Coordonnees caseDevant = this.personnage.positionDevant();
-		if (caseDevant.x < 0
-				|| caseDevant.x > Personnage.getTerrain().getLargeur() - 1
-				|| caseDevant.y < 0
-				|| caseDevant.y > Personnage.getTerrain().getHauteur() - 1) {
-			return Automate.SORTIE_TERRAIN;
-		} else if (Personnage.getTerrain().getCase(personnage.getCoord().x, personnage.getCoord().y).isAccessable()) {
-			return Automate.CASE_LIBRE;
-		} else {
-			return Automate.CASE_OCCUPEE;
-		}
-	}
+
 	
 }

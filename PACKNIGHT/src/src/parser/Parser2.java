@@ -12,24 +12,28 @@
 package src.parser;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jdom2.*;
 import org.jdom2.input.*;
-public class Parser {
-   
 
+import controleur.automate.TableTransitionSortie;
+public class Parser2 {
+   
+	
 	private final String balise_Etat_Initial = "Etats_Initiaux"; //balise de l'état initiale
 	private final String balise_Etat = "Etat"; //balise de l'état
 	private final String balise_Transition = "Transition"; //balise des transitions
 	private final String balise_Etat_Finaux = "Etats_Finals"; //balise des état final
-
+	
 	private final String attribue_Etat_Numero = "Nom"; //nom de l'attribut de balise_etat
 	private final String attribue_Transition_Entree = "Entree"; //nom de l'attribut entree de balise_transition
 	private final String attribue_Transition_EtatArriver= "Etat"; //nom de l'attribut etat d'arriver de balise_transition
 	private final String attribue_Transition_Sortie = "Action"; //nom de l'attribut sortie de balise_transition
-
+	
 	private Element racine;
    
    /**
@@ -41,22 +45,23 @@ public class Parser {
     * @return 0 si l'ouverture du fichier a reussi // 1 sinon
     * 
     * author : Alex
+ * @throws Exception 
     */
-   public int openFile(String file)
+   public Parser2(String file) throws Exception
    {
-	   	org.jdom2.Document document;
+	   	org.jdom2.Document document = null;
 	    //On crée une instance de SAXBuilder
 	    SAXBuilder sxb = new SAXBuilder();
-	    try
-	    {
+	   // try
+	   // {
 	    	System.out.println("Ouverture du fichier");
 	       //On crée un nouveau document JDOM avec en argument le fichier XML
 	    	document = sxb.build(new File(file));
-	    }
-	    catch(Exception e){return 1;}
+	   // }
+	   // catch(Exception e) {throw new Exception("Erreur dans l'ouverture du fichier de l'automate");}// return 1;}
 	    //On initialise un nouvel élément racine avec l'élément racine du document.
 	    racine = document.getRootElement();
-	    return 0;
+	    //return 0;
    }
    
    
@@ -71,35 +76,43 @@ public class Parser {
     * 
     * author : Alex
     */
-   public void parseTableau(int tabTrans[][],int tabSort[][])
+   public ArrayList<List<Quad>> parseTableau() //int tabTrans[][],int tabSort[][])
 	{
-
+	   
+	   ArrayList<List<Quad>>transitionSortie = new ArrayList<List<Quad>> ();
+	   
 	   //On crée la liste d'etat
 	   List<Element> listEtat = racine.getChildren(balise_Etat);
 	   //On crée un Iterator sur la liste d'etat
 	   Iterator<Element> i = listEtat.iterator();
-
+	   
 	   while(i.hasNext())
 	   {
 		   //Recup le prochain etat a traiter
 		   Element etat = (Element)i.next();
 		   //Recup l'indice de l'état pour le tableau Transition
-		   Integer Ietat = Integer.getInteger(etat.getAttributeValue(attribue_Etat_Numero));
-
+		   Integer Ietat = Integer.parseInt(etat.getAttributeValue(attribue_Etat_Numero));
+		   
+		   System.out.println(Ietat.intValue()); //Ici erreur car pointeur null
+		   //Initialisation d'une liste d'entree de l'Ietat
+		   transitionSortie.add(Ietat, new LinkedList<Quad>());
+		   
 		   //Meme action mais pour transition
 		   List<Element> listTransition = etat.getChildren(balise_Transition);
 		   Iterator<Element> j = listTransition.iterator(); 
 		   while(j.hasNext())
 		   {
 			   Element transition = (Element)j.next(); 
-			   Integer Ientree = Integer.getInteger(transition.getAttributeValue(attribue_Transition_Entree));
-			   Integer Iarriver = Integer.getInteger(transition.getAttributeValue(attribue_Transition_EtatArriver));
-			   Integer Isortie = Integer.getInteger(transition.getAttributeValue(attribue_Transition_Sortie));
-
-			   tabSort[Ietat][Ientree] = Isortie;
-			   tabTrans[Ietat][Ientree] = Iarriver;
+			   Integer Ientree = Integer.parseInt(transition.getAttributeValue(attribue_Transition_Entree));
+			   Integer Iarriver = Integer.parseInt(transition.getAttributeValue(attribue_Transition_EtatArriver));
+			   Integer Isortie = Integer.parseInt(transition.getAttributeValue(attribue_Transition_Sortie));
+			   
+			   transitionSortie.get(Ietat).add(new Quad(true, Ientree, Iarriver, Isortie));
+			   //tabSort[Ietat][Ientree] = Isortie;
+			   //tabTrans[Ietat][Ientree] = Iarriver;
 		   }
 	   }
+	return transitionSortie;
 	}
    
    /**
@@ -119,14 +132,14 @@ public class Parser {
     */
    public int parseTransitionMax()
    {
-
+	   
 	   int res=0;
-
+	   
 	   List<Element> listEtat = racine.getChildren(balise_Etat);
 	   //On crée un Iterator sur la liste d'etat
 	   Iterator<Element> i = listEtat.iterator();
-
-
+	   
+	   
 	   while(i.hasNext())
 	   {
 		   //Recup le prochain etat a traiter
@@ -139,7 +152,7 @@ public class Parser {
 	   }
 	   return res;
    }
-
+	
    /**
     * renvoie le numero de l'état initiale
     * @return le numero de l'état initiale
@@ -152,55 +165,58 @@ public class Parser {
 	   //On recup la liste d'état initial mis dans la balise "Etats_Initiaux"
 	   List<Element> listEtatInit = racine.getChildren(balise_Etat_Initial);
 	   Iterator<Element> i = listEtatInit.iterator();
-
-
+	   
+	   
 	   if (i.hasNext())
 	   {
 		   Element etat = (Element) i.next();
-		   res = Integer.getInteger(etat.getAttributeValue(attribue_Etat_Numero));
+		   res = Integer.parseInt(etat.getAttributeValue(attribue_Etat_Numero));
 	   }
-
+	   
 	   else
 	   {
 		   return -1;
 	   }
-
+	   
 	   return res;
    }
    
  /**
   * ajoute avec la fonction "List.add()" la liste avec le numero des etats finaux
-  * @param liste : la liste qui va etre remplie
+  * @return liste of Integer : la liste des etats finals
   * utiliser la fonction parseNombreEtat() de preference
   */
-   public void parseEtatFinal(List<Integer> liste)
+   public List<Integer> parseEtatFinal()
    {
+	   List<Integer> liste = new LinkedList();
+	   
 	 //On recup la liste des etats finaux
 	   List<Element> listEtatFinal = racine.getChildren(balise_Etat_Finaux);
-
+	   
 	   //On crée un Iterator sur cette liste
 	   Iterator<Element> i = listEtatFinal.iterator();
-
+	   
 	   while (i.hasNext())
 	   {
 		   Element etat_finals = (Element)i.next();
-
+		   
 		   //on recupere la liste des etats final mis dans la balise "Etats_Finals"
 		   List<Element> listeEtat = etat_finals.getChildren(balise_Etat);
-
+		   
 		   Iterator<Element> j = listeEtat.iterator();
-
+		   
 		   while(j.hasNext())
 		   {
 			   //Recup le prochain etat a traiter
 			   Element etat = (Element)j.next();
-
+			   
 			   //Recup l'indice de l'état pour le tableau Transition
-			   Integer Ietat = Integer.getInteger(etat.getAttributeValue(attribue_Etat_Numero));
-
+			   Integer Ietat = Integer.parseInt(etat.getAttributeValue(attribue_Etat_Numero));
+			   
 			   //on ajoute a la liste d'état final létat trouver
 			   liste.add(Ietat);
 		   }
 	   	}
+	return liste;
    }
 }

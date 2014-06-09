@@ -2,7 +2,7 @@
 <Automate ID="Fontôme_bete" >
   <Etats_Initiaux>
   
-    <Etat Nom="Initiale" Action="Cherche">
+    <Etat Nom="0">
       <Transition Entree = "int" Etat="int" >
 	</Transition>
       <Transition Entree = "int" Etat="int" >
@@ -13,10 +13,10 @@
   
   
   
-  <Etat Nom="1" Action="Cherche" >
-    <Transition Entree = "int" Etat="int" >
+  <Etat Nom="1" Action="1" >
+    <Transition Entree = "1" Etat="1" >
       </Transition>
-    <Transition Entree = "int" Etat="int" >
+    <Transition Entree = "1" Etat="1" >
       </Transition>
   </Etat>
   
