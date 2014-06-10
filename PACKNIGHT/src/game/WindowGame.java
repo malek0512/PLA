@@ -18,11 +18,17 @@ import org.newdawn.slick.tiled.TiledMap;
 public class WindowGame extends BasicGame {
     private GameContainer container;
 	private TiledMap map;
-	private float x = 360, y = 320;
+	private float x = 448, y = 320;
 	private float xCamera = x, yCamera = y;
 	private int direction = 0;
 	private boolean moving = false;
 	private Animation[] animations = new Animation[8];
+	public static int largueur = 18, hauteur = 20;
+	public static int tuile_size = 32;
+	public static int largueur_map = 28, hauteur_map = 31;
+	int taillePersonnage =56;
+	int zonePersonnage = 5;
+
 
 	public WindowGame() {
         super("Lesson 1 :: WindowGame");
@@ -31,7 +37,7 @@ public class WindowGame extends BasicGame {
     public void init(GameContainer container) throws SlickException {
         this.container = container;
         this.map = new TiledMap("src/graphisme/main/ressources/map/PACMAN.tmx");
-        SpriteSheet spriteSheet = new SpriteSheet("src//graphisme/main/ressources/map/sprites/PACMAN-SPRITES.png", 56, 56);
+        SpriteSheet spriteSheet = new SpriteSheet("src//graphisme/main/ressources/map/sprites/PACMAN-SPRITES.png", taillePersonnage, taillePersonnage);
         this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
         this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
         this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
@@ -40,29 +46,38 @@ public class WindowGame extends BasicGame {
         this.animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
         this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
         this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
-        Music background = new Music("src//graphisme/main/ressources/music/Requiem.ogg");
+        Music background = new Music("src/graphisme/main/ressources/music/Requiem.ogg");
         background.loop();
     }
     
-    
-	/**
-	 * Cette fonction met a jours les informations du jeux
-	 */
 
     public void render(GameContainer container, Graphics g) throws SlickException {
-        g.translate(container.getWidth() / 2 - this.x, 0);
-            g.translate(0, container.getHeight() / 2 - this.y);   	
+        g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
         this.map.render(0, 0, 0);
         g.drawAnimation(animations[direction + (moving ? 4 : 0)], x, y);
     }
 
     public void update(GameContainer container, int delta) throws SlickException {
         if (this.moving) {
-            float futurX = getFuturX(delta);
-            float futurY = getFuturY(delta);
-                this.x = futurX;
-                this.y = futurY;
+
+            switch (this.direction) {
+            case 0: y = this.y - .1f * delta; break;
+            case 1: x = this.x - .1f * delta; break;
+            case 2: y = this.y + .1f * delta; break;
+            case 3: x = this.x + .1f * delta; break;
+            }
+
         }
+        float w = container.getWidth() / 4;
+        if (this.x > (this.xCamera + w) && (this.x + w  <  largueur_map*tuile_size))
+        	this.xCamera = this.x - w;
+        if (this.x < (this.xCamera - w) && (this.x > w)) 
+        	this.xCamera = this.x + w;
+        float h = container.getHeight() / 4;
+        if (this.y > (this.yCamera + h) && (this.y + h < hauteur_map*tuile_size)) 
+        	this.yCamera = this.y - h;
+        if (this.y < (this.yCamera - h) && (this.y > h))
+        	this.yCamera = this.y + h;
            
     }
 
@@ -85,6 +100,7 @@ public class WindowGame extends BasicGame {
 	    case Input.KEY_DOWN:  this.direction = 2; this.moving = true; break;
 	    case Input.KEY_RIGHT: this.direction = 3; this.moving = true; break;
 	    case Input.KEY_ESCAPE:container.exit(); break;
+	    case Input.KEY_S:    this.direction = 0; this.moving = false; break;
 	    }
 	}
 	

@@ -3,19 +3,19 @@
  */
 package game;
 
-import graphisme.WindowGame;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 
 public class Principale {
 static long duree = 10;
-private static int largeur = 28, longueur = 20;
+
 
 
 
 	public static void main(String[] args) throws SlickException {
-	    new AppGameContainer(new WindowGame(), largeur*32, longueur*32, false).start();
+	    new AppGameContainer(new WindowGame(), WindowGame.largueur*WindowGame.tuile_size, WindowGame.hauteur*WindowGame.tuile_size, false).start();
 	}
 }
 
