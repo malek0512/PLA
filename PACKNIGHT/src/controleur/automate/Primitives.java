@@ -83,6 +83,44 @@ public class Primitives {
 	}
 	
 	/**
+	 * @param position : coordonner du fantome
+	 * @param rayon : rayon de vision du Fantome a la position donnée
+	 * @return la liste des pacman de le champ de vision
+	 * @author rama
+	 */
+	protected boolean pacmanEstDansCroix(Coordonnees position) {
+		Coordonnees test=position;
+		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
+		{
+			Pacman pac = i.next();
+			Coordonnees cord = pac.position();
+			if(cord.x == position.x){
+				if (cord.y<position.y){
+					while(!mur()||cord.y == test.y){
+						
+					}
+						
+				}
+				
+			}
+			if(cord.y == position.y){
+				return true;
+			}
+				
+		}
+		return false;
+	}
+	private boolean mur() {
+		return false;
+	}
+	
+	private void estIntersection(){
+		
+	}
+	
+	
+
+	/**
 	 * @return dans les parametres la case devant le Personnage selon sa direction actuelle
 	 * @author malek
 	 * @param d
