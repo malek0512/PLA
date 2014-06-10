@@ -4,9 +4,6 @@ import java.util.List;
 
 import java.util.Map;
 
-
-import structure_terrain.Terrain;
-
 //ajouter le fichier "personnages.SmartGhost.AvisDeRecherche" svp, il a pas était "git add"
 //merci par avance
 //Misterious Guy
@@ -17,7 +14,9 @@ public class Ghost extends Personnage {
 	 * que les fantomes puissent communiquer entre eux
 	 * author : alex
 	 */
-	static List<Ghost> liste = new LinkedList<Ghost>();
+	
+	
+	public static List<Ghost> liste = new LinkedList<Ghost>();
 	final int vision = 5;
 
 	// Structure qui repertorie l'ensemble des information d'un PM en fuite
