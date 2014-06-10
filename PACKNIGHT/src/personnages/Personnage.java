@@ -22,7 +22,33 @@ public abstract class Personnage{
 	static public List<Personnage> liste = new LinkedList<Personnage>();
 	
 	protected static Terrain terrain;
+	
+	
+	/**
+	 * Pour la gestion des collision
+	 */
+	boolean estSurAxeX; //vraie si la coord x est à 0
+	boolean estSurAxeY; //vraie si la coord y est à 0
+	float coordX;
+	float coordY;
+	boolean estSurCase; //vraie si et seulement si les boolean estSurAxe(X ou Y) sont vrai
 
+	public boolean caseDisponible(Direction direction)
+	{
+		if (estSurCase)
+		{
+			return Personnage.terrain.getCase(this.coord, direction).isAccessable();
+		}
+		else if(direction == Direction.haut || direction == Direction.bas)
+		{
+			return !(estSurAxeY); 
+		}
+		else
+		{
+			return !(estSurAxeX);
+		}
+	}
+	
 	/**
 	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
 	 * @author malek

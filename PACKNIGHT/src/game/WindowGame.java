@@ -15,6 +15,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
 
+import personnages.*;
+
 public class WindowGame extends BasicGame {
     private GameContainer container;
 	private TiledMap map;
@@ -23,13 +25,19 @@ public class WindowGame extends BasicGame {
 	private int direction = 0;
 	private boolean moving = false;
 	private Animation[] animations = new Animation[8];
-	public static int largueur = 18, hauteur = 20;
+	public static int largueur = 28, hauteur = 15;
 	public static int tuile_size = 32;
 	public static int largueur_map = 28, hauteur_map = 31;
 	int taillePersonnage =56;
 	int zonePersonnage = 5;
 
-
+	PacKnight pacman = new PacKnight("j1",1,1,Direction.haut);
+	
+	private CoordonneesFloat pixelHautDroite(Coordonnees cord)
+	{
+		return new CoordonneesFloat(cord.x, cord.y);
+	}
+	
 	public WindowGame() {
         super("PACKNIGHT : THE RETURN");
     }
@@ -46,6 +54,7 @@ public class WindowGame extends BasicGame {
         this.animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
         this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
         this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
+        //container.setFullscreen(true);
         Music background = new Music("src/graphisme/main/ressources/music/Requiem.ogg");
         background.loop();
     }
