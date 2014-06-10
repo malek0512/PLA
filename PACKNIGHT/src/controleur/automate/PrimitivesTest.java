@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import personnages.Coordonnees;
+import personnages.Pacman;
 import personnages.Personnage;
 
 /**
@@ -24,19 +25,18 @@ public class PrimitivesTest extends Primitives {
 	 * @return -1 si PM pas dans un cercle de rayon R, Automate.PM_DANS_RAYON_X sinon 
 	 */
 	protected int dansRayon(int rayon) {
-		Coordonnees position = auto.getPersonnage().position();
-		List<Coordonnees> liste = new LinkedList<>();
-		dansRayon(position, liste, rayon);
-		for(int i=0; i<liste.size(); i++)
-			if(this.caseEstPM(liste.get(i))){
-				return Automate.PM_DANS_RAYON_X;
-			}
+		
+		if (Pacman.personnagePresent(auto.getPersonnage().position()))
+			return Automate.PM_DANS_RAYON_X;
 		return -1;
 	}
 	
 	/**
 	 * @return Une ENTREE de l'automate. Selon la configuratoin de la case devant le robot
 	 * @author malek
+	 * 
+	 * rmq : pourquoi ne pas tout simplement considerer SORTIE_TERRAIN comme case OCCUPEE ?
+	 * alex
 	 */
 	public int configCaseDevant() {
 		Coordonnees caseDevant = auto.getPersonnage().positionDevant();

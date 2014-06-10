@@ -10,8 +10,8 @@ public class test_terrain {
 		Terrain terr=new Terrain(5,7);
 		//setCase(int ligne, int colonne, Case ca)
 		
-		Case mur=new Case(false);
-		Case chemin=new Case(true);
+		Case mur=new Case(0);
+		Case chemin=new Case(1);
 		
 		for(j=0;j<5;j++){
 			terr.setCase(j, 0, mur);

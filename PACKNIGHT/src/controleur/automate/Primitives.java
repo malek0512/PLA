@@ -1,9 +1,10 @@
 package controleur.automate;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
-import personnages.Coordonnees;
-import personnages.Direction;
+import personnages.*;
 import structure_terrain.Case;
 
 /**
@@ -33,40 +34,51 @@ public class Primitives {
 	/**
 	 * @author malek
 	 * @param coord
-	 * @return
+	 * @return vraie si les coordonnée sont hors du terrain, faux sinon
+	 * 
+	 * rmq : tu peut tout simplement demander au terrain si la cas est accessible, non ?
+	 * Je ne comprend pas l'idée de vérifier si la case est dans le terrain, si on veut faire
+	 * ce test autant le mettre dans la classe Terrain non ?
+	 * Si une classe voulais aussi cette information, c'est pas ici qu'elle viendrais cherher si il existe déja
+	 * une fonction pour ca :p
 	 */
 	protected boolean estDansLeTerrain(Coordonnees coord){
 		return (coord.x < 0
-		|| coord.x > auto.getPersonnage().getTerrain().getLargeur() - 1
+		|| coord.x > Personnage.getTerrain().getLargeur() - 1
 		|| coord.y < 0
-		|| coord.y > auto.getPersonnage().getTerrain().getHauteur() - 1);
+		|| coord.y > Personnage.getTerrain().getHauteur() - 1);
 	}
 
-	//Fonction non au point, attendre que case soit un objet PM ou GHOST
-	//Il faudra pour cela maj la valeur qd le robot est initialiser et se deplace
+
+	/**
+	 * author : alex
+	 * @param c : coordonée du point a tester
+	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquer
+	 * 
+	 * remarque : peut etre la supprimer, et faire directement le test ^^
+	 */
 	protected boolean caseEstPM(Coordonnees c){
-		return ((auto.getPersonnage().getTerrain().getCase(c.y, c.x)) instanceof Case); //instanceof GHOST;
+		return Pacman.personnagePresent(c);
 	}
 	
+	
 	/**
-	 * Fonction recursive qui renvoie toute les coordonnees voisine dans un certain cercle de rayon R
-	 * @require La liste des coordonnees en parametre != NULL 
-	 * @author malek
+	 * @param position : coordonner du fantome
+	 * @param rayon : rayon de vision du Fantome a la position donnée
+	 * @return la liste des pacman de le champ de vision
 	 */
-	protected void dansRayon(Coordonnees position, List<Coordonnees> l, int rayon) {
-		if (rayon>=1){
-			Coordonnees caseNord, caseSud, caseEst, caseOuest;
-			caseNord = getCase(position, Direction.haut);
-			caseSud = getCase(position, Direction.bas);
-			caseOuest = getCase(position, Direction.gauche);
-			caseEst = getCase(position, Direction.droite);
-			//l.add(caseNord); l.add(caseSud); l.add(caseEst); l.add(caseOuest);
-			dansRayon(caseNord, l, rayon--);  l.add(caseNord);
-			dansRayon(caseSud, l, rayon--);   l.add(caseSud);
-			dansRayon(caseOuest, l, rayon--); l.add(caseOuest);
-			dansRayon(caseEst, l, rayon--);   l.add(caseEst);
-			
+	protected List<Pacman> pacmanEstDansRayon(Coordonnees position, int rayon) {
+		List<Pacman> res = new LinkedList<Pacman>();
+
+		int someXYSource = position.sommmeXY();
+		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
+		{
+			Pacman pac = i.next();
+			int someXYTester = i.next().position().sommmeXY();
+			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
+				res.add(pac);
 		}
+		return res;
 	}
 	
 	/**
