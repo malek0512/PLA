@@ -39,13 +39,14 @@ public class PrimitivesTest extends Primitives {
 	 * alex
 	 */
 	public int configCaseDevant() {
-		Coordonnees caseDevant = auto.getPersonnage().positionDevant();
+		Coordonnees caseDevant = positionDevant();
 		if (caseDevant.x < 0
 				|| caseDevant.x > Personnage.getTerrain().getLargeur() - 1
 				|| caseDevant.y < 0
 				|| caseDevant.y > Personnage.getTerrain().getHauteur() - 1) {
 			return Automate.SORTIE_TERRAIN;
-		} else if (Personnage.getTerrain().getCase(auto.getPersonnage().getCoord().x, auto.getPersonnage().getCoord().y).isAccessable()) {
+		} else if (Personnage.getTerrain().getCase(auto.getPersonnage().getCoord().x, 
+				auto.getPersonnage().getCoord().y).isAccessable()) {
 			return Automate.CASE_LIBRE;
 		} else {
 			return Automate.CASE_OCCUPEE;

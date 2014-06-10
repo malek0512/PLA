@@ -6,6 +6,7 @@ import personnages.Personnage;
 import personnages.RobotIdiot;
 import structure_terrain.Case;
 import structure_terrain.Terrain;
+import structure_terrain.TerrainTest1;
 
 
 public class TestRobot2 {
@@ -15,9 +16,12 @@ public class TestRobot2 {
 	public static void main(String[] args) throws Exception {
 		PM = new RobotIdiot(0,0,Direction.bas);
 		//Automate a = new Automate(); //"Fichier.xml");
-		Automate a = new Automate("src/Tests/Test2.xml", PM);
+		Automate a = new Automate("Automate/Fichier.xml", PM);
+		
+		System.out.println(a.tableTransSortie());
 		//PM.insererAutomate(a);
-		PM.initTerrain(5, 5);
+		Terrain terrain = new TerrainTest1(5, 5);
+		Personnage.initTerrain(terrain);
 		//a.setPersonnage(PM);
 		while ( a.getEntree() != Automate.SORTIE_TERRAIN || !a.isEtatFinal()){
 			
