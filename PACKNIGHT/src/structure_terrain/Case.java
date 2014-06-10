@@ -9,7 +9,7 @@
  */
 
 
-package structure_terrain;
+package src.structure_terrain;
 
 public class Case {
 	

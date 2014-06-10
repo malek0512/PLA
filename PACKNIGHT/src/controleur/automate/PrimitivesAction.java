@@ -2,7 +2,7 @@ package controleur.automate;
 
 import personnages.Coordonnees;
 import personnages.Direction;
-import structure_terrain.Case;
+import src.structure_terrain.Case;
 
 /**
  * Classe contenant l'ensemble des primitives d'action 

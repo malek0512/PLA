@@ -4,9 +4,9 @@ import personnages.Direction;
 import personnages.Pacman;
 import personnages.Personnage;
 import personnages.RobotIdiot;
-import structure_terrain.Case;
-import structure_terrain.Terrain;
-import structure_terrain.TerrainTest1;
+import src.structure_terrain.Case;
+import src.structure_terrain.Terrain;
+import src.structure_terrain.TerrainTest1;
 
 
 public class TestRobot2 {

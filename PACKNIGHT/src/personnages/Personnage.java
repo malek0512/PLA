@@ -7,7 +7,7 @@
 
 package personnages;
 
-import structure_terrain.*;
+import src.structure_terrain.*;
 
 public abstract class Personnage{
 

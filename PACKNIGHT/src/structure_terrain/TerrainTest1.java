@@ -1,4 +1,4 @@
-package structure_terrain;
+package src.structure_terrain;
 
 public class TerrainTest1 extends Terrain {
 

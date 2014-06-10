@@ -3,8 +3,8 @@
  * Classe abstract, on ne peut instancier que des terrains dont on connais tout
  */
 
-package structure_terrain;
-import structure_terrain.Case; 
+package src.structure_terrain;
+import src.structure_terrain.Case;
 
 public abstract class Terrain {
 

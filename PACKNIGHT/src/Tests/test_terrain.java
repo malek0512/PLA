@@ -1,7 +1,7 @@
 package Tests;
 
-import structure_terrain.Case;
-import structure_terrain.Terrain;
+import src.structure_terrain.Case;
+import src.structure_terrain.Terrain;
 
 public class test_terrain {
 
