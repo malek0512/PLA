@@ -2,11 +2,12 @@
  * author alex
  * Classe abstract, on ne peut instancier que des terrains dont on connais tout
  */
-
 package structure_terrain;
+
+import structure_terrain.Case;
 import personnages.Coordonnees;
 import personnages.Direction;
-import structure_terrain.Case; 
+
 
 public abstract class Terrain {
 

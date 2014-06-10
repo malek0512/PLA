@@ -1,5 +1,7 @@
 package structure_terrain;
 
+import structure_terrain.Terrain;
+
 public class TerrainTest1 extends Terrain {
 
 	public TerrainTest1(int hauteur, int largeur) {

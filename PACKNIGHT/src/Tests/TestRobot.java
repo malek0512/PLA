@@ -16,7 +16,7 @@ public class TestRobot {
 	public static void main(String[] args) throws Exception {
 		PM = new RobotIdiot(0,0,Direction.bas);
 		//Automate a = new Automate(); //"Fichier.xml");
-		Automate a = new Automate(); //"Automate/Test2.xml");
+		Automate a = new Automate(null, PM); //"Automate/Test2.xml");
 		//PM.insererAutomate(a);
 		Terrain terrain = new TerrainTest1(5, 5);
 		Personnage.initTerrain(terrain);

@@ -1,17 +1,17 @@
 package Tests;
 
-import structure_terrain.Case;
+
 import structure_terrain.Terrain;
+import structure_terrain.TerrainTest1;
 
 public class test_terrain {
 
 	public static void main(String[] args) {
 		int j;
-		Terrain terr=new Terrain(5,7);
-		//setCase(int ligne, int colonne, Case ca)
+		Terrain terr=new TerrainTest1(5,7);
 		
-		Case mur=new Case(0);
-		Case chemin=new Case(1);
+		int mur=0;
+		int chemin=1;
 		
 		for(j=0;j<5;j++){
 			terr.setCase(j, 0, mur);
