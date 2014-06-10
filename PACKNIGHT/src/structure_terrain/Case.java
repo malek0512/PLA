@@ -9,33 +9,34 @@
  */
 
 
-package src.structure_terrain;
+package structure_terrain;
 
 public class Case {
 	
 	// 1 == Vide // 0 == Mur
-	private boolean accessible; 
+	private int accessible; 
 	
-	public Case(boolean a){
+	public Case(int a){
 		this.accessible = a;
 	}
 	
-	protected void setAcessCase(boolean a){
+	protected void setAcessCase(int a){
 		this.accessible = a;
 	}
 	
 	public boolean isAccessable(){
-		return accessible;
+		return (accessible!=0);
 	}
 	
 	public String toString(){
 		String s;
 		
-		if (isAccessable()){
+		if (accessible==1)
 			s=" ";
-		}
-		else 
+		else if (accessible==0)
 			s="#";
+		else
+			s="x";
 		return s;
 	}
 }

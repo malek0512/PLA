@@ -4,6 +4,16 @@ public class Coordonnees {
 	public int x; //les mettres private ou public change rien au vue de ce qu'on a
 	public int y; // "			"			"			"			"			"
 
+	
+	public boolean equals(Coordonnees dest)
+	{
+		return (dest.x == this.x && dest.y == this.y);
+	}
+	
+	public int sommmeXY()
+	{
+		return x+y;
+	}
 	/**
 	 * @return the x
 	 */

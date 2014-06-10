@@ -1,4 +1,6 @@
-package src.structure_terrain;
+package structure_terrain;
+
+import structure_terrain.Terrain;
 
 public class TerrainTest1 extends Terrain {
 
@@ -6,7 +8,7 @@ public class TerrainTest1 extends Terrain {
 		super(hauteur, largeur);
 		for(int i=0; i<hauteur; i++){
 			for(int j=0; j<largeur; j++){
-				this.terrain[i][j].setAcessCase(true) ;
+				this.terrain[i][j].setAcessCase(1) ;
 			}
 		}
 	}

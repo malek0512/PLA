@@ -7,22 +7,63 @@
 
 package personnages;
 
-import src.structure_terrain.*;
+
+
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import structure_terrain.*;
+
 
 public abstract class Personnage{
 
+	static public List<Personnage> liste = new LinkedList<Personnage>();
+	
 	protected static Terrain terrain;
 
 	/**
 	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
 	 * @author malek
 	 */
-	final public static void initTerrain(Terrain terrain){
+	static public void initTerrain(Terrain terrain){
 		Personnage.terrain = terrain; 
 	}
 	
+	/**
+	 * @param position ou on veut savoir si un personnage si trouve
+	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
+	 */
+	static public boolean personnagePresent(Coordonnees position)
+	{
+		Iterator<Personnage> i= Personnage.liste.iterator();
+		while(i.hasNext())
+		{
+			if(position.equals(i.next().coord))
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * @param position a tester
+	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null
+	 */
+	static public Personnage personnageReference(Coordonnees position)
+	{
+		Iterator<Personnage> i= Personnage.liste.iterator();
+		while(i.hasNext())
+		{
+			Personnage p = i.next();
+			if(position.equals(p.coord))
+				return p;
+		}
+		return null;
+	}
+	
 	protected String nom;
-	private Coordonnees coord;
+	protected Coordonnees coord;
 	protected Direction direction;
 	
 	//protected boolean automatise; Si controleur c instanceof iu alors non automatisé sinon automatisé
@@ -36,6 +77,7 @@ public abstract class Personnage{
 		this.nom = new String(nom);
 		this.setCoord(new Coordonnees(x,y));
 		this.direction = d;
+		Personnage.liste.add(this);
 	}
 	
 //	public void insererAutomate(Automate a){
