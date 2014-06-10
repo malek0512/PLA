@@ -8,9 +8,9 @@ import structure_terrain.Case;
 
 public abstract class Terrain {
 
-	private Case[][] terrain;
-	private int hauteur;
-	private int largeur;
+	protected Case[][] terrain;
+	protected int hauteur;
+	protected int largeur;
 	
 	/**
 	 * Alloue la mémoire pour un terrain de haut largeur donnée
@@ -23,6 +23,11 @@ public abstract class Terrain {
 		terrain=new Case[hauteur][largeur];
 		this.hauteur = hauteur;
 		this.largeur = largeur;
+		for(int i=0; i<hauteur; i++){
+			for(int j=0; j<largeur; j++){
+				this.terrain[i][j] = new Case(true) ;
+			}
+		}
 	}
 
 	/**

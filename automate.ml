@@ -14,9 +14,8 @@ type etat = {
 
 type automate = {
   nom1 : string;
-  etatsInitiaux : etat list;
+  etats : etat list;
   etatsFinals : etat list;
-  etatsAutres : etat list
 };;
 
 (* Fonctions *)
@@ -41,26 +40,32 @@ let rec getEtats (e :etat list) : string =
     |[] -> ""
     |head::tail -> getEtat head ^ getEtats tail;;
 
+let rec getEtatsFinals (e :etat list) : string =
+  let getEtat (e : etat) : string =
+    let {nom = name;
+	 transitions = trans
+	} = e in
+  "<Etat Nom= \""^ string_of_int name ^ "\" > \n" ^ "</Etat> \n"
+  in
+  match e with
+    |[] -> ""
+    |head::tail -> getEtat head ^ getEtatsFinals tail;;
+
 let getAutomate (a : automate) : string =
   let  {
   nom1 = name;
-  etatsInitiaux = etatInit;
+  etats = etat;
   etatsFinals = etatEnd;
-  etatsAutres = etatlist
   } = a in
   "<Automate ID= \""^ name ^"\" > \n" ^
-    "<Etats_Initiaux> \n" ^
-    getEtats etatInit ^
-    "</Etats_Initiaux> \n" ^
-
-    getEtats etatlist ^
+    getEtats etat ^
 
     "<Etats_Finals> \n" ^
-    getEtats etatEnd ^
-    "<Etats_Finals> \n" ^
+       getEtatsFinals etatEnd ^
+    "</Etats_Finals> \n" ^
  "</Automate> \n";;
 
-let entete = "<?xml version = \"1.0\" ?>";;
+let entete = "<?xml version = \"1.0\" ?>\n";;
 let outChannel = open_out"Fichier.xml";;
 let writeAutomate (a:automate) =
   let string = getAutomate a in
@@ -69,24 +74,40 @@ let writeAutomate (a:automate) =
   ;;
 
 (********************************************************************)
+(*
+type entree = int;;
+type etat_name = int;;
+type action = string;;
 
+type etat = {
+  nom : etat_name;
+  transitions : (entree * etat_name * action) list
+};;
+
+
+type automate = {
+  nom1 : string;
+  etats : etat list;
+  etatsFinals : int list;
+};;
+*)
+(*******************************************************************)
 
 let etat0 = {
   nom = 0;
-  transitions = [(0,0,"Boire")]
+  transitions = [(0,0,"0"); (2,1,"2")]
 };;
 
 let etat1 = {
-  nom = 0;
-  transitions = [(0,0,"Boire")]
+  nom = 1;
+  transitions = [(2,1,"2")]
 };;
 
 
 let automata = {
   nom1="Fontome";
-  etatsInitiaux = [etat0];
-  etatsFinals = [etat3];
-  etatsAutres = [etat1;etat2]
+  etats = [etat0; etat1];
+  etatsFinals = [etat1];
 };;
 
 

@@ -2,7 +2,7 @@
  * Edit :
  * J'ai mit la fonction personnage en abstract, elle doit pas etre instancier
  * j'ai mit la fonction d'init terrain en final, qu'on puisse l'utiliser sans passer par une instance
- * d'une fonction ^^ et pour qu'on puisse l'apeler que par Personnage
+ * d'une fonction ^^ et pour qu'on puisse l'appeler que par Personnage
  */
 
 package personnages;
@@ -12,13 +12,12 @@ import structure_terrain.*;
 public abstract class Personnage{
 
 	protected static Terrain terrain;
+
 	/**
 	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
 	 * @author malek
-	 * @param hauteur_terrain
-	 * @param largeur_terrain
 	 */
-	final public void initTerrain(Terrain terrain){
+	final public static void initTerrain(Terrain terrain){
 		Personnage.terrain = terrain; 
 	}
 	
@@ -160,25 +159,7 @@ public abstract class Personnage{
 		return this.direction;
 	}
 	
-	/**
-	 * @return dans les parametres la case devant le Personnage selon sa direction actuelle
-	 * @author malek
-	 * @param d
-	 * @param x
-	 * @param y
-	 */
-	/*
-	public Coordonnees positionDevant(){
-		Coordonnees coord = new Coordonnees(0,0);
-		switch (this.direction){
-		case haut : coord.x=this.getCoord().x; coord.y=this.getCoord().y-1;   break;
-		case bas : coord.x=this.getCoord().x; coord.y=this.getCoord().y+1;    break;
-		case gauche : coord.x=this.getCoord().x-1; coord.y=this.getCoord().y; break;
-		case droite : coord.x=this.getCoord().x+1; coord.y=this.getCoord().y; break;
-		}
-		return coord;
-	}
-	*/
+
 
 	/**
 	 * @return dans les parametres la case devant le Personnage selon sa direction
@@ -207,7 +188,7 @@ public abstract class Personnage{
 					}
 				}else{
 					if (terrain.getCase(i, j).isAccessable()){
-						res += " ";
+						res += "-";
 					} else {
 						res += "X";
 					}

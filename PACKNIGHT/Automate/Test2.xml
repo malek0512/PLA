@@ -1,47 +1,20 @@
-<?xml version ="1.0"?>
-<Automate ID="Fontôme_bete" >
-  <Etats_Initiaux>
-  
-    <Etat Nom="0">
-      <Transition Entree = "int" Etat="int" >
-	</Transition>
-      <Transition Entree = "int" Etat="int" >
-	</Transition>
-    </Etat>
-  
-  </Etats_Initiaux>
-  
-  
-  
-  <Etat Nom="1" Action="1" >
-    <Transition Entree = "1" Etat="1" >
-      </Transition>
-    <Transition Entree = "1" Etat="1" >
-      </Transition>
-  </Etat>
-  
-  <Etat Nom="Initiale" Action="">
-    <Transition Entree = "" Etat="1" >
-      </Transition>
-    <Transition Entree = "" Etat="1" >
-      </Transition>
-  </Etat>
+<?xml version = "1.0" ?>
+<Automate ID= "Fontome" > 
 
-  <Etat Nom="Final" Action="" >
-    <Transition Entree = "" Etat="1" >
-      </Transition>
-    <Transition Entree = "" Etat="1" >
-      </Transition>
-  </Etat>
-  
-  <Etats_Finals>
-  
-    <Etat Nom="Initiale" Action="Cherche">
-      <Transition Entree = "int" Etat="int" >
-	</Transition>
-      <Transition Entree = "int" Etat="int" >
-	</Transition>
-    </Etat>
-  
-  </Etats_Finals>
-</Automate>
+<Etat Nom= "0" > 
+ <Transition Entree= "0" Etat= "0" Action = "0" > </Transition> 
+ <Transition Entree= "2" Etat= "1" Action = "2" > </Transition> 
+</Etat> 
+
+<Etat Nom= "1" > 
+ <Transition Entree= "2" Etat= "1" Action = "2" > </Transition> 
+</Etat> 
+
+<Etats_Finals>
+  <Etat Nom= "1" > 
+    </Etat> 
+</Etats_Finals> 
+
+
+
+</Automate> 

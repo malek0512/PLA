@@ -30,6 +30,7 @@ public class Primitives {
 		}
 		return coord;
 	}
+	
 	/**
 	 * @author malek
 	 * @param coord
@@ -78,11 +79,11 @@ public class Primitives {
 	 */
 	public Coordonnees positionDevant(){
 		Coordonnees coord = new Coordonnees(0,0);
-		switch (auto.direction){
-		case haut : coord.x=this.getCoord().x; coord.y=this.getCoord().y-1;   break;
-		case bas : coord.x=this.getCoord().x; coord.y=this.getCoord().y+1;    break;
-		case gauche : coord.x=this.getCoord().x-1; coord.y=this.getCoord().y; break;
-		case droite : coord.x=this.getCoord().x+1; coord.y=this.getCoord().y; break;
+		switch (auto.getPersonnage().getOrientation()){
+		case haut : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y-1;   break;
+		case bas : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y+1;    break;
+		case gauche : coord.x=this.auto.getPersonnage().getCoord().x-1; coord.y=this.auto.getPersonnage().getCoord().y; break;
+		case droite : coord.x=this.auto.getPersonnage().getCoord().x+1; coord.y=this.auto.getPersonnage().getCoord().y; break;
 		}
 		return coord;
 	}
