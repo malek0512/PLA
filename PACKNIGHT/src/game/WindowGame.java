@@ -31,7 +31,7 @@ public class WindowGame extends BasicGame {
 
 
 	public WindowGame() {
-        super("Lesson 1 :: WindowGame");
+        super("PACKNIGHT : THE RETURN");
     }
 
     public void init(GameContainer container) throws SlickException {
