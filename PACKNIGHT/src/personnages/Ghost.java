@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 
-import personnages.SmartGhost.AvisDeRecherche;
 import structure_terrain.Terrain;
 
 //ajouter le fichier "personnages.SmartGhost.AvisDeRecherche" svp, il a pas était "git add"
