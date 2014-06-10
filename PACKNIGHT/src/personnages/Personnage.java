@@ -15,23 +15,15 @@ import structure_terrain.*;
 
 public abstract class Personnage{
 
-<<<<<<< HEAD
-	
 	static public List<Personnage> liste = new LinkedList<Personnage>();
 	
-=======
 	protected static Terrain terrain;
 
->>>>>>> bc01fc8697d9149c5b7b37bb696771737262c784
 	/**
 	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
 	 * @author malek
 	 */
-<<<<<<< HEAD
 	static public void initTerrain(Terrain terrain){
-=======
-	final public static void initTerrain(Terrain terrain){
->>>>>>> bc01fc8697d9149c5b7b37bb696771737262c784
 		Personnage.terrain = terrain; 
 	}
 	
@@ -66,7 +58,6 @@ public abstract class Personnage{
 		return null;
 	}
 	
-	protected static Terrain terrain;
 	protected String nom;
 	protected Coordonnees coord;
 	protected Direction direction;

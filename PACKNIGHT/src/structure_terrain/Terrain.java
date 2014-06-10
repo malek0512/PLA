@@ -27,7 +27,7 @@ public abstract class Terrain {
 		this.largeur = largeur;
 		for(int i=0; i<hauteur; i++){
 			for(int j=0; j<largeur; j++){
-				this.terrain[i][j] = new Case(true) ;
+				this.terrain[i][j] = new Case(1) ;
 			}
 		}
 	}

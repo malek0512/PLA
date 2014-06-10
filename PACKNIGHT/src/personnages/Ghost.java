@@ -4,7 +4,6 @@ import java.util.List;
 
 import java.util.Map;
 
-
 //ajouter le fichier "personnages.SmartGhost.AvisDeRecherche" svp, il a pas était "git add"
 //merci par avance
 //Misterious Guy
