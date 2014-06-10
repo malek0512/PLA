@@ -33,11 +33,6 @@ public class WindowGame extends BasicGame {
 
 	PacKnight pacman = new PacKnight("j1",1,1,Direction.haut);
 	
-	private CoordonneesFloat pixelHautDroite(Coordonnees cord)
-	{
-		return new CoordonneesFloat(cord.x, cord.y);
-	}
-	
 	public WindowGame() {
         super("Lesson 1 :: WindowGame");
     }
