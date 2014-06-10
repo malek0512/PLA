@@ -6,6 +6,7 @@ package structure_terrain;
 
 import structure_terrain.Case;
 import personnages.Coordonnees;
+import personnages.CoordonneesFloat;
 import personnages.Direction;
 
 
@@ -120,5 +121,4 @@ public abstract class Terrain {
 		}
 		return null;
 	}
-	
 }

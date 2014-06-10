@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Pacman extends Personnage {
-	
+
 	/**
 	 * liste des pacmans sur le terrain
 	 */
