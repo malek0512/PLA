@@ -23,7 +23,7 @@ public class TestRobot2 {
 		Terrain terrain = new TerrainTest1(5, 5);
 		Personnage.initTerrain(terrain);
 		//a.setPersonnage(PM);
-		while ( a.getEntree() != Automate.SORTIE_TERRAIN || !a.isEtatFinal()){
+		while ( /*a.getEntree() != Automate.SORTIE_TERRAIN ||*/ !a.isEtatFinal()){
 			
 			System.out.println(PM.toString());
 			System.out.println(a.infoAutomate());
