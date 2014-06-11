@@ -63,12 +63,7 @@ public class Primitives {
 	protected boolean caseEstPM(CoordonneesFloat cord){
 		return Pacman.personnagePresent(cord);
 	}
-	
-	
-	// TODO 
-	//TODO
-	//TODO
-	//TODO
+
 	/**
 	 * @param position : coordonner du fantome
 	 * @param rayon : rayon de vision du Fantome a la position donnée
@@ -89,7 +84,7 @@ public class Primitives {
 	}
 	
 	/**
-	 * @param position : coordonner du fantome
+	 * @param position : coordonnees du fantome
 	 * @return vrai si un pacman est dans la croix et qu'il n'y a pas de mur entre les deux
 	 * @author rama/vivien
 	 */
