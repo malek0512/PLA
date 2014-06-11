@@ -19,40 +19,10 @@ import structure_terrain.*;
 
 public abstract class Personnage{
 
-	static public List<Personnage> liste = new LinkedList<Personnage>();
-	
+	protected static float tauxDeDeplacement = (float) 0.2; //la taille du deplacement du personnage
 	protected static Terrain terrain;
 	
-	
-	/**
-	 * Pour la gestion des collision
-	 */
-	boolean estSurAxeX; //vraie si la coord x est à 0
-	boolean estSurAxeY; //vraie si la coord y est à 0
-	float coordX;
-	float coordY;
-	boolean estSurCase; //vraie si et seulement si les boolean estSurAxe(X ou Y) sont vrai
-
-	public boolean caseDevantDisponible()
-	{
-		return this.caseDisponible(this.direction);
-	}
-	
-	public boolean caseDisponible(Direction direction)
-	{
-		if (estSurCase)
-		{
-			return Personnage.terrain.getCase(this.coord, direction).isAccessable();
-		}
-		else if(direction == Direction.haut || direction == Direction.bas)
-		{
-			return !(estSurAxeY); 
-		}
-		else
-		{
-			return !(estSurAxeX);
-		}
-	}
+	public static List<Personnage> liste = new LinkedList<Personnage>();
 	
 	/**
 	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
@@ -62,16 +32,21 @@ public abstract class Personnage{
 		Personnage.terrain = terrain; 
 	}
 	
+	//get terrain
+	public static Terrain getTerrain() {
+		return terrain;
+	}
+	
 	/**
 	 * @param position ou on veut savoir si un personnage si trouve
 	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
 	 */
-	static public boolean personnagePresent(Coordonnees position)
+	static public boolean personnagePresent(CoordonneesFloat position)
 	{
 		Iterator<Personnage> i= Personnage.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coord))
+			if(position.equals(i.next().coordFloat))
 				return true;
 		}
 		return false;
@@ -87,60 +62,63 @@ public abstract class Personnage{
 		while(i.hasNext())
 		{
 			Personnage p = i.next();
-			if(position.equals(p.coord))
+			if(position.equals(p.coordFloat))
 				return p;
 		}
 		return null;
 	}
 	
+	/**
+	 * Pour la gestion des collision
+	 */
+	boolean estSurAxeX; //vraie si la coord x est à 0
+	boolean estSurAxeY; //vraie si la coord y est à 0
+	protected CoordonneesFloat coordFloat;
+	boolean estSurCase; //vraie si et seulement si les boolean estSurAxe(X ou Y) sont vrai
 	protected String nom;
-	protected Coordonnees coord;
+	// protected Coordonnees coord; a supprimer
 	protected Direction direction;
-	
-	//protected boolean automatise; Si controleur c instanceof iu alors non automatisé sinon automatisé
-	//protected Controleur c;
 	
 	/**
 	 * Donne un nom, une poisition et une direction au personnage
+	 * Ajoute le personnage a la liste des perso
 	 * @author malek
 	 */
-	public Personnage(String nom, int x, int y, Direction d){
+	public Personnage(String nom, float x, float y, Direction d){
 		this.nom = new String(nom);
-		this.setCoord(new Coordonnees(x,y));
+		this.setCoord(new CoordonneesFloat(x,y));
 		this.direction = d;
 		Personnage.liste.add(this);
 	}
 	
-//	public void insererAutomate(Automate a){
-//		this.c = a;
-//	}
-	
 	/**
-	 * Test si le personnage peut avancer
+	 * renvoie vrai si la case devant this est disponible
 	 * author : alex
 	 */
-	public boolean peutAvancer()
+	public boolean caseDevantDisponible()
 	{
-		switch(this.direction)
-		{
-		case droite :
-			return Personnage.terrain.getCase(coord.x+1, coord.y).isAccessable();
-			
-		case gauche :
-			return Personnage.terrain.getCase(coord.x-1, coord.y).isAccessable();
-			
-		case haut :
-			return Personnage.terrain.getCase(coord.x, coord.y+1).isAccessable();
-			
-		case bas :
-			return Personnage.terrain.getCase(coord.x, coord.y-1).isAccessable();
-		default :
-			return false; //pour eviter des erreurs de compile...
-		}
+		return this.caseDisponible(this.direction);
+	}
+	
+	/**
+	 * renvoie vraie si la case dans la direction de this est disponible
+	 * @param direction : la direction ou on veut regarder les disponibiliter
+	 * @return
+	 * author : alex
+	 */
+	public boolean caseDisponible(Direction direction)
+	{
+		if (estSurCase)
+			return Personnage.terrain.getCase(this.coordFloat.intoInt(), direction).isAccessable();
+		else if(direction == Direction.haut || direction == Direction.bas)
+			return !(estSurAxeY); 
+		else
+			return !(estSurAxeX);
 	}
 	
 	/**
 	 * Primitive avancer
+	 * @require : this.caseDevantDisponible() == true
 	 * author : alex
 	 */
 	public void avancer()
@@ -148,31 +126,17 @@ public abstract class Personnage{
 		switch(this.direction)
 		{
 		case droite :
-			if(this.coord.x==terrain.getLargeur()-1)
-				coord.x = 0 ;
-			else
-				coord.x++;
+			this.coordFloat.x += tauxDeDeplacement;
 			break;
-			
 		case gauche :
-			if(this.coord.x==0)
-				coord.x = terrain.getLargeur()-1;
-			else
-				coord.x--;
+			this.coordFloat.x -= tauxDeDeplacement;
 			break;
-			
 		case haut :
-			if(this.coord.y==terrain.getHauteur()-1)
-				coord.y = 0;
-			else
-				coord.y++;
+			this.coordFloat.y += tauxDeDeplacement;
 			break;
 			
 		case bas :
-			if(this.coord.y==0)
-				coord.y = terrain.getHauteur()-1;
-			else
-				coord.y--;
+			this.coordFloat.y -= tauxDeDeplacement;
 			break;
 			
 		default :
@@ -209,21 +173,24 @@ public abstract class Personnage{
 		this.direction = direction;
 	}
 	
-	/**
-	 * setter coord
-	 */
-	public void positionner(Coordonnees coord){
-		coord.x = this.coord.x;
-		coord.y = this.coord.y;
+	
+	//setter de base
+	public void setCoord(CoordonneesFloat coord) {
+		this.coordFloat = coord;
 	}
 	
-	/**
-	 * getter coord
-	 */
-	public Coordonnees position(){
-		return new Coordonnees(this.getCoord());
+	//setter de base
+	public void setCoord(float x, float y) {
+		this.coordFloat.x = x;
+		this.coordFloat.y = y;
 	}
-
+	
+	
+	//getter de base
+	public CoordonneesFloat getCoord() {
+		return coordFloat;
+	}
+	
 	/**
 	 * @return la direction du Personnage
 	 * @author malek
@@ -233,16 +200,6 @@ public abstract class Personnage{
 	}
 	
 
-
-	/**
-	 * @return dans les parametres la case devant le Personnage selon sa direction
-	 * @author malek
-	 */
-	/*
-	public boolean isAutomatised(){
-		return (c instanceof Automate);
-	}
-	*/
 	
 	/**
 	 * @return String contenant le terrain et le personnage
@@ -273,14 +230,5 @@ public abstract class Personnage{
 		return res;
 	}
 
-	public Coordonnees getCoord() {
-		return coord;
-	}
 
-	public void setCoord(Coordonnees coord) {
-		this.coord = coord;
-	}
-	public static Terrain getTerrain() {
-		return terrain;
-	}
 }

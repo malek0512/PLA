@@ -15,17 +15,16 @@ public class PacKnight extends Pacman{
 	static public List<PacKnight> liste = new LinkedList<PacKnight>();
 	static int vie = 10;
 	
-	
 	/**
 	 * @param position ou on veut savoir si un personnage si trouve
 	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
 	 */
-	static public boolean personnagePresent(Coordonnees position)
+	static public boolean personnagePresent(CoordonneesFloat position)
 	{
 		Iterator<PacKnight> i= PacKnight.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coord))
+			if(position.equals(i.next().coordFloat))
 				return true;
 		}
 		return false;
@@ -35,20 +34,20 @@ public class PacKnight extends Pacman{
 	 * @param position a tester
 	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null
 	 */
-	static public PacKnight personnageReference(Coordonnees position)
+	static public PacKnight personnageReference(CoordonneesFloat position)
 	{
 		Iterator<PacKnight> i=PacKnight.liste.iterator();
 		while(i.hasNext())
 		{
 			PacKnight p = i.next();
-			if(position.equals(p.coord))
+			if(position.equals(p.coordFloat))
 				return p;
 		}
 		return null;
 	}
 	
 	
-	public PacKnight(String name, int x, int y, Direction d) {
+	public PacKnight(String name, float x, float y, Direction d) {
 		super(name,x,y,d);
 		PacKnight.liste.add(this);
 	}
