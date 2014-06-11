@@ -46,6 +46,7 @@ public class CoordonneesFloat {
 	
 	/**
 	 * renvoie les coordonne casté en int
+	 * @require : les coordones de this doivent avoir leur partie decimal a 0 !!!
 	 * @author alex
 	 */
 	public Coordonnees intoInt()

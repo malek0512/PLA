@@ -15,23 +15,26 @@ public class Primitives {
 	Automate auto;
 	
 	/**
+	 * TODO : a move dans Terrain
+	 * ATTENTION : ceci ne fontcionne que pour des coordonnée de TERRAIN et non de PERSONNAGE
 	 * @author malek
-	 * @param c
-	 * @param d
+	 * @param cord : coordone du la case
+	 * @param dest : orientation de la case voisine a retourner
 	 * @return
 	 */
-	protected Coordonnees getCase(Coordonnees c, Direction d){
-		Coordonnees coord = new Coordonnees(c);
-		switch (d){
-		case haut :   coord.y--;  break;
-		case bas :    coord.y++;   break;
-		case gauche : coord.x--;  break;
-		case droite : coord.x++;   break;
+	protected Coordonnees getCase(Coordonnees cord, Direction dest){
+		Coordonnees newCoord = new Coordonnees(cord);
+		switch (dest){
+		case haut :   newCoord.y--;  break;
+		case bas :    newCoord.y++;   break;
+		case gauche : newCoord.x--;  break;
+		case droite : newCoord.x++;   break;
 		}
-		return coord;
+		return newCoord;
 	}
 	
 	/**
+	 * TODO : a move dans terrain
 	 * @author malek
 	 * @param coord
 	 * @return vraie si les coordonnée sont hors du terrain, faux sinon
@@ -51,23 +54,27 @@ public class Primitives {
 
 
 	/**
+	 * TODO : a move dans PacMan
+	 * Test si un objet est en contact d'un pacman
 	 * author : alex
-	 * @param c : coordonée du point a tester
+	 * @param cord : coordonée de l'objet a tester
 	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquer
-	 * 
-	 * remarque : peut etre la supprimer, et faire directement le test ^^
 	 */
-	protected boolean caseEstPM(Coordonnees c){
-		return Pacman.personnagePresent(c);
+	protected boolean caseEstPM(CoordonneesFloat cord){
+		return Pacman.personnagePresent(cord);
 	}
 	
 	
+	// TODO 
+	//TODO
+	//TODO
+	//TODO
 	/**
 	 * @param position : coordonner du fantome
 	 * @param rayon : rayon de vision du Fantome a la position donnée
 	 * @return la liste des pacman de le champ de vision
 	 */
-	protected List<Pacman> pacmanEstDansRayon(Coordonnees position, int rayon) {
+	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position, int rayon) {
 		List<Pacman> res = new LinkedList<Pacman>();
 
 		int someXYSource = position.sommmeXY();
@@ -144,6 +151,7 @@ public class Primitives {
 		}
 		return res;
 	}
+	
 	/**
 	 * @param coord Corrdonnees de la case à tester si présence d'un mur
 	 * @return boolean Vrai si il y a un mur faux sinon
