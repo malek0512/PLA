@@ -148,20 +148,6 @@ public abstract class Personnage{
 		}
 	}
 
-
-	/**
-	 * Avance Betement
-	 * @author malek
-	 */
-	public void avancerBetement(){
-		switch (this.direction){
-		case haut : this.getCoord().y--;  break;
-		case bas : this.getCoord().y++;   break;
-		case gauche : this.getCoord().x--;  break;
-		case droite : this.getCoord().x++;   break;
-		}
-	}
-
 	/**
 	 * gere la colision en fonction de sa position
 	 * author : alex

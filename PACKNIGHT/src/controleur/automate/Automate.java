@@ -134,6 +134,7 @@ public class Automate extends Controleur {
 		case Automate.GAUCHE: personnage.setDirection(Direction.gauche); break;
 		case Automate.HAUT: personnage.setDirection(Direction.haut); break;
 		case Automate.BAS: personnage.setDirection(Direction.bas); break;
+		case Automate.DIRECTION_ALEATOIRE: personnage.setDirectionAleatoire(); break;
 		
 		
 		}
