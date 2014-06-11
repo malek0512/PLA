@@ -33,6 +33,11 @@ public abstract class Personnage{
 	float coordY;
 	boolean estSurCase; //vraie si et seulement si les boolean estSurAxe(X ou Y) sont vrai
 
+	public boolean caseDevantDisponible()
+	{
+		return this.caseDisponible(this.direction);
+	}
+	
 	public boolean caseDisponible(Direction direction)
 	{
 		if (estSurCase)

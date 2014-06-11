@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import personnages.*;
-import structure_terrain.Case;
 
 /**
  * Classe contenant l'ensemble de fonction intermedaire permettant l'elaboration des primitives 
@@ -84,42 +83,78 @@ public class Primitives {
 	
 	/**
 	 * @param position : coordonner du fantome
-	 * @param rayon : rayon de vision du Fantome a la position donnée
-	 * @return la liste des pacman de le champ de vision
-	 * @author rama
+	 * @return vrai si un pacman est dans la croix et qu'il n'y a pas de mur entre les deux
+	 * @author rama/vivien
 	 */
 	protected boolean pacmanEstDansCroix(Coordonnees position) {
 		Coordonnees test=position;
+		boolean res=false;
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
 			Pacman pac = i.next();
 			Coordonnees cord = pac.position();
+			Coordonnees temp= position;
 			if(cord.x == position.x){
 				if (cord.y<position.y){
-					while(!mur()||cord.y == test.y){
+					while(!mur(temp) && cord.y != test.y){
+						test.y--;
+						temp.y=test.y;
+					}
+					if(!mur(temp)){
+						auto.getPersonnage().setDirection(Direction.haut);
+						return true;
 						
 					}
-						
+				}
+				else {
+					while(!mur(temp) && cord.y != test.y){
+					test.y++;
+					temp.y=test.y;
+					}
+					if(!mur(temp)){
+						auto.getPersonnage().setDirection(Direction.bas);
+						return true;
+					}
 				}
 				
 			}
-			if(cord.y == position.y){
-				return true;
-			}
+			else if(cord.y == position.y){
+					if (cord.x<position.x){
+						while(!mur(temp) && cord.x != test.x){
+							test.x--;
+							temp.x=test.x;
+						}
+						if(!mur(temp)){
+							auto.getPersonnage().setDirection(Direction.gauche);
+							return true;
+						}
+					}
 				
+					else {
+						while(!mur(temp) && cord.x != test.x){
+							test.x++;
+							temp.x=test.x;
+						}
+						if(!mur(temp)){
+							auto.getPersonnage().setDirection(Direction.droite);
+							return true;
+						}
+					}
+				}	
 		}
-		return false;
+		return res;
 	}
-	private boolean mur() {
-		return false;
+	/**
+	 * @param coord Corrdonnees de la case à tester si présence d'un mur
+	 * @return boolean Vrai si il y a un mur faux sinon
+	 * @author vivien*/
+	public boolean mur(Coordonnees coord) {
+		boolean res=true;
+		if (Personnage.getTerrain().getCase(coord.x,coord.y).isAccessable())
+			res=false;
+		return res;
 	}
 	
-	private void estIntersection(){
-		
-	}
-	
-	
-
 	/**
 	 * @return dans les parametres la case devant le Personnage selon sa direction actuelle
 	 * @author malek
