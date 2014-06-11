@@ -141,8 +141,8 @@ public class Primitives {
 	 * @param x
 	 * @param y
 	 */
-	public Coordonnees positionDevant(){
-		Coordonnees coord = new Coordonnees(0,0);
+	public CoordonneesFloat positionDevant(){
+		CoordonneesFloat coord = new CoordonneesFloat(0,0);
 		switch (auto.getPersonnage().getOrientation()){
 		case haut : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y-1;   break;
 		case bas : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y+1;    break;
@@ -150,6 +150,18 @@ public class Primitives {
 		case droite : coord.x=this.auto.getPersonnage().getCoord().x+1; coord.y=this.auto.getPersonnage().getCoord().y; break;
 		}
 		return coord;
+	}
+	/**Pas merci ! :)
+	 * @return Vrai si la case est une intersection
+	 */
+	public boolean estIntersection(CoordonneesFloat coord){
+		int n=0;
+
+		for(Direction d : Direction.values())
+			if(this.auto.getPersonnage().caseDisponible(d))
+				n++;
+		
+		return n>2;
 	}
 	
 }

@@ -21,7 +21,7 @@ public abstract class Personnage{
 
 	protected static float tauxDeDeplacement = (float) 0.2; //la taille du deplacement du personnage
 	protected static Terrain terrain;
-	
+
 	public static List<Personnage> liste = new LinkedList<Personnage>();
 	
 	/**
@@ -82,7 +82,7 @@ public abstract class Personnage{
 	protected String nom;
 	// protected Coordonnees coord; a supprimer
 	protected Direction direction;
-	
+	protected boolean vivant;
 	/**
 	 * Donne un nom, une poisition et une direction au personnage
 	 * Ajoute le personnage a la liste des perso
