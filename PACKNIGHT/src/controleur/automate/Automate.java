@@ -13,14 +13,12 @@ import personnages.Direction;
 import personnages.Personnage;
 
 /**
- * Toute primitive de test doit etre ajoutée dans cette classe, et se voit attribuée, une constante en public.
+ * Toute primitive de test doit etre ajoutée dans PrimitivesTest, et se voit attribuée, une constante en public, ci dessous.
  * Une fois ajoutée en fin de fichier: 
  * 		* Ajouter un "case CONSTANTE : le_nom_de_votre_fct();" (dans la fonction getEntree())
  * 		* Ajouter un "case CONSTANTE : le_nom_de_votre_fct_action();" (dans la fonction suivant())
- * Toute primitive de sortie (d'action), se voit aussi attribué une constante en public, comme ci-dessous.
- * Un automate dispose de toute les fonctions (primitive) de test, renseigné ci dessous. Cependant les primitives
- * d'action (sortie) sont renseigné dans le personnage. Puisque tous les personnage ne possèdent pas les mêmes 
- * facultés. 
+ * Toute primitive de sortie (d'action) est ajoutée dans PrimitivesAction , se voit aussi attribué une constante en public, comme ci-dessous.
+ * Un automate dispose de toute les fonctions (primitive) de test, renseigné ci dessous. 
  * @author malek
  */
 public class Automate extends Controleur {
@@ -56,12 +54,13 @@ public class Automate extends Controleur {
 	
 	private int etatCourant;
 	private int nbEtat;
-	private int nbEntree;
-	private int nbSortie;
+//	private int nbEntree;
+//	private int nbSortie;
 	private int nbTransition;
 //	private int nbTransitionMax;
 	private int etatInitial;
 	private List<Integer>etatsFinals;
+	private List<Integer>etatsBloquants;
 	
 	/*
 	 * Prend un fichier XML et remplie les attributs de l'automate
@@ -72,14 +71,9 @@ public class Automate extends Controleur {
 		Parser parser = new Parser(fichierXML);
 		
 		ArrayList<List<Quad>> liste = parser.parseTableau();
+		etatInitial = parser.parseEtatInitiale();
 		etatsFinals = parser.parseEtatFinal();
-//		for(List<Quad> n : liste){
-//			for(Quad q : n){
-//				System.out.println("Entree " + q.Entree + " ETSUIV " + q.EtatSuiv +" Sortie " + q.Sortie);
-//			}
-//		}
-//		System.out.println(liste);
-		
+		etatsBloquants = parser.parseEtatBloquant();
 		//Initialisations des attributs
 		this.nbEtat  = liste.size();
 //		this.nbTransition = 0;
@@ -123,7 +117,7 @@ public class Automate extends Controleur {
 	public void suivant() throws Exception {
 		int entreeAutomate = getEntree();
 		int sortieAutomate = effectuerTransition(entreeAutomate);
-		System.out.println(nbEntreeValide());
+//		System.out.println(nbEntreeValide());
 		switch (sortieAutomate) {
 		//TODO Ajouter chaque fonction d'action
 		case Automate.AVANCER: personnage.avancer(); break;
@@ -159,7 +153,7 @@ public class Automate extends Controleur {
 	 */ 
 	public int getEntree() throws Exception{
 		Map<Integer, Triplet> entries = tableTransitionSortie.getEtatAll(this.etatCourant);
-		//On parcout l'ensemble des Entree de l'automate, de l'etatCourant
+		//On parcours l'ensemble des Entree de l'automate, de l'etatCourant
 		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
 			Integer Entree = key.next();
 			//if ( entries.get(Entree).ok ){
@@ -176,7 +170,14 @@ public class Automate extends Controleur {
 			//	}
 			}
 		}
-		throw new Exception("Erreur dans l'automate. L'etat courant ne possède aucune entree valide");
+		
+		//Affichage des ENTREES dans le cas où : Aucune entree n'est valide  
+		String Erreur = "C'est l'ETAT " + this.etatCourant + ", voici toutes mes ENTREES : ";
+		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
+			Integer Entree = key.next(); Erreur += Entree.intValue();
+		}
+		System.out.println(Erreur);
+		throw new Exception("Erreur dans l'automate. L'etat courant ne possède aucune entree valide. Manque t-il une transition ?");
 	}
 
 	/**
