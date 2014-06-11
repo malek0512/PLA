@@ -46,11 +46,21 @@ public class CoordonneesFloat {
 	
 	/**
 	 * renvoie les coordonne casté en int
+	 * @require : les coordones de this doivent avoir leur partie decimal a 0 !!!
 	 * @author alex
 	 */
 	public Coordonnees intoInt()
 	{
 		return new Coordonnees((int) x, (int) y);
+	}
+	
+	/**
+	 * renvoie la somme des composantes
+	 * author : alex
+	 */
+	public float sommeXY()
+	{
+		return this.x + this.y;
 	}
 }
 
