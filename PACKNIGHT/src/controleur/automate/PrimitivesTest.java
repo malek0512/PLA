@@ -52,4 +52,23 @@ public class PrimitivesTest extends Primitives {
 			return Automate.CASE_OCCUPEE;
 		}
 	}
+	public boolean estIntersection(Coordonnees coord){
+		int n=0;
+		Coordonnees tmp=coord;
+		if(Personnage.getTerrain().getCase(tmp.x+1,tmp.y).isAccessable()){
+			n++;
+		}
+		if(Personnage.getTerrain().getCase(tmp.x-1,tmp.y).isAccessable()){
+			n++;
+		}
+		if(Personnage.getTerrain().getCase(tmp.x,tmp.y+1).isAccessable()){
+			n++;
+		}
+		if(Personnage.getTerrain().getCase(tmp.x,tmp.y+1).isAccessable()){
+			n++;
+		}
+		return n>2;
+		
+	}
+	
 }
