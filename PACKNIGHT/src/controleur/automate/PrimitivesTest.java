@@ -1,10 +1,9 @@
 package controleur.automate;
 
-import java.util.LinkedList;
-import java.util.List;
 
 import personnages.Coordonnees;
-import personnages.Personnage;
+import personnages.Direction;
+import personnages.Pacman;
 
 /**
  * Classe contenant l'ensemble des primitives de test 
@@ -12,7 +11,7 @@ import personnages.Personnage;
  */
 public class PrimitivesTest extends Primitives {
 
-	
+	//TODO renseigner la doc, bien que petite
 	public PrimitivesTest(Automate a) {
 		super();
 		this.auto = a;
@@ -24,13 +23,9 @@ public class PrimitivesTest extends Primitives {
 	 * @return -1 si PM pas dans un cercle de rayon R, Automate.PM_DANS_RAYON_X sinon 
 	 */
 	protected int dansRayon(int rayon) {
-		Coordonnees position = auto.getPersonnage().position();
-		List<Coordonnees> liste = new LinkedList<>();
-		dansRayon(position, liste, rayon);
-		for(int i=0; i<liste.size(); i++)
-			if(this.caseEstPM(liste.get(i))){
-				return Automate.PM_DANS_RAYON_X;
-			}
+		
+		if (Pacman.personnagePresent(auto.getPersonnage().getCoord()))
+			return Automate.PM_DANS_RAYON_X;
 		return -1;
 	}
 	
@@ -39,17 +34,28 @@ public class PrimitivesTest extends Primitives {
 	 * @author malek
 	 */
 	public int configCaseDevant() {
-		Coordonnees caseDevant = positionDevant();
-		if (caseDevant.x < 0
-				|| caseDevant.x > Personnage.getTerrain().getLargeur() - 1
-				|| caseDevant.y < 0
-				|| caseDevant.y > Personnage.getTerrain().getHauteur() - 1) {
-			return Automate.SORTIE_TERRAIN;
-		} else if (Personnage.getTerrain().getCase(auto.getPersonnage().getCoord().x, 
-				auto.getPersonnage().getCoord().y).isAccessable()) {
-			return Automate.CASE_LIBRE;
-		} else {
+		boolean caseDevantDispo = this.auto.getPersonnage().caseDevantDisponible();
+		if (!caseDevantDispo)
 			return Automate.CASE_OCCUPEE;
-		}
+		else
+			return Automate.CASE_LIBRE;
 	}
+	
+	// TODO : RENSEIGNER LA DOC
+	// TODO : metre un merci pour mysterious guy pour avoir reduit le programme a 3 ligne de code 
+	public boolean estIntersection(Coordonnees coord){
+		int n=0;
+
+		for(Direction d : Direction.values())
+			if(this.auto.getPersonnage().caseDisponible(d))
+				n++;
+		
+		return n>2;
+	}
+
+	//I mean rly ?
+	public boolean dansCroix(){
+		return pacmanEstDansCroix(auto.getPersonnage().getCoord().intoInt());
+	}
+	
 }

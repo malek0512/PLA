@@ -1,10 +1,10 @@
 package controleur.automate;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
-import personnages.Coordonnees;
-import personnages.Direction;
-import structure_terrain.Case;
+import personnages.*;
 
 /**
  * Classe contenant l'ensemble de fonction intermedaire permettant l'elaboration des primitives 
@@ -15,59 +15,136 @@ public class Primitives {
 	Automate auto;
 	
 	/**
-	 * @author malek
-	 * @param c
-	 * @param d
-	 * @return
+	 * RIP : getCase
+	 * a était move dans Terrain
 	 */
-	protected Coordonnees getCase(Coordonnees c, Direction d){
-		Coordonnees coord = new Coordonnees(c);
-		switch (d){
-		case haut :   coord.y--;  break;
-		case bas :    coord.y++;   break;
-		case gauche : coord.x--;  break;
-		case droite : coord.x++;   break;
-		}
-		return coord;
-	}
+
+	/**
+	 * RIP : estDansLeTerrain
+	 * deplacer dans Terrain
+	 */
 	
 	/**
-	 * @author malek
-	 * @param coord
-	 * @return
+	 * TODO : a move dans PacMan
+	 * Test si un objet est en contact d'un pacman
+	 * author : alex
+	 * @param cord : coordonée de l'objet a tester
+	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquer
 	 */
-	protected boolean estDansLeTerrain(Coordonnees coord){
-		return (coord.x < 0
-		|| coord.x > auto.getPersonnage().getTerrain().getLargeur() - 1
-		|| coord.y < 0
-		|| coord.y > auto.getPersonnage().getTerrain().getHauteur() - 1);
+	protected boolean caseEstPM(CoordonneesFloat cord){
+		return Pacman.personnagePresent(cord);
 	}
 
-	//Fonction non au point, attendre que case soit un objet PM ou GHOST
-	//Il faudra pour cela maj la valeur qd le robot est initialiser et se deplace
-	protected boolean caseEstPM(Coordonnees c){
-		return ((auto.getPersonnage().getTerrain().getCase(c.y, c.x)) instanceof Case); //instanceof GHOST;
+	/**
+	 * @param position : coordonner du fantome
+	 * @param rayon : rayon de vision du Fantome a la position donnée
+	 * @return la liste des pacman de le champ de vision
+	 */
+	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position, float rayon) {
+		List<Pacman> res = new LinkedList<Pacman>();
+
+		float someXYSource = position.sommeXY();
+		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
+		{
+			Pacman pac = i.next();
+			float someXYTester = i.next().getCoord().sommeXY();
+			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
+				res.add(pac);
+		}
+		return res;
 	}
 	
 	/**
-	 * Fonction recursive qui renvoie toute les coordonnees voisine dans un certain cercle de rayon R
-	 * @require La liste des coordonnees en parametre != NULL 
-	 * @author malek
+	 * TODO : regler les problème après avoir changer mur() de preference
+	 * ATTENTION : les coordonée étant desormais en float, on ne peut plus comparer
+	 * les valeurs et mettre un equal
+	 * Dans le sens ou un pac-man peut etre a la coordonée : (2,3 ; 4,4)
+	 * Il faudrais plutot tester si il est dans l'intervalle : ([2,3] ; [4,5])
+	 * et non pas si les coordonné sont parfaitement egales
+	 * mysterious guy
+	 * 
+	 * @param position : coordonner du fantome
+	 * @return vrai si un pacman est dans la croix et qu'il n'y a pas de mur entre les deux
+	 * @author rama/vivien
 	 */
-	protected void dansRayon(Coordonnees position, List<Coordonnees> l, int rayon) {
-		if (rayon>=1){
-			Coordonnees caseNord, caseSud, caseEst, caseOuest;
-			caseNord = getCase(position, Direction.haut);
-			caseSud = getCase(position, Direction.bas);
-			caseOuest = getCase(position, Direction.gauche);
-			caseEst = getCase(position, Direction.droite);
-			//l.add(caseNord); l.add(caseSud); l.add(caseEst); l.add(caseOuest);
-			dansRayon(caseNord, l, rayon--);  l.add(caseNord);
-			dansRayon(caseSud, l, rayon--);   l.add(caseSud);
-			dansRayon(caseOuest, l, rayon--); l.add(caseOuest);
-			dansRayon(caseEst, l, rayon--);   l.add(caseEst);
-			
+	protected boolean pacmanEstDansCroix(CoordonneesFloat position) {
+		CoordonneesFloat test=position;
+		boolean res=false;
+		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
+		{
+			Pacman pac = i.next();
+			CoordonneesFloat cord = pac.getCoord();
+			CoordonneesFloat temp= position;
+			if(cord.x == position.x){
+				if (cord.y<position.y){
+					while(!mur(temp) && cord.y != test.y){
+						test.y--;
+						temp.y=test.y;
+					}
+					if(!mur(temp)){
+						auto.getPersonnage().setDirection(Direction.haut);
+						return true;
+						
+					}
+				}
+				else {
+					while(!mur(temp) && cord.y != test.y){
+					test.y++;
+					temp.y=test.y;
+					}
+					if(!mur(temp)){
+						auto.getPersonnage().setDirection(Direction.bas);
+						return true;
+					}
+				}
+				
+			}
+			else if(cord.y == position.y){
+					if (cord.x<position.x){
+						while(!mur(temp) && cord.x != test.x){
+							test.x--;
+							temp.x=test.x;
+						}
+						if(!mur(temp)){
+							auto.getPersonnage().setDirection(Direction.gauche);
+							return true;
+						}
+					}
+				
+					else {
+						while(!mur(temp) && cord.x != test.x){
+							test.x++;
+							temp.x=test.x;
+						}
+						if(!mur(temp)){
+							auto.getPersonnage().setDirection(Direction.droite);
+							return true;
+						}
+					}
+				}	
 		}
+		return res;
+	}
+	
+	/**
+	 * TODO : mauvaise utilisation je pense
+	 * Remarque : je pense qu'il faudrais utiliser d'autre fonction que celle utiliser
+	 * ci dessous, les quels je ne serais dire, mais si j'ai bien compris
+	 * cette fonction sert a savoir si un personnage peut avancer
+	 * ou non dans une direction, right ? Si oui, go voir la fonction :
+	 * "public boolean caseDisponible(Direction direction)" dans Personnage
+	 * Cordialement
+	 * Mysterious Guy
+	 * 
+	 * @param coord : Cordonnees de la case à tester si présence d'un mur
+	 * @return boolean Vrai si il y a un mur faux sinon
+	 * @author vivien
+	 * */
+	private boolean mur(Coordonnees coord) {
+		boolean res=true;
+		if (Personnage.getTerrain().getCase(coord.x,coord.y).isAccessable())
+			res=false;
+		return res;
 	}
 	
 	/**
@@ -86,5 +163,25 @@ public class Primitives {
 		case droite : coord.x=this.auto.getPersonnage().getCoord().x+1; coord.y=this.auto.getPersonnage().getCoord().y; break;
 		}
 		return coord;
+	}
+	
+	//TODO javadoc
+	public boolean estIntersection(Coordonnees coord){
+		int n=0;
+		Coordonnees tmp=coord;
+		if(Personnage.getTerrain().getCase(tmp.x+1,tmp.y).isAccessable()){
+			n++;
+		}
+		if(Personnage.getTerrain().getCase(tmp.x-1,tmp.y).isAccessable()){
+			n++;
+		}
+		if(Personnage.getTerrain().getCase(tmp.x,tmp.y+1).isAccessable()){
+			n++;
+		}
+		if(Personnage.getTerrain().getCase(tmp.x,tmp.y+1).isAccessable()){
+			n++;
+		}
+		return n>2;
+		
 	}
 }
