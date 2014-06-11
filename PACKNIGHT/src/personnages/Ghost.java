@@ -20,7 +20,8 @@ public class Ghost extends Personnage {
 	final int vision = 5;
 	private int compteurAction=4;
 
-	/**Structure qui repertorie l'ensemble des information d'un PM en fuite
+	/**
+	 * Structure qui repertorie l'ensemble des information d'un PM en fuite
 	 * */
 	public class AvisDeRecherche {
 		boolean repere, Mort;
@@ -48,5 +49,12 @@ public class Ghost extends Personnage {
 	public void gererCollision() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/**
+	 * @return Nombre d'action avancer() à effectuer pour avancer d'une case
+	 * */
+	public int getCompteurAction(){
+		return this.compteurAction;
 	}
 }

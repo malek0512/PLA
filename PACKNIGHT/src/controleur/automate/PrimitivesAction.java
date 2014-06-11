@@ -15,7 +15,7 @@ public class PrimitivesAction extends Primitives{
 		super();
 		this.auto = a;
 	}
-	/**
+	/** Rend une direction aléatoire parmis celle disponible lors de l'arrivée d'une intersection
 	 * @param personnage auquel on veut changer la direction aléatoirement
 	 * */
 	public void setDirectionAleatoire(Personnage perso){
@@ -34,6 +34,9 @@ public class PrimitivesAction extends Primitives{
 		perso.setDirection(direct[alea]);
 	}
 	
+	/** Donne la prochaine direction disponible si la prochaine case est indisponible
+	 * @param personnage auquel on veut changer la direction aléatoirement
+	 * */
 	public void prochaineDirection(Personnage perso){
 		
 		if(!perso.caseDisponible(perso.getOrientation())){
@@ -49,6 +52,7 @@ public class PrimitivesAction extends Primitives{
 		
 		
 	}
+	
 	
 
 }

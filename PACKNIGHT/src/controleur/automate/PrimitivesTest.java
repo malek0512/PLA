@@ -1,6 +1,7 @@
 package controleur.automate;
 
 
+import personnages.Ghost;
 import personnages.Pacman;
 
 /**
@@ -53,4 +54,9 @@ public class PrimitivesTest extends Primitives {
 		return pacmanEstDansCroix(auto.getPersonnage().getCoord());
 	}
 	
+	public boolean caseAtteinte(){
+		
+		return ((Ghost) auto.getPersonnage()).getCompteurAction()==0;
+
+	}
 }

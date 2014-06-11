@@ -36,6 +36,7 @@ public class Automate extends Controleur {
 	public static final int NON_PM_DANS_CROIX = 6;
 	public final static int INTERSECTION = 7;
 	public final static int NON_INTERSECTION = 8;
+	public final static int CASE_ATTEINTE=9;
 	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
 	public final static int AVANCER = 0;
@@ -47,6 +48,7 @@ public class Automate extends Controleur {
 	public final static int SUIVRE_PACMAN = 6;
 	public final static int DIRECTION_ALEATOIRE = 7;
 	public final static int PROCHAINE_DIRECTION = 8;
+	public final static int CHEMIN_PLUS_COURT=9;
 	
 	
 	
