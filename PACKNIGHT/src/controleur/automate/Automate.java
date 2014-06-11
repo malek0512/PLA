@@ -2,17 +2,13 @@ package controleur.automate;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import controleur.Controleur;
 import controleur.automate.TableTransitionSortie.Triplet;
 import src.parser.Parser;
 import src.parser.Quad;
-import personnages.Coordonnees;
 import personnages.Direction;
 import personnages.Personnage;
 
@@ -52,6 +48,7 @@ public class Automate extends Controleur {
 	public final static int RECHERCHER_PACMAN = 5;
 	public final static int SUIVRE_PACMAN = 6;
 	public final static int DIRECTION_ALEATOIRE = 7;
+	public final static int PROCHAINE_DIRECTION = 8;
 	
 	
 	
@@ -135,6 +132,7 @@ public class Automate extends Controleur {
 		case Automate.HAUT: personnage.setDirection(Direction.haut); break;
 		case Automate.BAS: personnage.setDirection(Direction.bas); break;
 		case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
+		case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
 		
 		
 		}
@@ -171,8 +169,8 @@ public class Automate extends Controleur {
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) return CASE_OCCUPEE; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
 				case PM_DANS_RAYON_X : int X=primitivesTest.dansRayon(3); if (X!=-1) return X; break;
-				case INTERSECTION: if(primitivesTest.estIntersection()) return INTERSECTION; break;
-				case NON_INTERSECTION: if(!primitivesTest.estIntersection()) return NON_INTERSECTION; break;
+				case INTERSECTION: if(primitivesTest.estIntersection(personnage.getCoord().intoInt())) return INTERSECTION; break;
+				case NON_INTERSECTION: if(!primitivesTest.estIntersection(personnage.getCoord().intoInt())) return NON_INTERSECTION; break;
 				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; else return NON_PM_DANS_CROIX;
 				case NON_PM_DANS_CROIX: if(!primitivesTest.dansCroix()) return NON_PM_DANS_CROIX;
 			//	}
