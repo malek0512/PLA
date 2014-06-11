@@ -30,7 +30,7 @@ public class WindowGame extends BasicGame {
 	public static int largueur_map = 28, hauteur_map = 31;
 	int taillePersonnage =56;
 	int zonePersonnage = 5;
-
+	Music M;
 	PacKnight pacman = new PacKnight("j1",1,1,Direction.haut);
 	
 	public WindowGame() {
@@ -51,7 +51,8 @@ public class WindowGame extends BasicGame {
         this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
         //container.setFullscreen(true);
         Music background = new Music("src/graphisme/main/ressources/music/Requiem.ogg");
-        background.loop();
+        M = background;
+        M.loop();
     }
     
 
@@ -105,6 +106,9 @@ public class WindowGame extends BasicGame {
 	    case Input.KEY_RIGHT: this.direction = 3; this.moving = true; break;
 	    case Input.KEY_ESCAPE:container.exit(); break;
 	    case Input.KEY_S:    this.direction = 0; this.moving = false; break;
+	    case Input.KEY_M: if(this.M.playing()) this.M.pause() ;else this.M.resume(); break;
+	    
+	    
 	    }
 	}
 	
