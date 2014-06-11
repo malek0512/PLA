@@ -23,17 +23,25 @@ public class PrimitivesAction extends Primitives{
 		int	alea=rnd.nextInt(4);
 		int i=0;
 		Direction[] direct=new Direction[4];
-		if(perso.caseDisponible(Direction.bas) && Direction.bas!=perso.getOrientation()){
-			direct[i]=Direction.bas;
+		
+		if(perso.caseDisponible(Direction.bas) && perso.getOrientation()!=Direction.haut){
+				direct[i]=Direction.bas;
+				i++;
+		}
+		if(perso.caseDisponible(Direction.haut) && perso.getOrientation()!=Direction.bas){
+				direct[i]=Direction.haut;
+				i++;
+		}
+		if(perso.caseDisponible(Direction.gauche) && perso.getOrientation()!=Direction.droite){
+			direct[i]=Direction.gauche;
 			i++;
 		}
-		if(perso.caseDisponible(Direction.haut)){}
-		if(perso.caseDisponible(Direction.haut)){}
-		if(perso.caseDisponible(Direction.haut)){}
-		
-		while(!perso.caseDisponible(direct[alea]) && direct[alea]==perso.getOrientation()){
-			alea=rnd.nextInt(i+1);
+		if(perso.caseDisponible(Direction.droite) && perso.getOrientation()!=Direction.gauche){
+			direct[i]=Direction.droite;
+			i++;
 		}
+		
+		alea=rnd.nextInt(i+1);
 		perso.setDirection(direct[alea]);
 	}
 
