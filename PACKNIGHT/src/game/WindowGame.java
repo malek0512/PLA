@@ -40,7 +40,7 @@ public class WindowGame extends BasicGame {
     public void init(GameContainer container) throws SlickException {
         this.container = container;
         this.map = new TiledMap("src/graphisme/main/ressources/map/PACMAN.tmx");
-        SpriteSheet spriteSheet = new SpriteSheet("src//graphisme/main/ressources/map/sprites/PACMAN-SPRITES.png", taillePersonnage, taillePersonnage);
+        SpriteSheet spriteSheet = new SpriteSheet("src/graphisme/main/ressources/map/sprites/PACMAN-SPRITES.png", taillePersonnage, taillePersonnage);
         this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
         this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
         this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
@@ -49,8 +49,7 @@ public class WindowGame extends BasicGame {
         this.animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
         this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
         this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
-        //container.setFullscreen(true);
-        Music background = new Music("src/graphisme/main/ressources/music/Requiem.ogg");
+        Music background = new Music("src/graphisme/main/ressources/music/AllBeat.ogg");
         M = background;
         M.loop();
     }

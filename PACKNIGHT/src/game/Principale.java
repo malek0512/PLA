@@ -4,6 +4,7 @@
 package game;
 
 import game.WindowGame;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
