@@ -37,16 +37,20 @@ public abstract class Personnage{
 		return terrain;
 	}
 	
+	
+	
 	/**
-	 * @param position ou on veut savoir si un personnage si trouve
-	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
+	 * Test si un objet est en contact d'un pacman
+	 * author : alex
+	 * @param cord : coordonée de l'objet a tester
+	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquer
 	 */
 	static public boolean personnagePresent(CoordonneesFloat position)
 	{
 		Iterator<Personnage> i= Personnage.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coordFloat))
+			if(HitBoxManager.hitting(i.next().coordFloat, position))
 				return true;
 		}
 		return false;
@@ -56,7 +60,7 @@ public abstract class Personnage{
 	 * @param position a tester
 	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null
 	 */
-	static public Personnage personnageReference(Coordonnees position)
+	static public Personnage personnageReference(CoordonneesFloat position)
 	{
 		Iterator<Personnage> i= Personnage.liste.iterator();
 		while(i.hasNext())
