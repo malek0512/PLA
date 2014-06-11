@@ -23,7 +23,7 @@ public abstract class Terrain {
 	 * author : alex
 	 */
 	public Terrain(int hauteur, int largeur){
-		terrain=new Case[largeur][hauteur];
+		terrain=new Case[hauteur][largeur];
 		this.hauteur = hauteur;
 		this.largeur = largeur;
 		for(int i=0; i<hauteur; i++){
