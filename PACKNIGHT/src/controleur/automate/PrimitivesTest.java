@@ -41,8 +41,9 @@ public class PrimitivesTest extends Primitives {
 			return Automate.CASE_LIBRE;
 	}
 	
-	// TODO : RENSEIGNER LA DOC
-	// TODO : metre un merci pour mysterious guy pour avoir reduit le programme a 3 ligne de code 
+	/**Pas merci !
+	 * 
+	 */
 	public boolean estIntersection(Coordonnees coord){
 		int n=0;
 
@@ -53,9 +54,8 @@ public class PrimitivesTest extends Primitives {
 		return n>2;
 	}
 
-	//I mean rly ?
 	public boolean dansCroix(){
-		return pacmanEstDansCroix(auto.getPersonnage().getCoord().intoInt());
+		return pacmanEstDansCroix(auto.getPersonnage().getCoord());
 	}
 	
 }

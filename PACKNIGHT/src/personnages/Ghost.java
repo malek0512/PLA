@@ -18,8 +18,10 @@ public class Ghost extends Personnage {
 	
 	public static List<Ghost> liste = new LinkedList<Ghost>();
 	final int vision = 5;
+	private int compteurAction=4;
 
-	// Structure qui repertorie l'ensemble des information d'un PM en fuite
+	/**Structure qui repertorie l'ensemble des information d'un PM en fuite
+	 * */
 	public class AvisDeRecherche {
 		boolean repere, Mort;
 		Coordonnees coord;
@@ -32,7 +34,9 @@ public class Ghost extends Personnage {
 		}
 	}
 
-	// Le central repertorie l'ensemble des information des PM en suite
+	/**
+	 * Le central repertorie l'ensemble des information des PM en suite
+	 */
 	protected static Map<Pacman, AvisDeRecherche> central;
 
 	public Ghost(String nom, int x, int y, Direction d) {
