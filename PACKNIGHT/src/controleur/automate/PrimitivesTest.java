@@ -1,8 +1,6 @@
 package controleur.automate;
 
 
-import personnages.Coordonnees;
-import personnages.Direction;
 import personnages.Pacman;
 
 /**
@@ -40,22 +38,19 @@ public class PrimitivesTest extends Primitives {
 		else
 			return Automate.CASE_LIBRE;
 	}
-	
-	// TODO : RENSEIGNER LA DOC
-	// TODO : metre un merci pour mysterious guy pour avoir reduit le programme a 3 ligne de code 
-	public boolean estIntersection(Coordonnees coord){
-		int n=0;
-
-		for(Direction d : Direction.values())
-			if(this.auto.getPersonnage().caseDisponible(d))
-				n++;
+	/**
+	 * Specification de la méthode dans primitive
+	 * Ne s'applique qu'au personnage de l'automate en cours d'utilisation*/
+	public boolean estIntersection(){
 		
-		return n>2;
+		return estIntersection(auto.getPersonnage().getCoord());
 	}
-
-	//I mean rly ?
+	/**
+	 * utilise la méthode pacman est dans croix de primitive avec déjà l'argument personnage.
+	 * 
+	 * */
 	public boolean dansCroix(){
-		return pacmanEstDansCroix(auto.getPersonnage().getCoord().intoInt());
+		return pacmanEstDansCroix(auto.getPersonnage().getCoord());
 	}
 	
 }

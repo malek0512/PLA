@@ -1,0 +1,22 @@
+Etat 0
+Transition 
+  ETATSUIVANT = 2
+  ENTREE = CASE_LIBRE
+  SORTIE = AVANCE
+Transition 
+  ETATSUIVANT = 2222
+  ENTREE = CASE_LIBRE
+  SORTIE = AVANCE
+
+Etat = wazaa
+Transition 
+  ETATSUIVANT = 2
+  ENTREE = CASE_LIBRE
+  SORTIE = AVANCE
+
+
+  
+ETAT_INITIAL = waza 
+ETAT_FINAL = waza 
+ETAT_BLOQUANT = waza 
+AUTOMATE = Fontome

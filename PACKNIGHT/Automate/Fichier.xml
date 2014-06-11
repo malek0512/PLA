@@ -11,4 +11,6 @@
 <Etat Nom= "1" > 
 </Etat> 
 </Etats_Finals> 
+<Etats_Bloquants> 
+</Etats_Bloquants> 
 </Automate> 

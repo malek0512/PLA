@@ -20,29 +20,35 @@ public class PrimitivesAction extends Primitives{
 	 * */
 	public void setDirectionAleatoire(Personnage perso){
 		Random rnd = new Random();
-		int	alea=rnd.nextInt(4);
 		int i=0;
+		int alea;
 		Direction[] direct=new Direction[4];
 		
-		if(perso.caseDisponible(Direction.bas) && perso.getOrientation()!=Direction.haut){
-				direct[i]=Direction.bas;
+		for(Direction d : Direction.values()){
+			if(perso.caseDisponible(d) && perso.getOrientation()!=d.opposer()){
+				direct[i]=d;
 				i++;
+			}
 		}
-		if(perso.caseDisponible(Direction.haut) && perso.getOrientation()!=Direction.bas){
-				direct[i]=Direction.haut;
-				i++;
-		}
-		if(perso.caseDisponible(Direction.gauche) && perso.getOrientation()!=Direction.droite){
-			direct[i]=Direction.gauche;
-			i++;
-		}
-		if(perso.caseDisponible(Direction.droite) && perso.getOrientation()!=Direction.gauche){
-			direct[i]=Direction.droite;
-			i++;
-		}
-		
 		alea=rnd.nextInt(i+1);
 		perso.setDirection(direct[alea]);
 	}
+	
+	public void prochaineDirection(Personnage perso){
+		
+		if(!perso.caseDisponible(perso.getOrientation())){
+			for(Direction d : Direction.values()){
+				if(perso.caseDisponible(d)){
+					perso.setDirection(d);
+				}
+			}
+		}		
+	}
+	
+	public void directionCheminPlusCourt(Personnage perso){
+		
+		
+	}
+	
 
 }
