@@ -39,6 +39,7 @@ public class Automate extends Controleur {
 	public final static int CASE_GHOST = 3;
 	public final static int PM_DANS_RAYON_X = 4;
 	
+	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
 	public final static int AVANCER = 0;
 	public final static int GAUCHE = 1;
