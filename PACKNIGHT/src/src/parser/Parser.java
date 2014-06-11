@@ -24,7 +24,7 @@ import controleur.automate.TableTransitionSortie;
 public class Parser {
    
 
-	private final String balise_Etat_Initial = "Etats_Initiaux"; //balise de l'état initiale
+	private final String balise_Etat_Initial = "Etat_Initial"; //balise de l'état initiale
 	private final String balise_Etat = "Etat"; //balise de l'état
 	private final String balise_Transition = "Transition"; //balise des transitions
 	private final String balise_Etat_Finaux = "Etats_Finals"; //balise des état final
