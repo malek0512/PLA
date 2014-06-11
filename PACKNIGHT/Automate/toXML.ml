@@ -57,7 +57,7 @@ let getAutomate (a : automate) : string =
   "<Automate ID= \""^ name ^"\" > \n" ^
     getEtats etat ^
 
-    "<Etat_Inital> \n" ^
+    "<Etat_Initial> \n" ^
        getEtatsFinals ([etatInit]) ^
     "</Etat_Initial> \n" ^
 

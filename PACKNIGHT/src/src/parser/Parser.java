@@ -162,24 +162,36 @@ public class Parser {
     */
    public int parseEtatInitiale()
    {
-	   int res;
-	   //On recup la liste d'état initial mis dans la balise "Etats_Initiaux"
-	   List<Element> listEtatInit = racine.getChildren(balise_Etat_Initial);
-	   Iterator<Element> i = listEtatInit.iterator();
+	   List<Integer> liste = new LinkedList();
 
+	 //On recup la liste des etats finaux
+	   List<Element> listEtatFinal = racine.getChildren(balise_Etat_Initial);
 
-	   if (i.hasNext())
+	   //On crée un Iterator sur cette liste
+	   Iterator<Element> i = listEtatFinal.iterator();
+
+	   while (i.hasNext())
 	   {
-		   Element etat = (Element) i.next();
-		   res = Integer.parseInt(etat.getAttributeValue(attribue_Etat_Numero));
-	   }
+		   Element etat_finals = (Element)i.next();
 
-	   else
-	   {
-		   return -1;
-	   }
+		   //on recupere la liste des etats final mis dans la balise "Etats_Finals"
+		   List<Element> listeEtat = etat_finals.getChildren(balise_Etat);
 
-	   return res;
+		   Iterator<Element> j = listeEtat.iterator();
+
+		   while(j.hasNext())
+		   {
+			   //Recup le prochain etat a traiter
+			   Element etat = (Element)j.next();
+
+			   //Recup l'indice de l'état pour le tableau Transition
+			   Integer Ietat = Integer.parseInt(etat.getAttributeValue(attribue_Etat_Numero));
+
+			   //on ajoute a la liste d'état final létat trouver
+			   liste.add(Ietat);
+		   }
+	   	}
+	return liste.get(0);
    }
    
  /**
