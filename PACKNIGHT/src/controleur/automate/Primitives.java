@@ -34,7 +34,7 @@ public class Primitives {
 	protected boolean caseEstPM(CoordonneesFloat cord){
 		return Pacman.personnagePresent(cord);
 	}
-	
+
 	/**
 	 * @param position : coordonner du fantome
 	 * @param rayon : rayon de vision du Fantome a la position donnée
@@ -140,10 +140,48 @@ public class Primitives {
 	 * @return boolean Vrai si il y a un mur faux sinon
 	 * @author vivien
 	 * */
-	public boolean mur(Coordonnees coord) {
+	private boolean mur(Coordonnees coord) {
 		boolean res=true;
 		if (Personnage.getTerrain().getCase(coord.x,coord.y).isAccessable())
 			res=false;
 		return res;
+	}
+	
+	/**
+	 * @return dans les parametres la case devant le Personnage selon sa direction actuelle
+	 * @author malek
+	 * @param d
+	 * @param x
+	 * @param y
+	 */
+	public Coordonnees positionDevant(){
+		Coordonnees coord = new Coordonnees(0,0);
+		switch (auto.getPersonnage().getOrientation()){
+		case haut : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y-1;   break;
+		case bas : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y+1;    break;
+		case gauche : coord.x=this.auto.getPersonnage().getCoord().x-1; coord.y=this.auto.getPersonnage().getCoord().y; break;
+		case droite : coord.x=this.auto.getPersonnage().getCoord().x+1; coord.y=this.auto.getPersonnage().getCoord().y; break;
+		}
+		return coord;
+	}
+	
+	//TODO javadoc
+	public boolean estIntersection(Coordonnees coord){
+		int n=0;
+		Coordonnees tmp=coord;
+		if(Personnage.getTerrain().getCase(tmp.x+1,tmp.y).isAccessable()){
+			n++;
+		}
+		if(Personnage.getTerrain().getCase(tmp.x-1,tmp.y).isAccessable()){
+			n++;
+		}
+		if(Personnage.getTerrain().getCase(tmp.x,tmp.y+1).isAccessable()){
+			n++;
+		}
+		if(Personnage.getTerrain().getCase(tmp.x,tmp.y+1).isAccessable()){
+			n++;
+		}
+		return n>2;
+		
 	}
 }

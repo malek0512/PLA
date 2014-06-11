@@ -51,7 +51,11 @@ public class PrimitivesTest extends Primitives {
 				n++;
 		
 		return n>2;
-		
+	}
+
+	//I mean rly ?
+	public boolean dansCroix(){
+		return pacmanEstDansCroix(auto.getPersonnage().getCoord().intoInt());
 	}
 	
 }
