@@ -21,12 +21,12 @@ public abstract class Pacman extends Personnage {
 	 * @param position ou on veut savoir si un personnage si trouve
 	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
 	 */
-	static public boolean personnagePresent(Coordonnees position)
+	static public boolean personnagePresent(CoordonneesFloat position)
 	{
 		Iterator<Pacman> i= Pacman.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coord))
+			if(position.equals(i.next().coordFloat))
 				return true;
 		}
 		return false;
@@ -36,20 +36,20 @@ public abstract class Pacman extends Personnage {
 	 * @param position a tester
 	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null
 	 */
-	static public Pacman personnageReference(Coordonnees position)
+	static public Pacman personnageReference(CoordonneesFloat position)
 	{
 		Iterator<Pacman> i= Pacman.liste.iterator();
 		while(i.hasNext())
 		{
 			Pacman p = i.next();
-			if(position.equals(p.coord))
+			if(position.equals(p.coordFloat))
 				return p;
 		}
 		return null;
 	}
 	
 	
-	public Pacman(String nom, int x, int y, Direction d){
+	public Pacman(String nom, float x, float y, Direction d){
 		super(nom,x,y,d);
 		Pacman.liste.add((Pacman) this);
 	}
