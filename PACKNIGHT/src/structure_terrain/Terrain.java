@@ -6,6 +6,7 @@ package structure_terrain;
 
 import structure_terrain.Case;
 import personnages.Coordonnees;
+import personnages.CoordonneesFloat;
 import personnages.Direction;
 
 
@@ -72,6 +73,7 @@ public abstract class Terrain {
 		int i,j;
 
 		for(i=0; i < terrain.length;i++){
+			System.out.print(i + " ");
 			for(j=0; j < terrain[0].length;j++){
 				System.out.print(terrain[i][j].toString());
 			}
@@ -87,7 +89,6 @@ public abstract class Terrain {
 	 */
 	public Case getCase(Coordonnees coord,Direction direction)
 	{
-		System.out.println("valeur donne bis :" + coord.x +" "+coord.y);
 		switch(direction)
 		{
 		case haut : return terrain[coord.x+1][coord.y];
@@ -109,7 +110,6 @@ public abstract class Terrain {
 	 */
 	public Coordonnees getCoordone(Coordonnees coord,Direction direction)
 	{
-		System.out.println("valeur donne :" + coord.x +" "+coord.y);
 		switch(direction)
 		{
 		case haut : return new Coordonnees(coord.x+1, coord.y);
@@ -121,5 +121,4 @@ public abstract class Terrain {
 		}
 		return null;
 	}
-	
 }

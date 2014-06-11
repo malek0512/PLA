@@ -14,7 +14,9 @@ public class Ghost extends Personnage {
 	 * que les fantomes puissent communiquer entre eux
 	 * author : alex
 	 */
-	static List<Ghost> liste = new LinkedList<Ghost>();
+	
+	
+	public static List<Ghost> liste = new LinkedList<Ghost>();
 	final int vision = 5;
 
 	// Structure qui repertorie l'ensemble des information d'un PM en fuite
