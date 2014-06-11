@@ -58,7 +58,7 @@ public class Primitives {
 	 * TODO : regler les problème après avoir changer mur() de preference
 	 * ATTENTION : les coordonée étant desormais en float, on ne peut plus comparer
 	 * les valeurs et mettre un equal
-	 * Dans le sens ou un pac-man peut etre a la coordonée : (2,3 ; 4,4)
+	 * Dans le sens ou un pac-man peut etre a la coordonée : (2,8 ; 4,4)
 	 * Il faudrais plutot tester si il est dans l'intervalle : ([2,3] ; [4,5])
 	 * et non pas si les coordonné sont parfaitement egales
 	 * mysterious guy
@@ -74,25 +74,23 @@ public class Primitives {
 		{
 			Pacman pac = i.next();
 			CoordonneesFloat cord = pac.getCoord();
-			CoordonneesFloat temp= position;
 			if(cord.x == position.x){
 				if (cord.y<position.y){
-					while(!mur(temp) && cord.y != test.y){
+					while(!mur(test) && cord.y >= test.y && cord.y<(test.y-1)){
 						test.y--;
-						temp.y=test.y;
 					}
-					if(!mur(temp)){
+					if(!mur(test)){
 						auto.getPersonnage().setDirection(Direction.haut);
 						return true;
 						
 					}
 				}
 				else {
-					while(!mur(temp) && cord.y != test.y){
+					while(!mur(test) && cord.y >= test.y && cord.y<(test.y+1)){
 					test.y++;
-					temp.y=test.y;
+					
 					}
-					if(!mur(temp)){
+					if(!mur(test)){
 						auto.getPersonnage().setDirection(Direction.bas);
 						return true;
 					}
@@ -101,22 +99,20 @@ public class Primitives {
 			}
 			else if(cord.y == position.y){
 					if (cord.x<position.x){
-						while(!mur(temp) && cord.x != test.x){
+						while(!mur(test) && cord.x >= test.x && cord.x<test.x-1){
 							test.x--;
-							temp.x=test.x;
 						}
-						if(!mur(temp)){
+						if(!mur(test)){
 							auto.getPersonnage().setDirection(Direction.gauche);
 							return true;
 						}
 					}
 				
 					else {
-						while(!mur(temp) && cord.x != test.x){
+						while(!mur(test) && cord.x >= test.x && cord.x<test.x+1){
 							test.x++;
-							temp.x=test.x;
 						}
-						if(!mur(temp)){
+						if(!mur(test)){
 							auto.getPersonnage().setDirection(Direction.droite);
 							return true;
 						}
@@ -127,22 +123,13 @@ public class Primitives {
 	}
 	
 	/**
-	 * TODO : mauvaise utilisation je pense
-	 * Remarque : je pense qu'il faudrais utiliser d'autre fonction que celle utiliser
-	 * ci dessous, les quels je ne serais dire, mais si j'ai bien compris
-	 * cette fonction sert a savoir si un personnage peut avancer
-	 * ou non dans une direction, right ? Si oui, go voir la fonction :
-	 * "public boolean caseDisponible(Direction direction)" dans Personnage
-	 * Cordialement
-	 * Mysterious Guy
-	 * 
-	 * @param coord : Cordonnees de la case à tester si présence d'un mur
+	 * @param temp: Cordonnees de la case à tester si présence d'un mur
 	 * @return boolean Vrai si il y a un mur faux sinon
 	 * @author vivien
 	 * */
-	private boolean mur(Coordonnees coord) {
+	private boolean mur(CoordonneesFloat temp) {
 		boolean res=true;
-		if (Personnage.getTerrain().getCase(coord.x,coord.y).isAccessable())
+		if (Personnage.getTerrain().getCase((int) temp.x,(int)temp.y).isAccessable())
 			res=false;
 		return res;
 	}
@@ -165,23 +152,4 @@ public class Primitives {
 		return coord;
 	}
 	
-	//TODO javadoc
-	public boolean estIntersection(Coordonnees coord){
-		int n=0;
-		Coordonnees tmp=coord;
-		if(Personnage.getTerrain().getCase(tmp.x+1,tmp.y).isAccessable()){
-			n++;
-		}
-		if(Personnage.getTerrain().getCase(tmp.x-1,tmp.y).isAccessable()){
-			n++;
-		}
-		if(Personnage.getTerrain().getCase(tmp.x,tmp.y+1).isAccessable()){
-			n++;
-		}
-		if(Personnage.getTerrain().getCase(tmp.x,tmp.y+1).isAccessable()){
-			n++;
-		}
-		return n>2;
-		
-	}
 }
