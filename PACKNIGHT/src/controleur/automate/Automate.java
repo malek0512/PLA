@@ -163,8 +163,7 @@ public class Automate extends Controleur {
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) return CASE_OCCUPEE; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
 				case PM_DANS_RAYON_X : int X=primitivesTest.dansRayon(3); if (X!=-1) return X; break;
-				case INTERSECTION: if(primitivesTest.estIntersection(personnage.getCoord().intoInt())) return INTERSECTION; break;
-				case NON_INTERSECTION: if(!primitivesTest.estIntersection(personnage.getCoord().intoInt())) return NON_INTERSECTION; break;
+				case INTERSECTION: if(primitivesTest.estIntersection()) return INTERSECTION; break;
 				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; else return NON_PM_DANS_CROIX;
 				case NON_PM_DANS_CROIX: if(!primitivesTest.dansCroix()) return NON_PM_DANS_CROIX;
 			//	}

@@ -45,5 +45,10 @@ public class PrimitivesAction extends Primitives{
 		}		
 	}
 	
+	public void directionCheminPlusCourt(Personnage perso){
+		
+		
+	}
+	
 
 }
