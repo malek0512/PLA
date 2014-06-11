@@ -147,8 +147,9 @@ public class Primitives {
 	/**
 	 * @param coord Corrdonnees de la case à tester si présence d'un mur
 	 * @return boolean Vrai si il y a un mur faux sinon
-	 * @author vivien*/
-	public boolean mur(Coordonnees coord) {
+	 * @author vivien
+	 * */
+	private boolean mur(Coordonnees coord) {
 		boolean res=true;
 		if (Personnage.getTerrain().getCase(coord.x,coord.y).isAccessable())
 			res=false;
@@ -171,5 +172,23 @@ public class Primitives {
 		case droite : coord.x=this.auto.getPersonnage().getCoord().x+1; coord.y=this.auto.getPersonnage().getCoord().y; break;
 		}
 		return coord;
+	}
+	public boolean estIntersection(Coordonnees coord){
+		int n=0;
+		Coordonnees tmp=coord;
+		if(Personnage.getTerrain().getCase(tmp.x+1,tmp.y).isAccessable()){
+			n++;
+		}
+		if(Personnage.getTerrain().getCase(tmp.x-1,tmp.y).isAccessable()){
+			n++;
+		}
+		if(Personnage.getTerrain().getCase(tmp.x,tmp.y+1).isAccessable()){
+			n++;
+		}
+		if(Personnage.getTerrain().getCase(tmp.x,tmp.y+1).isAccessable()){
+			n++;
+		}
+		return n>2;
+		
 	}
 }
