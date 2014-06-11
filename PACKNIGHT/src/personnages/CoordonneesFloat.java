@@ -53,5 +53,14 @@ public class CoordonneesFloat {
 	{
 		return new Coordonnees((int) x, (int) y);
 	}
+	
+	/**
+	 * renvoie la somme des composantes
+	 * author : alex
+	 */
+	public float sommeXY()
+	{
+		return this.x + this.y;
+	}
 }
 

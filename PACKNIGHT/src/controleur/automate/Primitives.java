@@ -15,44 +15,15 @@ public class Primitives {
 	Automate auto;
 	
 	/**
-	 * TODO : a move dans Terrain
-	 * ATTENTION : ceci ne fontcionne que pour des coordonnée de TERRAIN et non de PERSONNAGE
-	 * @author malek
-	 * @param cord : coordone du la case
-	 * @param dest : orientation de la case voisine a retourner
-	 * @return
+	 * RIP : getCase
+	 * a était move dans Terrain
 	 */
-	protected Coordonnees getCase(Coordonnees cord, Direction dest){
-		Coordonnees newCoord = new Coordonnees(cord);
-		switch (dest){
-		case haut :   newCoord.y--;  break;
-		case bas :    newCoord.y++;   break;
-		case gauche : newCoord.x--;  break;
-		case droite : newCoord.x++;   break;
-		}
-		return newCoord;
-	}
-	
+
 	/**
-	 * TODO : a move dans terrain
-	 * @author malek
-	 * @param coord
-	 * @return vraie si les coordonnée sont hors du terrain, faux sinon
-	 * 
-	 * rmq : tu peut tout simplement demander au terrain si la cas est accessible, non ?
-	 * Je ne comprend pas l'idée de vérifier si la case est dans le terrain, si on veut faire
-	 * ce test autant le mettre dans la classe Terrain non ?
-	 * Si une classe voulais aussi cette information, c'est pas ici qu'elle viendrais cherher si il existe déja
-	 * une fonction pour ca :p
+	 * RIP : estDansLeTerrain
+	 * deplacer dans Terrain
 	 */
-	protected boolean estDansLeTerrain(Coordonnees coord){
-		return (coord.x < 0
-		|| coord.x > Personnage.getTerrain().getLargeur() - 1
-		|| coord.y < 0
-		|| coord.y > Personnage.getTerrain().getHauteur() - 1);
-	}
-
-
+	
 	/**
 	 * TODO : a move dans PacMan
 	 * Test si un objet est en contact d'un pacman
@@ -64,24 +35,19 @@ public class Primitives {
 		return Pacman.personnagePresent(cord);
 	}
 	
-	
-	// TODO 
-	//TODO
-	//TODO
-	//TODO
 	/**
 	 * @param position : coordonner du fantome
 	 * @param rayon : rayon de vision du Fantome a la position donnée
 	 * @return la liste des pacman de le champ de vision
 	 */
-	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position, int rayon) {
+	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position, float rayon) {
 		List<Pacman> res = new LinkedList<Pacman>();
 
-		int someXYSource = position.sommmeXY();
+		float someXYSource = position.sommeXY();
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
 			Pacman pac = i.next();
-			int someXYTester = i.next().position().sommmeXY();
+			float someXYTester = i.next().getCoord().sommeXY();
 			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
 				res.add(pac);
 		}
@@ -89,18 +55,26 @@ public class Primitives {
 	}
 	
 	/**
+	 * TODO : regler les problème après avoir changer mur() de preference
+	 * ATTENTION : les coordonée étant desormais en float, on ne peut plus comparer
+	 * les valeurs et mettre un equal
+	 * Dans le sens ou un pac-man peut etre a la coordonée : (2,3 ; 4,4)
+	 * Il faudrais plutot tester si il est dans l'intervalle : ([2,3] ; [4,5])
+	 * et non pas si les coordonné sont parfaitement egales
+	 * mysterious guy
+	 * 
 	 * @param position : coordonner du fantome
 	 * @return vrai si un pacman est dans la croix et qu'il n'y a pas de mur entre les deux
 	 * @author rama/vivien
 	 */
-	protected boolean pacmanEstDansCroix(Coordonnees position) {
-		Coordonnees test=position;
+	protected boolean pacmanEstDansCroix(CoordonneesFloat position) {
+		CoordonneesFloat test=position;
 		boolean res=false;
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
 			Pacman pac = i.next();
-			Coordonnees cord = pac.position();
-			Coordonnees temp= position;
+			CoordonneesFloat cord = pac.getCoord();
+			CoordonneesFloat temp= position;
 			if(cord.x == position.x){
 				if (cord.y<position.y){
 					while(!mur(temp) && cord.y != test.y){
@@ -153,31 +127,23 @@ public class Primitives {
 	}
 	
 	/**
-	 * @param coord Corrdonnees de la case à tester si présence d'un mur
+	 * TODO : mauvaise utilisation je pense
+	 * Remarque : je pense qu'il faudrais utiliser d'autre fonction que celle utiliser
+	 * ci dessous, les quels je ne serais dire, mais si j'ai bien compris
+	 * cette fonction sert a savoir si un personnage peut avancer
+	 * ou non dans une direction, right ? Si oui, go voir la fonction :
+	 * "public boolean caseDisponible(Direction direction)" dans Personnage
+	 * Cordialement
+	 * Mysterious Guy
+	 * 
+	 * @param coord : Cordonnees de la case à tester si présence d'un mur
 	 * @return boolean Vrai si il y a un mur faux sinon
-	 * @author vivien*/
+	 * @author vivien
+	 * */
 	public boolean mur(Coordonnees coord) {
 		boolean res=true;
 		if (Personnage.getTerrain().getCase(coord.x,coord.y).isAccessable())
 			res=false;
 		return res;
-	}
-	
-	/**
-	 * @return dans les parametres la case devant le Personnage selon sa direction actuelle
-	 * @author malek
-	 * @param d
-	 * @param x
-	 * @param y
-	 */
-	public Coordonnees positionDevant(){
-		Coordonnees coord = new Coordonnees(0,0);
-		switch (auto.getPersonnage().getOrientation()){
-		case haut : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y-1;   break;
-		case bas : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y+1;    break;
-		case gauche : coord.x=this.auto.getPersonnage().getCoord().x-1; coord.y=this.auto.getPersonnage().getCoord().y; break;
-		case droite : coord.x=this.auto.getPersonnage().getCoord().x+1; coord.y=this.auto.getPersonnage().getCoord().y; break;
-		}
-		return coord;
 	}
 }

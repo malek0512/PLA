@@ -8,6 +8,7 @@ import structure_terrain.Case;
 import personnages.Coordonnees;
 import personnages.CoordonneesFloat;
 import personnages.Direction;
+import personnages.Personnage;
 
 
 public abstract class Terrain {
@@ -64,7 +65,6 @@ public abstract class Terrain {
 		terrain[ligne][colonne]=new Case(elt);
 	}
 
-
 	/**
 	 * affiche le terrain
 	 * fonction a ameliorer pour pouvoir voir quelque chose
@@ -82,6 +82,7 @@ public abstract class Terrain {
 	}
 	
 	/**
+	 * ATTENTION : ceci ne fontcionne que pour des coordonnée de TERRAIN et non de PERSONNAGE
 	 * @param coord : coordonée de la case a regarder 
 	 * @param direction : direction de la case que l'on veut retourner
 	 * @return case si avancer dans direction
@@ -100,9 +101,28 @@ public abstract class Terrain {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * TODO : a faire plus tard...
+	 * @author malek
+	 * @param coord
+	 * @return vraie si les coordonnée sont hors du terrain, faux sinon
+	 * 
+	 * rmq : tu peut tout simplement demander au terrain si la cas est accessible, non ?
+	 * Je ne comprend pas l'idée de vérifier si la case est dans le terrain, si on veut faire
+	 * ce test autant le mettre dans la classe Terrain non ?
+	 * Si une classe voulais aussi cette information, c'est pas ici qu'elle viendrais cherher si il existe déja
+	 * une fonction pour ca :p
+	 */
+	protected boolean estDansLeTerrain(Coordonnees coord){
+		return (coord.x < 0
+		|| coord.x > Personnage.getTerrain().getLargeur() - 1
+		|| coord.y < 0
+		|| coord.y > Personnage.getTerrain().getHauteur() - 1);
+	}
 	
 	/**
+	 * @require : les coordonnes sont dans le terrain
 	 * @param coord : coordonée de la case a regarder 
 	 * @param direction : direction de la case que l'on veut retourner
 	 * @return coordoné si avancer dans direction
