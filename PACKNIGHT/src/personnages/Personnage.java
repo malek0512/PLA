@@ -38,8 +38,6 @@ public abstract class Personnage{
 		return terrain;
 	}
 	
-	
-	
 	/**
 	 * Test si un objet est en contact d'un pacman
 	 * author : alex

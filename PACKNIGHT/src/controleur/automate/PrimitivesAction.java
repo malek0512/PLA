@@ -1,6 +1,9 @@
 package controleur.automate;
 
 
+import graph.Graph;
+
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -58,8 +61,14 @@ public class PrimitivesAction extends Primitives{
 	public void directionCheminPlusCourt(Personnage perso){
 		List<Pacman> res = new LinkedList<Pacman>();
 		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),((Ghost) auto.getPersonnage()).getVision());
-		
-		
+		Iterator<Pacman> i= res.iterator();
+		while(i.hasNext())
+		{
+			Graph g=new Graph(auto.getPersonnage().getTerrain());
+			g.a_star(i.next().getCoord());
+			
+		}
+		auto.getPersonnage().setDirection(Direction.haut);
 	}
 	/**
 	 * Reçoit un ordre du Fantôme Lord et avance vers la case désignée tant qu'il ne l'a pas atteinte

@@ -34,6 +34,7 @@ public class PrimitivesTest extends Primitives {
 		while(i.hasNext())
 		{
 			n++;
+			i.next();
 		}
 		return n!=0;
 	}

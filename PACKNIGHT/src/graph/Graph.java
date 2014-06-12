@@ -7,10 +7,12 @@ import java.util.List;
 import javax.naming.NamingEnumeration;
 
 import personnages.Coordonnees;
+import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Personnage;
 import structure_terrain.Terrain;
-import structure_terrain.Terrain1;
+//import structure_terrain.Terrain1;
+import structure_terrain.TerrainTest1;
 
 public class Graph {
 
@@ -26,7 +28,7 @@ public class Graph {
 		table = new Noeud[largeur][hauteur];
 	}
 	
-	public Graph(Terrain1 terrain) {
+	public Graph(TerrainTest1 terrain) {
 		largeur =terrain.getLargeur();
 		hauteur =terrain.getHauteur();
 		table = new Noeud[largeur][hauteur];
@@ -64,7 +66,7 @@ public class Graph {
 		if(Personnage.getTerrain().getCase(noeud , d).isAccessable())
 			{
 				nbInterSearch++;
-				file.add(Personnage.getTerrain().getCoordone(noeud,d));
+				file.add(Personnage.getTerrain().getCoordonnees(noeud,d));
 			}
 	}
 	
@@ -89,7 +91,7 @@ public class Graph {
 			{
 				if(Personnage.getTerrain().getCase(u,d).isAccessable())
 				{
-					Coordonnees v = Personnage.getTerrain().getCoordone(u,d); 
+					Coordonnees v = Personnage.getTerrain().getCoordonnees(u,d); 
 					Noeud adj = table[v.x][v.y];
 					if (adj.couleur==0) //blanc
 					{
@@ -125,9 +127,12 @@ public class Graph {
 	}
     return res;
     }
+    public void a_star(CoordonneesFloat coord){
+    	
+    }
 
     public static void main(String[] args) {
-    	Terrain1 terrain = new Terrain1(10, 10);
+    	TerrainTest1 terrain = new TerrainTest1(10, 10);
     	Personnage.initTerrain(terrain); 
     	Coordonnees start = new Coordonnees(1,1);
     	Graph g = new Graph(terrain);
@@ -143,5 +148,7 @@ public class Graph {
     	terrain.afficher();
     			
     }
+    
+    
 	
 }
