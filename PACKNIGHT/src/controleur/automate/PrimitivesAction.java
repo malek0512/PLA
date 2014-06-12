@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Ghost;
 import personnages.Pacman;
@@ -57,19 +58,21 @@ public class PrimitivesAction extends Primitives{
 	}
 	/**
 	 * Donne la direction du chemin le plus court vers le pacman
+	 * OU: liste des cases menant vers pacman ??
 	 * */
 	public void directionCheminPlusCourt(Personnage perso){
 		List<Pacman> res = new LinkedList<Pacman>();
+		List<CoordonneesFloat> liste = new LinkedList<CoordonneesFloat>();
+		CoordonneesFloat coord=auto.getPersonnage().getCoord();
 		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),((Ghost) auto.getPersonnage()).getVision());
 		Iterator<Pacman> i= res.iterator();
 		while(i.hasNext())
 		{
-			auto.getPersonnage();
 			Graph g=new Graph(Personnage.getTerrain());
-			g.a_star(i.next().getCoord());
+			liste=g.a_star(coord,i.next().getCoord());
 			
 		}
-		
+		liste.get(1);
 		auto.getPersonnage().setDirection(Direction.haut);
 	}
 	/**
