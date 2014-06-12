@@ -1,6 +1,7 @@
 (************************** Lexical Analyzer ***********************************)
-(*#load "dynlink.cma"
- #load "camlp4o.cma"
+(*
+#load "dynlink.cma"
+#load "camlp4o.cma"
 *)
 open ToXML
 (*
@@ -74,8 +75,6 @@ exception Variable_inconnue of string
 type token = 
   | S of string
   | V of string
-  | I of int 
-  | F of float
 
 let tk_of_list a = 
   if List.mem a variable then V a  
@@ -132,12 +131,12 @@ let getTable =
 let rec filter liste_transition  =
   let table = getTable in
   let rec search_correspondance table mot = match table with
-    |[] ->failwith "ACTION OU TEST NON DANS LA TABLE"
-    |S mot :: S code :: tail -> code
-    |_ :: tail -> search_correspondance tail mot in
+    |[] ->failwith "ACTION OU TEST PAS DANS LA TABLE"
+    |S moot :: S code :: tail ->if (moot=mot) then code else search_correspondance tail mot
+  in
   match liste_transition with
   |[] -> []
-  |(osef, test, action) :: tail -> let test_code=(search_correspondance table (test)) and action_code=(search_correspondance table (test)) in (osef, test_code, action_code) :: filter tail
+  |(osef, test, action) :: tail -> let test_code=(search_correspondance table (test)) and action_code=(search_correspondance table (action)) in (osef,test_code, action_code) :: filter tail
 
 let rec parse_transition (l) = match l with
   |[]->([],[])
@@ -188,4 +187,25 @@ let make file_name =
     let list_token = (string_inputs in_channel) in
     close_in in_channel;
     automate list_token
+(*
+let rec search_correspondance table mot = match table with
+    |[] ->failwith "ACTION OU TEST PAS DANS LA TABLE"
+    |S moot :: S code :: tail -> if (moot=mot) then code else search_correspondance tail mot 
 
+
+let test = [("1", "NON_INTERSECTION", "AVANCER");
+      ("2", "INTERSECTION", "DIRECTION_ALEATOIRE");
+      ("3", "EST_MORT", "END_LIFE")]
+  
+let rec filter liste_transition  =
+  let table = getTable in
+  match liste_transition with
+  |[] -> []
+  |(osef, test, action) :: tail -> let test_code=(search_correspondance table (test)) and action_code=(search_correspondance table (action)) in (osef,test_code, action_code) :: filter tail
+
+let _=getTable
+let _=search_correspondance getTable "INTERSECTION"
+let _=filter test
+let _ = make "rama"
+let _ = sear
+*)
