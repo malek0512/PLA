@@ -22,7 +22,7 @@ import structure_terrain.*;
 //demande de "git add" cette classe afin de pouvor tester :)
 import structure_terrain.Niveau1;
 import structure_terrain.Terrain;
-
+	
 
 public class WindowGame extends BasicGame {
 	
@@ -33,7 +33,7 @@ public class WindowGame extends BasicGame {
 	
 	public static int largueur = 28, hauteur = 15;
 	public static int tuile_size = 32;
-	public static int largueur_map = 50, hauteur_map = 28;
+	public static int largueur_map , hauteur_map ;
 	int taillePersonnage =32;
 	
 	PacKnight pacman = new PacKnight("j1",20,18,Direction.droite);
@@ -58,9 +58,14 @@ public class WindowGame extends BasicGame {
 
     public void init(GameContainer container) throws SlickException {
         this.container = container;
+
+        this.map = new TiledMap(CHEMIN_MAP.concat(MAP));
+       
+        largueur_map =map.getWidth();
+        hauteur_map = map.getHeight();
+        
         Terrain terrain = new Terrain(largueur_map,hauteur_map);
         Personnage.initTerrain(terrain);
-        this.map = new TiledMap(CHEMIN_MAP.concat(MAP));
         
 		coordFloat = new CoordonneesFloat(0,0);
     			for(int i=0;i<largueur_map;i++)
