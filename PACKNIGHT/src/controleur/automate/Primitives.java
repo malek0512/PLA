@@ -29,7 +29,7 @@ public class Primitives {
 	 * Test si un objet est en contact d'un pacman
 	 * author : alex
 	 * @param cord : coordonée de l'objet a tester
-	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquer
+	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquée
 	 */
 	protected boolean caseEstPM(CoordonneesFloat cord){
 		return Pacman.personnagePresent(cord);

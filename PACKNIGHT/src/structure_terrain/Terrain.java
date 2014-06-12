@@ -125,10 +125,10 @@ public class Terrain {
 	 * @require : les coordonnes sont dans le terrain
 	 * @param coord : coordonée de la case a regarder 
 	 * @param direction : direction de la case que l'on veut retourner
-	 * @return coordoné si avancer dans direction
+	 * @return coordonné si avancer dans direction
 	 * @author alex
 	 */
-	public Coordonnees getCoordone(Coordonnees coord,Direction direction)
+	public Coordonnees getCoordonnees(Coordonnees coord,Direction direction)
 	{
 		switch(direction)
 		{

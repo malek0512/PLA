@@ -12,6 +12,12 @@ public class RobotIdiot extends Personnage {
 		
 	}
 
+	@Override
+	public void respawn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/**
 	 * @return Une ENTREE de l'automate. Voir les constante d'ENTREE et SORTIE
 	 *         dans classe Automate

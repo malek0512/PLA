@@ -66,12 +66,6 @@ public abstract class Pacman extends Personnage {
 	 */
 	public abstract void meurtDansDatroceSouffrance();
 	
-	/**
-	 * fait revivre le pacman
-	 * NEED : determiner ou se situe les points de respawn
-	 * author : alex
-	 */
-	public abstract void respawn();
 	
 	/**
 	 * @return Une ENTREE de l'automate. Voir les constante d'ENTREE et SORTIE dans classe Automate

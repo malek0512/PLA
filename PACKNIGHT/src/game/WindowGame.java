@@ -19,6 +19,11 @@ import org.newdawn.slick.tiled.TiledMap;
 import personnages.*;
 import structure_terrain.*;
 
+//demande de "git add" cette classe afin de pouvor tester :)
+import structure_terrain.Niveau1;
+import structure_terrain.Terrain;
+
+
 public class WindowGame extends BasicGame {
 	
 	

@@ -6,7 +6,11 @@ public class CoordonneesFloat {
 	public float x;
 	public float y;
 	
-	
+	public float distance(CoordonneesFloat c){
+		float res;
+		res=Math.abs(this.x-c.x)+Math.abs(this.y-c.y);
+		return res;
+	}
 	public String toString()
 	{return ""+ x + " " + y;}
 	/**
