@@ -5,10 +5,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import personnages.CoordonneesFloat;
 import personnages.Ghost;
 import personnages.Pacman;
-import personnages.Personnage;
+
 
 /**
  * Classe contenant l'ensemble des primitives de test 

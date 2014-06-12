@@ -222,6 +222,13 @@ public abstract class Personnage{
 	}
 	
 	/**
+	 * fait revivre le pacman
+	 * NEED : determiner ou se situe les points de respawn
+	 * author : alex
+	 */
+	public abstract void respawn();
+	
+	/**
 	 * @return String contenant le terrain et le personnage
 	 * @author malek
 	 */

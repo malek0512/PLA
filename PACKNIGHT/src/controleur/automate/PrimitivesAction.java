@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import personnages.Direction;
+import personnages.Ghost;
 import personnages.Pacman;
 import personnages.Personnage;
 
@@ -56,7 +57,8 @@ public class PrimitivesAction extends Primitives{
 	 * */
 	public void directionCheminPlusCourt(Personnage perso){
 		List<Pacman> res = new LinkedList<Pacman>();
-		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
+		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),((Ghost) auto.getPersonnage()).getVision());
+		
 		
 	}
 	/**

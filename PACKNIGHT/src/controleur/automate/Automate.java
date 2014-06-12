@@ -10,6 +10,7 @@ import controleur.automate.TableTransitionSortie.Triplet;
 import src.parser.Parser;
 import src.parser.Quad;
 import personnages.Direction;
+import personnages.Ghost;
 import personnages.Personnage;
 
 /**
@@ -55,6 +56,7 @@ public class Automate extends Controleur {
 	public final static int CHEMIN_PLUS_COURT=9;
 	public final static int AVANCER_VERS=10;
 	public final static int END_LIFE=11;
+	public final static int SPAWN=12;
 	
 	
 	TableTransitionSortie tableTransitionSortie;
@@ -136,6 +138,7 @@ public class Automate extends Controleur {
 		case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
 		case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
 		case Automate.AVANCER_VERS: primitivesAction.avancerVers(); break;
+		case Automate.SPAWN:personnage.respawn();break;
 		
 		}
 		incrementerTransition();
@@ -170,7 +173,7 @@ public class Automate extends Controleur {
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) return CASE_LIBRE; break;
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) return CASE_OCCUPEE; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
-				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(3)) return PM_DANS_RAYON_X; break;
+				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return PM_DANS_RAYON_X; break;
 				case INTERSECTION: if(primitivesTest.estIntersection()) return INTERSECTION; break;
 				case NON_INTERSECTION: if(!primitivesTest.estIntersection()) return NON_INTERSECTION; break;
 				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; break;
