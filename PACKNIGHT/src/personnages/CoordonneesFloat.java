@@ -6,14 +6,25 @@ public class CoordonneesFloat {
 	public float x;
 	public float y;
 	
+	
+	public String toString()
+	{return ""+ x + " " + y;}
 	/**
-	 * mediter quant a son utilisation...
-	 * author : mysterious guy
+	 * renvoie le pixel correspondant a la coordonne x
+	 * author : alex
 	 */
-	public CoordonneesFloat(int x,int y)
+	public float pixelX()
 	{
-		this.x = x * WindowGame.tuile_size;
-		this.y = y * WindowGame.tuile_size;
+		return this.x * WindowGame.tuile_size;
+	}
+	
+	/**
+	 * renvoie le pixel correspondant a la coordonne y
+	 * author : alex
+	 */
+	public float pixelY()
+	{
+		return this.y * WindowGame.tuile_size;
 	}
 	
 	/**

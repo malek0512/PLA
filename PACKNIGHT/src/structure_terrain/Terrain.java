@@ -24,7 +24,7 @@ public abstract class Terrain {
 	 * @require les paramètre sont >= a 1
 	 * author : alex
 	 */
-	public Terrain(int hauteur, int largeur){
+	public Terrain(int largeur, int hauteur){
 		terrain=new Case[hauteur][largeur];
 		this.hauteur = hauteur;
 		this.largeur = largeur;
@@ -92,10 +92,10 @@ public abstract class Terrain {
 	{
 		switch(direction)
 		{
-		case haut : return terrain[coord.x+1][coord.y];
-		case bas : return terrain[coord.x-1][coord.y];
-		case droite : return terrain[coord.x][coord.y+1];
-		case gauche : return terrain[coord.x][coord.y-1];
+		case haut : return terrain[coord.x][coord.y-1];
+		case bas : return terrain[coord.x][coord.y+1];
+		case droite : return terrain[coord.x+1][coord.y];
+		case gauche : return terrain[coord.x-1][coord.y];
 		default:
 			break; 
 		}
@@ -125,17 +125,17 @@ public abstract class Terrain {
 	 * @require : les coordonnes sont dans le terrain
 	 * @param coord : coordonée de la case a regarder 
 	 * @param direction : direction de la case que l'on veut retourner
-	 * @return coordoné si avancer dans direction
+	 * @return coordonné si avancer dans direction
 	 * @author alex
 	 */
-	public Coordonnees getCoordone(Coordonnees coord,Direction direction)
+	public Coordonnees getCoordonnees(Coordonnees coord,Direction direction)
 	{
 		switch(direction)
 		{
-		case haut : return new Coordonnees(coord.x+1, coord.y);
-		case bas : return new Coordonnees(coord.x-1, coord.y);
-		case droite : return new Coordonnees(coord.x, coord.y+1);
-		case gauche : return new Coordonnees(coord.x, coord.y-1);
+		case haut : return new Coordonnees(coord.x, coord.y-1);
+		case bas : return new Coordonnees(coord.x, coord.y+1);
+		case droite : return new Coordonnees(coord.x+1, coord.y);
+		case gauche : return new Coordonnees(coord.x-1, coord.y);
 		default:
 			break; 
 		}
