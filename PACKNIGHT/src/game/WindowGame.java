@@ -31,7 +31,7 @@ public class WindowGame extends BasicGame {
 	public static int largueur_map = 50, hauteur_map = 28;
 	int taillePersonnage =32;
 	
-	PacKnight pacman = new PacKnight("j1",1,1,Direction.droite);
+	PacKnight pacman = new PacKnight("j1",20,18,Direction.droite);
 	
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
