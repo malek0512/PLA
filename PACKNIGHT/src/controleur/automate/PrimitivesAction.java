@@ -30,7 +30,7 @@ public class PrimitivesAction extends Primitives{
 				i++;
 			}
 		}
-		alea=rnd.nextInt(i+1);
+		alea=rnd.nextInt(i);
 		perso.setDirection(direct[alea]);
 	}
 	
@@ -39,7 +39,7 @@ public class PrimitivesAction extends Primitives{
 	 * */
 	public void prochaineDirection(Personnage perso){
 		
-		if(!perso.caseDisponible(perso.getOrientation())){
+		if(!perso.caseDevantDisponible()){
 			for(Direction d : Direction.values()){
 				if(perso.caseDisponible(d)){
 					perso.setDirection(d);
@@ -47,8 +47,17 @@ public class PrimitivesAction extends Primitives{
 			}
 		}		
 	}
-	
+	/**
+	 * Donne la direction du chemin le plus court vers le pacman
+	 * */
 	public void directionCheminPlusCourt(Personnage perso){
+		
+		
+	}
+	/**
+	 * Reçoit un ordre du Fantôme Lord et avance vers la case désignée tant qu'il ne l'a pas atteinte
+	 * */
+	public void avancerVers(){
 		
 		
 	}

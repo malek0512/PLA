@@ -19,6 +19,7 @@ public class Ghost extends Personnage {
 	public static List<Ghost> liste = new LinkedList<Ghost>();
 	final int vision = 5;
 	private int compteurAction=4;
+	private boolean control;
 
 	/**
 	 * Structure qui repertorie l'ensemble des information d'un PM en fuite
@@ -57,4 +58,16 @@ public class Ghost extends Personnage {
 	public int getCompteurAction(){
 		return this.compteurAction;
 	}
+	
+	public boolean getControle(){
+		return control;
+	}
+	
+	
+	public void setControl(boolean a){
+		control=a;
+		
+	}
+	
+	
 }

@@ -21,6 +21,7 @@ public abstract class Personnage{
 
 	protected static float tauxDeDeplacement = (float) 0.5; //la taille du deplacement du personnage
 	protected static Terrain terrain;
+	private boolean isAlive;
 
 	public static List<Personnage> liste = new LinkedList<Personnage>();
 	
@@ -208,8 +209,17 @@ public abstract class Personnage{
 	public Direction getOrientation(){
 		return this.direction;
 	}
-	
-
+	/**
+	 * @return Si le fantome est vivant*/
+	public boolean getisAlive(){
+		return isAlive;
+	}
+	/**
+	 * Met à jour l'état vivant ou mort du fantome*/
+	public void setIsAlive(boolean a){
+		isAlive=a;
+		
+	}
 	
 	/**
 	 * @return String contenant le terrain et le personnage

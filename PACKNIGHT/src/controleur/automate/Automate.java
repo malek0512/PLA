@@ -37,6 +37,9 @@ public class Automate extends Controleur {
 	public final static int INTERSECTION = 7;
 	public final static int NON_INTERSECTION = 8;
 	public final static int CASE_ATTEINTE=9;
+	public final static int EST_MORT=10;
+	public final static int VIVANT_FREE=11;
+	public final static int VIVANT_NON_FREE=12;
 	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
 	public final static int AVANCER = 0;
@@ -49,7 +52,8 @@ public class Automate extends Controleur {
 	public final static int DIRECTION_ALEATOIRE = 7;
 	public final static int PROCHAINE_DIRECTION = 8;
 	public final static int CHEMIN_PLUS_COURT=9;
-	
+	public final static int AVANCER_VERS=10;
+	public final static int END_LIFE=11;
 	
 	
 	TableTransitionSortie tableTransitionSortie;
@@ -129,7 +133,8 @@ public class Automate extends Controleur {
 		case Automate.BAS: personnage.setDirection(Direction.bas); break;
 		case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
 		case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
-		
+		case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
+		case Automate.AVANCER_VERS: primitivesAction.avancerVers(); break;
 		
 		}
 		incrementerTransition();
@@ -166,8 +171,12 @@ public class Automate extends Controleur {
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
 				case PM_DANS_RAYON_X : int X=primitivesTest.dansRayon(3); if (X!=-1) return X; break;
 				case INTERSECTION: if(primitivesTest.estIntersection()) return INTERSECTION; break;
-				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; else return NON_PM_DANS_CROIX;
-				case NON_PM_DANS_CROIX: if(!primitivesTest.dansCroix()) return NON_PM_DANS_CROIX;
+				case NON_INTERSECTION: if(!primitivesTest.estIntersection()) return NON_INTERSECTION; break;
+				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; break;
+				case NON_PM_DANS_CROIX: if(!primitivesTest.dansCroix()) return NON_PM_DANS_CROIX; break;
+				case EST_MORT: if(primitivesTest.isDead()) return EST_MORT; break;
+				case VIVANT_FREE: if(!primitivesTest.isDead() && !primitivesTest.isControled()) return VIVANT_FREE; break;
+				case VIVANT_NON_FREE: if(!primitivesTest.isDead() && primitivesTest.isControled()) return VIVANT_NON_FREE; break;
 			//	}
 			}
 		}
