@@ -2,29 +2,24 @@ package controleur.automate;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import controleur.Controleur;
 import controleur.automate.TableTransitionSortie.Triplet;
 import src.parser.Parser;
 import src.parser.Quad;
-import personnages.Coordonnees;
 import personnages.Direction;
+import personnages.Ghost;
 import personnages.Personnage;
 
 /**
- * Toute primitive de test doit etre ajoutée dans cette classe, et se voit attribuée, une constante en public.
+ * Toute primitive de test doit etre ajoutée dans PrimitivesTest, et se voit attribuée, une constante en public, ci dessous.
  * Une fois ajoutée en fin de fichier: 
  * 		* Ajouter un "case CONSTANTE : le_nom_de_votre_fct();" (dans la fonction getEntree())
  * 		* Ajouter un "case CONSTANTE : le_nom_de_votre_fct_action();" (dans la fonction suivant())
- * Toute primitive de sortie (d'action), se voit aussi attribué une constante en public, comme ci-dessous.
- * Un automate dispose de toute les fonctions (primitive) de test, renseigné ci dessous. Cependant les primitives
- * d'action (sortie) sont renseigné dans le personnage. Puisque tous les personnage ne possèdent pas les mêmes 
- * facultés. 
+ * Toute primitive de sortie (d'action) est ajoutée dans PrimitivesAction , se voit aussi attribué une constante en public, comme ci-dessous.
+ * Un automate dispose de toute les fonctions (primitive) de test, renseigné ci dessous. 
  * @author malek
  */
 public class Automate extends Controleur {
@@ -42,6 +37,11 @@ public class Automate extends Controleur {
 	public static final int NON_PM_DANS_CROIX = 6;
 	public final static int INTERSECTION = 7;
 	public final static int NON_INTERSECTION = 8;
+	public final static int CASE_ATTEINTE=9;
+	public final static int EST_MORT=10;
+	public final static int VIVANT_FREE=11;
+	public final static int VIVANT_NON_FREE=12;
+	public final static int ETOILE=13;
 	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
 	public final static int AVANCER = 0;
@@ -52,19 +52,24 @@ public class Automate extends Controleur {
 	public final static int RECHERCHER_PACMAN = 5;
 	public final static int SUIVRE_PACMAN = 6;
 	public final static int DIRECTION_ALEATOIRE = 7;
-	
+	public final static int PROCHAINE_DIRECTION = 8;
+	public final static int CHEMIN_PLUS_COURT=9;
+	public final static int AVANCER_VERS=10;
+	public final static int END_LIFE=11;
+	public final static int SPAWN=12;
 	
 	
 	TableTransitionSortie tableTransitionSortie;
 	
 	private int etatCourant;
 	private int nbEtat;
-	private int nbEntree;
-	private int nbSortie;
+//	private int nbEntree;
+//	private int nbSortie;
 	private int nbTransition;
 //	private int nbTransitionMax;
 	private int etatInitial;
 	private List<Integer>etatsFinals;
+	private List<Integer>etatsBloquants;
 	
 	/*
 	 * Prend un fichier XML et remplie les attributs de l'automate
@@ -75,14 +80,9 @@ public class Automate extends Controleur {
 		Parser parser = new Parser(fichierXML);
 		
 		ArrayList<List<Quad>> liste = parser.parseTableau();
+		etatInitial = parser.parseEtatInitiale();
 		etatsFinals = parser.parseEtatFinal();
-//		for(List<Quad> n : liste){
-//			for(Quad q : n){
-//				System.out.println("Entree " + q.Entree + " ETSUIV " + q.EtatSuiv +" Sortie " + q.Sortie);
-//			}
-//		}
-//		System.out.println(liste);
-		
+		etatsBloquants = parser.parseEtatBloquant();
 		//Initialisations des attributs
 		this.nbEtat  = liste.size();
 //		this.nbTransition = 0;
@@ -126,7 +126,7 @@ public class Automate extends Controleur {
 	public void suivant() throws Exception {
 		int entreeAutomate = getEntree();
 		int sortieAutomate = effectuerTransition(entreeAutomate);
-		System.out.println(nbEntreeValide());
+//		System.out.println(nbEntreeValide());
 		switch (sortieAutomate) {
 		//TODO Ajouter chaque fonction d'action
 		case Automate.AVANCER: personnage.avancer(); break;
@@ -135,7 +135,10 @@ public class Automate extends Controleur {
 		case Automate.HAUT: personnage.setDirection(Direction.haut); break;
 		case Automate.BAS: personnage.setDirection(Direction.bas); break;
 		case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
-		
+		case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
+		case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
+		case Automate.AVANCER_VERS: primitivesAction.avancerVers(); break;
+		case Automate.SPAWN:personnage.respawn();break;
 		
 		}
 		incrementerTransition();
@@ -161,7 +164,7 @@ public class Automate extends Controleur {
 	 */ 
 	public int getEntree() throws Exception{
 		Map<Integer, Triplet> entries = tableTransitionSortie.getEtatAll(this.etatCourant);
-		//On parcout l'ensemble des Entree de l'automate, de l'etatCourant
+		//On parcours l'ensemble des Entree de l'automate, de l'etatCourant
 		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
 			Integer Entree = key.next();
 			//if ( entries.get(Entree).ok ){
@@ -170,15 +173,26 @@ public class Automate extends Controleur {
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) return CASE_LIBRE; break;
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) return CASE_OCCUPEE; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
-				case PM_DANS_RAYON_X : int X=primitivesTest.dansRayon(3); if (X!=-1) return X; break;
+				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return PM_DANS_RAYON_X; break;
 				case INTERSECTION: if(primitivesTest.estIntersection()) return INTERSECTION; break;
 				case NON_INTERSECTION: if(!primitivesTest.estIntersection()) return NON_INTERSECTION; break;
-				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; else return NON_PM_DANS_CROIX;
-				case NON_PM_DANS_CROIX: if(!primitivesTest.dansCroix()) return NON_PM_DANS_CROIX;
+				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; break;
+				case NON_PM_DANS_CROIX: if(!primitivesTest.dansCroix()) return NON_PM_DANS_CROIX; break;
+				case EST_MORT: if(primitivesTest.isDead()) return EST_MORT; break;
+				case VIVANT_FREE: if(!primitivesTest.isDead() && !primitivesTest.isControled()) return VIVANT_FREE; break;
+				case VIVANT_NON_FREE: if(!primitivesTest.isDead() && primitivesTest.isControled()) return VIVANT_NON_FREE; break;
+				case ETOILE: return ETOILE;
 			//	}
 			}
 		}
-		throw new Exception("Erreur dans l'automate. L'etat courant ne possède aucune entree valide");
+		
+		//Affichage des ENTREES dans le cas où : Aucune entree n'est valide  
+		String Erreur = "C'est l'ETAT " + this.etatCourant + ", voici toutes mes ENTREES : ";
+		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
+			Integer Entree = key.next(); Erreur += Entree.intValue();
+		}
+		System.out.println(Erreur);
+		throw new Exception("Erreur dans l'automate. L'etat courant ne possède aucune entree valide. Manque t-il une transition ?");
 	}
 
 	/**
@@ -200,7 +214,7 @@ public class Automate extends Controleur {
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) nb++; break;
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) nb++; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) nb++; break;
-				case PM_DANS_RAYON_X : if (primitivesTest.dansRayon(3)==PM_DANS_RAYON_X) nb++; break;
+				case PM_DANS_RAYON_X : if (primitivesTest.dansRayon(3)) nb++; break;
 				}
 			//}
 		}

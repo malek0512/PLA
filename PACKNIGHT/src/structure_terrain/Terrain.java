@@ -11,9 +11,9 @@ import personnages.Direction;
 import personnages.Personnage;
 
 
-public abstract class Terrain {
+public class Terrain {
 
-	protected Case[][] terrain;
+	public Case[][] terrain;
 	protected int hauteur;
 	protected int largeur;
 	
@@ -24,12 +24,12 @@ public abstract class Terrain {
 	 * @require les paramètre sont >= a 1
 	 * author : alex
 	 */
-	public Terrain(int hauteur, int largeur){
-		terrain=new Case[hauteur][largeur];
+	public Terrain(int largeur, int hauteur){
+		terrain=new Case[largeur][hauteur];
 		this.hauteur = hauteur;
 		this.largeur = largeur;
-		for(int i=0; i<hauteur; i++){
-			for(int j=0; j<largeur; j++){
+		for(int i=0; i<largeur; i++){
+			for(int j=0; j<hauteur; j++){
 				this.terrain[i][j] = new Case(1) ;
 			}
 		}
@@ -72,10 +72,10 @@ public abstract class Terrain {
 	public void afficher(){
 		int i,j;
 
-		for(i=0; i < terrain.length;i++){
+		for(i=0; i < this.hauteur;i++){
 			System.out.print(i + " ");
-			for(j=0; j < terrain[0].length;j++){
-				System.out.print(terrain[i][j].toString());
+			for(j=0; j < this.largeur;j++){
+				System.out.print(terrain[j][i].toString());
 			}
 			System.out.print("\n");
 		}
@@ -92,10 +92,10 @@ public abstract class Terrain {
 	{
 		switch(direction)
 		{
-		case haut : return terrain[coord.x+1][coord.y];
-		case bas : return terrain[coord.x-1][coord.y];
-		case droite : return terrain[coord.x][coord.y+1];
-		case gauche : return terrain[coord.x][coord.y-1];
+		case haut : return terrain[coord.x][coord.y-1];
+		case bas : return terrain[coord.x][coord.y+1];
+		case droite : return terrain[coord.x+1][coord.y];
+		case gauche : return terrain[coord.x-1][coord.y];
 		default:
 			break; 
 		}
@@ -125,17 +125,17 @@ public abstract class Terrain {
 	 * @require : les coordonnes sont dans le terrain
 	 * @param coord : coordonée de la case a regarder 
 	 * @param direction : direction de la case que l'on veut retourner
-	 * @return coordoné si avancer dans direction
+	 * @return coordonné si avancer dans direction
 	 * @author alex
 	 */
-	public Coordonnees getCoordone(Coordonnees coord,Direction direction)
+	public Coordonnees getCoordonnees(Coordonnees coord,Direction direction)
 	{
 		switch(direction)
 		{
-		case haut : return new Coordonnees(coord.x+1, coord.y);
-		case bas : return new Coordonnees(coord.x-1, coord.y);
-		case droite : return new Coordonnees(coord.x, coord.y+1);
-		case gauche : return new Coordonnees(coord.x, coord.y-1);
+		case haut : return new Coordonnees(coord.x, coord.y-1);
+		case bas : return new Coordonnees(coord.x, coord.y+1);
+		case droite : return new Coordonnees(coord.x+1, coord.y);
+		case gauche : return new Coordonnees(coord.x-1, coord.y);
 		default:
 			break; 
 		}

@@ -24,10 +24,11 @@ import controleur.automate.TableTransitionSortie;
 public class Parser {
    
 
-	private final String balise_Etat_Initial = "Etats_Initiaux"; //balise de l'état initiale
+	private final String balise_Etat_Initial = "Etat_Initial"; //balise de l'état initiale
 	private final String balise_Etat = "Etat"; //balise de l'état
 	private final String balise_Transition = "Transition"; //balise des transitions
 	private final String balise_Etat_Finaux = "Etats_Finals"; //balise des état final
+	private final String balise_Etat_Bloquant = "Etats_Bloquants";
 
 	private final String attribue_Etat_Numero = "Nom"; //nom de l'attribut de balise_etat
 	private final String attribue_Transition_Entree = "Entree"; //nom de l'attribut entree de balise_transition
@@ -219,4 +220,43 @@ public class Parser {
 	   	}
 	return liste;
    }
+   
+   /**
+    * ajoute avec la fonction "List.add()" la liste avec le numero des etats finaux
+    * @return liste of Integer : la liste des etats finals
+    * utiliser la fonction parseNombreEtat() de preference
+    */
+     public List<Integer> parseEtatBloquant()
+     {
+  	   List<Integer> liste = new LinkedList();
+
+  	 //On recup la liste des etats finaux
+  	   List<Element> listEtatFinal = racine.getChildren(balise_Etat_Bloquant);
+
+  	   //On crée un Iterator sur cette liste
+  	   Iterator<Element> i = listEtatFinal.iterator();
+
+  	   while (i.hasNext())
+  	   {
+  		   Element etat_finals = (Element)i.next();
+
+  		   //on recupere la liste des etats final mis dans la balise "Etats_Finals"
+  		   List<Element> listeEtat = etat_finals.getChildren(balise_Etat);
+
+  		   Iterator<Element> j = listeEtat.iterator();
+
+  		   while(j.hasNext())
+  		   {
+  			   //Recup le prochain etat a traiter
+  			   Element etat = (Element)j.next();
+
+  			   //Recup l'indice de l'état pour le tableau Transition
+  			   Integer Ietat = Integer.parseInt(etat.getAttributeValue(attribue_Etat_Numero));
+
+  			   //on ajoute a la liste d'état final létat trouver
+  			   liste.add(Ietat);
+  		   }
+  	   	}
+  	return liste;
+     }
 }

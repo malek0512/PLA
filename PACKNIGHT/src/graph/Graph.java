@@ -4,13 +4,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.naming.NamingEnumeration;
-
 import personnages.Coordonnees;
+import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Personnage;
 import structure_terrain.Terrain;
-import structure_terrain.Terrain1;
+//import structure_terrain.Terrain1;
+import structure_terrain.TerrainTest1;
 
 public class Graph {
 
@@ -26,7 +26,7 @@ public class Graph {
 		table = new Noeud[largeur][hauteur];
 	}
 	
-	public Graph(Terrain1 terrain) {
+	public Graph(TerrainTest1 terrain) {
 		largeur =terrain.getLargeur();
 		hauteur =terrain.getHauteur();
 		table = new Noeud[largeur][hauteur];
@@ -64,7 +64,7 @@ public class Graph {
 		if(Personnage.getTerrain().getCase(noeud , d).isAccessable())
 			{
 				nbInterSearch++;
-				file.add(Personnage.getTerrain().getCoordone(noeud,d));
+				file.add(Personnage.getTerrain().getCoordonnees(noeud,d));
 			}
 	}
 	
@@ -89,7 +89,7 @@ public class Graph {
 			{
 				if(Personnage.getTerrain().getCase(u,d).isAccessable())
 				{
-					Coordonnees v = Personnage.getTerrain().getCoordone(u,d); 
+					Coordonnees v = Personnage.getTerrain().getCoordonnees(u,d); 
 					Noeud adj = table[v.x][v.y];
 					if (adj.couleur==0) //blanc
 					{
@@ -125,12 +125,21 @@ public class Graph {
 	}
     return res;
     }
+    public List<CoordonneesFloat> a_star(CoordonneesFloat coordF, CoordonneesFloat coordP){
+    	
+    	Noeud init = table[coordF.intoInt().x][coordF.intoInt().y];
+    	Noeud fin= table[coordP.intoInt().x][coordF.intoInt().y];
+    	float dist=coordF.distance(coordP);
+		return null;
+    	
+    	
+    }
 
     public static void main(String[] args) {
-    	Terrain1 terrain = new Terrain1(10, 10);
+    	TerrainTest1 terrain = new TerrainTest1(10, 10);
     	Personnage.initTerrain(terrain); 
     	Coordonnees start = new Coordonnees(1,1);
-    	Graph g = new Graph(terrain);
+    	//Graph g = new Graph(terrain);
     	
     	List<Coordonnees> l = Graph.visiterLargeur(start,3);
     	
@@ -143,5 +152,7 @@ public class Graph {
     	terrain.afficher();
     			
     }
+    
+    
 	
 }
