@@ -4,8 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.naming.NamingEnumeration;
-
 import personnages.Coordonnees;
 import personnages.CoordonneesFloat;
 import personnages.Direction;
@@ -135,7 +133,7 @@ public class Graph {
     	TerrainTest1 terrain = new TerrainTest1(10, 10);
     	Personnage.initTerrain(terrain); 
     	Coordonnees start = new Coordonnees(1,1);
-    	Graph g = new Graph(terrain);
+    	//Graph g = new Graph(terrain);
     	
     	List<Coordonnees> l = Graph.visiterLargeur(start,3);
     	

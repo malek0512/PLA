@@ -64,10 +64,12 @@ public class PrimitivesAction extends Primitives{
 		Iterator<Pacman> i= res.iterator();
 		while(i.hasNext())
 		{
-			Graph g=new Graph(auto.getPersonnage().getTerrain());
+			auto.getPersonnage();
+			Graph g=new Graph(Personnage.getTerrain());
 			g.a_star(i.next().getCoord());
 			
 		}
+		
 		auto.getPersonnage().setDirection(Direction.haut);
 	}
 	/**
