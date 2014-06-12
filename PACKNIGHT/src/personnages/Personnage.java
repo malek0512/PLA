@@ -119,8 +119,6 @@ public abstract class Personnage{
 	{
 		if (estSurCase)
 		{
-			System.out.println("case actuelle :" + coordFloat);
-			System.out.println("case Destination :" + this.coordFloat.intoInt());
 			return Personnage.terrain.getCase(this.coordFloat.intoInt(), direction).isAccessable();
 		}
 		else if(direction == Direction.haut || direction == Direction.bas)
@@ -132,9 +130,7 @@ public abstract class Personnage{
 	private void majEstSurAxe()
 	{
 		estSurAxeX = (int) coordFloat.x == coordFloat.x;
-		System.out.println(coordFloat.x +""+ estSurAxeX);
 		estSurAxeY = (int) coordFloat.y == coordFloat.y;
-		System.out.println(coordFloat.y +""+ estSurAxeY);
 		estSurCase = estSurAxeX && estSurAxeY;
 	}
 	

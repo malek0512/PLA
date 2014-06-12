@@ -11,9 +11,9 @@ import personnages.Direction;
 import personnages.Personnage;
 
 
-public abstract class Terrain {
+public class Terrain {
 
-	protected Case[][] terrain;
+	public Case[][] terrain;
 	protected int hauteur;
 	protected int largeur;
 	
@@ -25,11 +25,11 @@ public abstract class Terrain {
 	 * author : alex
 	 */
 	public Terrain(int largeur, int hauteur){
-		terrain=new Case[hauteur][largeur];
+		terrain=new Case[largeur][hauteur];
 		this.hauteur = hauteur;
 		this.largeur = largeur;
-		for(int i=0; i<hauteur; i++){
-			for(int j=0; j<largeur; j++){
+		for(int i=0; i<largeur; i++){
+			for(int j=0; j<hauteur; j++){
 				this.terrain[i][j] = new Case(1) ;
 			}
 		}
@@ -72,10 +72,10 @@ public abstract class Terrain {
 	public void afficher(){
 		int i,j;
 
-		for(i=0; i < terrain.length;i++){
+		for(i=0; i < this.hauteur;i++){
 			System.out.print(i + " ");
-			for(j=0; j < terrain[0].length;j++){
-				System.out.print(terrain[i][j].toString());
+			for(j=0; j < this.largeur;j++){
+				System.out.print(terrain[j][i].toString());
 			}
 			System.out.print("\n");
 		}

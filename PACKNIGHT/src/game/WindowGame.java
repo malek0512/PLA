@@ -9,6 +9,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
@@ -16,10 +17,26 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
 
 import personnages.*;
-import structure_terrain.Niveau1;
-import structure_terrain.Terrain;
+import structure_terrain.*;
 
 public class WindowGame extends BasicGame {
+	
+	
+	private String SPRITE = "PACMAN-SPRITES2.png";
+	private String MAP = "FATMAP.tmx";
+	private String MUSIC = "AllBeat.ogg";
+	
+	public static int largueur = 28, hauteur = 15;
+	public static int tuile_size = 32;
+	public static int largueur_map = 50, hauteur_map = 28;
+	int taillePersonnage =32;
+	
+	PacKnight pacman = new PacKnight("j1",1,1,Direction.droite);
+	
+	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
+	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
+	private String CHEMIN_MUSIC = "src/graphisme/main/ressources/music/";
+			
     private GameContainer container;
 	private TiledMap map;
 	private float x = 448, y = 320;
@@ -27,13 +44,8 @@ public class WindowGame extends BasicGame {
 	private int direction = 0;
 	private boolean moving = false;
 	private Animation[] animations = new Animation[8];
-	public static int largueur = 28, hauteur = 15;
-	public static int tuile_size = 32;
-	public static int largueur_map = 28, hauteur_map = 31;
-	int taillePersonnage =32;
-	int zonePersonnage = 5;
 	Music M;
-	PacKnight pacman = new PacKnight("j1",1,1,Direction.droite);
+	protected CoordonneesFloat coordFloat;
 	
 	public WindowGame() {
         super("PACKNIGHT : THE RETURN");
@@ -41,11 +53,27 @@ public class WindowGame extends BasicGame {
 
     public void init(GameContainer container) throws SlickException {
         this.container = container;
-        Terrain terrain = new Niveau1();
-        terrain.afficher();
+        Terrain terrain = new Terrain(largueur_map,hauteur_map);
         Personnage.initTerrain(terrain);
-        this.map = new TiledMap("src/graphisme/main/ressources/map/PACMAN2.tmx");
-        SpriteSheet spriteSheet = new SpriteSheet("src/graphisme/main/ressources/map/sprites/PACMAN-SPRITES2.png", taillePersonnage, taillePersonnage);
+        this.map = new TiledMap(CHEMIN_MAP.concat(MAP));
+        
+		coordFloat = new CoordonneesFloat(0,0);
+    			for(int i=0;i<largueur_map;i++)
+    			{
+    				for(int j=0;j<hauteur_map;j++)
+    				{
+    			        Image tile = this.map.getTileImage((int)coordFloat.x,(int)coordFloat.y,this.map.getLayerIndex("logic"));
+    			        boolean vide = tile != null;
+    			        if (vide) terrain.terrain[i][j] = new Case(0);
+    			        else terrain.terrain[i][j] = new Case(1);
+    			        coordFloat.y += 1;
+    				}
+    				coordFloat.x += 1;
+    				coordFloat.y =0;
+    			}
+    	        terrain.afficher();		
+    			
+        SpriteSheet spriteSheet = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE), taillePersonnage, taillePersonnage);
         this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
         this.animations[1] = loadAnimation(spriteSheet, 0, 1, 1);
         this.animations[2] = loadAnimation(spriteSheet, 0, 1, 2);
@@ -54,7 +82,7 @@ public class WindowGame extends BasicGame {
         this.animations[5] = loadAnimation(spriteSheet, 1, 9, 1);
         this.animations[6] = loadAnimation(spriteSheet, 1, 9, 2);
         this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
-        Music background = new Music("src/graphisme/main/ressources/music/AllBeat.ogg");
+        Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
         M = background;
         M.loop();
     }
@@ -69,6 +97,7 @@ public class WindowGame extends BasicGame {
     public void update(GameContainer container, int delta) throws SlickException {
         if (pacman.caseDevantDisponible())
         	pacman.avancer();
+    /*
         else
         {
         if(pacman.getOrientation()==Direction.haut)
@@ -80,7 +109,7 @@ public class WindowGame extends BasicGame {
         else if(pacman.getOrientation()==Direction.gauche)
         	pacman.setDirection(Direction.haut);
         }
-
+	*/
         float w = container.getWidth() / 4;
         if (pacman.getCoord().pixelX() > (this.xCamera + w) && (pacman.getCoord().pixelX() + w  <  largueur_map*tuile_size))
         	this.xCamera = pacman.getCoord().pixelX() - w;
@@ -117,26 +146,6 @@ public class WindowGame extends BasicGame {
 	    
 	    
 	    }
-	}
-	
-//Useless pour l'instant
-
-	private float getFuturX(int delta) {
-	    float futurX = this.x;
-	    switch (this.direction) {
-	    case 1: futurX = this.x - .1f * delta; break;
-	    case 3: futurX = this.x + .1f * delta; break;
-	    }
-	    return futurX;
-	}
-	
-	private float getFuturY(int delta) {
-	    float futurY = this.y;
-	    switch (this.direction) {
-	    case 0: futurY = this.y - .1f * delta; break;
-	    case 2: futurY = this.y + .1f * delta; break;
-	    }
-	    return futurY;
 	}
 	
 }
