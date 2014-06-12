@@ -13,9 +13,11 @@ package src.parser;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.jdom2.*;
 import org.jdom2.input.*;
@@ -77,10 +79,10 @@ public class Parser {
     * 
     * author : Alex
     */
-   public ArrayList<List<Quad>> parseTableau() //int tabTrans[][],int tabSort[][])
+   public Map<String,List<Quad>> parseTableau() //int tabTrans[][],int tabSort[][])
 	{
 
-	   ArrayList<List<Quad>>transitionSortie = new ArrayList<List<Quad>> ();
+	   Map<String,List<Quad>>transitionSortie = new HashMap<String,List<Quad>> ();
 
 	   //On crée la liste d'etat
 	   List<Element> listEtat = racine.getChildren(balise_Etat);
@@ -92,11 +94,11 @@ public class Parser {
 		   //Recup le prochain etat a traiter
 		   Element etat = (Element)i.next();
 		   //Recup l'indice de l'état pour le tableau Transition
-		   Integer Ietat = Integer.parseInt(etat.getAttributeValue(attribue_Etat_Numero));
+		   String Ietat = (etat.getAttributeValue(attribue_Etat_Numero));
 
-		   System.out.println(Ietat.intValue()); //Ici erreur car pointeur null
+//		   System.out.println(Ietat.intValue()); //Ici erreur car pointeur null
 		   //Initialisation d'une liste d'entree de l'Ietat
-		   transitionSortie.add(Ietat, new LinkedList<Quad>());
+		   transitionSortie.put(Ietat, new LinkedList<Quad>());
 
 		   //Meme action mais pour transition
 		   List<Element> listTransition = etat.getChildren(balise_Transition);
@@ -105,10 +107,10 @@ public class Parser {
 		   {
 			   Element transition = (Element)j.next(); 
 			   Integer Ientree = Integer.parseInt(transition.getAttributeValue(attribue_Transition_Entree));
-			   Integer Iarriver = Integer.parseInt(transition.getAttributeValue(attribue_Transition_EtatArriver));
+			   String Iarriver = (transition.getAttributeValue(attribue_Transition_EtatArriver));
 			   Integer Isortie = Integer.parseInt(transition.getAttributeValue(attribue_Transition_Sortie));
 
-			   transitionSortie.get(Ietat).add(new Quad(true, Ientree, Iarriver, Isortie));
+			   transitionSortie.get(Ietat).add(new Quad(Ientree, Iarriver, Isortie));
 			   //tabSort[Ietat][Ientree] = Isortie;
 			   //tabTrans[Ietat][Ientree] = Iarriver;
 		   }
@@ -160,9 +162,9 @@ public class Parser {
     * si l'état initial n'a pas était trouvé renvoie -1
     * author : Alex
     */
-   public int parseEtatInitiale()
+   public String parseEtatInitiale()
    {
-	   List<Integer> liste = new LinkedList();
+	   List<String> list = new LinkedList<String>();
 
 	 //On recup la liste des etats finaux
 	   List<Element> listEtatFinal = racine.getChildren(balise_Etat_Initial);
@@ -185,13 +187,13 @@ public class Parser {
 			   Element etat = (Element)j.next();
 
 			   //Recup l'indice de l'état pour le tableau Transition
-			   Integer Ietat = Integer.parseInt(etat.getAttributeValue(attribue_Etat_Numero));
+			   String Ietat = (etat.getAttributeValue(attribue_Etat_Numero));
 
 			   //on ajoute a la liste d'état final létat trouver
-			   liste.add(Ietat);
+			   list.add(Ietat);
 		   }
 	   	}
-	return liste.get(0);
+	return list.get(0);
    }
    
  /**
@@ -199,9 +201,9 @@ public class Parser {
   * @return liste of Integer : la liste des etats finals
   * utiliser la fonction parseNombreEtat() de preference
   */
-   public List<Integer> parseEtatFinal()
+   public List<String> parseEtatFinal()
    {
-	   List<Integer> liste = new LinkedList();
+	   List<String> liste = new LinkedList<String>();
 
 	 //On recup la liste des etats finaux
 	   List<Element> listEtatFinal = racine.getChildren(balise_Etat_Finaux);
@@ -224,7 +226,7 @@ public class Parser {
 			   Element etat = (Element)j.next();
 
 			   //Recup l'indice de l'état pour le tableau Transition
-			   Integer Ietat = Integer.parseInt(etat.getAttributeValue(attribue_Etat_Numero));
+			   String Ietat = (etat.getAttributeValue(attribue_Etat_Numero));
 
 			   //on ajoute a la liste d'état final létat trouver
 			   liste.add(Ietat);
@@ -238,9 +240,9 @@ public class Parser {
     * @return liste of Integer : la liste des etats finals
     * utiliser la fonction parseNombreEtat() de preference
     */
-     public List<Integer> parseEtatBloquant()
+     public List<String> parseEtatBloquant()
      {
-  	   List<Integer> liste = new LinkedList();
+  	   List<String> liste = new LinkedList<String>();
 
   	 //On recup la liste des etats finaux
   	   List<Element> listEtatFinal = racine.getChildren(balise_Etat_Bloquant);
@@ -263,7 +265,7 @@ public class Parser {
   			   Element etat = (Element)j.next();
 
   			   //Recup l'indice de l'état pour le tableau Transition
-  			   Integer Ietat = Integer.parseInt(etat.getAttributeValue(attribue_Etat_Numero));
+  			 String Ietat = (etat.getAttributeValue(attribue_Etat_Numero));
 
   			   //on ajoute a la liste d'état final létat trouver
   			   liste.add(Ietat);

@@ -33,7 +33,7 @@ public class Automate extends Controleur {
 	public final static int CASE_GHOST = 3;
 	public final static int PM_DANS_RAYON_X = 4;
 	public final static int PM_DANS_CROIX = 5;
-	public static final int NON_PM_DANS_CROIX = 6;
+	public final static int NON_PM_DANS_CROIX = 6;
 	public final static int INTERSECTION = 7;
 	public final static int NON_INTERSECTION = 8;
 	
@@ -52,15 +52,15 @@ public class Automate extends Controleur {
 	
 	TableTransitionSortie tableTransitionSortie;
 	
-	private int etatCourant;
+	private String etatCourant;
 	private int nbEtat;
 //	private int nbEntree;
 //	private int nbSortie;
 	private int nbTransition;
 //	private int nbTransitionMax;
-	private int etatInitial;
-	private List<Integer>etatsFinals;
-	private List<Integer>etatsBloquants;
+	private String etatInitial;
+	private List<String>etatsFinals;
+	private List<String>etatsBloquants;
 	
 	/*
 	 * Prend un fichier XML et remplie les attributs de l'automate
@@ -70,16 +70,17 @@ public class Automate extends Controleur {
 		
 		Parser parser = new Parser(fichierXML);
 		
-		ArrayList<List<Quad>> liste = parser.parseTableau();
+		Map<String,List<Quad>> liste = parser.parseTableau();
 		etatInitial = parser.parseEtatInitiale();
 		etatsFinals = parser.parseEtatFinal();
+		System.out.println(etatsFinals);
 		etatsBloquants = parser.parseEtatBloquant();
 		//Initialisations des attributs
 		this.nbEtat  = liste.size();
 //		this.nbTransition = 0;
 //		this.nbTransitionMax = Integer.MAX_VALUE; //A Virer
 		this.personnage = p;
-		this.etatCourant = 0;
+		this.etatCourant = etatInitial;
 		
 		
 		//Initialisation des la table d'entree sortie
@@ -210,14 +211,14 @@ public class Automate extends Controleur {
 	 * @author malek
 	 */
 	public void reinitialiserAutomate(){
-		etatCourant = 0;
+		etatCourant = etatInitial;
 	}
 	
 	/**
 	 * @return Etat courant
 	 * @author malek
 	 */
-	public int getEtatCourant() {
+	public String getEtatCourant() {
 		return etatCourant;
 	}	
 
