@@ -17,7 +17,7 @@ public class Ghost extends Personnage {
 	
 	
 	public static List<Ghost> liste = new LinkedList<Ghost>();
-	final int vision = 5;
+	private final float vision = 5;
 	private int compteurAction=4;
 	private boolean control;
 
@@ -66,6 +66,16 @@ public class Ghost extends Personnage {
 	
 	public void setControl(boolean a){
 		control=a;
+		
+	}
+
+	public float getVision() {
+		return vision;
+	}
+
+	@Override
+	public void respawn() {
+		// TODO Auto-generated method stub
 		
 	}
 	

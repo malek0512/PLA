@@ -38,8 +38,6 @@ public abstract class Personnage{
 		return terrain;
 	}
 	
-	
-	
 	/**
 	 * Test si un objet est en contact d'un pacman
 	 * author : alex
@@ -220,6 +218,13 @@ public abstract class Personnage{
 		isAlive=a;
 		
 	}
+	
+	/**
+	 * fait revivre le pacman
+	 * NEED : determiner ou se situe les points de respawn
+	 * author : alex
+	 */
+	public abstract void respawn();
 	
 	/**
 	 * @return String contenant le terrain et le personnage

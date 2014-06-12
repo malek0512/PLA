@@ -66,11 +66,5 @@ public abstract class Pacman extends Personnage {
 	 */
 	public abstract void meurtDansDatroceSouffrance();
 	
-	/**
-	 * fait revivre le pacman
-	 * NEED : determiner ou se situe les points de respawn
-	 * author : alex
-	 */
-	public abstract void respawn();
 	
 }
