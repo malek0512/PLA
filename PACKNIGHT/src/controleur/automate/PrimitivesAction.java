@@ -1,8 +1,12 @@
 package controleur.automate;
 
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
+
 import personnages.Direction;
+import personnages.Pacman;
 import personnages.Personnage;
 
 /**
@@ -51,7 +55,8 @@ public class PrimitivesAction extends Primitives{
 	 * Donne la direction du chemin le plus court vers le pacman
 	 * */
 	public void directionCheminPlusCourt(Personnage perso){
-		
+		List<Pacman> res = new LinkedList<Pacman>();
+		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
 		
 	}
 	/**
