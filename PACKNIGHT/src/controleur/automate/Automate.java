@@ -40,6 +40,7 @@ public class Automate extends Controleur {
 	public final static int EST_MORT=10;
 	public final static int VIVANT_FREE=11;
 	public final static int VIVANT_NON_FREE=12;
+	public final static int ETOILE=13;
 	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
 	public final static int AVANCER = 0;
@@ -170,7 +171,7 @@ public class Automate extends Controleur {
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) return CASE_LIBRE; break;
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) return CASE_OCCUPEE; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
-				case PM_DANS_RAYON_X : int X=primitivesTest.dansRayon(3); if (X!=-1) return X; break;
+				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(3)) return PM_DANS_RAYON_X; break;
 				case INTERSECTION: if(primitivesTest.estIntersection()) return INTERSECTION; break;
 				case NON_INTERSECTION: if(!primitivesTest.estIntersection()) return NON_INTERSECTION; break;
 				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; break;
@@ -178,6 +179,7 @@ public class Automate extends Controleur {
 				case EST_MORT: if(primitivesTest.isDead()) return EST_MORT; break;
 				case VIVANT_FREE: if(!primitivesTest.isDead() && !primitivesTest.isControled()) return VIVANT_FREE; break;
 				case VIVANT_NON_FREE: if(!primitivesTest.isDead() && primitivesTest.isControled()) return VIVANT_NON_FREE; break;
+				case ETOILE: return ETOILE;
 			//	}
 			}
 		}
@@ -210,7 +212,7 @@ public class Automate extends Controleur {
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) nb++; break;
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) nb++; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) nb++; break;
-				case PM_DANS_RAYON_X : if (primitivesTest.dansRayon(3)==PM_DANS_RAYON_X) nb++; break;
+				case PM_DANS_RAYON_X : if (primitivesTest.dansRayon(3)) nb++; break;
 				}
 			//}
 		}

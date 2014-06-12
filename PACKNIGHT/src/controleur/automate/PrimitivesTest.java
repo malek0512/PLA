@@ -24,13 +24,13 @@ public class PrimitivesTest extends Primitives {
 
 	/**
 	 * Fonction de test Automate.PM_DANS_RAYON_X
-	 * @param rayon
+	 * @param d
 	 * @return True si un ou plusieurs pacman sont dans le rayon 
 	 */
-	protected boolean dansRayon(float rayon) {
+	protected boolean dansRayon(float d) {
 		int n=0;
 		List<Pacman> res = new LinkedList<Pacman>();
-		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),rayon);
+		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
 		Iterator<Pacman> i= res.iterator();
 		while(i.hasNext())
 		{
