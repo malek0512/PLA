@@ -125,7 +125,13 @@ public class Graph {
 	}
     return res;
     }
-    public void a_star(CoordonneesFloat coord){
+    public List<CoordonneesFloat> a_star(CoordonneesFloat coordF, CoordonneesFloat coordP){
+    	
+    	Noeud init = table[coordF.intoInt().x][coordF.intoInt().y];
+    	Noeud fin= table[coordP.intoInt().x][coordF.intoInt().y];
+    	float dist=coordF.distance(coordP);
+		return null;
+    	
     	
     }
 
