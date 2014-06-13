@@ -16,11 +16,11 @@ public class TestRobot2 {
 	public static void main(String[] args) throws Exception {
 		PM = new RobotIdiot(0,0,Direction.bas);
 		//Automate a = new Automate(); //"Fichier.xml");
-		Automate a = new Automate("Automate/Fichier.xml", PM);
+		Automate a = new Automate("Automate/Fantome.xml", PM);
 		
 		System.out.println(a.tableTransSortie());
 		//PM.insererAutomate(a);
-		Terrain terrain = new TerrainTest1(6, 7);
+		Terrain terrain = new TerrainTest1(6, 6);
 		Personnage.initTerrain(terrain);
 		//a.setPersonnage(PM);
 		while ( /*a.getEntree() != Automate.SORTIE_TERRAIN || */!a.isEtatFinal()){

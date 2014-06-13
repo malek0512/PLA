@@ -61,7 +61,7 @@ public abstract class Personnage{
 	
 	//coordonne du personnage en pixel
 	//La coordonne corespond au pixel Haut-Gauche !!!
-	protected CoordonneesFloat coord; 
+	protected CoordonneesFloat coord;
 	protected String nom; //nom du personnage
 	protected Direction direction; //direction actuelle du personnage
 	protected boolean vivant; //si le personnage est vivia
