@@ -26,7 +26,7 @@ public abstract class Pacman extends Personnage {
 		Iterator<Pacman> i= Pacman.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coordFloat))
+			if(position.equals(i.next().coord))
 				return true;
 		}
 		return false;
@@ -42,14 +42,14 @@ public abstract class Pacman extends Personnage {
 		while(i.hasNext())
 		{
 			Pacman p = i.next();
-			if(position.equals(p.coordFloat))
+			if(position.equals(p.coord))
 				return p;
 		}
 		return null;
 	}
 	
 	
-	public Pacman(String nom, float x, float y, Direction d){
+	public Pacman(String nom, int x, int y, Direction d){
 		super(nom,x,y,d);
 		Pacman.liste.add((Pacman) this);
 	}

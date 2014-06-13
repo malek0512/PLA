@@ -88,14 +88,14 @@ public class Terrain {
 	 * @return case si avancer dans direction
 	 * @author alex
 	 */
-	public Case getCase(Coordonnees coord,Direction direction)
+	public Case getCase(int x, int y,Direction direction)
 	{
 		switch(direction)
 		{
-		case haut : return terrain[coord.x][coord.y-1];
-		case bas : return terrain[coord.x][coord.y+1];
-		case droite : return terrain[coord.x+1][coord.y];
-		case gauche : return terrain[coord.x-1][coord.y];
+		case haut : return terrain[x][y-1];
+		case bas : return terrain[x][y+1];
+		case droite : return terrain[x+1][y];
+		case gauche : return terrain[x-1][y];
 		default:
 			break; 
 		}

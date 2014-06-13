@@ -20,7 +20,6 @@ import personnages.*;
 import structure_terrain.*;
 
 //demande de "git add" cette classe afin de pouvor tester :)
-import structure_terrain.Niveau1;
 import structure_terrain.Terrain;
 	
 
@@ -67,21 +66,17 @@ public class WindowGame extends BasicGame {
         Terrain terrain = new Terrain(largueur_map,hauteur_map);
         Personnage.initTerrain(terrain);
         
-		coordFloat = new CoordonneesFloat(0,0);
-    			for(int i=0;i<largueur_map;i++)
-    			{
-    				for(int j=0;j<hauteur_map;j++)
-    				{
-    			        Image tile = this.map.getTileImage((int)coordFloat.x,(int)coordFloat.y,this.map.getLayerIndex("logic"));
-    			        boolean vide = tile != null;
-    			        if (vide) terrain.terrain[i][j] = new Case(0);
-    			        else terrain.terrain[i][j] = new Case(1);
-    			        coordFloat.y += 1;
-    				}
-    				coordFloat.x += 1;
-    				coordFloat.y =0;
-    			}
-    	        terrain.afficher();		
+		for(int i=0;i<largueur_map;i++)
+		{
+			for(int j=0;j<hauteur_map;j++)
+			{
+		        Image tile = this.map.getTileImage(i,j,this.map.getLayerIndex("logic"));
+		        boolean vide = tile != null;
+		        if (vide) terrain.terrain[i][j] = new Case(0);
+		        else terrain.terrain[i][j] = new Case(1);
+			}
+		}
+        terrain.afficher();		
     			
         SpriteSheet spriteSheet = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE), taillePersonnage, taillePersonnage);
         this.animations[0] = loadAnimation(spriteSheet, 0, 1, 0);
@@ -105,8 +100,8 @@ public class WindowGame extends BasicGame {
     }
 
     public void update(GameContainer container, int delta) throws SlickException {
-        if (pacman.caseDevantDisponible())
-        	pacman.avancer();
+        //if (pacman.caseDevantDisponible())
+        pacman.avancer();
     /*
         else
         {
@@ -146,10 +141,10 @@ public class WindowGame extends BasicGame {
 
 	public void keyReleased(int key, char c) {
 	    switch (key) {
-	    case Input.KEY_UP:    pacman.setDirection(Direction.haut); this.direction= 0; this.moving = true; pacman.isMoving=true; break;
-	    case Input.KEY_LEFT:  pacman.setDirection(Direction.gauche);this.direction= 1; this.moving = true;pacman.isMoving=true; break;
-	    case Input.KEY_DOWN:  pacman.setDirection(Direction.bas);this.direction= 2; this.moving = true; pacman.isMoving=true; break;
-	    case Input.KEY_RIGHT: pacman.setDirection(Direction.droite);this.direction= 3; this.moving = true; pacman.isMoving=true; break;
+	    case Input.KEY_UP:    pacman.setDirection(Direction.haut); this.direction= 0; this.moving = true; break;
+	    case Input.KEY_LEFT:  pacman.setDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
+	    case Input.KEY_DOWN:  pacman.setDirection(Direction.bas);this.direction= 2; this.moving = true; break;
+	    case Input.KEY_RIGHT: pacman.setDirection(Direction.droite);this.direction= 3; this.moving = true; break;
 	    case Input.KEY_ESCAPE:container.exit(); break;
 	    case Input.KEY_S:     this.moving = false; break;
 	    case Input.KEY_M: if(this.M.playing()) this.M.pause() ;else this.M.resume(); break;
