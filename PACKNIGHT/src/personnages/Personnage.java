@@ -1,103 +1,61 @@
-/**
- * Edit :
- * J'ai mit la fonction personnage en abstract, elle doit pas etre instancier
- * j'ai mit la fonction d'init terrain en final, qu'on puisse l'utiliser sans passer par une instance
- * d'une fonction ^^ et pour qu'on puisse l'appeler que par Personnage
- */
-
 package personnages;
-
-
-
-
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import structure_terrain.*;
-
+import hitBoxManager.*;
 
 public abstract class Personnage{
 
-	protected static float tauxDeDeplacement = (float) 0.5; //la taille du deplacement du personnage
+	protected static int tauxDeDeplacement = 1; //la taille du deplacement du personnage en pixel
 	protected static Terrain terrain;
-	private boolean isAlive;
-
 	public static List<Personnage> liste = new LinkedList<Personnage>();
+
+	//coordonne du personnage en pixel
+	//La coordonne corespond au pixel Haut-Gauche !!!
+	protected CoordonneesFloat coord;
+	protected String nom; //nom du personnage
+	protected Direction direction; //direction actuelle du personnage
+	protected boolean isAlive; //si le personnage est vivant
 	
-	/**
-	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
-	 * @author malek
-	 */
-	static public void initTerrain(Terrain terrain){
-		Personnage.terrain = terrain; 
-	}
-	
-	//get terrain
-	public static Terrain getTerrain() {
-		return terrain;
-	}
-	
-	/**
-	 * Test si un objet est en contact d'un pacman
-	 * author : alex
-	 * @param cord : coordonée de l'objet a tester
-	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquer
-	 */
-	static public boolean personnagePresent(CoordonneesFloat position)
-	{
-		Iterator<Personnage> i= Personnage.liste.iterator();
-		while(i.hasNext())
-		{
-			if(HitBoxManager.hitting(i.next().coordFloat, position))
-				return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * @param position a tester
-	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null
-	 */
-	static public Personnage personnageReference(CoordonneesFloat position)
-	{
-		Iterator<Personnage> i= Personnage.liste.iterator();
-		while(i.hasNext())
-		{
-			Personnage p = i.next();
-			if(position.equals(p.coordFloat))
-				return p;
-		}
-		return null;
-	}
-	
-	/**
-	 * Pour la gestion des collision
-	 */
-	boolean estSurAxeX; //vraie si la coord x est à 0
-	boolean estSurAxeY; //vraie si la coord y est à 0
-	protected CoordonneesFloat coordFloat;
-	boolean estSurCase; //vraie si et seulement si les boolean estSurAxe(X ou Y) sont vrai
-	protected String nom;
-	public boolean isMoving;
-	// protected Coordonnees coord; a supprimer
-	protected Direction direction;
-	protected boolean vivant;
 	/**
 	 * Donne un nom, une poisition et une direction au personnage
 	 * Ajoute le personnage a la liste des perso
 	 * @author malek
 	 */
-	public Personnage(String nom, float x, float y, Direction d){
+	public Personnage(String nom, int x, int y, Direction d){
 		this.nom = new String(nom);
 		this.setCoord(new CoordonneesFloat(x,y));
 		this.direction = d;
-		this.estSurAxeX=true;
-		this.estSurAxeY=true;
-		this.estSurCase=true;
-		this.isMoving = false;
 		Personnage.liste.add(this);
 	}
+
+	/*
+	// TODO private boolean collisionTiles()
+	{
+		//vérifier si un coin de l'image touche un mur?
+		//pixel haut gauche
+		i1 = cord.x/lageur_tile;
+		j1 = cord.y/hauteur_tile;
+		
+		//pixel bas droite
+		i2 = (cord.x + skin_largeur -1)/largeur_tile;
+		j2 = (cord.y + skin_hauteur -1)/hauteur_tile;
+		
+		
+		/**
+		 * pour tester chaque pixel
+		 */
+		/*
+		for(int i=i1; i<=i2; i++)
+		{
+			for(int j=j1; j<=j2;j++)
+			{
+				if(TileIsMur(i,j)
+					return true;
+			}
+		}
+		*/
 	
 	/**
 	 * renvoie vrai si la case devant this est disponible
@@ -116,23 +74,12 @@ public abstract class Personnage{
 	 */
 	public boolean caseDisponible(Direction direction)
 	{
-		if (estSurCase)
-		{
-			return Personnage.terrain.getCase(this.coordFloat.intoInt(), direction).isAccessable();
-		}
-		else if(direction == Direction.haut || direction == Direction.bas)
-			return !(estSurAxeY); 
-		else
-			return !(estSurAxeX);
+		try {
+			return Personnage.terrain.getCase(coord.NonPixelX(), coord.NonPixelY(), direction).isAccessable();
+		} 
+		catch(Exception e) {return false;}
 	}
-	
-	private void majEstSurAxe()
-	{
-		estSurAxeX = (int) coordFloat.x == coordFloat.x;
-		estSurAxeY = (int) coordFloat.y == coordFloat.y;
-		estSurCase = estSurAxeX && estSurAxeY;
-	}
-	
+
 	/**
 	 * Primitive avancer
 	 * @require : this.caseDevantDisponible() == true
@@ -140,27 +87,34 @@ public abstract class Personnage{
 	 */
 	public void avancer()
 	{
-		switch(this.direction)
+		//System.out.println("######################");
+		//System.out.println("Direction du deplacement : " + this.direction);
+		//System.out.println("x : " + coordFloat.x + " y : " +coordFloat.y);
+		if(caseDevantDisponible())
 		{
-		case droite :
-			this.coordFloat.x += tauxDeDeplacement;
-			break;
-		case gauche :
-			this.coordFloat.x -= tauxDeDeplacement;
-			break;
-		case haut :
-			this.coordFloat.y -= tauxDeDeplacement;
-			break;
+			System.out.println("Deplacement autorisé");
+			switch(this.direction)
+			{
+			case droite :
+				this.coord.x += tauxDeDeplacement;
+				break;
+			case gauche :
+				this.coord.x -= tauxDeDeplacement;
+				break;
+			case haut :
+				this.coord.y -= tauxDeDeplacement;
+				break;
+				
+			case bas :
+				this.coord.y += tauxDeDeplacement;
+				break;
+				
+			default :
+				break;
+			}
 			
-		case bas :
-			this.coordFloat.y += tauxDeDeplacement;
-			break;
-			
-		default :
-			break;
+			//majEstSurAxe();
 		}
-		this.majEstSurAxe();
-		this.isMoving = false;
 	}
 
 	/**
@@ -181,19 +135,19 @@ public abstract class Personnage{
 	
 	//setter de base
 	public void setCoord(CoordonneesFloat coord) {
-		this.coordFloat = coord;
+		this.coord = coord;
 	}
 	
 	//setter de base
-	public void setCoord(float x, float y) {
-		this.coordFloat.x = x;
-		this.coordFloat.y = y;
+	public void setCoord(int x, int y) {
+		this.coord.x = x;
+		this.coord.y = y;
 	}
 	
 	
 	//getter de base
 	public CoordonneesFloat getCoord() {
-		return coordFloat;
+		return coord;
 	}
 	
 	/**
@@ -203,11 +157,13 @@ public abstract class Personnage{
 	public Direction getOrientation(){
 		return this.direction;
 	}
+
 	/**
 	 * @return Si le fantome est vivant*/
 	public boolean getisAlive(){
 		return isAlive;
 	}
+
 	/**
 	 * Met à jour l'état vivant ou mort du fantome*/
 	public void setIsAlive(boolean a){
@@ -221,6 +177,19 @@ public abstract class Personnage{
 	 * author : alex
 	 */
 	public abstract void respawn();
+
+	/**
+	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
+	 * @author malek
+	 */
+	static public void initTerrain(Terrain terrain){
+		Personnage.terrain = terrain; 
+	}
+	
+	//get terrain
+	public static Terrain getTerrain() {
+		return terrain;
+	}
 	
 	/**
 	 * @return String contenant le terrain et le personnage
@@ -251,5 +220,37 @@ public abstract class Personnage{
 		return res;
 	}
 
+	/**
+	 * Test si un objet est en contact d'un pacman
+	 * author : alex
+	 * @param cord : coordonée de l'objet a tester
+	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquer
+	 */
+	static public boolean personnagePresent(CoordonneesFloat position)
+	{
+		Iterator<Personnage> i= Personnage.liste.iterator();
+		while(i.hasNext())
+		{
+			if(HitBoxManager.personnageHittingPersonnage(i.next().coord, position))
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * @param position a tester
+	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null
+	 */
+	static public Personnage personnageReference(CoordonneesFloat position)
+	{
+		Iterator<Personnage> i= Personnage.liste.iterator();
+		while(i.hasNext())
+		{
+			Personnage p = i.next();
+			if(position.equals(p.coord))
+				return p;
+		}
+		return null;
+	}
 
 }

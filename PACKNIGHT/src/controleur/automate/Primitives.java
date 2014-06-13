@@ -129,7 +129,7 @@ public class Primitives {
 	 * */
 	private boolean mur(CoordonneesFloat temp) {
 		boolean res=true;
-		if (Personnage.getTerrain().getCase((int) temp.x,(int)temp.y).isAccessable())
+		if (Personnage.getTerrain().getCase(temp.x,temp.y).isAccessable())
 			res=false;
 		return res;
 	}

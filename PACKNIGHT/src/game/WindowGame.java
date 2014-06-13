@@ -27,7 +27,7 @@ public class WindowGame extends BasicGame {
 	
 	
 	private String SPRITE = "PACMAN-SPRITES2.png";
-	private String MAP = "FATMAP.tmx";
+	private String MAP = "PACMAN.tmx";
 	private String MUSIC = "AllBeat.ogg";
 	
 	public static int largueur = 28, hauteur = 15;
@@ -35,8 +35,8 @@ public class WindowGame extends BasicGame {
 	public static int largueur_map , hauteur_map ;
 	int taillePersonnage =32;
 	
-	PacKnight pacman = new PacKnight("j1",20,20,Direction.droite);
-	PacKnight pacman2 = new PacKnight("j2",21,14,Direction.droite);
+	PacKnight pacman = new PacKnight("j1",32,32,Direction.droite);
+	PacKnight pacman2 = new PacKnight("j2",32,32,Direction.droite);
 	
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
@@ -65,21 +65,17 @@ public class WindowGame extends BasicGame {
         hauteur_map = map.getHeight();
         Terrain terrain = new Terrain(largueur_map,hauteur_map);
         Personnage.initTerrain(terrain);
-
-        coordFloat = new CoordonneesFloat(0,0);
-    			for(int i=0;i<largueur_map;i++)
-    			{
-    				for(int j=0;j<hauteur_map;j++)
-    				{
-    			        Image tile = this.map.getTileImage((int)coordFloat.x,(int)coordFloat.y,this.map.getLayerIndex("logic"));
-    			        boolean vide = tile != null;
-    			        if (vide) terrain.terrain[i][j] = new Case(0);
-    			        else terrain.terrain[i][j] = new Case(1);
-    			        coordFloat.y += 1;
-    				}
-    				coordFloat.x += 1;
-    				coordFloat.y =0;
-    			}
+        
+		for(int i=0;i<largueur_map;i++)
+		{
+			for(int j=0;j<hauteur_map;j++)
+			{
+		        Image tile = this.map.getTileImage(i,j,this.map.getLayerIndex("logic"));
+		        boolean vide = tile != null;
+		        if (vide) terrain.terrain[i][j] = new Case(0);
+		        else terrain.terrain[i][j] = new Case(1);
+			}
+		}
     			
         SpriteSheet spriteSheet = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE), taillePersonnage, taillePersonnage);
         SpriteSheet spriteSheet2 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE), taillePersonnage, taillePersonnage);
@@ -108,8 +104,8 @@ public class WindowGame extends BasicGame {
     public void render(GameContainer container, Graphics g) throws SlickException {
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
         this.map.render(0, 0, 0);
-        g.drawAnimation(animations[direction + (moving ? 4 : 0)], pacman.getCoord().pixelX(), pacman.getCoord().pixelY());
-        g.drawAnimation(animations2[direction + (moving ? 4 : 0)], pacman2.getCoord().pixelX(), pacman2.getCoord().pixelY());
+        g.drawAnimation(animations[direction + (moving ? 4 : 0)], pacman.getCoord().x, pacman.getCoord().y);
+        g.drawAnimation(animations2[direction + (moving ? 4 : 0)], pacman2.getCoord().x, pacman2.getCoord().y);
     }
 
     public void update(GameContainer container, int delta) throws SlickException {
@@ -132,15 +128,15 @@ public class WindowGame extends BasicGame {
         }
 	
         float w = container.getWidth() / 4;
-        if (pacman.getCoord().pixelX() > (this.xCamera + w) && (pacman.getCoord().pixelX() + w  <  largueur_map*tuile_size))
-        	this.xCamera = pacman.getCoord().pixelX() - w;
-        if (pacman.getCoord().pixelX() < (this.xCamera - w) && (pacman.getCoord().pixelX() > w)) 
-        	this.xCamera = pacman.getCoord().pixelX() + w;
+        if (pacman.getCoord().x > (this.xCamera + w) && (pacman.getCoord().x + w  <  largueur_map*tuile_size))
+        	this.xCamera = pacman.getCoord().x - w;
+        if (pacman.getCoord().x < (this.xCamera - w) && (pacman.getCoord().x > w)) 
+        	this.xCamera = pacman.getCoord().x + w;
         float h = container.getHeight() / 4;
-        if (pacman.getCoord().pixelY() > (this.yCamera + h) && (pacman.getCoord().pixelY() + h < hauteur_map*tuile_size)) 
-        	this.yCamera = pacman.getCoord().pixelY() - h;
-        if (pacman.getCoord().pixelY() < (this.yCamera - h) && (pacman.getCoord().pixelY() > h))
-        	this.yCamera = pacman.getCoord().pixelY() + h;
+        if (pacman.getCoord().y > (this.yCamera + h) && (pacman.getCoord().y + h < hauteur_map*tuile_size)) 
+        	this.yCamera = pacman.getCoord().y - h;
+        if (pacman.getCoord().y < (this.yCamera - h) && (pacman.getCoord().y > h))
+        	this.yCamera = pacman.getCoord().y + h;
     }
 
 
@@ -157,18 +153,18 @@ public class WindowGame extends BasicGame {
 
 	public void keyReleased(int key, char c) {
 	    switch (key) {
-	    case Input.KEY_UP:    pacman.setDirection(Direction.haut); this.direction= 0; this.moving = true; pacman.isMoving=true; break;
-	    case Input.KEY_LEFT:  pacman.setDirection(Direction.gauche);this.direction= 1; this.moving = true;pacman.isMoving=true; break;
-	    case Input.KEY_DOWN:  pacman.setDirection(Direction.bas);this.direction= 2; this.moving = true; pacman.isMoving=true; break;
-	    case Input.KEY_RIGHT: pacman.setDirection(Direction.droite);this.direction= 3; this.moving = true; pacman.isMoving=true; break;
+	    case Input.KEY_UP:    pacman.setDirection(Direction.haut); this.direction= 0; this.moving = true; break;
+	    case Input.KEY_LEFT:  pacman.setDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
+	    case Input.KEY_DOWN:  pacman.setDirection(Direction.bas);this.direction= 2; this.moving = true; break;
+	    case Input.KEY_RIGHT: pacman.setDirection(Direction.droite);this.direction= 3; this.moving = true; break;
 	    case Input.KEY_ESCAPE:container.exit(); break;
 	    case Input.KEY_P:     this.moving = false; break;
 	    case Input.KEY_M: if(this.M.playing()) this.M.pause() ;else this.M.resume(); break;
 	    
-	    case Input.KEY_Z:    pacman2.setDirection(Direction.haut); this.direction= 0; this.moving = true; pacman2.isMoving=true; break;
-	    case Input.KEY_Q:  pacman2.setDirection(Direction.gauche);this.direction= 1; this.moving = true;pacman2.isMoving=true; break;
-	    case Input.KEY_S:  pacman2.setDirection(Direction.bas);this.direction= 2; this.moving = true; pacman2.isMoving=true; break;
-	    case Input.KEY_D: pacman2.setDirection(Direction.droite);this.direction= 3; this.moving = true; pacman2.isMoving=true; break;
+	    case Input.KEY_Z:    pacman2.setDirection(Direction.haut); this.direction= 0; this.moving = true;  break;
+	    case Input.KEY_Q:  pacman2.setDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
+	    case Input.KEY_S:  pacman2.setDirection(Direction.bas);this.direction= 2; this.moving = true;  break;
+	    case Input.KEY_D: pacman2.setDirection(Direction.droite);this.direction= 3; this.moving = true; break;
 	    
 	    
 	    }
