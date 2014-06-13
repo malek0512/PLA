@@ -82,20 +82,22 @@ public class Terrain {
 	}
 	
 	/**
-	 * ATTENTION : ceci ne fontcionne que pour des coordonnée de TERRAIN et non de PERSONNAGE
-	 * @param coord : coordonée de la case a regarder 
+	 * ATTENTION : ceci ne fonctionne que pour des coordonnées de TERRAIN et non de PERSONNAGE
+	 * @param coord : coordonnée de la case a regarder 
 	 * @param direction : direction de la case que l'on veut retourner
 	 * @return case si avancer dans direction
 	 * @author alex
+	 * 
+	 * Pas de test si les coordonnées sont dans le terrain ? (malek)
 	 */
-	public Case getCase(Coordonnees coord,Direction direction)
+	public Case getCase(int x, int y,Direction direction)
 	{
 		switch(direction)
 		{
-		case haut : return terrain[coord.x][coord.y-1];
-		case bas : return terrain[coord.x][coord.y+1];
-		case droite : return terrain[coord.x+1][coord.y];
-		case gauche : return terrain[coord.x-1][coord.y];
+		case haut : return terrain[x][y-1];
+		case bas : return terrain[x][y+1];
+		case droite : return terrain[x+1][y];
+		case gauche : return terrain[x-1][y];
 		default:
 			break; 
 		}

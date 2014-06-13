@@ -24,7 +24,7 @@ public class PacKnight extends Pacman{
 		Iterator<PacKnight> i= PacKnight.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coordFloat))
+			if(position.equals(i.next().coord))
 				return true;
 		}
 		return false;
@@ -40,14 +40,14 @@ public class PacKnight extends Pacman{
 		while(i.hasNext())
 		{
 			PacKnight p = i.next();
-			if(position.equals(p.coordFloat))
+			if(position.equals(p.coord))
 				return p;
 		}
 		return null;
 	}
 	
 	
-	public PacKnight(String name, float x, float y, Direction d) {
+	public PacKnight(String name, int x, int y, Direction d) {
 		super(name,x,y,d);
 		PacKnight.liste.add(this);
 	}

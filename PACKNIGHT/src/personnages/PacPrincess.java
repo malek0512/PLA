@@ -26,7 +26,7 @@ public class PacPrincess extends Pacman{
 		Iterator<PacPrincess> i= PacPrincess.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coordFloat))
+			if(position.equals(i.next().coord))
 				return true;
 		}
 		return false;
@@ -42,14 +42,14 @@ public class PacPrincess extends Pacman{
 		while(i.hasNext())
 		{
 			PacPrincess p = i.next();
-			if(position.equals(p.coordFloat))
+			if(position.equals(p.coord))
 				return p;
 		}
 		return null;
 	}
 	
 	
-	public PacPrincess(String name, float x, float y, Direction d) {
+	public PacPrincess(String name, int x, int y, Direction d) {
 		super(name,x,y,d);
 		PacPrincess.liste.add(this);
 	}

@@ -3,8 +3,8 @@ package personnages;
 import game.*;
 
 public class CoordonneesFloat {
-	public float x;
-	public float y;
+	public int x;
+	public int y;
 	
 	public float distance(CoordonneesFloat c){
 		float res;
@@ -17,18 +17,18 @@ public class CoordonneesFloat {
 	 * renvoie le pixel correspondant a la coordonne x
 	 * author : alex
 	 */
-	public float pixelX()
+	public int NonPixelX()
 	{
-		return this.x * WindowGame.tuile_size;
+		return this.x / WindowGame.tuile_size;
 	}
 	
 	/**
 	 * renvoie le pixel correspondant a la coordonne y
 	 * author : alex
 	 */
-	public float pixelY()
+	public int NonPixelY()
 	{
-		return this.y * WindowGame.tuile_size;
+		return this.y / WindowGame.tuile_size;
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class CoordonneesFloat {
 	 * @param y
 	 * author : alex
 	 */
-	public CoordonneesFloat(float x,float y)
+	public CoordonneesFloat(int x,int y)
 	{
 		this.x = x;
 		this.y = y;
@@ -57,16 +57,6 @@ public class CoordonneesFloat {
 	public boolean equals(CoordonneesFloat coord)
 	{
 		return (coord.x == this.x && coord.y == this.y);
-	}
-	
-	/**
-	 * renvoie les coordonne casté en int
-	 * @require : les coordones de this doivent avoir leur partie decimal a 0 !!!
-	 * @author alex
-	 */
-	public Coordonnees intoInt()
-	{
-		return new Coordonnees((int) x, (int) y);
 	}
 	
 	/**
