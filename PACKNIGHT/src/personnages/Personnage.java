@@ -9,62 +9,15 @@ public abstract class Personnage{
 
 	protected static int tauxDeDeplacement = 1; //la taille du deplacement du personnage en pixel
 	protected static Terrain terrain;
-	private boolean isAlive;
-
 	public static List<Personnage> liste = new LinkedList<Personnage>();
-	
-	/**
-	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
-	 * @author malek
-	 */
-	static public void initTerrain(Terrain terrain){
-		Personnage.terrain = terrain; 
-	}
-	
-	//get terrain
-	public static Terrain getTerrain() {
-		return terrain;
-	}
-	
-	/**
-	 * Test si un objet est en contact d'un pacman
-	 * author : alex
-	 * @param cord : coordonée de l'objet a tester
-	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquer
-	 */
-	static public boolean personnagePresent(CoordonneesFloat position)
-	{
-		Iterator<Personnage> i= Personnage.liste.iterator();
-		while(i.hasNext())
-		{
-			if(HitBoxManager.personnageHittingPersonnage(i.next().coord, position))
-				return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * @param position a tester
-	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null
-	 */
-	static public Personnage personnageReference(CoordonneesFloat position)
-	{
-		Iterator<Personnage> i= Personnage.liste.iterator();
-		while(i.hasNext())
-		{
-			Personnage p = i.next();
-			if(position.equals(p.coord))
-				return p;
-		}
-		return null;
-	}
-	
+
 	//coordonne du personnage en pixel
 	//La coordonne corespond au pixel Haut-Gauche !!!
 	protected CoordonneesFloat coord;
 	protected String nom; //nom du personnage
 	protected Direction direction; //direction actuelle du personnage
-	protected boolean vivant; //si le personnage est vivia
+	protected boolean isAlive; //si le personnage est vivant
+	
 	/**
 	 * Donne un nom, une poisition et une direction au personnage
 	 * Ajoute le personnage a la liste des perso
@@ -204,11 +157,13 @@ public abstract class Personnage{
 	public Direction getOrientation(){
 		return this.direction;
 	}
+
 	/**
 	 * @return Si le fantome est vivant*/
 	public boolean getisAlive(){
 		return isAlive;
 	}
+
 	/**
 	 * Met à jour l'état vivant ou mort du fantome*/
 	public void setIsAlive(boolean a){
@@ -222,6 +177,19 @@ public abstract class Personnage{
 	 * author : alex
 	 */
 	public abstract void respawn();
+
+	/**
+	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
+	 * @author malek
+	 */
+	static public void initTerrain(Terrain terrain){
+		Personnage.terrain = terrain; 
+	}
+	
+	//get terrain
+	public static Terrain getTerrain() {
+		return terrain;
+	}
 	
 	/**
 	 * @return String contenant le terrain et le personnage
@@ -252,5 +220,37 @@ public abstract class Personnage{
 		return res;
 	}
 
+	/**
+	 * Test si un objet est en contact d'un pacman
+	 * author : alex
+	 * @param cord : coordonée de l'objet a tester
+	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquer
+	 */
+	static public boolean personnagePresent(CoordonneesFloat position)
+	{
+		Iterator<Personnage> i= Personnage.liste.iterator();
+		while(i.hasNext())
+		{
+			if(HitBoxManager.personnageHittingPersonnage(i.next().coord, position))
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * @param position a tester
+	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null
+	 */
+	static public Personnage personnageReference(CoordonneesFloat position)
+	{
+		Iterator<Personnage> i= Personnage.liste.iterator();
+		while(i.hasNext())
+		{
+			Personnage p = i.next();
+			if(position.equals(p.coord))
+				return p;
+		}
+		return null;
+	}
 
 }
