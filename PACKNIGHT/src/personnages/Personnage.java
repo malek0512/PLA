@@ -121,7 +121,10 @@ public abstract class Personnage{
 	 */
 	public boolean caseDisponible(Direction direction)
 	{
-		return Personnage.terrain.getCase(coord.NonPixelX(), coord.NonPixelY(), direction).isAccessable();
+		try {
+			return Personnage.terrain.getCase(coord.NonPixelX(), coord.NonPixelY(), direction).isAccessable();
+		} 
+		catch(Exception e) {return false;}
 	}
 
 	/**

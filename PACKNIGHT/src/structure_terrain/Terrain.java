@@ -4,6 +4,7 @@
  */
 package structure_terrain;
 
+import game.WindowGame;
 import structure_terrain.Case;
 import personnages.Coordonnees;
 import personnages.CoordonneesFloat;
@@ -89,19 +90,21 @@ public class Terrain {
 	 * @author alex
 	 * 
 	 * Pas de test si les coordonnées sont dans le terrain ? (malek)
+	 * @throws Exception 
 	 */
-	public Case getCase(int x, int y,Direction direction)
+	public Case getCase(int x, int y,Direction direction) throws Exception
 	{
-		switch(direction)
-		{
-		case haut : return terrain[x][y-1];
-		case bas : return terrain[x][y+1];
-		case droite : return terrain[x+1][y];
-		case gauche : return terrain[x-1][y];
-		default:
-			break; 
+		if(estDansLeTerrain(new Coordonnees((int) (x/WindowGame.tuile_size),(int) (y/WindowGame.tuile_size))))
+			switch(direction)
+			{
+			case haut : return terrain[x][y-1];
+			case bas : return terrain[x][y+1];
+			case droite : return terrain[x+1][y];
+			case gauche : return terrain[x-1][y];
+			default:
+				break; 
 		}
-		return null;
+		throw new Exception("Coordonnées pas dans le terrain");
 	}
 
 	/**

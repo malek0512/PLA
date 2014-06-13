@@ -13,6 +13,10 @@ public class CoordonneesFloat {
 	}
 	public String toString()
 	{return ""+ x + " " + y;}
+	
+	public CoordonneesFloat caseFromPixel(){
+		return new CoordonneesFloat(x/WindowGame.tuile_size, y/WindowGame.tuile_size)
+	}
 	/**
 	 * renvoie le pixel correspondant a la coordonne x
 	 * author : alex
