@@ -1,9 +1,13 @@
 package controleur.automate;
 
 
-import personnages.Coordonnees;
-import personnages.Direction;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import personnages.Ghost;
 import personnages.Pacman;
+
 
 /**
  * Classe contenant l'ensemble des primitives de test 
@@ -19,14 +23,20 @@ public class PrimitivesTest extends Primitives {
 
 	/**
 	 * Fonction de test Automate.PM_DANS_RAYON_X
-	 * @param rayon
-	 * @return -1 si PM pas dans un cercle de rayon R, Automate.PM_DANS_RAYON_X sinon 
+	 * @param d
+	 * @return True si un ou plusieurs pacman sont dans le rayon 
 	 */
-	protected int dansRayon(int rayon) {
-		
-		if (Pacman.personnagePresent(auto.getPersonnage().getCoord()))
-			return Automate.PM_DANS_RAYON_X;
-		return -1;
+	protected boolean dansRayon(float d) {
+		int n=0;
+		List<Pacman> res = new LinkedList<Pacman>();
+		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
+		Iterator<Pacman> i= res.iterator();
+		while(i.hasNext())
+		{
+			n++;
+			i.next();
+		}
+		return n!=0;
 	}
 	
 	/**
@@ -40,22 +50,34 @@ public class PrimitivesTest extends Primitives {
 		else
 			return Automate.CASE_LIBRE;
 	}
-	
-	/**Pas merci !
-	 * 
-	 */
-	public boolean estIntersection(Coordonnees coord){
-		int n=0;
-
-		for(Direction d : Direction.values())
-			if(this.auto.getPersonnage().caseDisponible(d))
-				n++;
+	/**
+	 * Specification de la méthode dans primitive
+	 * Ne s'applique qu'au personnage de l'automate en cours d'utilisation*/
+	public boolean estIntersection(){
 		
-		return n>2;
+		return estIntersection(auto.getPersonnage().getCoord());
 	}
-
+	/**
+	 * utilise la méthode pacman est dans croix de primitive avec déjà l'argument personnage.
+	 * 
+	 * */
 	public boolean dansCroix(){
 		return pacmanEstDansCroix(auto.getPersonnage().getCoord());
+	}
+	
+	public boolean caseAtteinte(){
+		
+		return ((Ghost) auto.getPersonnage()).getCompteurAction()==0;
+	}
+	
+	public boolean isDead(){
+		
+		return !(auto.getPersonnage()).getisAlive();
+	}
+	
+	public boolean isControled(){
+		
+		return ((Ghost) auto.getPersonnage()).getControle();
 	}
 	
 }

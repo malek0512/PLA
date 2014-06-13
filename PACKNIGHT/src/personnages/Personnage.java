@@ -19,9 +19,10 @@ import structure_terrain.*;
 
 public abstract class Personnage{
 
-	protected static float tauxDeDeplacement = (float) 0.2; //la taille du deplacement du personnage
+	protected static float tauxDeDeplacement = (float) 0.5; //la taille du deplacement du personnage
 	protected static Terrain terrain;
-	
+	private boolean isAlive;
+
 	public static List<Personnage> liste = new LinkedList<Personnage>();
 	
 	/**
@@ -36,8 +37,6 @@ public abstract class Personnage{
 	public static Terrain getTerrain() {
 		return terrain;
 	}
-	
-	
 	
 	/**
 	 * Test si un objet est en contact d'un pacman
@@ -80,9 +79,10 @@ public abstract class Personnage{
 	protected CoordonneesFloat coordFloat;
 	boolean estSurCase; //vraie si et seulement si les boolean estSurAxe(X ou Y) sont vrai
 	protected String nom;
+	public boolean isMoving;
 	// protected Coordonnees coord; a supprimer
 	protected Direction direction;
-	
+	protected boolean vivant;
 	/**
 	 * Donne un nom, une poisition et une direction au personnage
 	 * Ajoute le personnage a la liste des perso
@@ -92,6 +92,10 @@ public abstract class Personnage{
 		this.nom = new String(nom);
 		this.setCoord(new CoordonneesFloat(x,y));
 		this.direction = d;
+		this.estSurAxeX=true;
+		this.estSurAxeY=true;
+		this.estSurCase=true;
+		this.isMoving = false;
 		Personnage.liste.add(this);
 	}
 	
@@ -113,11 +117,20 @@ public abstract class Personnage{
 	public boolean caseDisponible(Direction direction)
 	{
 		if (estSurCase)
+		{
 			return Personnage.terrain.getCase(this.coordFloat.intoInt(), direction).isAccessable();
+		}
 		else if(direction == Direction.haut || direction == Direction.bas)
 			return !(estSurAxeY); 
 		else
 			return !(estSurAxeX);
+	}
+	
+	private void majEstSurAxe()
+	{
+		estSurAxeX = (int) coordFloat.x == coordFloat.x;
+		estSurAxeY = (int) coordFloat.y == coordFloat.y;
+		estSurCase = estSurAxeX && estSurAxeY;
 	}
 	
 	/**
@@ -136,16 +149,18 @@ public abstract class Personnage{
 			this.coordFloat.x -= tauxDeDeplacement;
 			break;
 		case haut :
-			this.coordFloat.y += tauxDeDeplacement;
+			this.coordFloat.y -= tauxDeDeplacement;
 			break;
 			
 		case bas :
-			this.coordFloat.y -= tauxDeDeplacement;
+			this.coordFloat.y += tauxDeDeplacement;
 			break;
 			
 		default :
 			break;
 		}
+		this.majEstSurAxe();
+		this.isMoving = false;
 	}
 
 	/**
@@ -188,8 +203,24 @@ public abstract class Personnage{
 	public Direction getOrientation(){
 		return this.direction;
 	}
+	/**
+	 * @return Si le fantome est vivant*/
+	public boolean getisAlive(){
+		return isAlive;
+	}
+	/**
+	 * Met à jour l'état vivant ou mort du fantome*/
+	public void setIsAlive(boolean a){
+		isAlive=a;
+		
+	}
 	
-
+	/**
+	 * fait revivre le pacman
+	 * NEED : determiner ou se situe les points de respawn
+	 * author : alex
+	 */
+	public abstract void respawn();
 	
 	/**
 	 * @return String contenant le terrain et le personnage

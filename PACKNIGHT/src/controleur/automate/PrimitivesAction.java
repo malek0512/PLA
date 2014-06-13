@@ -1,8 +1,17 @@
 package controleur.automate;
 
 
+import graph.Graph;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
+
+import personnages.CoordonneesFloat;
 import personnages.Direction;
+import personnages.Ghost;
+import personnages.Pacman;
 import personnages.Personnage;
 
 /**
@@ -15,7 +24,7 @@ public class PrimitivesAction extends Primitives{
 		super();
 		this.auto = a;
 	}
-	/**
+	/** Rend une direction aléatoire parmis celle disponible lors de l'arrivée d'une intersection
 	 * @param personnage auquel on veut changer la direction aléatoirement
 	 * */
 	public void setDirectionAleatoire(Personnage perso){
@@ -30,13 +39,16 @@ public class PrimitivesAction extends Primitives{
 				i++;
 			}
 		}
-		alea=rnd.nextInt(i+1);
+		alea=rnd.nextInt(i);
 		perso.setDirection(direct[alea]);
 	}
 	
+	/** Donne la prochaine direction disponible si la prochaine case est indisponible
+	 * @param personnage auquel on veut changer la direction aléatoirement
+	 * */
 	public void prochaineDirection(Personnage perso){
 		
-		if(!perso.caseDisponible(perso.getOrientation())){
+		if(!perso.caseDevantDisponible()){
 			for(Direction d : Direction.values()){
 				if(perso.caseDisponible(d)){
 					perso.setDirection(d);
@@ -44,6 +56,33 @@ public class PrimitivesAction extends Primitives{
 			}
 		}		
 	}
+	/**
+	 * Donne la direction du chemin le plus court vers le pacman
+	 * OU: liste des cases menant vers pacman ??
+	 * */
+	public void directionCheminPlusCourt(Personnage perso){
+		List<Pacman> res = new LinkedList<Pacman>();
+		List<CoordonneesFloat> liste = new LinkedList<CoordonneesFloat>();
+		CoordonneesFloat coord=auto.getPersonnage().getCoord();
+		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),((Ghost) auto.getPersonnage()).getVision());
+		Iterator<Pacman> i= res.iterator();
+		while(i.hasNext())
+		{
+			Graph g=new Graph(Personnage.getTerrain());
+			liste=g.a_star(coord,i.next().getCoord());
+			
+		}
+		liste.get(1);
+		auto.getPersonnage().setDirection(Direction.haut);
+	}
+	/**
+	 * Reçoit un ordre du Fantôme Lord et avance vers la case désignée tant qu'il ne l'a pas atteinte
+	 * */
+	public void avancerVers(){
+		
+		
+	}
+	
 	
 
 }

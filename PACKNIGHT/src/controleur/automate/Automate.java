@@ -10,6 +10,7 @@ import controleur.automate.TableTransitionSortie.Triplet;
 import src.parser.Parser;
 import src.parser.Quad;
 import personnages.Direction;
+import personnages.Ghost;
 import personnages.Personnage;
 
 /**
@@ -33,9 +34,14 @@ public class Automate extends Controleur {
 	public final static int CASE_GHOST = 3;
 	public final static int PM_DANS_RAYON_X = 4;
 	public final static int PM_DANS_CROIX = 5;
-	public static final int NON_PM_DANS_CROIX = 6;
+	public final static int NON_PM_DANS_CROIX = 6;
 	public final static int INTERSECTION = 7;
 	public final static int NON_INTERSECTION = 8;
+	public final static int CASE_ATTEINTE=9;
+	public final static int EST_MORT=10;
+	public final static int VIVANT_FREE=11;
+	public final static int VIVANT_NON_FREE=12;
+	public final static int ETOILE=13;
 	
 	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
@@ -48,20 +54,23 @@ public class Automate extends Controleur {
 	public final static int SUIVRE_PACMAN = 6;
 	public final static int DIRECTION_ALEATOIRE = 7;
 	public final static int PROCHAINE_DIRECTION = 8;
-	
+	public final static int CHEMIN_PLUS_COURT=9;
+	public final static int AVANCER_VERS=10;
+	public final static int END_LIFE=11;
+	public final static int SPAWN=12;
 	
 	
 	TableTransitionSortie tableTransitionSortie;
 	
-	private int etatCourant;
+	private String etatCourant;
 	private int nbEtat;
 //	private int nbEntree;
 //	private int nbSortie;
 	private int nbTransition;
 //	private int nbTransitionMax;
-	private int etatInitial;
-	private List<Integer>etatsFinals;
-	private List<Integer>etatsBloquants;
+	private String etatInitial;
+	private List<String>etatsFinals;
+	private List<String>etatsBloquants;
 	
 	/*
 	 * Prend un fichier XML et remplie les attributs de l'automate
@@ -71,16 +80,17 @@ public class Automate extends Controleur {
 		
 		Parser parser = new Parser(fichierXML);
 		
-		ArrayList<List<Quad>> liste = parser.parseTableau();
+		Map<String,List<Quad>> liste = parser.parseTableau();
 		etatInitial = parser.parseEtatInitiale();
 		etatsFinals = parser.parseEtatFinal();
+		System.out.println(etatsFinals);
 		etatsBloquants = parser.parseEtatBloquant();
 		//Initialisations des attributs
 		this.nbEtat  = liste.size();
 //		this.nbTransition = 0;
 //		this.nbTransitionMax = Integer.MAX_VALUE; //A Virer
 		this.personnage = p;
-		this.etatCourant = 0;
+		this.etatCourant = etatInitial;
 		
 		
 		//Initialisation des la table d'entree sortie
@@ -128,7 +138,9 @@ public class Automate extends Controleur {
 		case Automate.BAS: personnage.setDirection(Direction.bas); break;
 		case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
 		case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
-		
+		case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
+		case Automate.AVANCER_VERS: primitivesAction.avancerVers(); break;
+		case Automate.SPAWN:personnage.respawn();break;
 		
 		}
 		incrementerTransition();
@@ -163,11 +175,15 @@ public class Automate extends Controleur {
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) return CASE_LIBRE; break;
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) return CASE_OCCUPEE; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
-				case PM_DANS_RAYON_X : int X=primitivesTest.dansRayon(3); if (X!=-1) return X; break;
-				case INTERSECTION: if(primitivesTest.estIntersection(personnage.getCoord().intoInt())) return INTERSECTION; break;
-				case NON_INTERSECTION: if(!primitivesTest.estIntersection(personnage.getCoord().intoInt())) return NON_INTERSECTION; break;
-				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; else return NON_PM_DANS_CROIX;
-				case NON_PM_DANS_CROIX: if(!primitivesTest.dansCroix()) return NON_PM_DANS_CROIX;
+				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return PM_DANS_RAYON_X; break;
+				case INTERSECTION: if(primitivesTest.estIntersection()) return INTERSECTION; break;
+				case NON_INTERSECTION: if(!primitivesTest.estIntersection()) return NON_INTERSECTION; break;
+				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; break;
+				case NON_PM_DANS_CROIX: if(!primitivesTest.dansCroix()) return NON_PM_DANS_CROIX; break;
+				case EST_MORT: if(primitivesTest.isDead()) return EST_MORT; break;
+				case VIVANT_FREE: if(!primitivesTest.isDead() && !primitivesTest.isControled()) return VIVANT_FREE; break;
+				case VIVANT_NON_FREE: if(!primitivesTest.isDead() && primitivesTest.isControled()) return VIVANT_NON_FREE; break;
+				case ETOILE: return ETOILE;
 			//	}
 			}
 		}
@@ -200,7 +216,7 @@ public class Automate extends Controleur {
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) nb++; break;
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) nb++; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) nb++; break;
-				case PM_DANS_RAYON_X : if (primitivesTest.dansRayon(3)==PM_DANS_RAYON_X) nb++; break;
+				case PM_DANS_RAYON_X : if (primitivesTest.dansRayon(3)) nb++; break;
 				}
 			//}
 		}
@@ -212,14 +228,14 @@ public class Automate extends Controleur {
 	 * @author malek
 	 */
 	public void reinitialiserAutomate(){
-		etatCourant = 0;
+		etatCourant = etatInitial;
 	}
 	
 	/**
 	 * @return Etat courant
 	 * @author malek
 	 */
-	public int getEtatCourant() {
+	public String getEtatCourant() {
 		return etatCourant;
 	}	
 

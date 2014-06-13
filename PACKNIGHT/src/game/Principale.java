@@ -4,6 +4,7 @@
 package game;
 
 import game.WindowGame;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
@@ -24,7 +25,7 @@ static long duree = 10;
 	public static void main(String[] args) throws SlickException {
 		
 		
-	    new AppGameContainer(new WindowGame(), 1600, 900, true).start();
+	    new AppGameContainer(new WindowGame(), 800, 600, true).start();
 	}
 }
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import src.parser.Quad;
 
@@ -12,8 +13,8 @@ public class TableTransitionSortie {
 	//Classe intermediaire de triplet
 	public class Triplet {
 //		public boolean ok;
-		public int EtatSuiv, Sortie;
-		public Triplet(int etatSuiv, int sortie) {
+		public String EtatSuiv; int Sortie;
+		public Triplet(String etatSuiv, int sortie) {
 			super();
 //			this.ok = ok;
 			EtatSuiv = etatSuiv;
@@ -23,27 +24,11 @@ public class TableTransitionSortie {
 
 
 	
-	List<Map<Integer,Triplet>> table;
+	Map<String, Map<Integer,Triplet>> table;
 	private int nbEtat;
 	public TableTransitionSortie(int nbEtat){
-		table = new ArrayList<Map<Integer,Triplet>>(nbEtat);
+		table = new HashMap<String, Map<Integer,Triplet>>();
 		this.nbEtat = nbEtat;
-		for(int i=0; i<nbEtat; i++){
-			table.add(i, new HashMap<Integer,Triplet>());
-		}
-	}
-	/**
-	 * 
-	 * @param transition
-	 * @param sortie
-	 * @param bool, bool[i][j] = true, si a l'etat i, l'entree j, et utilisé
-	 */
-	public void initTransitionSortie(int[][] transition, int[][] sortie ){
-		for(int i=0; i<nbEtat; i++){
-			for(int j=0; j<transition[0].length; j++){
-				table.get(i).put(j, new Triplet(transition[i][j], sortie[i][j]));
-			}
-		}
 	}
 
 	/**
@@ -51,10 +36,11 @@ public class TableTransitionSortie {
 	 * 		Quad = {int Entree, int EtatSuiv, int Sortie }
 	 * @param TransitionSortie
 	 */
-	public void initTransitionSortie(ArrayList<List<Quad>>TransitionSortie ){
-		for(int i=0; i<nbEtat; i++){
-			for(Quad q: TransitionSortie.get(i)){
-				table.get(i).put(q.Entree, new Triplet(q.EtatSuiv,q.Sortie));
+	public void initTransitionSortie(Map<String,List<Quad>>TransitionSortie ){
+		for(Entry<String,List<Quad>> i : TransitionSortie.entrySet()){
+			table.put(i.getKey(), new HashMap<Integer,Triplet>());
+			for(Quad q: i.getValue()){
+				table.get(i.getKey()).put(q.Entree, new Triplet(q.EtatSuiv,q.Sortie));
 			}
 		}
 	}
@@ -66,8 +52,10 @@ public class TableTransitionSortie {
 	 */
 	public boolean isEntreeExisteDansAutomate(int Entree){
 		boolean OK = false;
-		for(Map<Integer, Triplet> i : table)
-			OK = OK || i.containsKey(Entree);
+		for(Entry<String, Map<Integer, Triplet>>  s: table.entrySet()){
+//			for(Map<Integer, Triplet> i : s.getValue())
+				OK = OK || s.getValue().containsKey(Entree);
+		}
 		return OK;
 	}
 	
@@ -77,7 +65,7 @@ public class TableTransitionSortie {
 	 * @return
 	 */
 	public boolean isEtatExisteDansAutomate(int Etat){
-		return table.size()>Etat;
+		return table.containsKey(Etat);
 	}
 	
 	/**
@@ -85,28 +73,28 @@ public class TableTransitionSortie {
 	 * @param Etat
 	 * @throws Exception Si l'etat n'existe pas dans l'automate
 	 */
-	public Map<Integer, Triplet> getEtatAll(int Etat) throws Exception{
-		if (table.size()<=Etat) throw new Exception("L'etat renseigner n'existe pas dans la table");
+	public Map<Integer, Triplet> getEtatAll(String Etat) throws Exception{
+		if (!table.containsKey(Etat)) throw new Exception("L'etat renseigner n'existe pas dans la table");
 		return (Map<Integer, Triplet>) table.get(Etat);
 	}
 
-	public int getEtatSuiv(int Etat, int Entree) throws Exception{
-		if (table.size()<=Etat) throw new Exception("L'etat renseigner n'existe pas dans la table");
+	public String getEtatSuiv(String Etat, int Entree) throws Exception{
+		if (!table.containsKey(Etat)) throw new Exception("L'etat renseigner n'existe pas dans la table");
 		if (!table.get(Etat).containsKey(Entree)) throw new Exception("L'entree renseignée n'existe pas dans la table");
 		return table.get(Etat).get(Entree).EtatSuiv;
 	}
 	
-	public int getSortie(int Etat, int Entree) throws Exception{
-		if (table.size()<=Etat) throw new Exception("L'etat renseigner n'existe pas dans la table");
+	public int getSortie(String Etat, int Entree) throws Exception{
+		if (!table.containsKey(Etat)) throw new Exception("L'etat renseigner n'existe pas dans la table");
 		if (!table.get(Etat).containsKey(Entree)) throw new Exception("L'entree renseignée n'existe pas dans la table");
 		return table.get(Etat).get(Entree).Sortie;
 	}
 	
 	public String toString(){
 		String res = "Table De Transition et Sortie \n";
-		for(int i=0; i<table.size(); i++){
-			res += "ETAT " + i + " : ";
-			for(Map.Entry<Integer,Triplet> e : table.get(i).entrySet()){
+		for(Entry<String, Map<Integer, Triplet>> i : table.entrySet()){
+			res += "ETAT " + i.getKey() + " : ";
+			for(Map.Entry<Integer,Triplet> e : i.getValue().entrySet()){
 				res += " [ENTREE " + e.getKey() + " : etatSuiv " + e.getValue().EtatSuiv + ", SORTIE " + 
 						e.getValue().Sortie + "], ";
 			}

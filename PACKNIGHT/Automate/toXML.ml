@@ -22,7 +22,7 @@ type automate = {
 let rec getTransitions (trans : (entree * etat_name * action) list): string =
   let getTransition transition =
   let (entry, nom_etat, act) = transition in
-  " <Transition Entree= \""^ (entry) ^ "\" Etat= \"" ^ (nom_etat) ^ "\" Action = \"" ^ act ^ "\" > </Transition> \n" in
+  " <Transition Entree= \""^ (nom_etat) ^ "\" Etat= \"" ^ (entry) ^ "\" Action = \"" ^ act ^ "\" > </Transition> \n" in
 
   match trans with
     |[] -> ""
@@ -57,7 +57,7 @@ let getAutomate (a : automate) : string =
   "<Automate ID= \""^ name ^"\" > \n" ^
     getEtats etat ^
 
-    "<Etat_Inital> \n" ^
+    "<Etat_Initial> \n" ^
        getEtatsFinals ([etatInit]) ^
     "</Etat_Initial> \n" ^
 
