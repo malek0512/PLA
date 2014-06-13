@@ -61,7 +61,7 @@ public abstract class Pacman extends Personnage {
 	public abstract boolean canRespawn();
 	
 	/**
-	 * le pacman meurt dans d'atroce soufrance
+	 * le pacman meurt dans d'atroces souffrances
 	 * author : alex
 	 */
 	public abstract void meurtDansDatroceSouffrance();
