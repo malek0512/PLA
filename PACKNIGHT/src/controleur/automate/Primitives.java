@@ -164,4 +164,15 @@ public class Primitives {
 		return n>2;
 	}
 	
+	public CoordonneesFloat positionAdjacente(Direction d){
+		CoordonneesFloat coord = new CoordonneesFloat(0,0);
+		switch (d){
+		case haut : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y-1;   break;
+		case bas : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y+1;    break;
+		case gauche : coord.x=this.auto.getPersonnage().getCoord().x-1; coord.y=this.auto.getPersonnage().getCoord().y; break;
+		case droite : coord.x=this.auto.getPersonnage().getCoord().x+1; coord.y=this.auto.getPersonnage().getCoord().y; break;
+		}
+		return coord;
+	}
+	
 }

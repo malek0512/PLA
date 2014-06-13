@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import personnages.Coordonnees;
-import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Personnage;
 import structure_terrain.Terrain;
@@ -125,15 +124,7 @@ public class Graph {
 	}
     return res;
     }
-    public List<CoordonneesFloat> a_star(CoordonneesFloat coordF, CoordonneesFloat coordP){
-    	
-    	Noeud init = table[coordF.intoInt().x][coordF.intoInt().y];
-    	Noeud fin= table[coordP.intoInt().x][coordF.intoInt().y];
-    	float dist=coordF.distance(coordP);
-		return null;
-    	
-    	
-    }
+  
 
     public static void main(String[] args) {
     	TerrainTest1 terrain = new TerrainTest1(10, 10);
