@@ -16,7 +16,6 @@ public class PacPrincess extends Pacman{
 	static public List<PacPrincess> liste = new LinkedList<PacPrincess>();
 	private int vie = 2;
 	
-	
 	/**
 	 * @param position ou on veut savoir si un personnage si trouve
 	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
@@ -49,8 +48,8 @@ public class PacPrincess extends Pacman{
 	}
 	
 	
-	public PacPrincess(String name, int x, int y, Direction d) {
-		super(name,x,y,d);
+	public PacPrincess(String name, int x, int y, Direction d, CoordonneesFloat respawn) {
+		super(name,x,y,d,respawn);
 		PacPrincess.liste.add(this);
 	}
 
@@ -58,22 +57,23 @@ public class PacPrincess extends Pacman{
 		return vie !=0;
 	}
 
-	@Override
 	public void meurtDansDatroceSouffrance() {
-		// TODO Auto-generated method stub
-		
+		vie--;
+		if(vie != 0)
+			respawn();
 	}
 
-	@Override
-	public void respawn() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void gererCollision() {
-		// TODO Auto-generated method stub
-		
+		Iterator<Ghost> i = Ghost.liste.iterator();
+		while(i.hasNext())
+		{
+			Ghost g = i.next();
+			if(g.getisAlive() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
+			{
+				this.meurtDansDatroceSouffrance();
+				break;
+			}
+		}
 	}
 	
 

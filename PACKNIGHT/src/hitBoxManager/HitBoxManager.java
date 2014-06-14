@@ -1,7 +1,6 @@
 package hitBoxManager;
 
 import personnages.CoordonneesFloat;
-import game.*;
 
 public class HitBoxManager {
 
