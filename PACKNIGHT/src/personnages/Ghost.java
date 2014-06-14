@@ -47,7 +47,7 @@ public class Ghost extends Personnage {
 	public void gererCollision() {
 		// TODO Auto-generated method stub
 		
-	}
+	}//nom du personnage//nom du personnage  
 	
 	/**
 	 * @return Nombre d'action avancer() à effectuer pour avancer d'une case
@@ -73,7 +73,6 @@ public class Ghost extends Personnage {
 	@Override
 	public void respawn() {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	

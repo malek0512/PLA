@@ -80,7 +80,7 @@ public class Automate extends Controleur {
 		Map<String,List<Quad>> liste = parser.parseTableau();
 		etatInitial = parser.parseEtatInitiale();
 		etatsFinals = parser.parseEtatFinal();
-		System.out.println(etatsFinals);
+//		System.out.println(etatsFinals);
 		etatsBloquants = parser.parseEtatBloquant();
 		//Initialisations des attributs
 		this.nbEtat  = liste.size();
@@ -91,7 +91,7 @@ public class Automate extends Controleur {
 		
 		
 		//Initialisation des la table d'entree sortie
-		tableTransitionSortie = new TableTransitionSortie(this.nbEtat);
+		tableTransitionSortie = new TableTransitionSortie();
 		tableTransitionSortie.initTransitionSortie(liste);
 	}
 	
