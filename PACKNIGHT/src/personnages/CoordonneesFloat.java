@@ -15,7 +15,7 @@ public class CoordonneesFloat {
 	{return ""+ x + " " + y;}
 	
 	public CoordonneesFloat caseFromPixel(){
-		return new CoordonneesFloat(x/WindowGame.tuile_size, y/WindowGame.tuile_size)
+		return new CoordonneesFloat(x/WindowGame.tuile_size, y/WindowGame.tuile_size);
 	}
 	/**
 	 * renvoie le pixel correspondant a la coordonne x

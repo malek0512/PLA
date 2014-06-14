@@ -7,7 +7,7 @@ import hitBoxManager.*;
 
 public abstract class Personnage{
 
-	protected static int tauxDeDeplacement = 1; //la taille du deplacement du personnage en pixel
+	protected static int tauxDeDeplacement = 8; //la taille du deplacement du personnage en pixel
 	protected static Terrain terrain;
 	private boolean isAlive;
 
@@ -121,10 +121,14 @@ public abstract class Personnage{
 	 */
 	public boolean caseDisponible(Direction direction)
 	{
-		try {
+		System.out.println("######################");
+		System.out.println("Direction du deplacement : " + this.direction);
+		System.out.println("x : " + coord.x + " y : " +coord.y);
+		System.out.println("case demander : " + coord.NonPixelX() + " " + coord.NonPixelY());
+		System.out.println(Personnage.terrain.getCase(coord.NonPixelX(), coord.NonPixelY(), direction).isAccessable());
+		if(direction == droite)
 			return Personnage.terrain.getCase(coord.NonPixelX(), coord.NonPixelY(), direction).isAccessable();
-		} 
-		catch(Exception e) {return false;}
+		return Personnage.terrain.getCase(coord.NonPixelX(), coord.NonPixelY(), direction).isAccessable();
 	}
 
 	/**
@@ -134,9 +138,6 @@ public abstract class Personnage{
 	 */
 	public void avancer()
 	{
-		//System.out.println("######################");
-		//System.out.println("Direction du deplacement : " + this.direction);
-		//System.out.println("x : " + coordFloat.x + " y : " +coordFloat.y);
 		if(caseDevantDisponible())
 		{
 			System.out.println("Deplacement autorisé");

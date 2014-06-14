@@ -35,7 +35,7 @@ public class WindowGame extends BasicGame {
 	public static int largueur_map , hauteur_map ;
 	int taillePersonnage =32;
 	
-	PacKnight pacman = new PacKnight("j1",32,32,Direction.droite);
+	PacKnight pacman = new PacKnight("j1",64,32,Direction.droite);
 	PacKnight pacman2 = new PacKnight("j2",32,32,Direction.droite);
 	
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
@@ -111,8 +111,8 @@ public class WindowGame extends BasicGame {
     public void update(GameContainer container, int delta) throws SlickException {
         if (pacman.caseDevantDisponible())
         	pacman.avancer();
-        if (pacman2.caseDevantDisponible())
-        	pacman2.avancer();
+      //  if (pacman2.caseDevantDisponible())
+        //	pacman2.avancer();
         
     
         else
