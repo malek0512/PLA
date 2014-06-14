@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import structure_terrain.*;
-import game.WindowGame;
 import hitBoxManager.*;
 
 public abstract class Personnage{
@@ -20,7 +19,6 @@ public abstract class Personnage{
 	protected boolean nextDirectionSet;
 	protected Direction nextDirection; //prochaine direction que prendra le personnage
 	protected Direction direction; //direction actuelle du personnage
-	protected boolean isAlive; //si le personnage est vivant
 	
 	/**
 	 * Donne un nom, une poisition et une direction au personnage
@@ -35,6 +33,93 @@ public abstract class Personnage{
 		Personnage.liste.add(this);
 	}
 
+
+	//getter de base
+	public CoordonneesFloat getCoord() {
+		return coord;
+	}
+	
+	//getter de base
+	public Direction getOrientation(){
+		return this.direction;
+	}
+	
+	/************************************************
+	 * Methode dont l'utiliter n'est plus a prouver *
+	 ***********************************************/
+
+			/* METHODE POUR AUTOMATE */
+	/**
+	 * Ne fait pas de test, et avance
+	 * Utiliser par les automates et c'est tout
+	 */
+	public void avancerAux()
+	{
+		switch(this.direction)
+		{
+		case droite :
+			this.coord.x += tauxDeDeplacement;
+			break;
+		case gauche :
+			this.coord.x -= tauxDeDeplacement;
+			break;
+		case haut :
+			this.coord.y -= tauxDeDeplacement;
+			break;
+			
+		case bas :
+			this.coord.y += tauxDeDeplacement;
+			break;
+			
+		default :
+			break;
+			}
+	}
+	
+	/**
+	 * Change la direction du personnage
+	 * Utiliser par les automates uniquement !
+	 * author : alex
+	 */
+	public void setDirection(Direction direction)
+	{
+		this.direction = direction;
+	}
+
+			/* METHODE POUR USER */
+	/**
+	 * Fait les test neccessaire pour savoir le personnage peut avancer
+	 * Si il le peut, alors le fait avancer
+	 * 
+	 * author : alex
+	 */
+	public void avancer()
+	{
+		if(this.nextDirectionSet && caseDisponible(this.nextDirection))
+		{
+			this.direction = nextDirection;
+			this.nextDirectionSet = false;
+			this.avancerAux();
+		}
+		else
+		{
+			if(this.caseDevantDisponible())
+				this.avancerAux();
+		}
+	}
+
+	/**
+	 * Change la prochaine direction du personnage
+	 * Utiliser par les utilisateur uniquement !
+	 * author : alex
+	 */
+	public void setNextDirection(Direction dir)
+	{
+		this.nextDirection = dir;
+		this.nextDirectionSet = true;
+	}
+	
+			/* RESTE */
 	/**
 	 * renvoie vrai si la case devant this est disponible
 	 * author : alex
@@ -75,121 +160,19 @@ public abstract class Personnage{
 			return false;
 		}
 	}
-
-	/**
-	 * Primitive avancer
-	 * @require : this.caseDevantDisponible() == true
-	 * author : alex
-	 */
-	public void avancer()
-	{
-		if(this.nextDirectionSet && caseDisponible(this.nextDirection))
-		{
-			this.direction = nextDirection;
-			this.nextDirectionSet = false;
-			this.avancerAux();
-		}
-		else
-		{
-			if(this.caseDevantDisponible())
-				this.avancerAux();
-		}
-	}
-
-	/**
-	 * Ne fait pas de test, et avance
-	 */
-	protected void avancerAux()
-	{
-		switch(this.direction)
-		{
-		case droite :
-			this.coord.x += tauxDeDeplacement;
-			break;
-		case gauche :
-			this.coord.x -= tauxDeDeplacement;
-			break;
-		case haut :
-			this.coord.y -= tauxDeDeplacement;
-			break;
-			
-		case bas :
-			this.coord.y += tauxDeDeplacement;
-			break;
-			
-		default :
-			break;
-			}
-	}
+	
 	/**
 	 * gere la colision en fonction de sa position
 	 * author : alex
 	 */
 	public abstract void gererCollision();
-	
-	/**
-	 * Change la direction du personnage
-	 * author : alex
-	 */
-	public void setDirection(Direction direction)
-	{
-		this.direction = direction;
-	}
 
-	/**
-	 * Change la direction du personnage
-	 * author : alex
-	 */
-	public void setNextDirection(Direction dir)
-	{
-		this.nextDirection = dir;
-		this.nextDirectionSet = true;
-	}
-	
-	//setter de base
-	public void setCoord(CoordonneesFloat coord) {
-		this.coord = coord;
-	}
-	
-	//setter de base
-	public void setCoord(int x, int y) {
-		this.coord.x = x;
-		this.coord.y = y;
-	}
-	
-	
-	//getter de base
-	public CoordonneesFloat getCoord() {
-		return coord;
-	}
-	
-	/**
-	 * @return la direction du Personnage
-	 * @author malek
-	 */
-	public Direction getOrientation(){
-		return this.direction;
-	}
-
-	/**
-	 * @return Si le fantome est vivant*/
-	public boolean getisAlive(){
-		return isAlive;
-	}
-
-	/**
-	 * Met à jour l'état vivant ou mort du fantome*/
-	public void setIsAlive(boolean a){
-		isAlive=a;
-		
-	}
-	
 	/**
 	 * fait revivre le pacman
 	 * NEED : determiner ou se situe les points de respawn
 	 * author : alex
 	 */
-	public abstract void respawn();
+	protected abstract void respawn();
 
 	/**
 	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
@@ -202,35 +185,6 @@ public abstract class Personnage{
 	//get terrain
 	public static Terrain getTerrain() {
 		return terrain;
-	}
-	
-	/**
-	 * @return String contenant le terrain et le personnage
-	 * @author malek
-	 */
-	public String toString(){
-		String res=" Personnage \n"; // + ((c instanceof Automate)? "automatisé \n" : "non automatisé \n");
-		for(int i=0; i<terrain.getHauteur(); i++){
-			for(int j=0; j<terrain.getLargeur(); j++){
-				if (i == this.getCoord().y && j == this.getCoord().x){
-					switch (this.direction){
-					case haut : res += "^";   break;
-					case bas : res += "v";    break;
-					case gauche : res += "<"; break;
-					case droite : res += ">"; break;
-					}
-				}else{
-					if (terrain.getCase(i, j).isAccessable()){
-						res += "-";
-					} else {
-						res += "X";
-					}
-				}
-			}
-			res += "\n";
-		}
-		res += "\n";
-		return res;
 	}
 
 	/**
@@ -264,6 +218,57 @@ public abstract class Personnage{
 				return p;
 		}
 		return null;
+	}
+
+	
+	/**
+	 * le pacman meurt dans d'atroces souffrances
+	 * author : alex
+	 */
+	public abstract void meurtDansDatroceSouffrance();
+	
+	/***********************************************
+	 * fonction dont l'utiliter reste a prouver    *
+	 ***********************************************/
+	
+	//setter de base
+	public void setCoord(CoordonneesFloat coord) {
+		this.coord = coord;
+	}
+	
+	//setter de base
+	public void setCoord(int x, int y) {
+		this.coord.x = x;
+		this.coord.y = y;
+	}
+
+	/**
+	 * @return String contenant le terrain et le personnage
+	 * @author malek
+	 */
+	public String toString(){
+		String res=" Personnage \n"; // + ((c instanceof Automate)? "automatisé \n" : "non automatisé \n");
+		for(int i=0; i<terrain.getHauteur(); i++){
+			for(int j=0; j<terrain.getLargeur(); j++){
+				if (i == this.getCoord().y && j == this.getCoord().x){
+					switch (this.direction){
+					case haut : res += "^";   break;
+					case bas : res += "v";    break;
+					case gauche : res += "<"; break;
+					case droite : res += ">"; break;
+					}
+				}else{
+					if (terrain.getCase(i, j).isAccessable()){
+						res += "-";
+					} else {
+						res += "X";
+					}
+				}
+			}
+			res += "\n";
+		}
+		res += "\n";
+		return res;
 	}
 
 }

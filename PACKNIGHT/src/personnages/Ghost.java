@@ -17,7 +17,19 @@ public class Ghost extends Personnage {
 	private final float vision = 5;
 	private int compteurAction=4;
 	private boolean control;
-
+	private boolean isAlive;
+	
+	//getter de base
+	public boolean getisAlive(){
+		return isAlive;
+	}
+	/**
+	 * Met à jour l'état vivant ou mort du fantome*/
+	public void setIsAlive(boolean a){
+		isAlive=a;
+		
+	}
+	
 	/**
 	 * Structure qui repertorie l'ensemble des information d'un PM en fuite
 	 * */
@@ -73,6 +85,11 @@ public class Ghost extends Personnage {
 	@Override
 	public void respawn() {
 		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public void meurtDansDatroceSouffrance() {
+		
 	}
 	
 	
