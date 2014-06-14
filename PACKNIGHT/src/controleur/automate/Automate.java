@@ -49,8 +49,6 @@ public class Automate extends Controleur {
 	public final static int DROIT = 2;
 	public final static int HAUT = 3;
 	public final static int BAS = 4;
-	public final static int RECHERCHER_PACMAN = 5;
-	public final static int SUIVRE_PACMAN = 6;
 	public final static int DIRECTION_ALEATOIRE = 7;
 	public final static int PROCHAINE_DIRECTION = 8;
 	public final static int CHEMIN_PLUS_COURT=9;
@@ -138,7 +136,7 @@ public class Automate extends Controleur {
 		case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
 		case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
 		case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
-		case Automate.AVANCER_VERS: primitivesAction.avancerVers(); break;
+		case Automate.AVANCER_VERS: primitivesAction.avancerVersPoint(); break;
 		case Automate.SPAWN:personnage.respawn();break;
 		
 		}

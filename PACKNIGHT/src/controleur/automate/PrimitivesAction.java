@@ -1,14 +1,10 @@
 package controleur.automate;
 
 
-import graph.Graph;
-
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Ghost;
 import personnages.Pacman;
@@ -58,27 +54,31 @@ public class PrimitivesAction extends Primitives{
 	}
 	/**
 	 * Donne la direction du chemin le plus court vers le pacman
-	 * OU: liste des cases menant vers pacman ??
+	 * 
 	 * */
 	public void directionCheminPlusCourt(Personnage perso){
-		List<Pacman> res = new LinkedList<Pacman>();
-		List<CoordonneesFloat> liste = new LinkedList<CoordonneesFloat>();
-		CoordonneesFloat coord=auto.getPersonnage().getCoord();
-		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),((Ghost) auto.getPersonnage()).getVision());
+		List<Pacman> res = pacmanEstDansRayon(auto.getPersonnage().getCoord(),((Ghost) auto.getPersonnage()).getVision());
+		Pacman min=res.get(0);
 		Iterator<Pacman> i= res.iterator();
+		Pacman pac;
 		while(i.hasNext())
 		{
-			Graph g=new Graph(Personnage.getTerrain());
-			liste=g.a_star(coord,i.next().getCoord());
-			
+			pac = i.next();
+			if(perso.getCoord().distance(pac.getCoord())<perso.getCoord().distance(min.getCoord()))
+				min = pac;
 		}
-		liste.get(1);
-		auto.getPersonnage().setDirection(Direction.haut);
+		Direction mind=Direction.haut;
+		for(Direction d : Direction.values()){
+			
+			if(positionAdjacente(d).distance(min.getCoord())<positionAdjacente(mind).distance(min.getCoord()))
+				mind=d;
+		}
+	perso.setDirection(mind);
 	}
 	/**
 	 * Reçoit un ordre du Fantôme Lord et avance vers la case désignée tant qu'il ne l'a pas atteinte
 	 * */
-	public void avancerVers(){
+	public void avancerVersPoint(){
 		
 		
 	}
