@@ -35,8 +35,8 @@ public class WindowGame extends BasicGame {
 	public static int largueur_map , hauteur_map ;
 	int taillePersonnage =32;
 	
-	PacKnight pacman = new PacKnight("j1",32,32,Direction.droite);
-	PacKnight pacman2 = new PacKnight("j2",32,32,Direction.droite);
+	PacKnight pacman = new PacKnight("j1",1,1,Direction.droite);
+	PacKnight pacman2 = new PacKnight("j2",2,1,Direction.droite);
 	
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
@@ -109,12 +109,8 @@ public class WindowGame extends BasicGame {
     }
 
     public void update(GameContainer container, int delta) throws SlickException {
-        if (pacman.caseDevantDisponible())
-        	pacman.avancer();
-        if (pacman2.caseDevantDisponible())
-        	pacman2.avancer();
-        
-    
+    	if (pacman.caseDevantDisponible())
+    		pacman.avancer();
         else
         {
         if(pacman.getOrientation()==Direction.haut)
@@ -126,7 +122,22 @@ public class WindowGame extends BasicGame {
         else if(pacman.getOrientation()==Direction.gauche)
         	pacman.setDirection(Direction.haut);
         }
-	
+    	
+    	if (pacman2.caseDevantDisponible())
+        	pacman2.avancer();
+    	else
+        {
+        if(pacman2.getOrientation()==Direction.haut)
+        	pacman2.setDirection(Direction.droite);
+        else if(pacman2.getOrientation()==Direction.droite)
+        	pacman2.setDirection(Direction.bas);
+        else if(pacman2.getOrientation()==Direction.bas)
+        	pacman2.setDirection(Direction.gauche);
+        else if(pacman2.getOrientation()==Direction.gauche)
+        	pacman2.setDirection(Direction.haut);
+        }
+    	
+    	
         float w = container.getWidth() / 4;
         if (pacman.getCoord().x > (this.xCamera + w) && (pacman.getCoord().x + w  <  largueur_map*tuile_size))
         	this.xCamera = pacman.getCoord().x - w;

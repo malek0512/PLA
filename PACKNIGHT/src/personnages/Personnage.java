@@ -2,12 +2,14 @@ package personnages;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import structure_terrain.*;
+import game.WindowGame;
 import hitBoxManager.*;
 
 public abstract class Personnage{
 
-	protected static int tauxDeDeplacement = 1; //la taille du deplacement du personnage en pixel
+	protected static int tauxDeDeplacement = 4; //la taille du deplacement du personnage en pixel
 	protected static Terrain terrain;
 	public static List<Personnage> liste = new LinkedList<Personnage>();
 
@@ -25,38 +27,11 @@ public abstract class Personnage{
 	 */
 	public Personnage(String nom, int x, int y, Direction d){
 		this.nom = new String(nom);
-		this.setCoord(new CoordonneesFloat(x,y));
+		this.coord = new CoordonneesFloat(32*x,32*y);
 		this.direction = d;
 		Personnage.liste.add(this);
 	}
 
-	/*
-	// TODO private boolean collisionTiles()
-	{
-		//vérifier si un coin de l'image touche un mur?
-		//pixel haut gauche
-		i1 = cord.x/lageur_tile;
-		j1 = cord.y/hauteur_tile;
-		
-		//pixel bas droite
-		i2 = (cord.x + skin_largeur -1)/largeur_tile;
-		j2 = (cord.y + skin_hauteur -1)/hauteur_tile;
-		
-		
-		/**
-		 * pour tester chaque pixel
-		 */
-		/*
-		for(int i=i1; i<=i2; i++)
-		{
-			for(int j=j1; j<=j2;j++)
-			{
-				if(TileIsMur(i,j)
-					return true;
-			}
-		}
-		*/
-	
 	/**
 	 * renvoie vrai si la case devant this est disponible
 	 * author : alex
@@ -74,10 +49,28 @@ public abstract class Personnage{
 	 */
 	public boolean caseDisponible(Direction direction)
 	{
-		try {
-			return Personnage.terrain.getCase(coord.NonPixelX(), coord.NonPixelY(), direction).isAccessable();
-		} 
-		catch(Exception e) {return false;}
+		boolean res = true;
+		switch (direction)
+		{
+		case haut :
+			res = Personnage.terrain.caseAcessible(coord.casDX(), coord.casBY(),direction);
+			res = res && (Personnage.terrain.caseAcessible(coord.casGX(), coord.casBY(), direction));
+			return res; 
+		case bas :
+			res = (Personnage.terrain.caseAcessible(coord.casGX(), coord.casHY(), direction));
+			res = res && (Personnage.terrain.caseAcessible(coord.casDX(), coord.casHY(), direction));
+			return res;
+		case droite :
+			res = (Personnage.terrain.caseAcessible(coord.casGX(), coord.casBY(), direction));
+			res = res && (Personnage.terrain.caseAcessible(coord.casGX(), coord.casHY(), direction));
+			return res;
+		case gauche :
+			res = (Personnage.terrain.caseAcessible(coord.casDX(), coord.casBY(), direction));
+			res = res && (Personnage.terrain.caseAcessible(coord.casDX(), coord.casHY(), direction));
+			return res;
+		default :
+			return false;
+		}
 	}
 
 	/**
@@ -87,12 +80,8 @@ public abstract class Personnage{
 	 */
 	public void avancer()
 	{
-		//System.out.println("######################");
-		//System.out.println("Direction du deplacement : " + this.direction);
-		//System.out.println("x : " + coordFloat.x + " y : " +coordFloat.y);
 		if(caseDevantDisponible())
 		{
-			System.out.println("Deplacement autorisé");
 			switch(this.direction)
 			{
 			case droite :
