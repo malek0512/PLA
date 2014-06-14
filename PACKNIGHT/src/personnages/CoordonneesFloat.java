@@ -28,39 +28,9 @@ public class CoordonneesFloat {
 	
 	public int x;
 	public int y;
-<<<<<<< HEAD
-	
-	public float distance(CoordonneesFloat c){
-		float res;
-		res=Math.abs(this.x-c.x)+Math.abs(this.y-c.y);
-		return res;
-	}
-	public String toString()
-	{return ""+ x + " " + y;}
-	
-	public CoordonneesFloat caseFromPixel(){
-		return new CoordonneesFloat(x/WindowGame.tuile_size, y/WindowGame.tuile_size);
-	}
-	/**
-	 * renvoie le pixel correspondant a la coordonne x
-	 * author : alex
-	 */
-	public int NonPixelX()
-	{
-		return this.x / WindowGame.tuile_size;
-	}
-	
-	/**
-	 * renvoie le pixel correspondant a la coordonne y
-	 * author : alex
-	 */
-	public int NonPixelY()
-	{
-		return this.y / WindowGame.tuile_size;
-	}
-=======
+
 	final static private int size = WindowGame.tuile_size;
->>>>>>> d59125a85440d82dd3de96d892e6e21a3c9d62a2
+
 	
 	/**
 	 * constructeur de base
