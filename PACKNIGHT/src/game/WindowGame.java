@@ -109,9 +109,9 @@ public class WindowGame extends BasicGame {
     }
 
     public void update(GameContainer container, int delta) throws SlickException {
-    	if (pacman.caseDevantDisponible())
+    	//if (pacman.caseDevantDisponible())
     		pacman.avancer();
-        else
+        /**else
         {
         if(pacman.getOrientation()==Direction.haut)
         	pacman.setDirection(Direction.droite);
@@ -122,7 +122,7 @@ public class WindowGame extends BasicGame {
         else if(pacman.getOrientation()==Direction.gauche)
         	pacman.setDirection(Direction.haut);
         }
-    	
+    	*/
     	if (pacman2.caseDevantDisponible())
         	pacman2.avancer();
     	else
@@ -164,18 +164,18 @@ public class WindowGame extends BasicGame {
 
 	public void keyReleased(int key, char c) {
 	    switch (key) {
-	    case Input.KEY_UP:    pacman.setDirection(Direction.haut); this.direction= 0; this.moving = true; break;
-	    case Input.KEY_LEFT:  pacman.setDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
-	    case Input.KEY_DOWN:  pacman.setDirection(Direction.bas);this.direction= 2; this.moving = true; break;
-	    case Input.KEY_RIGHT: pacman.setDirection(Direction.droite);this.direction= 3; this.moving = true; break;
+	    case Input.KEY_UP:    pacman.setNextDirection(Direction.haut); this.direction= 0; this.moving = true; break;
+	    case Input.KEY_LEFT:  pacman.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
+	    case Input.KEY_DOWN:  pacman.setNextDirection(Direction.bas);this.direction= 2; this.moving = true; break;
+	    case Input.KEY_RIGHT: pacman.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
 	    case Input.KEY_ESCAPE:container.exit(); break;
 	    case Input.KEY_P:     this.moving = false; break;
 	    case Input.KEY_M: if(this.M.playing()) this.M.pause() ;else this.M.resume(); break;
 	    
-	    case Input.KEY_Z:    pacman2.setDirection(Direction.haut); this.direction= 0; this.moving = true;  break;
-	    case Input.KEY_Q:  pacman2.setDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
-	    case Input.KEY_S:  pacman2.setDirection(Direction.bas);this.direction= 2; this.moving = true;  break;
-	    case Input.KEY_D: pacman2.setDirection(Direction.droite);this.direction= 3; this.moving = true; break;
+	    case Input.KEY_Z:    pacman2.setNextDirection(Direction.haut); this.direction= 0; this.moving = true;  break;
+	    case Input.KEY_Q:  pacman2.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
+	    case Input.KEY_S:  pacman2.setNextDirection(Direction.bas);this.direction= 2; this.moving = true;  break;
+	    case Input.KEY_D: pacman2.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
 	    
 	    
 	    }

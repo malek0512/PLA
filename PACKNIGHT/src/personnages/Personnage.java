@@ -17,6 +17,8 @@ public abstract class Personnage{
 	//La coordonne corespond au pixel Haut-Gauche !!!
 	protected CoordonneesFloat coord;
 	protected String nom; //nom du personnage
+	protected boolean nextDirectionSet;
+	protected Direction nextDirection; //prochaine direction que prendra le personnage
 	protected Direction direction; //direction actuelle du personnage
 	protected boolean isAlive; //si le personnage est vivant
 	
@@ -29,6 +31,7 @@ public abstract class Personnage{
 		this.nom = new String(nom);
 		this.coord = new CoordonneesFloat(32*x,32*y);
 		this.direction = d;
+		this.nextDirectionSet = false;
 		Personnage.liste.add(this);
 	}
 
@@ -80,32 +83,44 @@ public abstract class Personnage{
 	 */
 	public void avancer()
 	{
-		if(caseDevantDisponible())
+		if(this.nextDirectionSet && caseDisponible(this.nextDirection))
 		{
-			switch(this.direction)
-			{
-			case droite :
-				this.coord.x += tauxDeDeplacement;
-				break;
-			case gauche :
-				this.coord.x -= tauxDeDeplacement;
-				break;
-			case haut :
-				this.coord.y -= tauxDeDeplacement;
-				break;
-				
-			case bas :
-				this.coord.y += tauxDeDeplacement;
-				break;
-				
-			default :
-				break;
-			}
-			
-			//majEstSurAxe();
+			this.direction = nextDirection;
+			this.nextDirectionSet = false;
+			this.avancerAux();
+		}
+		else
+		{
+			if(this.caseDevantDisponible())
+				this.avancerAux();
 		}
 	}
 
+	/**
+	 * Ne fait pas de test, et avance
+	 */
+	protected void avancerAux()
+	{
+		switch(this.direction)
+		{
+		case droite :
+			this.coord.x += tauxDeDeplacement;
+			break;
+		case gauche :
+			this.coord.x -= tauxDeDeplacement;
+			break;
+		case haut :
+			this.coord.y -= tauxDeDeplacement;
+			break;
+			
+		case bas :
+			this.coord.y += tauxDeDeplacement;
+			break;
+			
+		default :
+			break;
+			}
+	}
 	/**
 	 * gere la colision en fonction de sa position
 	 * author : alex
@@ -120,7 +135,16 @@ public abstract class Personnage{
 	{
 		this.direction = direction;
 	}
-	
+
+	/**
+	 * Change la direction du personnage
+	 * author : alex
+	 */
+	public void setNextDirection(Direction dir)
+	{
+		this.nextDirection = dir;
+		this.nextDirectionSet = true;
+	}
 	
 	//setter de base
 	public void setCoord(CoordonneesFloat coord) {
