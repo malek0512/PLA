@@ -110,7 +110,7 @@ public class WindowGame extends BasicGame {
 
     public void update(GameContainer container, int delta) throws SlickException {
     	//if (pacman.caseDevantDisponible())
-    		pacman.avancer();
+    	pacman.avancer();
         /**else
         {
         if(pacman.getOrientation()==Direction.haut)
@@ -124,7 +124,7 @@ public class WindowGame extends BasicGame {
         }
     	*/
     	if (pacman2.caseDevantDisponible())
-        	pacman2.avancer();
+        	pacman2.avancerAux();
     	else
         {
         if(pacman2.getOrientation()==Direction.haut)

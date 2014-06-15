@@ -8,7 +8,7 @@ import hitBoxManager.*;
 
 public abstract class Personnage{
 
-	protected static int tauxDeDeplacement = 4; //la taille du deplacement du personnage en pixel
+	protected static int tauxDeDeplacement = 8; //la taille du deplacement du personnage en pixel
 	protected static Terrain terrain;
 	public static List<Personnage> liste = new LinkedList<Personnage>();
 
