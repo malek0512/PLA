@@ -70,6 +70,7 @@ public class Ghost extends Personnage {
 			}
 		}		
 		
+  
 		if(this.isAlive)
 		{
 			Iterator<PacPrincess> j = PacPrincess.liste.iterator();
@@ -109,7 +110,6 @@ public class Ghost extends Personnage {
 	@Override
 	public void respawn() {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override

@@ -12,23 +12,16 @@ import src.parser.Quad;
 public class TableTransitionSortie {
 	//Classe intermediaire de triplet
 	public class Triplet {
-//		public boolean ok;
 		public String EtatSuiv; int Sortie;
 		public Triplet(String etatSuiv, int sortie) {
-			super();
-//			this.ok = ok;
 			EtatSuiv = etatSuiv;
 			Sortie = sortie;
 		}
 	}
-
-
 	
 	Map<String, Map<Integer,Triplet>> table;
-	private int nbEtat;
-	public TableTransitionSortie(int nbEtat){
+	public TableTransitionSortie(){
 		table = new HashMap<String, Map<Integer,Triplet>>();
-		this.nbEtat = nbEtat;
 	}
 
 	/**
