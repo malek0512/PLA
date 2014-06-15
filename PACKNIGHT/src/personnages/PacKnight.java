@@ -57,6 +57,7 @@ public class PacKnight extends Pacman{
 	}
 
 	public void meurtDansDatroceSouffrance() {
+		System.out.println("meurt");
 		vie--;
 		if(vie != 0)
 			respawn();
