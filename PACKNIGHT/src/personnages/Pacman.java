@@ -51,7 +51,7 @@ public abstract class Pacman extends Personnage {
 	
 	public Pacman(String nom, int x, int y, Direction d, CoordonneesFloat spawn){
 		super(nom,x,y,d);
-		this.pointDeRespawn = spawn;
+		this.pointDeRespawn = new CoordonneesFloat(spawn.x * 32, spawn.y * 32);
 		Pacman.liste.add((Pacman) this);
 	}
 	

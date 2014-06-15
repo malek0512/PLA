@@ -22,33 +22,6 @@ public class HitBoxManager {
 	 */
 	static public boolean personnageHittingPersonnage(CoordonneesFloat cord1,CoordonneesFloat cord2)
 	{
-		int i1 = cord1.x;
-		int j1 = cord1.y;
-		
-		int u1 = cord2.x;
-		int v1 = cord2.y;
-		
-		if(i1 + tilesSize + hitBox < u1 - hitBox)
-		{
-			//le pixel haut-droite 1 est plus a gauche que le pixel haut-gauche 2
-			return false;
-		}
-		if (i1 - hitBox < u1 + tilesSize + hitBox)
-		{
-			//le pixel haut-droite 2 est plus a gauche que le pixel haut-gauche 1
-			return false;
-		}
-		if(j1 + hitBox + tilesSize < v1 - hitBox)
-		{
-			//le pixel bas-droite 1 est plus a gauche que le pixel bas-droite 2
-			return false;
-		}
-		if(j1 - hitBox < v1 + tilesSize + hitBox)
-		{
-			//le pixel bas-droite 2 est plus a gauche que le pixel bas-droite 1
-			return false;
-		}
-		return true;
-		
+		return (Math.abs(cord1.x - cord2.x) < 2*hitBox) && (Math.abs(cord1.y - cord2.y) < 2*hitBox);
 	}
 }
