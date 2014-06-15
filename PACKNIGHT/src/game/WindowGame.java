@@ -31,10 +31,10 @@ public class WindowGame extends BasicGame {
 	private String SPRITE_PACMAN_3 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_4 = "PACMAN-SPRITES2.png";
 	
-	private String SPRITE_GHOST_1 = "PACMAN-SPRITES2.png";
-	private String SPRITE_GHOST_2 = "PACMAN-SPRITES2.png";
-	private String SPRITE_GHOST_3 = "PACMAN-SPRITES2.png";
-	private String SPRITE_GHOST_4 = "PACMAN-SPRITES2.png";
+	private String SPRITE_GHOST_1 = "Lulu.png";
+	private String SPRITE_GHOST_2 = "Leona.png";
+	private String SPRITE_GHOST_3 = "Soraka.png";
+	private String SPRITE_GHOST_4 = "Janna.png";
 	
 	
 	private String MAP = "PACMAN.tmx";
@@ -47,9 +47,9 @@ public class WindowGame extends BasicGame {
 	
 
 	PacKnight PACMAN_1= new PacKnight("J1",1,1,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_2 = new PacKnight("J2",2,1,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_3 = new PacKnight("J3",3,1,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_4 = new PacKnight("J4",4,1,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_2 = new PacKnight("J2",5,1,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_3 = new PacKnight("J3",4,5,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_4 = new PacKnight("J4",1,5,Direction.droite,new CoordonneesFloat(1, 1));
 
 	Ghost GHOST_1 = new Ghost("Lulu", 1, 2, Direction.droite);
 	Ghost GHOST_2 = new Ghost("Leona", 8, 1, Direction.droite);
@@ -66,15 +66,15 @@ public class WindowGame extends BasicGame {
 	private float xCamera = x, yCamera = y;
 	private int direction = 0;
 	private boolean moving = false;
-	
-	private Animation[] animations = new Animation[8];
-	private Animation[] animations2 = new Animation[8];
-	private Animation[] animations3 = new Animation[8];
-	private Animation[] animations4 = new Animation[8];
-	private Animation[] animations5 = new Animation[8];
-	private Animation[] animations6 = new Animation[8];
-	private Animation[] animations7 = new Animation[8];
-	private Animation[] animations8 = new Animation[8];
+
+	private Animation[] animations_PACMAN_1 = new Animation[8];
+	private Animation[] animations_PACMAN_2 = new Animation[8];
+	private Animation[] animations_PACMAN_3 = new Animation[8];
+	private Animation[] animations_PACMAN_4 = new Animation[8];
+	private Animation[] animations_GHOST_1 = new Animation[8];
+	private Animation[] animations_GHOST_2 = new Animation[8];
+	private Animation[] animations_GHOST_3 = new Animation[8];
+	private Animation[] animations_GHOST_4 = new Animation[8];
 	
 	Music M;
 	protected CoordonneesFloat coordFloat;
@@ -91,7 +91,6 @@ public class WindowGame extends BasicGame {
         hauteur_map = map.getHeight();
         Terrain terrain = new Terrain(largueur_map,hauteur_map);
         Personnage.initTerrain(terrain);
-        
     	mapToTerrain(terrain);
 
     			
@@ -103,80 +102,15 @@ public class WindowGame extends BasicGame {
         SpriteSheet spriteSheet_GHOST_2 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_2), taillePersonnage, taillePersonnage);
         SpriteSheet spriteSheet_GHOST_3 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_3), taillePersonnage, taillePersonnage);
         SpriteSheet spriteSheet_GHOST_4 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_4), taillePersonnage, taillePersonnage);
-        
-        
-        this.animations[0] = loadAnimation(spriteSheet_PACMAN_1, 0, 1, 0);
-        this.animations[1] = loadAnimation(spriteSheet_PACMAN_1, 0, 1, 1);
-        this.animations[2] = loadAnimation(spriteSheet_PACMAN_1, 0, 1, 2);
-        this.animations[3] = loadAnimation(spriteSheet_PACMAN_1, 0, 1, 3);
-        this.animations[4] = loadAnimation(spriteSheet_PACMAN_1, 1, 9, 0);
-        this.animations[5] = loadAnimation(spriteSheet_PACMAN_1, 1, 9, 1);
-        this.animations[6] = loadAnimation(spriteSheet_PACMAN_1, 1, 9, 2);
-        this.animations[7] = loadAnimation(spriteSheet_PACMAN_1, 1, 9, 3);
-        
-        this.animations2[0] = loadAnimation(spriteSheet_PACMAN_2, 0, 1, 0);
-        this.animations2[1] = loadAnimation(spriteSheet_PACMAN_2, 0, 1, 1);
-        this.animations2[2] = loadAnimation(spriteSheet_PACMAN_2, 0, 1, 2);
-        this.animations2[3] = loadAnimation(spriteSheet_PACMAN_2, 0, 1, 3);
-        this.animations2[4] = loadAnimation(spriteSheet_PACMAN_2, 1, 9, 0);
-        this.animations2[5] = loadAnimation(spriteSheet_PACMAN_2, 1, 9, 1);
-        this.animations2[6] = loadAnimation(spriteSheet_PACMAN_2, 1, 9, 2);
-        this.animations2[7] = loadAnimation(spriteSheet_PACMAN_2, 1, 9, 3);
-        
-        this.animations3[0] = loadAnimation(spriteSheet_PACMAN_3, 0, 1, 0);
-        this.animations3[1] = loadAnimation(spriteSheet_PACMAN_3, 0, 1, 1);
-        this.animations3[2] = loadAnimation(spriteSheet_PACMAN_3, 0, 1, 2);
-        this.animations3[3] = loadAnimation(spriteSheet_PACMAN_3, 0, 1, 3);
-        this.animations3[4] = loadAnimation(spriteSheet_PACMAN_3, 1, 9, 0);
-        this.animations3[5] = loadAnimation(spriteSheet_PACMAN_3, 1, 9, 1);
-        this.animations3[6] = loadAnimation(spriteSheet_PACMAN_3, 1, 9, 2);
-        this.animations3[7] = loadAnimation(spriteSheet_PACMAN_3, 1, 9, 3);
-        
-        this.animations4[0] = loadAnimation(spriteSheet_PACMAN_4, 0, 1, 0);
-        this.animations4[1] = loadAnimation(spriteSheet_PACMAN_4, 0, 1, 1);
-        this.animations4[2] = loadAnimation(spriteSheet_PACMAN_4, 0, 1, 2);
-        this.animations4[3] = loadAnimation(spriteSheet_PACMAN_4, 0, 1, 3);
-        this.animations4[4] = loadAnimation(spriteSheet_PACMAN_4, 1, 9, 0);
-        this.animations4[5] = loadAnimation(spriteSheet_PACMAN_4, 1, 9, 1);
-        this.animations4[6] = loadAnimation(spriteSheet_PACMAN_4, 1, 9, 2);
-        this.animations4[7] = loadAnimation(spriteSheet_PACMAN_4, 1, 9, 3);
-        
-        this.animations5[0] = loadAnimation(spriteSheet_GHOST_1, 0, 1, 0);
-        this.animations5[1] = loadAnimation(spriteSheet_GHOST_1, 0, 1, 1);
-        this.animations5[2] = loadAnimation(spriteSheet_GHOST_1, 0, 1, 2);
-        this.animations5[3] = loadAnimation(spriteSheet_GHOST_1, 0, 1, 3);
-        this.animations5[4] = loadAnimation(spriteSheet_GHOST_1, 1, 9, 0);
-        this.animations5[5] = loadAnimation(spriteSheet_GHOST_1, 1, 9, 1);
-        this.animations5[6] = loadAnimation(spriteSheet_GHOST_1, 1, 9, 2);
-        this.animations5[7] = loadAnimation(spriteSheet_GHOST_1, 1, 9, 3);
-        
-        this.animations6[0] = loadAnimation(spriteSheet_GHOST_2, 0, 1, 0);
-        this.animations6[1] = loadAnimation(spriteSheet_GHOST_2, 0, 1, 1);
-        this.animations6[2] = loadAnimation(spriteSheet_GHOST_2, 0, 1, 2);
-        this.animations6[3] = loadAnimation(spriteSheet_GHOST_2, 0, 1, 3);
-        this.animations6[4] = loadAnimation(spriteSheet_GHOST_2, 1, 9, 0);
-        this.animations6[5] = loadAnimation(spriteSheet_GHOST_2, 1, 9, 1);
-        this.animations6[6] = loadAnimation(spriteSheet_GHOST_2, 1, 9, 2);
-        this.animations6[7] = loadAnimation(spriteSheet_GHOST_2, 1, 9, 3);
 
-        this.animations7[0] = loadAnimation(spriteSheet_GHOST_3, 0, 1, 0);
-        this.animations7[1] = loadAnimation(spriteSheet_GHOST_3, 0, 1, 1);
-        this.animations7[2] = loadAnimation(spriteSheet_GHOST_3, 0, 1, 2);
-        this.animations7[3] = loadAnimation(spriteSheet_GHOST_3, 0, 1, 3);
-        this.animations7[4] = loadAnimation(spriteSheet_GHOST_3, 1, 9, 0);
-        this.animations7[5] = loadAnimation(spriteSheet_GHOST_3, 1, 9, 1);
-        this.animations7[6] = loadAnimation(spriteSheet_GHOST_3, 1, 9, 2);
-        this.animations7[7] = loadAnimation(spriteSheet_GHOST_3, 1, 9, 3);
-
-        this.animations8[0] = loadAnimation(spriteSheet_GHOST_4, 0, 1, 0);
-        this.animations8[1] = loadAnimation(spriteSheet_GHOST_4, 0, 1, 1);
-        this.animations8[2] = loadAnimation(spriteSheet_GHOST_4, 0, 1, 2);
-        this.animations8[3] = loadAnimation(spriteSheet_GHOST_4, 0, 1, 3);
-        this.animations8[4] = loadAnimation(spriteSheet_GHOST_4, 1, 9, 0);
-        this.animations8[5] = loadAnimation(spriteSheet_GHOST_4, 1, 9, 1);
-        this.animations8[6] = loadAnimation(spriteSheet_GHOST_4, 1, 9, 2);
-        this.animations8[7] = loadAnimation(spriteSheet_GHOST_4, 1, 9, 3);
-
+        toSprite(animations_PACMAN_1,spriteSheet_PACMAN_1);
+        toSprite(animations_PACMAN_2,spriteSheet_PACMAN_2);
+        toSprite(animations_PACMAN_3,spriteSheet_PACMAN_3);
+        toSprite(animations_PACMAN_4,spriteSheet_PACMAN_4);
+        toSprite(animations_GHOST_1,spriteSheet_GHOST_1);
+        toSprite(animations_GHOST_2,spriteSheet_GHOST_2);
+        toSprite(animations_GHOST_3,spriteSheet_GHOST_3);
+        toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
         
         Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
         M = background;
@@ -187,16 +121,14 @@ public class WindowGame extends BasicGame {
     public void render(GameContainer container, Graphics g) throws SlickException {
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
         this.map.render(0, 0, 0);
-        g.drawAnimation(animations[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x, PACMAN_1.getCoord().y);
-        g.drawAnimation(animations2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
-        g.drawAnimation(animations3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
-        g.drawAnimation(animations4[direction + (moving ? 4 : 0)], PACMAN_4.getCoord().x, PACMAN_4.getCoord().y);
-        g.drawAnimation(animations5[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x, GHOST_1.getCoord().y);
-        g.drawAnimation(animations6[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x, GHOST_2.getCoord().y);
-        g.drawAnimation(animations7[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x, GHOST_3.getCoord().y);
-        g.drawAnimation(animations8[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x, GHOST_4.getCoord().y);
-        
-        
+        g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x, PACMAN_1.getCoord().y);
+        g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
+        g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
+        g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], PACMAN_4.getCoord().x, PACMAN_4.getCoord().y);
+        g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x, GHOST_1.getCoord().y);
+        g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x, GHOST_2.getCoord().y);
+        g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x, GHOST_3.getCoord().y);
+        g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x, GHOST_4.getCoord().y);
     }
 
     public void update(GameContainer container, int delta) throws SlickException {
@@ -243,10 +175,6 @@ public class WindowGame extends BasicGame {
     }
 
 
-
-
-
-
 	public void keyReleased(int key, char c) {
 	    switch (key) {
 	    case Input.KEY_UP:    PACMAN_1.setNextDirection(Direction.haut); this.direction= 0; this.moving = true; break;
@@ -286,6 +214,19 @@ public class WindowGame extends BasicGame {
 		        else terrain.terrain[i][j] = new Case(1);
 			}
 		}
+	}
+	
+	public void toSprite(Animation animation[],SpriteSheet Personnage){
+	
+    animation[0] = loadAnimation(Personnage, 0, 1, 0);
+    animation[1] = loadAnimation(Personnage, 0, 1, 1);
+    animation[2] = loadAnimation(Personnage, 0, 1, 2);
+    animation[3] = loadAnimation(Personnage, 0, 1, 3);
+    animation[4] = loadAnimation(Personnage, 1, 9, 0);
+    animation[5] = loadAnimation(Personnage, 1, 9, 1);
+    animation[6] = loadAnimation(Personnage, 1, 9, 2);
+    animation[7] = loadAnimation(Personnage, 1, 9, 3);
+    
 	}
 	
 }
