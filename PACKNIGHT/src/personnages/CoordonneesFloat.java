@@ -28,7 +28,9 @@ public class CoordonneesFloat {
 	
 	public int x;
 	public int y;
+
 	final static private int size = WindowGame.tuile_size;
+
 	
 	/**
 	 * constructeur de base

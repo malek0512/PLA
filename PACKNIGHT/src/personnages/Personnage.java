@@ -8,7 +8,8 @@ import hitBoxManager.*;
 
 public abstract class Personnage{
 
-	protected static int tauxDeDeplacement = 8; //la taille du deplacement du personnage en pixel
+	protected static int tauxDeDeplacement = 4; //la taille du deplacement du personnage en pixel
+
 	protected static Terrain terrain;
 	public static List<Personnage> liste = new LinkedList<Personnage>();
 
@@ -137,6 +138,7 @@ public abstract class Personnage{
 	 */
 	public boolean caseDisponible(Direction direction)
 	{
+
 		boolean res = true;
 		switch (direction)
 		{
@@ -159,6 +161,7 @@ public abstract class Personnage{
 		default :
 			return false;
 		}
+
 	}
 	
 	/**
@@ -172,6 +175,7 @@ public abstract class Personnage{
 	 * NEED : determiner ou se situe les points de respawn
 	 * author : alex
 	 */
+
 	protected abstract void respawn();
 
 	/**
@@ -185,6 +189,7 @@ public abstract class Personnage{
 	//get terrain
 	public static Terrain getTerrain() {
 		return terrain;
+
 	}
 
 	/**
