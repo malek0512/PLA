@@ -75,6 +75,7 @@ public abstract class Personnage{
 		default :
 			break;
 			}
+		this.gererCollision();
 	}
 	
 	/**

@@ -65,8 +65,10 @@ public class PacKnight extends Pacman{
 
 	public void gererCollision() {
 		Iterator<Ghost> i = Ghost.liste.iterator();
+		System.out.println("dans gerer collision");
 		while(i.hasNext())
 		{
+			System.out.println("a un suivant");
 			Ghost g = i.next();
 			if(g.getisAlive() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
 			{
