@@ -31,10 +31,10 @@ public class WindowGame extends BasicGame {
 	private String SPRITE_PACMAN_3 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_4 = "PACMAN-SPRITES2.png";
 	
-	private String SPRITE_GHOST_1 = "Lulu.png";
-	private String SPRITE_GHOST_2 = "Leona.png";
-	private String SPRITE_GHOST_3 = "Soraka.png";
-	private String SPRITE_GHOST_4 = "Janna.png";
+	private String SPRITE_GHOST_1 = "TEST.png";
+	private String SPRITE_GHOST_2 = "TEST.png";
+	private String SPRITE_GHOST_3 = "TEST.png";
+	private String SPRITE_GHOST_4 = "TEST.png";
 	
 	
 	private String MAP = "PACMAN.tmx";
@@ -48,13 +48,13 @@ public class WindowGame extends BasicGame {
 
 	PacKnight PACMAN_1= new PacKnight("J1",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 	PacKnight PACMAN_2 = new PacKnight("J2",5,1,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_3 = new PacKnight("J3",4,5,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_4 = new PacKnight("J4",1,5,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_3 = new PacKnight("J3",10,11,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_4 = new PacKnight("J4",10,11,Direction.droite,new CoordonneesFloat(1, 1));
 
-	Ghost GHOST_1 = new Ghost("Lulu", 1, 2, Direction.droite);
-	Ghost GHOST_2 = new Ghost("Leona", 1, 3, Direction.droite);
-	Ghost GHOST_3 = new Ghost("Soraka", 1, 4, Direction.droite);
-	Ghost GHOST_4 = new Ghost("Janna", 1, 5, Direction.droite);
+	Ghost GHOST_1 = new Ghost("TEST", 1, 2, Direction.droite);
+	Ghost GHOST_2 = new Ghost("TEST", 8, 1, Direction.droite);
+	Ghost GHOST_3 = new Ghost("TEST", 1, 5, Direction.droite);
+	Ghost GHOST_4 = new Ghost("TEST", 12, 1, Direction.droite);
 	
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
@@ -66,7 +66,7 @@ public class WindowGame extends BasicGame {
 	private float xCamera = x, yCamera = y;
 	private int direction = 0;
 	private boolean moving = false;
-	
+
 	private Animation[] animations_PACMAN_1 = new Animation[8];
 	private Animation[] animations_PACMAN_2 = new Animation[8];
 	private Animation[] animations_PACMAN_3 = new Animation[8];
@@ -98,11 +98,11 @@ public class WindowGame extends BasicGame {
         SpriteSheet spriteSheet_PACMAN_2 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_2), taillePersonnage, taillePersonnage);
         SpriteSheet spriteSheet_PACMAN_3 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_3), taillePersonnage, taillePersonnage);
         SpriteSheet spriteSheet_PACMAN_4 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_4), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_GHOST_1 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_1), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_GHOST_2 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_2), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_GHOST_3 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_3), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_GHOST_4 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_4), taillePersonnage, taillePersonnage);
-        
+        SpriteSheet spriteSheet_GHOST_1 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_1), taillePersonnage, taillePersonnage);
+        SpriteSheet spriteSheet_GHOST_2 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_2), taillePersonnage, taillePersonnage);
+        SpriteSheet spriteSheet_GHOST_3 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_3), taillePersonnage, taillePersonnage);
+        SpriteSheet spriteSheet_GHOST_4 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_4), taillePersonnage, taillePersonnage);
+
         toSprite(animations_PACMAN_1,spriteSheet_PACMAN_1);
         toSprite(animations_PACMAN_2,spriteSheet_PACMAN_2);
         toSprite(animations_PACMAN_3,spriteSheet_PACMAN_3);
@@ -111,7 +111,6 @@ public class WindowGame extends BasicGame {
         toSprite(animations_GHOST_2,spriteSheet_GHOST_2);
         toSprite(animations_GHOST_3,spriteSheet_GHOST_3);
         toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
-        
         
         Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
         M = background;
