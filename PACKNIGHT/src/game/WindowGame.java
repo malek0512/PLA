@@ -79,7 +79,6 @@ public class WindowGame extends BasicGame {
         hauteur_map = map.getHeight();
         Terrain terrain = new Terrain(largueur_map,hauteur_map);
         Personnage.initTerrain(terrain);
-        
     	mapToTerrain(terrain);
 
     			
