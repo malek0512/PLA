@@ -57,24 +57,23 @@ public class PacKnight extends Pacman{
 	}
 
 	public void meurtDansDatroceSouffrance() {
-		System.out.println("meurt");
 		vie--;
 		if(vie != 0)
 			respawn();
+		else
+			System.out.println("fin de game");
 	}
 
 	public void gererCollision() {
 		Iterator<Ghost> i = Ghost.liste.iterator();
-		System.out.println("dans gerer collision");
 		while(i.hasNext())
 		{
-			System.out.println("a un suivant");
 			Ghost g = i.next();
 			if(g.getisAlive() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
 			{
 				this.meurtDansDatroceSouffrance();
 				g.meurtDansDatroceSouffrance(); //vengence !!!
-				break;
+				//break;
 			}
 		}
 	}

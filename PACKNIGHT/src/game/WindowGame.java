@@ -31,10 +31,10 @@ public class WindowGame extends BasicGame {
 	private String SPRITE_PACMAN_3 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_4 = "PACMAN-SPRITES2.png";
 	
-	private String SPRITE_GHOST_1 = "Lulu.png";
-	private String SPRITE_GHOST_2 = "Leona.png";
-	private String SPRITE_GHOST_3 = "Soraka.png";
-	private String SPRITE_GHOST_4 = "Janna.png";
+	private String SPRITE_GHOST_1 = "TEST.png";
+	private String SPRITE_GHOST_2 = "TEST.png";
+	private String SPRITE_GHOST_3 = "TEST.png";
+	private String SPRITE_GHOST_4 = "TEST.png";
 	
 	
 	private String MAP = "PACMAN.tmx";
@@ -48,13 +48,13 @@ public class WindowGame extends BasicGame {
 
 	PacKnight PACMAN_1= new PacKnight("J1",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 	PacKnight PACMAN_2 = new PacKnight("J2",5,1,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_3 = new PacKnight("J3",4,5,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_4 = new PacKnight("J4",1,5,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_3 = new PacKnight("J3",10,11,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_4 = new PacKnight("J4",10,11,Direction.droite,new CoordonneesFloat(1, 1));
 
-	Ghost GHOST_1 = new Ghost("Lulu", 1, 2, Direction.droite);
-	Ghost GHOST_2 = new Ghost("Leona", 8, 1, Direction.droite);
-	Ghost GHOST_3 = new Ghost("Soraka", 1, 3, Direction.droite);
-	Ghost GHOST_4 = new Ghost("Janna", 1, 4, Direction.droite);
+	Ghost GHOST_1 = new Ghost("TEST", 1, 2, Direction.droite);
+	Ghost GHOST_2 = new Ghost("TEST", 8, 1, Direction.droite);
+	Ghost GHOST_3 = new Ghost("TEST", 1, 5, Direction.droite);
+	Ghost GHOST_4 = new Ghost("TEST", 12, 1, Direction.droite);
 	
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";

@@ -114,7 +114,7 @@ public class Ghost extends Personnage {
 	
 	@Override
 	public void meurtDansDatroceSouffrance() {
-		
+		isAlive = false;
 	}
 	
 	
