@@ -62,6 +62,6 @@ public abstract class Pacman extends Personnage {
 	public abstract boolean canRespawn();
 	
 	protected void respawn() {
-		this.coord = this.pointDeRespawn;
+		this.coord = new CoordonneesFloat(pointDeRespawn);
 	}
 }

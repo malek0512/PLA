@@ -115,6 +115,7 @@ public class Ghost extends Personnage {
 	@Override
 	public void meurtDansDatroceSouffrance() {
 		isAlive = false;
+		System.out.println("fantome est mort : " + this.nom);
 	}
 	
 	

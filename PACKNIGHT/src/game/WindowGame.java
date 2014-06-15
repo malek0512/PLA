@@ -47,14 +47,14 @@ public class WindowGame extends BasicGame {
 	
 
 	PacKnight PACMAN_1= new PacKnight("J1",1,1,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_2 = new PacKnight("J2",5,1,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_2 = new PacKnight("J2",10,11,Direction.droite,new CoordonneesFloat(1, 1));
 	PacKnight PACMAN_3 = new PacKnight("J3",10,11,Direction.droite,new CoordonneesFloat(1, 1));
 	PacKnight PACMAN_4 = new PacKnight("J4",10,11,Direction.droite,new CoordonneesFloat(1, 1));
 
-	Ghost GHOST_1 = new Ghost("TEST", 1, 2, Direction.droite);
-	Ghost GHOST_2 = new Ghost("TEST", 8, 1, Direction.droite);
-	Ghost GHOST_3 = new Ghost("TEST", 1, 5, Direction.droite);
-	Ghost GHOST_4 = new Ghost("TEST", 12, 1, Direction.droite);
+	Ghost GHOST_1 = new Ghost("1", 1, 2, Direction.droite);
+	Ghost GHOST_2 = new Ghost("2", 8, 1, Direction.droite);
+	Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite);
+	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite);
 	
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";

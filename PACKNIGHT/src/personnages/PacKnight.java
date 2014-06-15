@@ -58,10 +58,12 @@ public class PacKnight extends Pacman{
 
 	public void meurtDansDatroceSouffrance() {
 		vie--;
-		if(vie != 0)
+		System.out.println("Un pac est mort, vie restante : " + PacKnight.vie);
+		if(vie > 0)
 			respawn();
 		else
 			System.out.println("fin de game");
+		System.out.println("Cordonne après mort du pacman : " + this.coord);
 	}
 
 	public void gererCollision() {
@@ -71,9 +73,10 @@ public class PacKnight extends Pacman{
 			Ghost g = i.next();
 			if(g.getisAlive() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
 			{
+				System.out.println("fantome tester : " + g.nom );
 				this.meurtDansDatroceSouffrance();
 				g.meurtDansDatroceSouffrance(); //vengence !!!
-				//break;
+				break;
 			}
 		}
 	}
