@@ -8,7 +8,6 @@ import hitBoxManager.*;
 
 public abstract class Personnage{
 
-
 	protected static int tauxDeDeplacement = 4; //la taille du deplacement du personnage en pixel
 
 	protected static Terrain terrain;
@@ -76,6 +75,7 @@ public abstract class Personnage{
 		default :
 			break;
 			}
+		this.gererCollision();
 	}
 	
 	/**

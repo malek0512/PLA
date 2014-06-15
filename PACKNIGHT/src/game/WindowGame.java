@@ -51,6 +51,10 @@ public class WindowGame extends BasicGame {
 	PacKnight PACMAN_3 = new PacKnight("J3",3,1,Direction.droite,new CoordonneesFloat(1, 1));
 	PacKnight PACMAN_4 = new PacKnight("J4",4,1,Direction.droite,new CoordonneesFloat(1, 1));
 
+	Ghost GHOST_1 = new Ghost("Lulu", 1, 2, Direction.droite);
+	Ghost GHOST_2 = new Ghost("Leona", 1, 3, Direction.droite);
+	Ghost GHOST_3 = new Ghost("Soraka", 1, 4, Direction.droite);
+	Ghost GHOST_4 = new Ghost("Janna", 1, 5, Direction.droite);
 	
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
@@ -62,8 +66,12 @@ public class WindowGame extends BasicGame {
 	private float xCamera = x, yCamera = y;
 	private int direction = 0;
 	private boolean moving = false;
+	
 	private Animation[] animations = new Animation[8];
 	private Animation[] animations2 = new Animation[8];
+	private Animation[] animations3 = new Animation[8];
+	private Animation[] animations4 = new Animation[8];
+	
 	Music M;
 	protected CoordonneesFloat coordFloat;
 	
@@ -105,23 +113,23 @@ public class WindowGame extends BasicGame {
         this.animations2[6] = loadAnimation(spriteSheet_PACMAN_2, 1, 9, 2);
         this.animations2[7] = loadAnimation(spriteSheet_PACMAN_2, 1, 9, 3);
         
-        this.animations2[0] = loadAnimation(spriteSheet_PACMAN_3, 0, 1, 0);
-        this.animations2[1] = loadAnimation(spriteSheet_PACMAN_3, 0, 1, 1);
-        this.animations2[2] = loadAnimation(spriteSheet_PACMAN_3, 0, 1, 2);
-        this.animations2[3] = loadAnimation(spriteSheet_PACMAN_3, 0, 1, 3);
-        this.animations2[4] = loadAnimation(spriteSheet_PACMAN_3, 1, 9, 0);
-        this.animations2[5] = loadAnimation(spriteSheet_PACMAN_3, 1, 9, 1);
-        this.animations2[6] = loadAnimation(spriteSheet_PACMAN_3, 1, 9, 2);
-        this.animations2[7] = loadAnimation(spriteSheet_PACMAN_3, 1, 9, 3);
+        this.animations3[0] = loadAnimation(spriteSheet_PACMAN_3, 0, 1, 0);
+        this.animations3[1] = loadAnimation(spriteSheet_PACMAN_3, 0, 1, 1);
+        this.animations3[2] = loadAnimation(spriteSheet_PACMAN_3, 0, 1, 2);
+        this.animations3[3] = loadAnimation(spriteSheet_PACMAN_3, 0, 1, 3);
+        this.animations3[4] = loadAnimation(spriteSheet_PACMAN_3, 1, 9, 0);
+        this.animations3[5] = loadAnimation(spriteSheet_PACMAN_3, 1, 9, 1);
+        this.animations3[6] = loadAnimation(spriteSheet_PACMAN_3, 1, 9, 2);
+        this.animations3[7] = loadAnimation(spriteSheet_PACMAN_3, 1, 9, 3);
         
-        this.animations2[0] = loadAnimation(spriteSheet_PACMAN_4, 0, 1, 0);
-        this.animations2[1] = loadAnimation(spriteSheet_PACMAN_4, 0, 1, 1);
-        this.animations2[2] = loadAnimation(spriteSheet_PACMAN_4, 0, 1, 2);
-        this.animations2[3] = loadAnimation(spriteSheet_PACMAN_4, 0, 1, 3);
-        this.animations2[4] = loadAnimation(spriteSheet_PACMAN_4, 1, 9, 0);
-        this.animations2[5] = loadAnimation(spriteSheet_PACMAN_4, 1, 9, 1);
-        this.animations2[6] = loadAnimation(spriteSheet_PACMAN_4, 1, 9, 2);
-        this.animations2[7] = loadAnimation(spriteSheet_PACMAN_4, 1, 9, 3);
+        this.animations4[0] = loadAnimation(spriteSheet_PACMAN_4, 0, 1, 0);
+        this.animations4[1] = loadAnimation(spriteSheet_PACMAN_4, 0, 1, 1);
+        this.animations4[2] = loadAnimation(spriteSheet_PACMAN_4, 0, 1, 2);
+        this.animations4[3] = loadAnimation(spriteSheet_PACMAN_4, 0, 1, 3);
+        this.animations4[4] = loadAnimation(spriteSheet_PACMAN_4, 1, 9, 0);
+        this.animations4[5] = loadAnimation(spriteSheet_PACMAN_4, 1, 9, 1);
+        this.animations4[6] = loadAnimation(spriteSheet_PACMAN_4, 1, 9, 2);
+        this.animations4[7] = loadAnimation(spriteSheet_PACMAN_4, 1, 9, 3);
         
         Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
         M = background;
@@ -134,8 +142,8 @@ public class WindowGame extends BasicGame {
         this.map.render(0, 0, 0);
         g.drawAnimation(animations[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x, PACMAN_1.getCoord().y);
         g.drawAnimation(animations2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
-        g.drawAnimation(animations2[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
-        g.drawAnimation(animations2[direction + (moving ? 4 : 0)], PACMAN_4.getCoord().x, PACMAN_4.getCoord().y);
+        g.drawAnimation(animations3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
+        g.drawAnimation(animations4[direction + (moving ? 4 : 0)], PACMAN_4.getCoord().x, PACMAN_4.getCoord().y);
     }
 
     public void update(GameContainer container, int delta) throws SlickException {
