@@ -112,8 +112,8 @@ public class WindowGame extends BasicGame {
     	mapToTerrain(terrain);
     	playground = terrain;
     	try{
-    		aleatoire = new Automate("Automate/_build/ALEATOIRE.XML",GHOST_1);
-    		}catch(Exception e)  {};
+    		aleatoire = new Automate("Automate/A_ALEATOIRE.xml",GHOST_1);
+    		}catch(Exception e)  {System.out.println(e);};
     			
         SpriteSheet spriteSheet_PACMAN_1 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_1), taillePersonnage, taillePersonnage);
         SpriteSheet spriteSheet_PACMAN_2 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_2), taillePersonnage, taillePersonnage);
@@ -170,8 +170,11 @@ public class WindowGame extends BasicGame {
 
     public void update(GameContainer container, int delta) throws SlickException {
 		if(!PAUSE) {
-	    	//if (pacman.caseDevantDisponible())
+	    	if (PACMAN_1.parametrable())
 	    		PACMAN_1.avancer();
+	    	else
+	    		PACMAN_1.avancerAnimation();
+	    	
 	        /**else
 	        {
 	        if(pacman.getOrientation()==Direction.haut)
@@ -184,31 +187,26 @@ public class WindowGame extends BasicGame {
 	        	pacman.setDirection(Direction.haut);
 	        }
 	    	*/
-	    	if (PACMAN_2.caseDevantDisponible())
+	    	if (PACMAN_2.parametrable())
+	    	{
+	    		if(PACMAN_2.caseDevantDisponible())
 	    		PACMAN_2.avancer();
+		    	else
+		        {
+		        if(PACMAN_2.getOrientation()==Direction.haut)
+		        	PACMAN_2.setDirection(Direction.droite);
+		        else if(PACMAN_2.getOrientation()==Direction.droite)
+		        	PACMAN_2.setDirection(Direction.bas);
+		        else if(PACMAN_2.getOrientation()==Direction.bas)
+		        	PACMAN_2.setDirection(Direction.gauche);
+		        else if(PACMAN_2.getOrientation()==Direction.gauche)
+		        	PACMAN_2.setDirection(Direction.haut);
+		        }
+	    	}
 	    	else
-	        {
-	        if(PACMAN_2.getOrientation()==Direction.haut)
-	        	PACMAN_2.setDirection(Direction.droite);
-	        else if(PACMAN_2.getOrientation()==Direction.droite)
-	        	PACMAN_2.setDirection(Direction.bas);
-	        else if(PACMAN_2.getOrientation()==Direction.bas)
-	        	PACMAN_2.setDirection(Direction.gauche);
-	        else if(PACMAN_2.getOrientation()==Direction.gauche)
-	        	PACMAN_2.setDirection(Direction.haut);
-	        }
-	    	
-	    	/*
-	        float w = container.getWidth() / 4;
-	        if (PACMAN_1.getCoord().x > (this.xCamera + w) && (PACMAN_1.getCoord().x + w  <  largueur_map*tuile_size))
-	        	this.xCamera = PACMAN_1.getCoord().x - w;
-	        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w)) 
-	        	this.xCamera = PACMAN_1.getCoord().x + w;
-	        float h = container.getHeight() / 4;
-	        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
-	        	this.yCamera = PACMAN_1.getCoord().y - h;
-	        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
-	        	this.yCamera = PACMAN_1.getCoord().y + h;*/
+
+	    		PACMAN_2.avancerAnimation();
+
 	    	
 	        float w = container.getWidth() / 4;
 	        if (PACMAN_1.getCoord().x > (this.xCamera + w) && (PACMAN_1.getCoord().x + w  <  largueur_map*tuile_size))
@@ -225,7 +223,7 @@ public class WindowGame extends BasicGame {
 	        {
 	        aleatoire.suivant();
 	        }
-	        catch (Exception e) {}
+	        catch (Exception e) {System.out.println(e);}
 		}
     }
 
