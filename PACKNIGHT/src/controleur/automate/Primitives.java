@@ -43,11 +43,11 @@ public class Primitives {
 	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position, float rayon) {
 		List<Pacman> res = new LinkedList<Pacman>();
 
-		float someXYSource = position.sommeXY();
+		float someXYSource = position.CasHG().sommeXY();
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
 			Pacman pac = i.next();
-			float someXYTester = i.next().getCoord().sommeXY();
+			float someXYTester = i.next().getCoord().CasHG().sommeXY();
 			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
 				res.add(pac);
 		}

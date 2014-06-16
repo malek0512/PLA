@@ -15,7 +15,7 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
-
+import controleur.automate.Automate;
 import personnages.*;
 import structure_terrain.*;
 
@@ -56,6 +56,8 @@ public class WindowGame extends BasicGame {
 	Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite);
 	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite);
 	
+	Automate aleatoire;
+	
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
 	private String CHEMIN_MUSIC = "src/graphisme/main/ressources/music/";
@@ -95,7 +97,9 @@ public class WindowGame extends BasicGame {
         Personnage.initTerrain(terrain);
     	mapToTerrain(terrain);
     	playground = terrain;
-
+    	try{
+    		aleatoire = new Automate("Automate/_build/ALEATOIRE.XML",GHOST_1);
+    		}catch(Exception e)  {};
     			
         SpriteSheet spriteSheet_PACMAN_1 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_1), taillePersonnage, taillePersonnage);
         SpriteSheet spriteSheet_PACMAN_2 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_2), taillePersonnage, taillePersonnage);
