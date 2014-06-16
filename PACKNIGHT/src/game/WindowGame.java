@@ -286,7 +286,6 @@ public class WindowGame extends BasicGame {
 				        	{
 				        	terrain.terrain[i][j] = new Case(2);
 				        	Terrain.nb_pacgum++;
-				        	System.out.println(+Terrain.nb_pacgum);
 				        	}
 				        else terrain.terrain[i][j] = new Case(1);
 		        }
