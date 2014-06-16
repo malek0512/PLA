@@ -142,6 +142,7 @@ public class WindowGame extends BasicGame {
     public void render(GameContainer container, Graphics g) throws SlickException {
     	float xBary = (PACMAN_1.getCoord().x + PACMAN_2.getCoord().x + PACMAN_3.getCoord().x + PACMAN_4.getCoord().x)/4;
     	float yBary = (PACMAN_1.getCoord().y + PACMAN_2.getCoord().y + PACMAN_3.getCoord().y + PACMAN_4.getCoord().y)/4;	
+    	
     	xCamera = xBary;
     	yCamera = yBary;
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
@@ -197,6 +198,17 @@ public class WindowGame extends BasicGame {
 	        	PACMAN_2.setDirection(Direction.haut);
 	        }
 	    	
+	    	/*
+	        float w = container.getWidth() / 4;
+	        if (PACMAN_1.getCoord().x > (this.xCamera + w) && (PACMAN_1.getCoord().x + w  <  largueur_map*tuile_size))
+	        	this.xCamera = PACMAN_1.getCoord().x - w;
+	        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w)) 
+	        	this.xCamera = PACMAN_1.getCoord().x + w;
+	        float h = container.getHeight() / 4;
+	        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
+	        	this.yCamera = PACMAN_1.getCoord().y - h;
+	        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
+	        	this.yCamera = PACMAN_1.getCoord().y + h;*/
 	    	
 	        float w = container.getWidth() / 4;
 	        if (PACMAN_1.getCoord().x > (this.xCamera + w) && (PACMAN_1.getCoord().x + w  <  largueur_map*tuile_size))
