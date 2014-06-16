@@ -66,7 +66,7 @@ public class PrimitivesAction extends Primitives{
 		while(i.hasNext())
 		{
 			pac = i.next();
-			if(perso.getCoord().distance(pac.getCoord())<perso.getCoord().distance(min.getCoord()))
+			if(perso.getCoord().CasCentre().distance(pac.getCoord().CasCentre())<perso.getCoord().CasCentre().distance(min.getCoord().CasCentre()))
 				min = pac;
 		}
 		Direction mind=Direction.haut;

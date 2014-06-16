@@ -36,7 +36,7 @@ public class Automate extends Controleur {
 	public final static int NON_PM_DANS_CROIX = 6;
 	public final static int INTERSECTION = 7;
 	public final static int NON_INTERSECTION = 8;
-	public final static int CASE_ATTEINTE=9;
+	public final static int CASE_NON_ATTEINTE=9;
 	public final static int FREE=10;
 	public final static int NON_FREE=11;
 	public final static int ETOILE=12;
@@ -128,7 +128,7 @@ public class Automate extends Controleur {
 //		System.out.println(nbEntreeValide());
 		switch (sortieAutomate) {
 		//TODO Ajouter chaque fonction d'action
-		case Automate.AVANCER: personnage.avancer(); break;
+		case Automate.AVANCER: personnage.avancerAux(); break;
 		case Automate.DROIT: personnage.setDirection(Direction.droite); break;
 		case Automate.GAUCHE: personnage.setDirection(Direction.gauche); break;
 		case Automate.HAUT: personnage.setDirection(Direction.haut); break;
@@ -172,6 +172,7 @@ public class Automate extends Controleur {
 				//TODO Ajouter chaque fonction de test
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) return CASE_LIBRE; break;
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) return CASE_OCCUPEE; break;
+				case CASE_NON_ATTEINTE:if(!primitivesTest.caseAtteinte()) return CASE_NON_ATTEINTE; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
 				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return PM_DANS_RAYON_X; break;
 				case INTERSECTION: if(primitivesTest.estIntersection()) return INTERSECTION; break;

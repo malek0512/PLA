@@ -67,7 +67,7 @@ public class PrimitivesTest extends Primitives {
 	 * @return : Vrai si le déplacment du fantôme s'est fait d'une case*/
 	public boolean caseAtteinte(){
 		
-		return ((Ghost) auto.getPersonnage()).getCompteurAction()==0;
+		return auto.getPersonnage().getCompteurAction()==0;
 	}
 	/**
 	 * @return : Vrai si le fantôme est controllé par le fantôme Lord*/
