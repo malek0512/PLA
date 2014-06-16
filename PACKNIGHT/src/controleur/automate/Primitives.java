@@ -67,8 +67,8 @@ public class Primitives {
 	 * @return vrai si un pacman est dans la croix et qu'il n'y a pas de mur entre les deux
 	 * @author rama/vivien
 	 */
-	protected boolean pacmanEstDansCroix(Coordonnees position) {
-		Coordonnees test=position;
+	protected boolean pacmanEstDansCroix(CoordonneesFloat position) {
+		CoordonneesFloat test=position;
 		boolean res=false;
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
@@ -127,7 +127,7 @@ public class Primitives {
 	 * @return boolean Vrai si il y a un mur faux sinon
 	 * @author vivien
 	 * */
-	private boolean mur(Coordonnees test) {
+	private boolean mur(CoordonneesFloat test) {
 		boolean res=true;
 		if (Personnage.getTerrain().getCase(test.x,test.y).isAccessable())
 			res=false;
