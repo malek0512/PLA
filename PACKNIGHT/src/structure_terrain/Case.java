@@ -13,7 +13,7 @@ package structure_terrain;
 
 public class Case {
 	
-	// 1 == Vide // 0 == Mur
+	// 2 == Pac-gomm // 1 == Vide // 0 == Mur
 	private int accessible; 
 	
 	public Case(int a){
