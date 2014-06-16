@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Ghost;
 import personnages.Pacman;
@@ -66,24 +67,23 @@ public class PrimitivesAction extends Primitives{
 		while(i.hasNext())
 		{
 			pac = i.next();
-			if(perso.getCoord().distance(pac.getCoord())<perso.getCoord().distance(min.getCoord()))
+			if(perso.getCoord().CasCentre().distance(pac.getCoord().CasCentre())<perso.getCoord().CasCentre().distance(min.getCoord().CasCentre()))
 				min = pac;
 		}
 		Direction mind=Direction.haut;
 		//calcul de la direction permettant de se rapprocher le plus de pacman
 		for(Direction d : Direction.values()){
 			
-			if(positionAdjacente(d).distance(min.getCoord())<positionAdjacente(mind).distance(min.getCoord()))
+			if(positionAdjacente(d).CasCentre().distance(min.getCoord().CasCentre())<positionAdjacente(mind).CasCentre().distance(min.getCoord().CasCentre()))
 				mind=d;
 		}
 	perso.setDirection(mind);
 	}
+	
 	/**
 	 * Reçoit un ordre du Fantôme Lord et avance vers la case désignée tant qu'il ne l'a pas atteinte
 	 * */
-	public void avancerVersPoint(){
-		((Ghost)auto.getPersonnage()).setControl(true);
-		
+	public void obeir(List<CoordonneesFloat> d){
 		
 	}
 	

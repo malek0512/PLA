@@ -16,6 +16,7 @@ public class Terrain {
 	public Case[][] terrain;
 	protected int hauteur;
 	protected int largeur;
+	static public int nb_pacgum;
 	
 	/**
 	 * Alloue la mémoire pour un terrain de haut largeur donnée
@@ -24,15 +25,11 @@ public class Terrain {
 	 * @require les paramètre sont >= a 1
 	 * author : alex
 	 */
-	public Terrain(int largeur, int hauteur){
+	public Terrain(int largeur, int hauteur, int nb_pacgum){
 		terrain=new Case[largeur][hauteur];
 		this.hauteur = hauteur;
 		this.largeur = largeur;
-		for(int i=0; i<largeur; i++){
-			for(int j=0; j<hauteur; j++){
-				this.terrain[i][j] = new Case(1) ;
-			}
-		}
+		Terrain.nb_pacgum = nb_pacgum;
 	}
 
 	/**

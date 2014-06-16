@@ -32,11 +32,12 @@ public class Automate extends Controleur {
 	public final static int SORTIE_TERRAIN = 2;
 	public final static int CASE_GHOST = 3;
 	public final static int PM_DANS_RAYON_X = 4;
+	public final static int NON_PM_DANS_RAYON_X = 13;
 	public final static int PM_DANS_CROIX = 5;
 	public final static int NON_PM_DANS_CROIX = 6;
 	public final static int INTERSECTION = 7;
 	public final static int NON_INTERSECTION = 8;
-	public final static int CASE_ATTEINTE=9;
+	public final static int CASE_NON_ATTEINTE=9;
 	public final static int FREE=10;
 	public final static int NON_FREE=11;
 	public final static int ETOILE=12;
@@ -52,7 +53,7 @@ public class Automate extends Controleur {
 	public final static int DIRECTION_ALEATOIRE = 7;
 	public final static int PROCHAINE_DIRECTION = 8;
 	public final static int CHEMIN_PLUS_COURT=9;
-	public final static int AVANCER_VERS=10;
+	public final static int OBEIR=10;
 	public final static int END_LIFE=11;
 	public final static int SPAWN=12;
 	
@@ -117,33 +118,43 @@ public class Automate extends Controleur {
 
 	/**
 	 * Fonction effectuant l'action suivante, selon l'entree et la sortie de l'automate.
-	 * A modifier au fure et a mesure des ajout de fonction d'actions des personnages.
+	 * A modifier au fur et a mesure des ajout de fonction d'actions des personnages.
 	 * Ne pas oublier de CASTER selon le type de votre personnage, afin d'avoir accès aux actions qui y sont décrites 
 	 * @throws Exception
 	 * @author malek
 	 */
 	public void suivant() throws Exception {
-		int entreeAutomate = getEntree();
-		int sortieAutomate = effectuerTransition(entreeAutomate);
+		//System.out.println();
 //		System.out.println(nbEntreeValide());
-		switch (sortieAutomate) {
-		//TODO Ajouter chaque fonction d'action
-		case Automate.AVANCER: personnage.avancer(); break;
-		case Automate.DROIT: personnage.setDirection(Direction.droite); break;
-		case Automate.GAUCHE: personnage.setDirection(Direction.gauche); break;
-		case Automate.HAUT: personnage.setDirection(Direction.haut); break;
-		case Automate.BAS: personnage.setDirection(Direction.bas); break;
-		case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
-		case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
-		case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
-		case Automate.AVANCER_VERS: primitivesAction.avancerVersPoint(); break;
-		case Automate.SPAWN:personnage.respawn();break;
-		case Automate.RIEN:primitivesAction.pass(); break;
-		
+		if(this.personnage.parametrable())
+		{
+			do
+			{
+				int entreeAutomate = getEntree();
+				int sortieAutomate = effectuerTransition(entreeAutomate);
+				switch (sortieAutomate) {
+				//TODO Ajouter chaque fonction d'action
+				case Automate.AVANCER: personnage.avancerAux(); break;
+				case Automate.DROIT: personnage.setDirection(Direction.droite); break;
+				case Automate.GAUCHE: personnage.setDirection(Direction.gauche); break;
+				case Automate.HAUT: personnage.setDirection(Direction.haut); break;
+				case Automate.BAS: personnage.setDirection(Direction.bas); break;
+				case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
+				case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
+				case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
+				case Automate.OBEIR: primitivesAction.obeir(((Ghost) getPersonnage()).ordre); break;
+				case Automate.SPAWN:personnage.respawn();break;
+				case Automate.RIEN:primitivesAction.pass(); break;
+				}
+			}
+			while(this.personnage.parametrable() && !(isEtatBloquant()));
+			incrementerTransition();
 		}
-		incrementerTransition();
+		else
+		{
+			this.personnage.avancerAnimation();
+		}
 	}
-
 
 	/**
 	 * A l'etatCourant X,
@@ -172,8 +183,10 @@ public class Automate extends Controleur {
 				//TODO Ajouter chaque fonction de test
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) return CASE_LIBRE; break;
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) return CASE_OCCUPEE; break;
+				case CASE_NON_ATTEINTE:if(!primitivesTest.caseAtteinte()) return CASE_NON_ATTEINTE; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
 				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return PM_DANS_RAYON_X; break;
+				case NON_PM_DANS_RAYON_X : if(!primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return NON_PM_DANS_RAYON_X; break;
 				case INTERSECTION: if(primitivesTest.estIntersection()) return INTERSECTION; break;
 				case NON_INTERSECTION: if(!primitivesTest.estIntersection()) return NON_INTERSECTION; break;
 				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; break;
@@ -244,6 +257,10 @@ public class Automate extends Controleur {
 		return this.etatsFinals.contains(this.etatCourant);
 	}
 
+	public boolean isEtatBloquant()
+	{
+		return this.etatsBloquants.contains(this.etatCourant);
+	}
 	protected void incrementerTransition(){
 		nbTransition++;
 	}
