@@ -9,24 +9,19 @@ import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Personnage;
 import structure_terrain.Terrain;
+import structure_terrain.Terrain1;
 //import structure_terrain.Terrain1;
 import structure_terrain.TerrainTest1;
 
 public class Graph {
 
-	static public Noeud table[][];
-	static private int hauteur;
-	static private int largeur;
+	public Noeud table[][];
+	private int hauteur;
+	private int largeur;
 	
 	
 	public Graph(Terrain terrain)
 	{
-		largeur =terrain.getLargeur();
-		hauteur =terrain.getHauteur();
-		table = new Noeud[largeur][hauteur];
-	}
-	
-	public Graph(TerrainTest1 terrain) {
 		largeur =terrain.getLargeur();
 		hauteur =terrain.getHauteur();
 		table = new Noeud[largeur][hauteur];
@@ -39,8 +34,43 @@ public class Graph {
 		}
 	}
 	
+	private CoordonneesFloat getCaseDirection(CoordonneesFloat u, Direction d)
+	{
+		switch(d)
+		{
+		case bas : return new CoordonneesFloat(u.x,u.y+1);
+		case haut : return new CoordonneesFloat(u.x, u.y-1);
+		case droite : return new CoordonneesFloat(u.x+1, u.y);
+		case gauche : return new CoordonneesFloat(u.x-1, u.y);
+		default : return null;
+		}
+	}
+	
+	private int couleur(CoordonneesFloat u, Direction d)
+	{
+		switch(d)
+		{
+		case bas : return table[u.x][u.y+1].couleur;
+		case haut : return table[u.x][u.y-1].couleur;
+		case droite : return table[u.x+1][u.y].couleur;
+		case gauche : return table[u.x-1][u.y].couleur;
+		default : return 0;
+		}
+	}
+	
+	private int nbAdjacent(CoordonneesFloat u)
+	{
+		int adj = 0;
+		for(Direction d : Direction.values())
+		{
+			if(Personnage.getTerrain().caseAcessible(u.x, u.y, d) && couleur(u,d) == 0 )
+				adj++;
+		}
+		return adj;
+	}
+	
 	/** Pour remettre en situation initiale chaque sommet **/
-    public final void reset(){
+    public void reset(){
     	for(int i =0; i<largeur;i++)
     	{
     		for(int j=0;j<hauteur;j++)
@@ -48,60 +78,53 @@ public class Graph {
     	}
     }
 
-    public static List<Coordonnees> visiterLargeur(Coordonnees noeud, int nbInter){
-    	
+    /**
+     * @param noeud : coordonnée de la case a gank
+     * @return : liste des points statégique pour le gank
+     */
+    public List<CoordonneesFloat> visiterLargeur(CoordonneesFloat noeud){
+    
+    int nbInter = 2;
     int nbInterFind=0;
     int nbInterSearch = 0;
+    
     Noeud init = table[noeud.x][noeud.y]; 
 	init.couleur = 2; // noir
 	
-	List<Coordonnees> res =  new LinkedList<Coordonnees>();
-	List<Coordonnees> file = new LinkedList<Coordonnees>();
+	List<CoordonneesFloat> res =  new LinkedList<CoordonneesFloat>();
+	List<CoordonneesFloat> file = new LinkedList<CoordonneesFloat>();
 
-	//initialisation du nbInterSearch
-	for(Direction d : Direction.values())
-	{
-		if(Personnage.getTerrain().getCase(noeud , d).isAccessable())
-			{
-				nbInterSearch++;
-				file.add(Personnage.getTerrain().getCoordonnees(noeud,d));
-			}
-	}
-	
+	file.add(noeud);
 	//algo de parcours
 	while (!file.isEmpty()){
-	    Coordonnees u = file.remove(0);
+	    CoordonneesFloat u = file.remove(0);
+	    System.out.println(u);
 	    Noeud ncourant = table[u.x][u.y];
 	    //calcule du nombre d'adjacent
-		int cptAdj=0;
-		for(Direction d : Direction.values())
-		{
-			if(Personnage.getTerrain().getCase(u,d).isAccessable())
-				cptAdj++;
-		}
-		cptAdj--; //on retire le papa des adjacente
-		if(cptAdj <= nbInter - nbInterFind - (nbInterSearch - 1))
+		int cptAdj = this.nbAdjacent(u);
+
+		if(cptAdj <= nbInter - nbInterFind - nbInterSearch)
 		{
 			//mis a jours de interSearch
 			nbInterSearch = nbInterSearch - 1 + cptAdj;
 			//on ajoute tout les adjacent a la liste
 			for(Direction d : Direction.values())
 			{
-				if(Personnage.getTerrain().getCase(u,d).isAccessable())
+				if(Personnage.getTerrain().caseAcessible(u.x, u.y, d))
 				{
-					Coordonnees v = Personnage.getTerrain().getCoordonnees(u,d); 
+					CoordonneesFloat v = this.getCaseDirection(u, d); 
 					Noeud adj = table[v.x][v.y];
 					if (adj.couleur==0) //blanc
 					{
-					    adj.pere = ncourant;
+					    // adj.pere = ncourant;
 					    adj.couleur=1; // gris 
 					    file.add(v);
 				    }
 					else if (adj.couleur==1) //gris
 					{
 						//remove le adj gris trouver
-						//TODO
-						//mis a jout du nombre d'inter trouver
+						res.remove(res.indexOf(v));
+						//mis a jour du nombre d'inter trouver
 						nbInterFind--;
 						adj.couleur=2; //noir
 						file.add(v);
@@ -125,29 +148,21 @@ public class Graph {
 	}
     return res;
     }
-    public List<CoordonneesFloat> a_star(CoordonneesFloat coordF, CoordonneesFloat coordP){
-    	
-    	Noeud init = table[coordF.intoInt().x][coordF.intoInt().y];
-    	Noeud fin= table[coordP.intoInt().x][coordF.intoInt().y];
-    	float dist=coordF.distance(coordP);
-		return null;
-    	
-    	
-    }
+  
 
     public static void main(String[] args) {
-    	TerrainTest1 terrain = new TerrainTest1(10, 10);
+    	Terrain terrain = new Terrain1(10, 10);
     	Personnage.initTerrain(terrain); 
-    	Coordonnees start = new Coordonnees(1,1);
-    	//Graph g = new Graph(terrain);
+    	CoordonneesFloat start = new CoordonneesFloat(1,1);
+    	Graph g = new Graph(terrain);
+    	List<CoordonneesFloat> l = g.visiterLargeur(start);
     	
-    	List<Coordonnees> l = Graph.visiterLargeur(start,3);
-    	
-    	Iterator<Coordonnees> i = l.iterator();
+    	Iterator<CoordonneesFloat> i = l.iterator();
     	while(i.hasNext())
     	{
-    		Coordonnees x = i.next();
-    		terrain.setCase(x.x, x.y, 2);
+    		System.out.println("here we go");
+    		CoordonneesFloat x = i.next();
+    		System.out.println(x);
     	}
     	terrain.afficher();
     			

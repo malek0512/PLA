@@ -47,8 +47,8 @@ public class PacKnight extends Pacman{
 	}
 	
 	
-	public PacKnight(String name, int x, int y, Direction d) {
-		super(name,x,y,d);
+	public PacKnight(String name, int x, int y, Direction d, CoordonneesFloat respawn) {
+		super(name,x,y,d,respawn);
 		PacKnight.liste.add(this);
 	}
 
@@ -57,20 +57,28 @@ public class PacKnight extends Pacman{
 	}
 
 	public void meurtDansDatroceSouffrance() {
-		// TODO Auto-generated method stub
-		
+		vie--;
+		System.out.println("Un pac est mort, vie restante : " + PacKnight.vie);
+		if(vie > 0)
+			respawn();
+		else
+			System.out.println("fin de game");
+		System.out.println("Cordonne après mort du pacman : " + this.coord);
 	}
 
-	@Override
-	public void respawn() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void gererCollision() {
-		// TODO Auto-generated method stub
-		
+		Iterator<Ghost> i = Ghost.liste.iterator();
+		while(i.hasNext())
+		{
+			Ghost g = i.next();
+			if(g.getisAlive() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
+			{
+				System.out.println("fantome tester : " + g.nom );
+				this.meurtDansDatroceSouffrance();
+				g.meurtDansDatroceSouffrance(); //vengence !!!
+				break;
+			}
+		}
 	}
 
 	

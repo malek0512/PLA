@@ -1,35 +1,36 @@
+/**
+ * legende :
+ * 
+ * ## Option 1 ##
+ * Pix : les valeurs de retour sont en pixel
+ * Cas : les valeurs de retour sont des numeros de case
+ * 
+ * ## Option 2 ##
+ * B : bas
+ * H : haut
+ * G : gauche
+ * D : droite
+ * C : centre
+ * 
+ * ## Option 3 ##
+ * X : renvoie seulement pour la valeur X
+ * Y : renvoie seulement pour la valeur Y
+ * 
+ * si pas d'option 3, renvoie un objet CoordonneesFloat 
+ * contenant dans X et Y les valeurs calculer avec option 3 X et Y
+ */
+
 package personnages;
 
 import game.*;
 
 public class CoordonneesFloat {
+	
 	public int x;
 	public int y;
-	
-	public float distance(CoordonneesFloat c){
-		float res;
-		res=Math.abs(this.x-c.x)+Math.abs(this.y-c.y);
-		return res;
-	}
-	public String toString()
-	{return ""+ x + " " + y;}
-	/**
-	 * renvoie le pixel correspondant a la coordonne x
-	 * author : alex
-	 */
-	public int NonPixelX()
-	{
-		return this.x / WindowGame.tuile_size;
-	}
-	
-	/**
-	 * renvoie le pixel correspondant a la coordonne y
-	 * author : alex
-	 */
-	public int NonPixelY()
-	{
-		return this.y / WindowGame.tuile_size;
-	}
+
+	final static private int size = WindowGame.tuile_size;
+
 	
 	/**
 	 * constructeur de base
@@ -63,9 +64,116 @@ public class CoordonneesFloat {
 	 * renvoie la somme des composantes
 	 * author : alex
 	 */
-	public float sommeXY()
+	public int sommeXY()
 	{
 		return this.x + this.y;
 	}
+	
+	public int distance(CoordonneesFloat c){
+		int	res;
+		res=Math.abs(this.x-c.x)+Math.abs(this.y-c.y);
+		return res;
+	}
+
+	/**
+	 * renvoie les coordonnes de la case correspondant au pixel
+	 */
+	public CoordonneesFloat CasHG(){
+		return new CoordonneesFloat(x/size, y/size);
+	}
+
+	public CoordonneesFloat CasHD()
+	{
+		return new CoordonneesFloat((x + size-1) / size, y/ size);
+	}
+	
+	public CoordonneesFloat CasBG()
+	{
+		return new CoordonneesFloat(x / size,(y+ size-1)/ size);
+	}
+
+	public CoordonneesFloat CasBD()
+	{
+		return new CoordonneesFloat((x+size-1) / size,(y+ size-1)/ size);
+	}
+	
+	public int casGX()
+	{
+		return (x/size);
+	}
+	
+	public int casDX()
+	{
+		return ((x+size-1)/size);
+	}
+	
+	public int casHY()
+	{
+		return (y/size);
+	}
+	
+	public int casBY()
+	{
+		return ((y+ size -1)/size);
+	}
+
+	public CoordonneesFloat PixHG(){
+		return new CoordonneesFloat(x, y);
+	}
+
+	public CoordonneesFloat PixHD()
+	{
+		return new CoordonneesFloat(x + size,y);
+	}
+	
+	public CoordonneesFloat PixBG()
+	{
+		return new CoordonneesFloat(x,y+ size);
+	}
+
+	public CoordonneesFloat PixBD()
+	{
+		return new CoordonneesFloat(x+ size,y+ size);
+	}
+	
+	public int PixGX()
+	{
+		return x;
+	}
+	
+	public int PixDX()
+	{
+		return x+ size;
+	}
+	
+	public int PixHY()
+	{
+		return y;
+	}
+	
+	public int PixBY()
+	{
+		return y+ size;
+	}
+
+	/**
+	 * renvoie la coordonne x du pixel centrale de la case de coordonne x
+	 */
+	public int PixcentrX()
+	{
+		return x + (size/2);
+	}
+	
+	/**
+	 * renvoie la coordonne x du pixel centrale de la case de coordonne x
+	 */
+	public int PixcentrY()
+	{
+		return y + (size/2);
+	}
+
+	public String toString()
+	{return ""+ x + " " + y;}
+	
 }
 

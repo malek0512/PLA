@@ -4,6 +4,7 @@
  */
 package structure_terrain;
 
+import game.WindowGame;
 import structure_terrain.Case;
 import personnages.Coordonnees;
 import personnages.CoordonneesFloat;
@@ -81,6 +82,21 @@ public class Terrain {
 		}
 	}
 	
+	public boolean caseAcessible(int x, int y,Direction direction)
+	{
+		if(estDansLeTerrain(x,y))
+			switch(direction)
+			{
+			case haut : return terrain[x][y-1].isAccessable();
+			case bas : return terrain[x][y+1].isAccessable();
+			case droite : return terrain[x+1][y].isAccessable();
+			case gauche : return terrain[x-1][y].isAccessable();
+			default:
+				break; 
+			}
+		return false;
+	}
+	
 	/**
 	 * ATTENTION : ceci ne fonctionne que pour des coordonnées de TERRAIN et non de PERSONNAGE
 	 * @param coord : coordonnée de la case a regarder 
@@ -89,19 +105,25 @@ public class Terrain {
 	 * @author alex
 	 * 
 	 * Pas de test si les coordonnées sont dans le terrain ? (malek)
+	 * @throws Exception 
 	 */
+
 	public Case getCase(int x, int y,Direction direction)
 	{
-		switch(direction)
-		{
-		case haut : return terrain[x][y-1];
-		case bas : return terrain[x][y+1];
-		case droite : return terrain[x+1][y];
-		case gauche : return terrain[x-1][y];
-		default:
-			break; 
-		}
+	//	if(estDansLeTerrain(new Coordonnees((int) (x/WindowGame.tuile_size),(int) (y/WindowGame.tuile_size))))
+
+			switch(direction)
+			{
+			case haut : return terrain[x][y-1];
+			case bas : return terrain[x][y+1];
+			case droite :return terrain[x+1][y];
+			case gauche : return terrain[x-1][y];
+			default:
+
+				break; 
+			}
 		return null;
+
 	}
 
 	/**
@@ -109,18 +131,13 @@ public class Terrain {
 	 * @author malek
 	 * @param coord
 	 * @return vraie si les coordonnée sont hors du terrain, faux sinon
-	 * 
-	 * rmq : tu peut tout simplement demander au terrain si la cas est accessible, non ?
-	 * Je ne comprend pas l'idée de vérifier si la case est dans le terrain, si on veut faire
-	 * ce test autant le mettre dans la classe Terrain non ?
-	 * Si une classe voulais aussi cette information, c'est pas ici qu'elle viendrais cherher si il existe déja
-	 * une fonction pour ca :p
+	 *
 	 */
-	protected boolean estDansLeTerrain(Coordonnees coord){
-		return (coord.x < 0
-		|| coord.x > Personnage.getTerrain().getLargeur() - 1
-		|| coord.y < 0
-		|| coord.y > Personnage.getTerrain().getHauteur() - 1);
+	protected boolean estDansLeTerrain(int x, int y){
+		return (!(x < 0
+		|| x > Personnage.getTerrain().getLargeur() - 1
+		|| y < 0
+		|| y > Personnage.getTerrain().getHauteur() - 1));
 	}
 	
 	/**
