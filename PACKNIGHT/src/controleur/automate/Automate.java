@@ -125,7 +125,7 @@ public class Automate extends Controleur {
 	public void suivant() throws Exception {
 		int entreeAutomate = getEntree();
 		int sortieAutomate = effectuerTransition(entreeAutomate);
-//		System.out.println(nbEntreeValide());
+		System.out.println("lol");
 		switch (sortieAutomate) {
 		//TODO Ajouter chaque fonction d'action
 		case Automate.AVANCER: personnage.avancer(); break;
