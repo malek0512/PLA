@@ -21,7 +21,14 @@ import structure_terrain.*;
 
 //demande de "git add" cette classe afin de pouvor tester :)
 import structure_terrain.Terrain;
-	
+/*
+if (!Pacgomme)
+{
+terrain.terrain[i][j] = new Case(2);
+Terrain.nb_pacgum++;
+System.out.println(+Terrain.nb_pacgum);
+}7
+*/
 
 public class WindowGame extends BasicGame {
 	
@@ -47,11 +54,11 @@ public class WindowGame extends BasicGame {
 	
 
 	PacKnight PACMAN_1= new PacKnight("J1",1,1,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_2 = new PacKnight("J2",10,11,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_3 = new PacKnight("J3",13,11,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_4 = new PacKnight("J4",10,11,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_2 = new PacKnight("J2",1,1,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_3 = new PacKnight("J3",1,1,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_4 = new PacKnight("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 
-	Ghost GHOST_1 = new Ghost("1", 1, 2, Direction.droite);
+	Ghost GHOST_1 = new Ghost("1", 11, 11, Direction.droite);
 	Ghost GHOST_2 = new Ghost("2", 8, 1, Direction.droite);
 	Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite);
 	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite);
@@ -187,6 +194,12 @@ public class WindowGame extends BasicGame {
         	this.yCamera = PACMAN_1.getCoord().y - h;
         if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
         	this.yCamera = PACMAN_1.getCoord().y + h;
+        
+        try
+        {
+        aleatoire.suivant();
+        }
+        catch (Exception e) {}
     }
 
 
