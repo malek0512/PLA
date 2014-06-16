@@ -58,12 +58,12 @@ public class Primitives {
 	 * TODO : regler les problème après avoir changer mur() de preference
 	 * ATTENTION : les coordonée étant desormais en float, on ne peut plus comparer
 	 * les valeurs et mettre un equal
-	 * Dans le sens ou un pac-man peut etre a la coordonée : (2,8 ; 4,4)
-	 * Il faudrais plutot tester si il est dans l'intervalle : ([2,3] ; [4,5])
-	 * et non pas si les coordonné sont parfaitement egales
+	 * Dans le sens ou un pac-man peut etre a la coordonnée : (2,8 ; 4,4)
+	 * Il faudrait plutot tester si il est dans l'intervalle : ([2,3] ; [4,5])
+	 * et non pas si les coordonnées sont parfaitement egales
 	 * mysterious guy
 	 * 
-	 * @param position : coordonner du fantome
+	 * @param position : coordonnees du fantome
 	 * @return vrai si un pacman est dans la croix et qu'il n'y a pas de mur entre les deux
 	 * @author rama/vivien
 	 */
@@ -124,7 +124,7 @@ public class Primitives {
 	}
 	
 	/**
-	 * @param temp: Cordonnees de la case à tester si présence d'un mur
+	 * @param temp: Coordonnees de la case à tester si présence d'un mur, A UNE DISTANCE i
 	 * @return boolean Vrai si il y a un mur faux sinon
 	 * @author vivien
 	 * */
@@ -152,6 +152,7 @@ public class Primitives {
 		}
 		return coord;
 	}
+
 	/**Pas merci ! :)
 	 * @return Vrai si la case est une intersection
 	 */

@@ -27,7 +27,7 @@ public class PrimitivesTest extends Primitives {
 	 */
 	protected boolean dansRayon(float d) {
 		int n=0;
-		List<Pacman> res = new LinkedList<Pacman>();
+		List<Pacman> res = new LinkedList<Pacman>(); //TODO Pas besoin de l'instancier
 		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
 		Iterator<Pacman> i= res.iterator();
 		while(i.hasNext())
