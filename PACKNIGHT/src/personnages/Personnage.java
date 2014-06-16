@@ -2,12 +2,14 @@ package personnages;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import structure_terrain.*;
 import hitBoxManager.*;
 
 public abstract class Personnage{
 
-	protected static int tauxDeDeplacement = 1; //la taille du deplacement du personnage en pixel
+	protected static int tauxDeDeplacement = 4; //la taille du deplacement du personnage en pixel
+
 	protected static Terrain terrain;
 	public static List<Personnage> liste = new LinkedList<Personnage>();
 
@@ -15,8 +17,9 @@ public abstract class Personnage{
 	//La coordonne corespond au pixel Haut-Gauche !!!
 	protected CoordonneesFloat coord;
 	protected String nom; //nom du personnage
+	protected boolean nextDirectionSet;
+	protected Direction nextDirection; //prochaine direction que prendra le personnage
 	protected Direction direction; //direction actuelle du personnage
-	protected boolean isAlive; //si le personnage est vivant
 	
 	/**
 	 * Donne un nom, une poisition et une direction au personnage
@@ -25,38 +28,100 @@ public abstract class Personnage{
 	 */
 	public Personnage(String nom, int x, int y, Direction d){
 		this.nom = new String(nom);
-		this.setCoord(new CoordonneesFloat(x,y));
+		this.coord = new CoordonneesFloat(32*x,32*y);
 		this.direction = d;
+		this.nextDirectionSet = false;
 		Personnage.liste.add(this);
 	}
 
-	/*
-	// TODO private boolean collisionTiles()
-	{
-		//vérifier si un coin de l'image touche un mur?
-		//pixel haut gauche
-		i1 = cord.x/lageur_tile;
-		j1 = cord.y/hauteur_tile;
-		
-		//pixel bas droite
-		i2 = (cord.x + skin_largeur -1)/largeur_tile;
-		j2 = (cord.y + skin_hauteur -1)/hauteur_tile;
-		
-		
-		/**
-		 * pour tester chaque pixel
-		 */
-		/*
-		for(int i=i1; i<=i2; i++)
-		{
-			for(int j=j1; j<=j2;j++)
-			{
-				if(TileIsMur(i,j)
-					return true;
-			}
-		}
-		*/
+
+	//getter de base
+	public CoordonneesFloat getCoord() {
+		return coord;
+	}
 	
+	//getter de base
+	public Direction getOrientation(){
+		return this.direction;
+	}
+	
+	/************************************************
+	 * Methode dont l'utiliter n'est plus a prouver *
+	 ***********************************************/
+
+			/* METHODE POUR AUTOMATE */
+	/**
+	 * Ne fait pas de test, et avance
+	 * Utiliser par les automates et c'est tout
+	 */
+	public void avancerAux()
+	{
+		switch(this.direction)
+		{
+		case droite :
+			this.coord.x += tauxDeDeplacement;
+			break;
+		case gauche :
+			this.coord.x -= tauxDeDeplacement;
+			break;
+		case haut :
+			this.coord.y -= tauxDeDeplacement;
+			break;
+			
+		case bas :
+			this.coord.y += tauxDeDeplacement;
+			break;
+			
+		default :
+			break;
+			}
+		this.gererCollision();
+	}
+	
+	/**
+	 * Change la direction du personnage
+	 * Utiliser par les automates uniquement !
+	 * author : alex
+	 */
+	public void setDirection(Direction direction)
+	{
+		this.direction = direction;
+	}
+
+			/* METHODE POUR USER */
+	/**
+	 * Fait les test neccessaire pour savoir le personnage peut avancer
+	 * Si il le peut, alors le fait avancer
+	 * 
+	 * author : alex
+	 */
+	public void avancer()
+	{
+		if(this.nextDirectionSet && caseDisponible(this.nextDirection))
+		{
+			this.direction = nextDirection;
+			this.nextDirectionSet = false;
+			this.avancerAux();
+		}
+		else
+		{
+			if(this.caseDevantDisponible())
+				this.avancerAux();
+		}
+	}
+
+	/**
+	 * Change la prochaine direction du personnage
+	 * Utiliser par les utilisateur uniquement !
+	 * author : alex
+	 */
+	public void setNextDirection(Direction dir)
+	{
+		this.nextDirection = dir;
+		this.nextDirectionSet = true;
+	}
+	
+			/* RESTE */
 	/**
 	 * renvoie vrai si la case devant this est disponible
 	 * author : alex
@@ -74,109 +139,45 @@ public abstract class Personnage{
 	 */
 	public boolean caseDisponible(Direction direction)
 	{
-		try {
-			return Personnage.terrain.getCase(coord.NonPixelX(), coord.NonPixelY(), direction).isAccessable();
-		} 
-		catch(Exception e) {return false;}
-	}
 
-	/**
-	 * Primitive avancer
-	 * @require : this.caseDevantDisponible() == true
-	 * author : alex
-	 */
-	public void avancer()
-	{
-		//System.out.println("######################");
-		//System.out.println("Direction du deplacement : " + this.direction);
-		//System.out.println("x : " + coordFloat.x + " y : " +coordFloat.y);
-		if(caseDevantDisponible())
+		boolean res = true;
+		switch (direction)
 		{
-			System.out.println("Deplacement autorisé");
-			switch(this.direction)
-			{
-			case droite :
-				this.coord.x += tauxDeDeplacement;
-				break;
-			case gauche :
-				this.coord.x -= tauxDeDeplacement;
-				break;
-			case haut :
-				this.coord.y -= tauxDeDeplacement;
-				break;
-				
-			case bas :
-				this.coord.y += tauxDeDeplacement;
-				break;
-				
-			default :
-				break;
-			}
-			
-			//majEstSurAxe();
+		case haut :
+			res = Personnage.terrain.caseAcessible(coord.casDX(), coord.casBY(),direction);
+			res = res && (Personnage.terrain.caseAcessible(coord.casGX(), coord.casBY(), direction));
+			return res; 
+		case bas :
+			res = (Personnage.terrain.caseAcessible(coord.casGX(), coord.casHY(), direction));
+			res = res && (Personnage.terrain.caseAcessible(coord.casDX(), coord.casHY(), direction));
+			return res;
+		case droite :
+			res = (Personnage.terrain.caseAcessible(coord.casGX(), coord.casBY(), direction));
+			res = res && (Personnage.terrain.caseAcessible(coord.casGX(), coord.casHY(), direction));
+			return res;
+		case gauche :
+			res = (Personnage.terrain.caseAcessible(coord.casDX(), coord.casBY(), direction));
+			res = res && (Personnage.terrain.caseAcessible(coord.casDX(), coord.casHY(), direction));
+			return res;
+		default :
+			return false;
 		}
-	}
 
+	}
+	
 	/**
 	 * gere la colision en fonction de sa position
 	 * author : alex
 	 */
 	public abstract void gererCollision();
-	
-	/**
-	 * Change la direction du personnage
-	 * author : alex
-	 */
-	public void setDirection(Direction direction)
-	{
-		this.direction = direction;
-	}
-	
-	
-	//setter de base
-	public void setCoord(CoordonneesFloat coord) {
-		this.coord = coord;
-	}
-	
-	//setter de base
-	public void setCoord(int x, int y) {
-		this.coord.x = x;
-		this.coord.y = y;
-	}
-	
-	
-	//getter de base
-	public CoordonneesFloat getCoord() {
-		return coord;
-	}
-	
-	/**
-	 * @return la direction du Personnage
-	 * @author malek
-	 */
-	public Direction getOrientation(){
-		return this.direction;
-	}
 
-	/**
-	 * @return Si le fantome est vivant*/
-	public boolean getisAlive(){
-		return isAlive;
-	}
-
-	/**
-	 * Met à jour l'état vivant ou mort du fantome*/
-	public void setIsAlive(boolean a){
-		isAlive=a;
-		
-	}
-	
 	/**
 	 * fait revivre le pacman
 	 * NEED : determiner ou se situe les points de respawn
 	 * author : alex
 	 */
-	public abstract void respawn();
+
+	protected abstract void respawn();
 
 	/**
 	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE SEULE FOIS
@@ -189,35 +190,7 @@ public abstract class Personnage{
 	//get terrain
 	public static Terrain getTerrain() {
 		return terrain;
-	}
-	
-	/**
-	 * @return String contenant le terrain et le personnage
-	 * @author malek
-	 */
-	public String toString(){
-		String res=" Personnage \n"; // + ((c instanceof Automate)? "automatisé \n" : "non automatisé \n");
-		for(int i=0; i<terrain.getHauteur(); i++){
-			for(int j=0; j<terrain.getLargeur(); j++){
-				if (i == this.getCoord().y && j == this.getCoord().x){
-					switch (this.direction){
-					case haut : res += "^";   break;
-					case bas : res += "v";    break;
-					case gauche : res += "<"; break;
-					case droite : res += ">"; break;
-					}
-				}else{
-					if (terrain.getCase(i, j).isAccessable()){
-						res += "-";
-					} else {
-						res += "X";
-					}
-				}
-			}
-			res += "\n";
-		}
-		res += "\n";
-		return res;
+
 	}
 
 	/**
@@ -251,6 +224,57 @@ public abstract class Personnage{
 				return p;
 		}
 		return null;
+	}
+
+	
+	/**
+	 * le pacman meurt dans d'atroces souffrances
+	 * author : alex
+	 */
+	public abstract void meurtDansDatroceSouffrance();
+	
+	/***********************************************
+	 * fonction dont l'utiliter reste a prouver    *
+	 ***********************************************/
+	
+	//setter de base
+	public void setCoord(CoordonneesFloat coord) {
+		this.coord = coord;
+	}
+	
+	//setter de base
+	public void setCoord(int x, int y) {
+		this.coord.x = x;
+		this.coord.y = y;
+	}
+
+	/**
+	 * @return String contenant le terrain et le personnage
+	 * @author malek
+	 */
+	public String toString(){
+		String res=" Personnage \n"; // + ((c instanceof Automate)? "automatisé \n" : "non automatisé \n");
+		for(int i=0; i<terrain.getHauteur(); i++){
+			for(int j=0; j<terrain.getLargeur(); j++){
+				if (i == this.getCoord().y && j == this.getCoord().x){
+					switch (this.direction){
+					case haut : res += "^";   break;
+					case bas : res += "v";    break;
+					case gauche : res += "<"; break;
+					case droite : res += ">"; break;
+					}
+				}else{
+					if (terrain.getCase(i, j).isAccessable()){
+						res += "-";
+					} else {
+						res += "X";
+					}
+				}
+			}
+			res += "\n";
+		}
+		res += "\n";
+		return res;
 	}
 
 }

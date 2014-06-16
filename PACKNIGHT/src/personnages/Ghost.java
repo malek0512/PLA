@@ -1,7 +1,7 @@
 package personnages;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import java.util.Map;
 
 public class Ghost extends Personnage {
@@ -17,7 +17,19 @@ public class Ghost extends Personnage {
 	private final float vision = 5;
 	private int compteurAction=4;
 	private boolean control;
-
+	private boolean isAlive;
+	
+	//getter de base
+	public boolean getisAlive(){
+		return isAlive;
+	}
+	/**
+	 * Met à jour l'état vivant ou mort du fantome*/
+	public void setIsAlive(boolean a){
+		isAlive=a;
+		
+	}
+	
 	/**
 	 * Structure qui repertorie l'ensemble des information d'un PM en fuite
 	 * */
@@ -40,13 +52,38 @@ public class Ghost extends Personnage {
 
 	public Ghost(String nom, int x, int y, Direction d) {
 		super(nom, x, y, d);
-
+		this.isAlive = true;
+		Ghost.liste.add(this);
+		
 	}
 
-	@Override
 	public void gererCollision() {
-		// TODO Auto-generated method stub
+		Iterator<PacKnight> i = PacKnight.liste.iterator();
+		while(i.hasNext()&& this.isAlive)
+		{
+			PacKnight g = i.next();
+			if(hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
+			{
+				this.meurtDansDatroceSouffrance();
+				g.meurtDansDatroceSouffrance();
+				break;
+			}
+		}		
 		
+  
+		if(this.isAlive)
+		{
+			Iterator<PacPrincess> j = PacPrincess.liste.iterator();
+			while(i.hasNext())
+			{
+				PacPrincess g = j.next();
+				if(hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
+				{
+					g.meurtDansDatroceSouffrance();
+					break;
+				}
+			}
+		}
 	}
 	
 	/**
@@ -73,7 +110,12 @@ public class Ghost extends Personnage {
 	@Override
 	public void respawn() {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	@Override
+	public void meurtDansDatroceSouffrance() {
+		isAlive = false;
+		System.out.println("fantome est mort : " + this.nom);
 	}
 	
 	

@@ -16,7 +16,6 @@ public abstract class Pacman extends Personnage {
 	 */
 	static public List<Pacman> liste = new LinkedList<Pacman>();
 	
-	
 	/**
 	 * @param position ou on veut savoir si un personnage si trouve
 	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
@@ -48,9 +47,11 @@ public abstract class Pacman extends Personnage {
 		return null;
 	}
 	
+	private CoordonneesFloat pointDeRespawn;
 	
-	public Pacman(String nom, int x, int y, Direction d){
+	public Pacman(String nom, int x, int y, Direction d, CoordonneesFloat spawn){
 		super(nom,x,y,d);
+		this.pointDeRespawn = new CoordonneesFloat(spawn.x * 32, spawn.y * 32);
 		Pacman.liste.add((Pacman) this);
 	}
 	
@@ -60,11 +61,7 @@ public abstract class Pacman extends Personnage {
 	 */
 	public abstract boolean canRespawn();
 	
-	/**
-	 * le pacman meurt dans d'atroces souffrances
-	 * author : alex
-	 */
-	public abstract void meurtDansDatroceSouffrance();
-	
-	
+	protected void respawn() {
+		this.coord = new CoordonneesFloat(pointDeRespawn);
+	}
 }
