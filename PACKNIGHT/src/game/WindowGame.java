@@ -15,23 +15,27 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
+
 import controleur.automate.Automate;
 import personnages.*;
 import structure_terrain.*;
 
-//demande de "git add" cette classe afin de pouvor tester :)
-import structure_terrain.Terrain;
-/*
-if (!Pacgomme)
-{
-terrain.terrain[i][j] = new Case(2);
-Terrain.nb_pacgum++;
-System.out.println(+Terrain.nb_pacgum);
-}7
-*/
 
 public class WindowGame extends BasicGame {
 	
+	/*Les differentes resolutions possible sont
+	 * 
+	 * WindowGame.largueur*WindowGame*tuile_size,WindowGame.hauteur*WindowGame*tuile_size
+	 * 1600,900
+	 * 1024,768
+	 * 800,600
+	 * 1440,900
+	 * 1360,768
+	 */
+
+	
+	static int resolution_x = 1600;
+	static int resolution_y = 900;
 	
 	private String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
@@ -87,14 +91,16 @@ public class WindowGame extends BasicGame {
 	private Animation[] animations_GHOST_4 = new Animation[8];
 	
 	private Music M;
-	private Image PACGUM;
+	private Image PACGUM,HEART;;
 	protected CoordonneesFloat coordFloat;
+	boolean PAUSE = false;
 	
 	public WindowGame() {
         super("PACKNIGHT : THE RETURN");
     }
 
     public void init(GameContainer container) throws SlickException {
+
         this.container = container;
         PACGUM = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
         this.map = new TiledMap(CHEMIN_MAP.concat(MAP));
@@ -133,14 +139,16 @@ public class WindowGame extends BasicGame {
     
 
     public void render(GameContainer container, Graphics g) throws SlickException {
-    	int xBary = (PACMAN_1.getCoord().x + PACMAN_2.getCoord().x + PACMAN_3.getCoord().x + PACMAN_4.getCoord().x)/4;
-    	int yBary = (PACMAN_1.getCoord().y + PACMAN_2.getCoord().y + PACMAN_3.getCoord().y + PACMAN_4.getCoord().y)/4;	
+    	float xBary = (PACMAN_1.getCoord().x + PACMAN_2.getCoord().x + PACMAN_3.getCoord().x + PACMAN_4.getCoord().x)/4;
+    	float yBary = (PACMAN_1.getCoord().y + PACMAN_2.getCoord().y + PACMAN_3.getCoord().y + PACMAN_4.getCoord().y)/4;	
     	xCamera = xBary;
     	yCamera = yBary;
-    	
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
         this.map.render(0, 0, 0);
         drawPacGum(playground);
+		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
+    	drawHeart(xBary,yBary);
+
         g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x, PACMAN_1.getCoord().y);
         g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
         g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
@@ -150,75 +158,93 @@ public class WindowGame extends BasicGame {
         if(GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x, GHOST_3.getCoord().y);
         if(GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x, GHOST_4.getCoord().y);
         
-        System.out.println(+Terrain.nb_pacgum);
+		if(PAUSE==true)
+		{
+			g.drawString("Resume (P)", 250, 100);
+			g.drawString("Main Menu (M)", 250, 150);
+			g.drawString("Quit Game (ESCAPE)", 250, 250);
+		}
     }
 
     public void update(GameContainer container, int delta) throws SlickException {
-
-    	//if (pacman.caseDevantDisponible())
-    		PACMAN_1.avancer();
-        /**else
-        {
-        if(pacman.getOrientation()==Direction.haut)
-        	pacman.setDirection(Direction.droite);
-        else if(pacman.getOrientation()==Direction.droite)
-        	pacman.setDirection(Direction.bas);
-        else if(pacman.getOrientation()==Direction.bas)
-        	pacman.setDirection(Direction.gauche);
-        else if(pacman.getOrientation()==Direction.gauche)
-        	pacman.setDirection(Direction.haut);
-        }
-    	*/
-    	if (PACMAN_2.caseDevantDisponible())
-    		PACMAN_2.avancer();
-    	else
-        {
-        if(PACMAN_2.getOrientation()==Direction.haut)
-        	PACMAN_2.setDirection(Direction.droite);
-        else if(PACMAN_2.getOrientation()==Direction.droite)
-        	PACMAN_2.setDirection(Direction.bas);
-        else if(PACMAN_2.getOrientation()==Direction.bas)
-        	PACMAN_2.setDirection(Direction.gauche);
-        else if(PACMAN_2.getOrientation()==Direction.gauche)
-        	PACMAN_2.setDirection(Direction.haut);
-        }
-    	
-    	
-        float w = container.getWidth() / 4;
-        if (PACMAN_1.getCoord().x > (this.xCamera + w) && (PACMAN_1.getCoord().x + w  <  largueur_map*tuile_size))
-        	this.xCamera = PACMAN_1.getCoord().x - w;
-        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w)) 
-        	this.xCamera = PACMAN_1.getCoord().x + w;
-        float h = container.getHeight() / 4;
-        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
-        	this.yCamera = PACMAN_1.getCoord().y - h;
-        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
-        	this.yCamera = PACMAN_1.getCoord().y + h;
-        
-        try
-        {
-        aleatoire.suivant();
-        }
-        catch (Exception e) {}
+		if(!PAUSE) {
+	    	//if (pacman.caseDevantDisponible())
+	    		PACMAN_1.avancer();
+	        /**else
+	        {
+	        if(pacman.getOrientation()==Direction.haut)
+	        	pacman.setDirection(Direction.droite);
+	        else if(pacman.getOrientation()==Direction.droite)
+	        	pacman.setDirection(Direction.bas);
+	        else if(pacman.getOrientation()==Direction.bas)
+	        	pacman.setDirection(Direction.gauche);
+	        else if(pacman.getOrientation()==Direction.gauche)
+	        	pacman.setDirection(Direction.haut);
+	        }
+	    	*/
+	    	if (PACMAN_2.caseDevantDisponible())
+	    		PACMAN_2.avancer();
+	    	else
+	        {
+	        if(PACMAN_2.getOrientation()==Direction.haut)
+	        	PACMAN_2.setDirection(Direction.droite);
+	        else if(PACMAN_2.getOrientation()==Direction.droite)
+	        	PACMAN_2.setDirection(Direction.bas);
+	        else if(PACMAN_2.getOrientation()==Direction.bas)
+	        	PACMAN_2.setDirection(Direction.gauche);
+	        else if(PACMAN_2.getOrientation()==Direction.gauche)
+	        	PACMAN_2.setDirection(Direction.haut);
+	        }
+	    	
+	    	
+	        float w = container.getWidth() / 4;
+	        if (PACMAN_1.getCoord().x > (this.xCamera + w) && (PACMAN_1.getCoord().x + w  <  largueur_map*tuile_size))
+	        	this.xCamera = PACMAN_1.getCoord().x - w;
+	        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w)) 
+	        	this.xCamera = PACMAN_1.getCoord().x + w;
+	        float h = container.getHeight() / 4;
+	        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
+	        	this.yCamera = PACMAN_1.getCoord().y - h;
+	        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
+	        	this.yCamera = PACMAN_1.getCoord().y + h;
+	        
+	        try
+	        {
+	        aleatoire.suivant();
+	        }
+	        catch (Exception e) {}
+		}
     }
 
 
 	public void keyReleased(int key, char c) {
-	    switch (key) {
-	    case Input.KEY_UP:    PACMAN_1.setNextDirection(Direction.haut); this.direction= 0; this.moving = true; break;
-	    case Input.KEY_LEFT:  PACMAN_1.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
-	    case Input.KEY_DOWN:  PACMAN_1.setNextDirection(Direction.bas);this.direction= 2; this.moving = true; break;
-	    case Input.KEY_RIGHT: PACMAN_1.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
-
-	    case Input.KEY_Z:    PACMAN_2.setNextDirection(Direction.haut); this.direction= 0; this.moving = true;  break;
-	    case Input.KEY_Q:  PACMAN_2.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
-	    case Input.KEY_S:  PACMAN_2.setNextDirection(Direction.bas);this.direction= 2; this.moving = true;  break;
-	    case Input.KEY_D: PACMAN_2.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
-	    
-	    case Input.KEY_ESCAPE:container.exit(); break;
-	    case Input.KEY_P:     this.moving = false; break;
-	    case Input.KEY_M: if(this.M.playing()) this.M.pause() ;else this.M.resume(); break;
-	    
+		if(PAUSE)
+		{
+		    switch (key) 
+		    {
+		    case Input.KEY_P: PAUSE = false; break;
+		    }
+		}
+		else
+		{
+		    switch (key)
+		    	{
+			    case Input.KEY_UP:    PACMAN_1.setNextDirection(Direction.haut); this.direction= 0; this.moving = true; break;
+			    case Input.KEY_LEFT:  PACMAN_1.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
+			    case Input.KEY_DOWN:  PACMAN_1.setNextDirection(Direction.bas);this.direction= 2; this.moving = true; break;
+			    case Input.KEY_RIGHT: PACMAN_1.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
+		
+			    case Input.KEY_Z:    PACMAN_2.setNextDirection(Direction.haut); this.direction= 0; this.moving = true;  break;
+			    case Input.KEY_Q:  PACMAN_2.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
+			    case Input.KEY_S:  PACMAN_2.setNextDirection(Direction.bas);this.direction= 2; this.moving = true;  break;
+			    case Input.KEY_D: PACMAN_2.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
+			    
+			    case Input.KEY_P: PAUSE = true; break;
+			    }
+	    }
+	    switch (key){
+	    	case Input.KEY_ESCAPE:container.exit(); break;
+		    case Input.KEY_M: if(this.M.playing()) this.M.pause() ;else this.M.resume(); break;
 	    }
 	}
 	
@@ -266,7 +292,15 @@ public class WindowGame extends BasicGame {
 			}
 	}
 	
-	
+	public void drawHeart(float xBary, float yBary)
+	{
+        int i = 0;
+		do {
+				HEART.draw(xBary+(float)resolution_x/2-(float)tuile_size,yBary-(float)resolution_y/2+(i+1)*(float)tuile_size);
+				i++;
+		}while(i<PacKnight.vie);	
+		
+	}
 	
 	public void toSprite(Animation animation[],SpriteSheet Personnage){
 	
