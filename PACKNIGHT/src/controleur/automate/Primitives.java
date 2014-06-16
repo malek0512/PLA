@@ -55,14 +55,6 @@ public class Primitives {
 	}
 	
 	/**
-	 * TODO : regler les problème après avoir changer mur() de preference
-	 * ATTENTION : les coordonée étant desormais en float, on ne peut plus comparer
-	 * les valeurs et mettre un equal
-	 * Dans le sens ou un pac-man peut etre a la coordonée : (2,8 ; 4,4)
-	 * Il faudrais plutot tester si il est dans l'intervalle : ([2,3] ; [4,5])
-	 * et non pas si les coordonné sont parfaitement egales
-	 * mysterious guy
-	 * 
 	 * @param position : coordonner du fantome
 	 * @return vrai si un pacman est dans la croix et qu'il n'y a pas de mur entre les deux
 	 * @author rama/vivien
@@ -167,10 +159,10 @@ public class Primitives {
 	public CoordonneesFloat positionAdjacente(Direction d){
 		CoordonneesFloat coord = new CoordonneesFloat(0,0);
 		switch (d){
-		case haut : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y-1;   break;
-		case bas : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y+1;    break;
-		case gauche : coord.x=this.auto.getPersonnage().getCoord().x-1; coord.y=this.auto.getPersonnage().getCoord().y; break;
-		case droite : coord.x=this.auto.getPersonnage().getCoord().x+1; coord.y=this.auto.getPersonnage().getCoord().y; break;
+		case haut : coord.x=this.auto.getPersonnage().getCoord().CasHG().x; coord.y=this.auto.getPersonnage().getCoord().y-1;   break;
+		case bas : coord.x=this.auto.getPersonnage().getCoord().CasHG().x; coord.y=this.auto.getPersonnage().getCoord().y+1;    break;
+		case gauche : coord.x=this.auto.getPersonnage().getCoord().CasHG().x-1; coord.y=this.auto.getPersonnage().getCoord().y; break;
+		case droite : coord.x=this.auto.getPersonnage().getCoord().CasHG().x+1; coord.y=this.auto.getPersonnage().getCoord().y; break;
 		}
 		return coord;
 	}

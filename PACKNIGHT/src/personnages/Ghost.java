@@ -15,10 +15,18 @@ public class Ghost extends Personnage {
 	public static List<Ghost> liste = new LinkedList<Ghost>();
 	private final float vision = 5;
 	private int compteurAction=4;
-	private boolean control;
+	private boolean control=false;
 	private boolean isAlive;
 	private CoordonneesFloat pointDeRespawn;
 	
+	public Ghost(String nom, int x, int y, Direction d,CoordonneesFloat spawn) {
+		super(nom, x, y, d);
+		this.isAlive = true;
+		this.pointDeRespawn = new CoordonneesFloat(spawn.x * 32, spawn.y * 32);
+		Ghost.liste.add(this);
+		
+		
+	}
 	//getter de base
 	public boolean getisAlive(){
 		return isAlive;
@@ -50,12 +58,7 @@ public class Ghost extends Personnage {
 	 */
 	protected static Map<Pacman, AvisDeRecherche> central;
 
-	public Ghost(String nom, int x, int y, Direction d) {
-		super(nom, x, y, d);
-		this.isAlive = true;
-		Ghost.liste.add(this);
-		
-	}
+	
 
 	public void gererCollision() {
 		Iterator<PacKnight> i = PacKnight.liste.iterator();
