@@ -140,27 +140,33 @@ public class CoordonneesFloat {
 	{
 		return new CoordonneesFloat(x+ size,y+ size);
 	}
+
 	
 	public CoordonneesFloat PixCentre()
 	{
 		return new CoordonneesFloat(x + (size/2), y + (size/2));
 	}
-	
+
+	/**
+	 * @return : x abscisse d'un Pixel Gauche de la case*/
 	public int PixGX()
 	{
 		return x;
 	}
-	
+	/**
+	 * @return : x abscisse d'un Pixel à Droite de la case*/
 	public int PixDX()
 	{
 		return x+ size;
 	}
-	
+	/**
+	 * @return : y ordonnée du Pixel en Haut de la case*/
 	public int PixHY()
 	{
 		return y;
 	}
-	
+	/**
+	 * @return : y ordonnée du Pixel en Bas de la case*/
 	public int PixBY()
 	{
 		return y+ size;

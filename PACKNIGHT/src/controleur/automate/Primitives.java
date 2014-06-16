@@ -74,10 +74,10 @@ public class Primitives {
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
 			Pacman pac = i.next();
-			CoordonneesFloat cord = pac.getCoord();
-			if(cord.x == position.x){
-				if (cord.y<position.y){
-					while(!mur(position,j,Direction.haut) && cord.y >= test.y && cord.y<(test.y-1)){
+			CoordonneesFloat coord = pac.getCoord();
+			if(position.casGX()==coord.){
+				if (coord.y<position.y){
+					while(!mur(position,j,Direction.haut) && coord.y >= test.y && coord.y<(test.y-1)){
 						j++;
 					}
 					if(!mur(position,j,Direction.haut)){
@@ -87,7 +87,7 @@ public class Primitives {
 					}
 				}
 				else {
-					while(!mur(position,j,Direction.bas) && cord.y >= test.y && cord.y<(test.y+1)){
+					while(!mur(position,j,Direction.bas) && coord.y >= test.y && coord.y<(test.y+1)){
 						j++;
 					
 					}
@@ -98,9 +98,9 @@ public class Primitives {
 				}
 				
 			}
-			else if(cord.y == position.y){
-					if (cord.x<position.x){
-						while(!mur(position,j,Direction.gauche) && cord.x >= test.x && cord.x<test.x-1){
+			else if(coord.y == position.y){
+					if (coord.x<position.x){
+						while(!mur(position,j,Direction.gauche) && coord.x >= test.x && coord.x<test.x-1){
 							j++;
 						}
 						if(!mur(position,j,Direction.gauche)){
@@ -110,8 +110,8 @@ public class Primitives {
 					}
 				
 					else {
-						while(!mur(position,j,Direction.droite) && cord.x >= test.x && cord.x<test.x+1){
-							test.x++;
+						while(!mur(position,j,Direction.droite) && coord.x >= test.x && coord.x<test.x+1){
+							j++;
 						}
 						if(!mur(position,j,Direction.droite)){
 							auto.getPersonnage().setDirection(Direction.droite);
@@ -129,10 +129,8 @@ public class Primitives {
 	 * @author vivien
 	 * */
 	private boolean mur(CoordonneesFloat test, int i, Direction d) {
-		boolean res=true;
-		if (Personnage.getTerrain().caseAcessible(test.x, test.y, i, d))
-			res=false;
-		return res;
+		
+		return Personnage.getTerrain().caseAcessible(test.x, test.y, i, d);
 	}
 	
 	/**
