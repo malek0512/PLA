@@ -125,7 +125,7 @@ public class Ghost extends Personnage {
 	}
 
 	public boolean parametrable() {
-		return !(seMeurt && prisonner);
+		return !(seMeurt || prisonner);
 	}
 
 	public void avancerAnimation() {
