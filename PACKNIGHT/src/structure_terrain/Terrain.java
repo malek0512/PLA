@@ -6,6 +6,7 @@ package structure_terrain;
 
 import structure_terrain.Case;
 import personnages.Coordonnees;
+import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Personnage;
 
@@ -188,5 +189,15 @@ public class Terrain {
 			break; 
 		}
 		return null;
+	}
+	
+	public int ValueCase(CoordonneesFloat cord)
+	{
+		return terrain[cord.x][cord.y].caseValeur(); 
+	}
+	
+	public void SetCase(CoordonneesFloat c, int v)
+	{
+		terrain[c.x][c.y].setAcessCase(v);
 	}
 }
