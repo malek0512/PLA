@@ -1,10 +1,8 @@
 package Tests;
 import controleur.automate.Automate;
 import personnages.Direction;
-import personnages.Pacman;
 import personnages.Personnage;
 import personnages.RobotIdiot;
-import structure_terrain.Case;
 import structure_terrain.Terrain;
 import structure_terrain.TerrainTest1;
 

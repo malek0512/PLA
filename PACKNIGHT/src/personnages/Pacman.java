@@ -11,11 +11,19 @@ import java.util.List;
 
 public abstract class Pacman extends Personnage {
 
+	private CoordonneesFloat pointDeRespawn;
 	/**
 	 * liste des pacmans sur le terrain
 	 */
 	static public List<Pacman> liste = new LinkedList<Pacman>();
 	
+	/**
+	 * Construit le pacman en initialisant son point de spawn*/
+	public Pacman(String nom, int x, int y, Direction d, CoordonneesFloat spawn){
+		super(nom,x,y,d);
+		this.pointDeRespawn = new CoordonneesFloat(spawn.x * 32, spawn.y * 32);
+		Pacman.liste.add((Pacman) this);
+	}
 	/**
 	 * @param position ou on veut savoir si un personnage si trouve
 	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
@@ -47,21 +55,13 @@ public abstract class Pacman extends Personnage {
 		return null;
 	}
 	
-	private CoordonneesFloat pointDeRespawn;
-	
-	public Pacman(String nom, int x, int y, Direction d, CoordonneesFloat spawn){
-		super(nom,x,y,d);
-		this.pointDeRespawn = new CoordonneesFloat(spawn.x * 32, spawn.y * 32);
-		Pacman.liste.add((Pacman) this);
-	}
-	
 	/**
 	 * @return true si le pacman peut revivre
 	 * author : alex
 	 */
 	public abstract boolean canRespawn();
 	
-	protected void respawn() {
+	public void respawn() {
 		this.coord = new CoordonneesFloat(pointDeRespawn);
 	}
 }

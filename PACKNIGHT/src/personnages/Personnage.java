@@ -23,7 +23,10 @@ public abstract class Personnage {
 	protected Direction nextDirection; // prochaine direction que prendra personnage
 	protected Direction direction; // direction actuelle du personnage
 
-	/**
+	/**Pourquoi ne pas mettre à jour ce constructeur et le faire de la même façon que pacman (avec les coordonnées de respawn)? et ainsi mettre
+	 * l'attribut point de respawn dans cette classe?
+	 * 
+	 *  
 	 * Donne un nom, une poisition et une direction au personnage Ajoute le
 	 * personnage a la liste des perso
 	 * 
@@ -175,7 +178,7 @@ public abstract class Personnage {
 	 * respawn author : alex
 	 */
 
-	protected abstract void respawn();
+	public abstract void respawn();
 
 	/**
 	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE
