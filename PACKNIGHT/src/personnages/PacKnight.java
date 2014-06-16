@@ -75,7 +75,7 @@ public class PacKnight extends Pacman{
 			{
 				System.out.println("fantome tester : " + g.nom );
 				this.meurtDansDatroceSouffrance();
-				g.meurtDansDatroceSouffrance(); //vengence !!!
+				g.meurtDansDatroceSouffrance(); //vengeance !!!
 				break;
 			}
 		}

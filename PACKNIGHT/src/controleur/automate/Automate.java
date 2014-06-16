@@ -1,6 +1,5 @@
 package controleur.automate;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -38,10 +37,9 @@ public class Automate extends Controleur {
 	public final static int INTERSECTION = 7;
 	public final static int NON_INTERSECTION = 8;
 	public final static int CASE_ATTEINTE=9;
-	public final static int EST_MORT=10;
-	public final static int VIVANT_FREE=11;
-	public final static int VIVANT_NON_FREE=12;
-	public final static int ETOILE=13;
+	public final static int FREE=10;
+	public final static int NON_FREE=11;
+	public final static int ETOILE=12;
 	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
 	public final static int AVANCER = 0;
@@ -177,9 +175,8 @@ public class Automate extends Controleur {
 				case NON_INTERSECTION: if(!primitivesTest.estIntersection()) return NON_INTERSECTION; break;
 				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; break;
 				case NON_PM_DANS_CROIX: if(!primitivesTest.dansCroix()) return NON_PM_DANS_CROIX; break;
-				case EST_MORT: if(primitivesTest.isDead()) return EST_MORT; break;
-				case VIVANT_FREE: if(!primitivesTest.isDead() && !primitivesTest.isControled()) return VIVANT_FREE; break;
-				case VIVANT_NON_FREE: if(!primitivesTest.isDead() && primitivesTest.isControled()) return VIVANT_NON_FREE; break;
+				case FREE: if(!primitivesTest.isControled()) return FREE; break;
+				case NON_FREE: if(primitivesTest.isControled()) return NON_FREE; break;
 				case ETOILE: return ETOILE;
 			//	}
 			}
