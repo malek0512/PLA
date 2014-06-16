@@ -148,10 +148,11 @@ public class WindowGame extends BasicGame {
         drawPacGum(playground);
         this.map.render(15*tuile_size, 0, 0);
         drawPacGum2(playground);
-        this.map.render(15*tuile_size, 15*tuile_size, 0);
-        drawPacGum3(playground);
         this.map.render(0, 15*tuile_size, 0);
         drawPacGum4(playground);
+        this.map.render(15*tuile_size, 15*tuile_size, 0);
+        drawPacGum3(playground);
+
      
         V = new Image("src/graphisme/main/ressources/map/image/Horizontale.png");
         H = new Image("src/graphisme/main/ressources/map/image/Verticale.png");
