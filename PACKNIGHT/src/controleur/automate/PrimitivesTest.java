@@ -15,7 +15,6 @@ import personnages.Pacman;
  */
 public class PrimitivesTest extends Primitives {
 
-	//TODO renseigner la doc, bien que petite
 	public PrimitivesTest(Automate a) {
 		super();
 		this.auto = a;
@@ -64,17 +63,14 @@ public class PrimitivesTest extends Primitives {
 	public boolean dansCroix(){
 		return pacmanEstDansCroix(auto.getPersonnage().getCoord());
 	}
-	
+	/**
+	 * @return : Vrai si le déplacment du fantôme s'est fait d'une case*/
 	public boolean caseAtteinte(){
 		
 		return ((Ghost) auto.getPersonnage()).getCompteurAction()==0;
 	}
-	
-	public boolean isDead(){
-		
-		return !(auto.getPersonnage()).getisAlive();
-	}
-	
+	/**
+	 * @return : Vrai si le fantôme est controllé par le fantôme Lord*/
 	public boolean isControled(){
 		
 		return ((Ghost) auto.getPersonnage()).getControle();

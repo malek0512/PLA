@@ -69,6 +69,7 @@ public class Primitives {
 	 */
 	protected boolean pacmanEstDansCroix(CoordonneesFloat position) {
 		CoordonneesFloat test=position;
+		int j=1;
 		boolean res=false;
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
@@ -76,21 +77,21 @@ public class Primitives {
 			CoordonneesFloat cord = pac.getCoord();
 			if(cord.x == position.x){
 				if (cord.y<position.y){
-					while(!mur(test) && cord.y >= test.y && cord.y<(test.y-1)){
-						test.y--;
+					while(!mur(position,j,Direction.haut) && cord.y >= test.y && cord.y<(test.y-1)){
+						j++;
 					}
-					if(!mur(test)){
+					if(!mur(position,j,Direction.haut)){
 						auto.getPersonnage().setDirection(Direction.haut);
 						return true;
 						
 					}
 				}
 				else {
-					while(!mur(test) && cord.y >= test.y && cord.y<(test.y+1)){
-					test.y++;
+					while(!mur(position,j,Direction.bas) && cord.y >= test.y && cord.y<(test.y+1)){
+						j++;
 					
 					}
-					if(!mur(test)){
+					if(!mur(position,j,Direction.bas)){
 						auto.getPersonnage().setDirection(Direction.bas);
 						return true;
 					}
@@ -99,20 +100,20 @@ public class Primitives {
 			}
 			else if(cord.y == position.y){
 					if (cord.x<position.x){
-						while(!mur(test) && cord.x >= test.x && cord.x<test.x-1){
-							test.x--;
+						while(!mur(position,j,Direction.gauche) && cord.x >= test.x && cord.x<test.x-1){
+							j++;
 						}
-						if(!mur(test)){
+						if(!mur(position,j,Direction.gauche)){
 							auto.getPersonnage().setDirection(Direction.gauche);
 							return true;
 						}
 					}
 				
 					else {
-						while(!mur(test) && cord.x >= test.x && cord.x<test.x+1){
+						while(!mur(position,j,Direction.droite) && cord.x >= test.x && cord.x<test.x+1){
 							test.x++;
 						}
-						if(!mur(test)){
+						if(!mur(position,j,Direction.droite)){
 							auto.getPersonnage().setDirection(Direction.droite);
 							return true;
 						}
@@ -127,9 +128,9 @@ public class Primitives {
 	 * @return boolean Vrai si il y a un mur faux sinon
 	 * @author vivien
 	 * */
-	private boolean mur(CoordonneesFloat temp) {
+	private boolean mur(CoordonneesFloat test, int i, Direction d) {
 		boolean res=true;
-		if (Personnage.getTerrain().getCase(temp.x,temp.y).isAccessable())
+		if (Personnage.getTerrain().caseAcessible(test.x, test.y, i, d))
 			res=false;
 		return res;
 	}

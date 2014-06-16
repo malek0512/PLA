@@ -57,10 +57,12 @@ public class PrimitivesAction extends Primitives{
 	 * 
 	 * */
 	public void directionCheminPlusCourt(Personnage perso){
+		
 		List<Pacman> res = pacmanEstDansRayon(auto.getPersonnage().getCoord(),((Ghost) auto.getPersonnage()).getVision());
 		Pacman min=res.get(0);
 		Iterator<Pacman> i= res.iterator();
 		Pacman pac;
+		//Recherche du pacman le plus proche
 		while(i.hasNext())
 		{
 			pac = i.next();
@@ -68,6 +70,7 @@ public class PrimitivesAction extends Primitives{
 				min = pac;
 		}
 		Direction mind=Direction.haut;
+		//calcul de la direction permettant de se rapprocher le plus de pacman
 		for(Direction d : Direction.values()){
 			
 			if(positionAdjacente(d).distance(min.getCoord())<positionAdjacente(mind).distance(min.getCoord()))
@@ -79,6 +82,7 @@ public class PrimitivesAction extends Primitives{
 	 * Reçoit un ordre du Fantôme Lord et avance vers la case désignée tant qu'il ne l'a pas atteinte
 	 * */
 	public void avancerVersPoint(){
+		((Ghost)auto.getPersonnage()).setControl(true);
 		
 		
 	}
