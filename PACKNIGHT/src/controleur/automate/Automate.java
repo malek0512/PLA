@@ -127,22 +127,7 @@ public class Automate extends Controleur {
 		int entreeAutomate = getEntree();
 		int sortieAutomate = effectuerTransition(entreeAutomate);
 		//System.out.println();
-		switch (sortieAutomate) {
-		//TODO Ajouter chaque fonction d'action
-		case Automate.AVANCER: personnage.avancer(); break;
-		case Automate.DROIT: personnage.setDirection(Direction.droite); break;
-		case Automate.GAUCHE: personnage.setDirection(Direction.gauche); break;
-		case Automate.HAUT: personnage.setDirection(Direction.haut); break;
-		case Automate.BAS: personnage.setDirection(Direction.bas); break;
-		case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
-		case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
-		case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
-		case Automate.AVANCER_VERS: primitivesAction.avancerVersPoint(); break;
-		case Automate.SPAWN:personnage.respawn();break;
-		case Automate.RIEN:primitivesAction.pass(); break;
-		}
 //		System.out.println(nbEntreeValide());
-
 		if(this.personnage.parametrable())
 		{
 			do
@@ -157,7 +142,7 @@ public class Automate extends Controleur {
 				case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
 				case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
 				case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
-				case Automate.OBEIR: primitivesAction.obeir(((Ghost)getPersonnage()).ordre); break;
+				case Automate.OBEIR: primitivesAction.obeir(((Ghost) getPersonnage()).ordre); break;
 				case Automate.SPAWN:personnage.respawn();break;
 				case Automate.RIEN:primitivesAction.pass(); break;
 				}

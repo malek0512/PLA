@@ -112,7 +112,7 @@ public class WindowGame extends BasicGame {
     	mapToTerrain(terrain);
     	playground = terrain;
     	try{
-    		aleatoire = new Automate("Automate/ALEATOIRE.xml",GHOST_1);
+    		aleatoire = new Automate("Automate/A_ALEATOIRE.xml",GHOST_1);
     		}catch(Exception e)  {System.out.println(e);};
     			
         SpriteSheet spriteSheet_PACMAN_1 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_1), taillePersonnage, taillePersonnage);
