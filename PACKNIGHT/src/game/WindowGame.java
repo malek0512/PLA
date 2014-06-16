@@ -6,6 +6,7 @@
 package game;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -77,8 +78,6 @@ public class WindowGame extends BasicGame {
     private GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
-	private float x = 0, y =0;
-	private float xCamera = x, yCamera = y;
 	private int direction = 0;
 	private boolean moving = false;
 
@@ -91,11 +90,15 @@ public class WindowGame extends BasicGame {
 	private Animation[] animations_GHOST_3 = new Animation[8];
 	private Animation[] animations_GHOST_4 = new Animation[8];
 	
+	float xBary = (PACMAN_1.getCoord().x + PACMAN_2.getCoord().x + PACMAN_3.getCoord().x + PACMAN_4.getCoord().x)/4;
+	float yBary = (PACMAN_1.getCoord().y + PACMAN_2.getCoord().y + PACMAN_3.getCoord().y + PACMAN_4.getCoord().y)/4;	
+	
+	private float xCamera = 32*28, yCamera = 32*31/2;
+	
 	private Music M;
-	private Image PACGUM,HEART;;
+	private Image PACGUM,HEART,V,H;
 	protected CoordonneesFloat coordFloat;
 	boolean PAUSE = false;
-	
 	public WindowGame() {
         super("PACKNIGHT : THE RETURN");
     }
@@ -134,23 +137,32 @@ public class WindowGame extends BasicGame {
         toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
         
         Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
-        M = background;
-        M.loop();
+     //   M = background;
+      //  M.loop();
     }
     
 
     public void render(GameContainer container, Graphics g) throws SlickException {
-    	float xBary = (PACMAN_1.getCoord().x + PACMAN_2.getCoord().x + PACMAN_3.getCoord().x + PACMAN_4.getCoord().x)/4;
-    	float yBary = (PACMAN_1.getCoord().y + PACMAN_2.getCoord().y + PACMAN_3.getCoord().y + PACMAN_4.getCoord().y)/4;	
-    	
-    	xCamera = xBary;
-    	yCamera = yBary;
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
         this.map.render(0, 0, 0);
         drawPacGum(playground);
+        this.map.render(15*tuile_size, 0, 0);
+        drawPacGum2(playground);
+        this.map.render(15*tuile_size, 15*tuile_size, 0);
+        drawPacGum3(playground);
+        this.map.render(0, 15*tuile_size, 0);
+        drawPacGum4(playground);
+     
+        V = new Image("src/graphisme/main/ressources/map/image/Horizontale.png");
+        H = new Image("src/graphisme/main/ressources/map/image/Verticale.png");
+        
+        V.draw(14*tuile_size,0);
+        H.draw(0,14*tuile_size);
+        
 		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
     	drawHeart(xBary,yBary);
-
+        V.draw(14*tuile_size,0);
+        H.draw(0,14*tuile_size);
         g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x, PACMAN_1.getCoord().y);
         g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
         g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
@@ -174,22 +186,11 @@ public class WindowGame extends BasicGame {
 	    		PACMAN_1.avancer();
 	    	else
 	    		PACMAN_1.avancerAnimation();
-	    	
-	        /**else
-	        {
-	        if(pacman.getOrientation()==Direction.haut)
-	        	pacman.setDirection(Direction.droite);
-	        else if(pacman.getOrientation()==Direction.droite)
-	        	pacman.setDirection(Direction.bas);
-	        else if(pacman.getOrientation()==Direction.bas)
-	        	pacman.setDirection(Direction.gauche);
-	        else if(pacman.getOrientation()==Direction.gauche)
-	        	pacman.setDirection(Direction.haut);
-	        }
-	    	*/
+
 	    	if (PACMAN_2.parametrable())
 	    	{
-	    		if(PACMAN_2.caseDevantDisponible())
+	    		PACMAN_2.avancer();
+	    	/*	if(PACMAN_2.caseDevantDisponible())
 	    		PACMAN_2.avancer();
 		    	else
 		        {
@@ -201,7 +202,7 @@ public class WindowGame extends BasicGame {
 		        	PACMAN_2.setDirection(Direction.gauche);
 		        else if(PACMAN_2.getOrientation()==Direction.gauche)
 		        	PACMAN_2.setDirection(Direction.haut);
-		        }
+		        }*/
 	    	}
 	    	else
 
@@ -213,11 +214,22 @@ public class WindowGame extends BasicGame {
 	        	this.xCamera = PACMAN_1.getCoord().x - w;
 	        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w)) 
 	        	this.xCamera = PACMAN_1.getCoord().x + w;
+	        
+	        if (PACMAN_2.getCoord().x > (this.xCamera + w) && (PACMAN_2.getCoord().x + w  <  largueur_map*tuile_size))
+	        	this.xCamera = PACMAN_2.getCoord().x - w;
+	        if (PACMAN_2.getCoord().x < (this.xCamera - w) && (PACMAN_2.getCoord().x > w)) 
+	        	this.xCamera = PACMAN_2.getCoord().x + w;
+	        
 	        float h = container.getHeight() / 4;
 	        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
 	        	this.yCamera = PACMAN_1.getCoord().y - h;
 	        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
 	        	this.yCamera = PACMAN_1.getCoord().y + h;
+	        
+	        if (PACMAN_2.getCoord().y > (this.yCamera + h) && (PACMAN_2.getCoord().y + h < hauteur_map*tuile_size)) 
+	        	this.yCamera = PACMAN_2.getCoord().y - h;
+	        if (PACMAN_2.getCoord().y < (this.yCamera - h) && (PACMAN_2.getCoord().y > h))
+	        	this.yCamera = PACMAN_2.getCoord().y + h;
 	        
 	        try
 	        {
@@ -301,6 +313,36 @@ public class WindowGame extends BasicGame {
 				}
 			}
 	}
+	public void drawPacGum2(Terrain terrain){
+		for(int i=0;i<largueur_map;i++)
+		{
+			for(int j=0;j<hauteur_map;j++)
+			{
+				if(terrain.terrain[i][j].caseValeur() == 2){
+				PACGUM.draw(i*tuile_size+15*tuile_size,j*tuile_size);}
+			}
+		}
+}
+	public void drawPacGum3(Terrain terrain){
+		for(int i=0;i<largueur_map;i++)
+		{
+			for(int j=0;j<hauteur_map;j++)
+			{
+				if(terrain.terrain[i][j].caseValeur() == 2){
+				PACGUM.draw(i*tuile_size+15*tuile_size,j*tuile_size+15*tuile_size);}
+			}
+		}
+}
+	public void drawPacGum4(Terrain terrain){
+		for(int i=0;i<largueur_map;i++)
+		{
+			for(int j=0;j<hauteur_map;j++)
+			{
+				if(terrain.terrain[i][j].caseValeur() == 2){
+				PACGUM.draw(i*tuile_size,j*tuile_size+15*tuile_size);}
+			}
+		}
+}
 	
 	public void drawHeart(float xBary, float yBary)
 	{
