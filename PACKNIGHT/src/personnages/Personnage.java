@@ -22,7 +22,7 @@ public abstract class Personnage {
 	protected boolean nextDirectionSet;
 	protected Direction nextDirection; // prochaine direction que prendra personnage
 	protected Direction direction; // direction actuelle du personnage
-	protected boolean seMeurt; //boolean vrai si le personnage est en animation de mort
+	protected boolean seMeurt = false; //boolean vrai si le personnage est en animation de mort
 	protected int timerAnimation = 0; //timer pour les animations
 	private int compteurAction=0;//nombre permettant de compter le nombre d'appel à la fonction avancer
 

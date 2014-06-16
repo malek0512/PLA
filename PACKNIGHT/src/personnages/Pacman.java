@@ -16,7 +16,7 @@ public abstract class Pacman extends Personnage {
 	 * liste des pacmans sur le terrain
 	 */
 	static public List<Pacman> liste = new LinkedList<Pacman>();
-	static final protected int tempsPasserMort = 1;
+	static final protected int tempsPasserMort = 40;
 	
 	/**
 	 * Construit le pacman en initialisant son point de spawn*/
