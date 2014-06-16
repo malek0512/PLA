@@ -40,14 +40,14 @@ public class Primitives {
 	 * @param rayon : rayon de vision du Fantome a la position donnée
 	 * @return la liste des pacman de le champ de vision
 	 */
-	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position, float rayon) {
+	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position, int rayon) {
 		List<Pacman> res = new LinkedList<Pacman>();
 
-		float someXYSource = position.CasHG().sommeXY();
+		float someXYSource = position.CasCentre().sommeXY();
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
 			Pacman pac = i.next();
-			float someXYTester = i.next().getCoord().CasHG().sommeXY();
+			float someXYTester = i.next().getCoord().CasCentre().sommeXY();
 			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
 				res.add(pac);
 		}
@@ -136,10 +136,10 @@ public class Primitives {
 	public CoordonneesFloat positionDevant(){
 		CoordonneesFloat coord = new CoordonneesFloat(0,0);
 		switch (auto.getPersonnage().getOrientation()){
-		case haut : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y-1;   break;
-		case bas : coord.x=this.auto.getPersonnage().getCoord().x; coord.y=this.auto.getPersonnage().getCoord().y+1;    break;
-		case gauche : coord.x=this.auto.getPersonnage().getCoord().x-1; coord.y=this.auto.getPersonnage().getCoord().y; break;
-		case droite : coord.x=this.auto.getPersonnage().getCoord().x+1; coord.y=this.auto.getPersonnage().getCoord().y; break;
+		case haut : coord.x=this.auto.getPersonnage().getCoord().CasCentre().x; coord.y=this.auto.getPersonnage().getCoord().CasCentre().y-1;   break;
+		case bas : coord.x=this.auto.getPersonnage().getCoord().CasCentre().x; coord.y=this.auto.getPersonnage().getCoord().CasCentre().y+1;    break;
+		case gauche : coord.x=this.auto.getPersonnage().getCoord().CasCentre().x-1; coord.y=this.auto.getPersonnage().getCoord().CasCentre().y; break;
+		case droite : coord.x=this.auto.getPersonnage().getCoord().CasCentre().x+1; coord.y=this.auto.getPersonnage().getCoord().CasCentre().y; break;
 		}
 		return coord;
 	}
@@ -159,10 +159,10 @@ public class Primitives {
 	public CoordonneesFloat positionAdjacente(Direction d){
 		CoordonneesFloat coord = new CoordonneesFloat(0,0);
 		switch (d){
-		case haut : coord.x=this.auto.getPersonnage().getCoord().CasHG().x; coord.y=this.auto.getPersonnage().getCoord().y-1;   break;
-		case bas : coord.x=this.auto.getPersonnage().getCoord().CasHG().x; coord.y=this.auto.getPersonnage().getCoord().y+1;    break;
-		case gauche : coord.x=this.auto.getPersonnage().getCoord().CasHG().x-1; coord.y=this.auto.getPersonnage().getCoord().y; break;
-		case droite : coord.x=this.auto.getPersonnage().getCoord().CasHG().x+1; coord.y=this.auto.getPersonnage().getCoord().y; break;
+		case haut : coord.x=this.auto.getPersonnage().getCoord().CasCentre().x; coord.y=this.auto.getPersonnage().getCoord().CasCentre().y-1;   break;
+		case bas : coord.x=this.auto.getPersonnage().getCoord().CasCentre().x; coord.y=this.auto.getPersonnage().getCoord().CasCentre().y+1;    break;
+		case gauche : coord.x=this.auto.getPersonnage().getCoord().CasCentre().x-1; coord.y=this.auto.getPersonnage().getCoord().CasCentre().y; break;
+		case droite : coord.x=this.auto.getPersonnage().getCoord().CasCentre().x+1; coord.y=this.auto.getPersonnage().getCoord().CasCentre().y; break;
 		}
 		return coord;
 	}

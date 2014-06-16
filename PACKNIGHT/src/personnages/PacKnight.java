@@ -15,7 +15,7 @@ public class PacKnight extends Pacman{
 	 * liste des PacKnight sur le terrain
 	 */
 	static public List<PacKnight> liste = new LinkedList<PacKnight>();
-	static int vie = 10;
+	public static int vie = 10;
 	
 	/**
 	 * @param position ou on veut savoir si un personnage si trouve
@@ -48,7 +48,6 @@ public class PacKnight extends Pacman{
 		return null;
 	}
 	
-	
 	public PacKnight(String name, int x, int y, Direction d, CoordonneesFloat respawn) {
 		super(name,x,y,d,respawn);
 		PacKnight.liste.add(this);
@@ -60,12 +59,8 @@ public class PacKnight extends Pacman{
 
 	public void meurtDansDatroceSouffrance() {
 		vie--;
-		System.out.println("Un pac est mort, vie restante : " + PacKnight.vie);
 		if(vie > 0)
 			respawn();
-		else
-			System.out.println("fin de game");
-		System.out.println("Cordonne après mort du pacman : " + this.coord);
 	}
 
 	public void gererCollision() {
@@ -73,7 +68,7 @@ public class PacKnight extends Pacman{
 		while(i.hasNext())
 		{
 			Ghost g = i.next();
-			if(g.getisAlive() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
+			if(g.hitting() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
 			{
 				System.out.println("fantome tester : " + g.nom );
 				this.meurtDansDatroceSouffrance();
@@ -92,6 +87,39 @@ public class PacKnight extends Pacman{
 		Personnage.terrain.SetCase(this.coord.CasCentre(),1);
 		Terrain.nb_pacgum--;
 	}
+	
+	/**
+	 * renvoie vrai si le pac-knight est parametrable
+	 */
 
+	public boolean parametrable() {
+		return !(this.seMeurt);
+	}
+
+
+	/**
+	 * fait avancer les animations en cours d'un cran
+	 */
+	public void avancerAnimation() {
+		if(seMeurt)
+		{
+			if(this.timerAnimation < Pacman.tempsPasserMort)
+			{
+				this.timerAnimation++;
+				//faire avancer d'un cran l'animation
+			}
+			else
+			{
+				this.timerAnimation=0;
+				this.seMeurt=false;
+				this.respawnWOA();
+			}
+		}
+	}
+
+	@Override
+	public boolean hitting() {
+		return !(seMeurt);
+	}
 	
 }
