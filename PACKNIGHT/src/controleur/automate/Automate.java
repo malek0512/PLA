@@ -140,7 +140,7 @@ public class Automate extends Controleur {
 		case Automate.AVANCER_VERS: primitivesAction.avancerVersPoint(); break;
 		case Automate.SPAWN:personnage.respawn();break;
 		case Automate.RIEN:primitivesAction.pass(); break;
-		
+		}
 //		System.out.println(nbEntreeValide());
 
 		if(this.personnage.parametrable())
@@ -168,7 +168,6 @@ public class Automate extends Controleur {
 		else
 		{
 			this.personnage.avancerAnimation();
->>>>>>> 9ec4f47e3fb04d8f7f775520194f5c0e0b68c9ea
 		}
 	}
 

@@ -1,0 +1,44 @@
+<?xml version = "1.0" ?>
+<Automate ID= "A_SUIVEUR" > 
+<Etat Nom= "0" > 
+ <Transition Entree= "12" Etat= "1" Action = "12" > </Transition> 
+</Etat> 
+<Etat Nom= "1" > 
+ <Transition Entree= "11" Etat= "2" Action = "10" > </Transition> 
+ <Transition Entree= "10" Etat= "3" Action = "5" > </Transition> 
+</Etat> 
+<Etat Nom= "2" > 
+ <Transition Entree= "11" Etat= "2" Action = "10" > </Transition> 
+ <Transition Entree= "10" Etat= "3" Action = "5" > </Transition> 
+</Etat> 
+<Etat Nom= "3" > 
+ <Transition Entree= "9" Etat= "3" Action = "0" > </Transition> 
+ <Transition Entree= "4" Etat= "4" Action = "0" > </Transition> 
+ <Transition Entree= "13" Etat= "5" Action = "5" > </Transition> 
+</Etat> 
+<Etat Nom= "4" > 
+ <Transition Entree= "12" Etat= "3" Action = "0" > </Transition> 
+</Etat> 
+<Etat Nom= "5" > 
+ <Transition Entree= "7" Etat= "6" Action = "7" > </Transition> 
+ <Transition Entree= "8" Etat= "7" Action = "8" > </Transition> 
+</Etat> 
+<Etat Nom= "6" > 
+ <Transition Entree= "12" Etat= "3" Action = "0" > </Transition> 
+</Etat> 
+<Etat Nom= "7" > 
+ <Transition Entree= "12" Etat= "3" Action = "0" > </Transition> 
+</Etat> 
+<Etat_Initial> 
+<Etat Nom= "0" > 
+</Etat> 
+</Etat_Initial> 
+<Etats_Finals> 
+</Etats_Finals> 
+<Etats_Bloquants> 
+<Etat Nom= "2" > 
+</Etat> 
+<Etat Nom= "3" > 
+</Etat> 
+</Etats_Bloquants> 
+</Automate> 
