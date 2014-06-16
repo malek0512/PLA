@@ -154,16 +154,16 @@ public class WindowGame extends BasicGame {
         drawPacGum3(playground);
 
      
-        V = new Image("src/graphisme/main/ressources/map/image/Horizontale.png");
-        H = new Image("src/graphisme/main/ressources/map/image/Verticale.png");
+     //   V = new Image("src/graphisme/main/ressources/map/image/Horizontale.png");
+     //   H = new Image("src/graphisme/main/ressources/map/image/Verticale.png");
         
-        V.draw(14*tuile_size,0);
-        H.draw(0,14*tuile_size);
+     //   V.draw(14*tuile_size,0);
+     //   H.draw(0,14*tuile_size);
         
 		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
     	drawHeart(xBary,yBary);
-        V.draw(14*tuile_size,0);
-        H.draw(0,14*tuile_size);
+     //   V.draw(14*tuile_size,0);
+     //   H.draw(0,14*tuile_size);
         g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x, PACMAN_1.getCoord().y);
         g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
         g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
