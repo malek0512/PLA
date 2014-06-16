@@ -15,13 +15,20 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
-
+import controleur.automate.Automate;
 import personnages.*;
 import structure_terrain.*;
 
 //demande de "git add" cette classe afin de pouvor tester :)
 import structure_terrain.Terrain;
-	
+/*
+if (!Pacgomme)
+{
+terrain.terrain[i][j] = new Case(2);
+Terrain.nb_pacgum++;
+System.out.println(+Terrain.nb_pacgum);
+}7
+*/
 
 public class WindowGame extends BasicGame {
 	
@@ -40,21 +47,24 @@ public class WindowGame extends BasicGame {
 	private String MAP = "PACMAN.tmx";
 	private String MUSIC = "AllBeat.ogg";
 	
-	public static int largueur = 28, hauteur = 15;
+
 	public static int tuile_size = 32;
 	public static int largueur_map , hauteur_map ;
 	int taillePersonnage =32;
 	
 
 	PacKnight PACMAN_1= new PacKnight("J1",1,1,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_2 = new PacKnight("J2",10,11,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_3 = new PacKnight("J3",10,11,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_4 = new PacKnight("J4",10,11,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_2 = new PacKnight("J2",1,1,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_3 = new PacKnight("J3",1,1,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_4 = new PacKnight("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 
 	Ghost GHOST_1 = new Ghost("1", 1, 2, Direction.droite,new CoordonneesFloat(1, 1));
 	Ghost GHOST_2 = new Ghost("2", 8, 1, Direction.droite,new CoordonneesFloat(1, 1));
 	Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite,new CoordonneesFloat(1, 1));
 	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(1, 1));
+
+	
+	Automate aleatoire;
 	
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
@@ -63,7 +73,7 @@ public class WindowGame extends BasicGame {
     private GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
-	private float x = 448, y = 320;
+	private float x = 0, y =0;
 	private float xCamera = x, yCamera = y;
 	private int direction = 0;
 	private boolean moving = false;
@@ -91,11 +101,13 @@ public class WindowGame extends BasicGame {
         this.map = new TiledMap(CHEMIN_MAP.concat(MAP));
         largueur_map =map.getWidth();
         hauteur_map = map.getHeight();
-        Terrain terrain = new Terrain(largueur_map,hauteur_map);
+        Terrain terrain = new Terrain(largueur_map,hauteur_map, 0);
         Personnage.initTerrain(terrain);
     	mapToTerrain(terrain);
     	playground = terrain;
-
+    	try{
+    		aleatoire = new Automate("Automate/_build/ALEATOIRE.XML",GHOST_1);
+    		}catch(Exception e)  {};
     			
         SpriteSheet spriteSheet_PACMAN_1 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_1), taillePersonnage, taillePersonnage);
         SpriteSheet spriteSheet_PACMAN_2 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_2), taillePersonnage, taillePersonnage);
@@ -122,6 +134,11 @@ public class WindowGame extends BasicGame {
     
 
     public void render(GameContainer container, Graphics g) throws SlickException {
+    	int xBary = (PACMAN_1.getCoord().x + PACMAN_2.getCoord().x + PACMAN_3.getCoord().x + PACMAN_4.getCoord().x)/4;
+    	int yBary = (PACMAN_1.getCoord().y + PACMAN_2.getCoord().y + PACMAN_3.getCoord().y + PACMAN_4.getCoord().y)/4;	
+    	xCamera = xBary;
+    	yCamera = yBary;
+    	
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
         this.map.render(0, 0, 0);
         drawPacGum(playground);
@@ -133,6 +150,8 @@ public class WindowGame extends BasicGame {
         if(GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x, GHOST_2.getCoord().y);
         if(GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x, GHOST_3.getCoord().y);
         if(GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x, GHOST_4.getCoord().y);
+        
+        System.out.println(+Terrain.nb_pacgum);
     }
 
     public void update(GameContainer container, int delta) throws SlickException {
@@ -176,6 +195,12 @@ public class WindowGame extends BasicGame {
         	this.yCamera = PACMAN_1.getCoord().y - h;
         if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
         	this.yCamera = PACMAN_1.getCoord().y + h;
+        
+        try
+        {
+        aleatoire.suivant();
+        }
+        catch (Exception e) {}
     }
 
 
@@ -219,7 +244,12 @@ public class WindowGame extends BasicGame {
 		        {
 				        Image tile_pacgomme = this.map.getTileImage(i,j,this.map.getLayerIndex("GUM"));
 				        boolean Pacgomme = tile_pacgomme == null;
-				        if (!Pacgomme) terrain.terrain[i][j] = new Case(2);
+				        if (!Pacgomme)
+				        	{
+				        	terrain.terrain[i][j] = new Case(2);
+				        	Terrain.nb_pacgum++;
+				        	System.out.println(+Terrain.nb_pacgum);
+				        	}
 				        else terrain.terrain[i][j] = new Case(1);
 		        }
 			}
@@ -232,10 +262,7 @@ public class WindowGame extends BasicGame {
 				for(int j=0;j<hauteur_map;j++)
 				{
 					if(terrain.terrain[i][j].caseValeur() == 2){
-						System.out.println("lul");
 					PACGUM.draw(i*tuile_size,j*tuile_size);}
-					int x = terrain.terrain[i][j].caseValeur();
-					System.out.println(+x);
 				}
 			}
 	}

@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import structure_terrain.Terrain;
+
 public class PacKnight extends Pacman{
 
 	/**
@@ -88,6 +90,7 @@ public class PacKnight extends Pacman{
 	private void mangePacGomm()
 	{
 		Personnage.terrain.SetCase(this.coord.CasCentre(),1);
+		Terrain.nb_pacgum--;
 	}
 
 	
