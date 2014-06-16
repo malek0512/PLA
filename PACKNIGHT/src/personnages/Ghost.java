@@ -13,10 +13,11 @@ public class Ghost extends Personnage {
 	 * author : alex
 	 */
 	public static List<Ghost> liste = new LinkedList<Ghost>();
-	private final float vision = 5;
-	private int compteurAction=4;
+
+	private final int vision = 5;
 	private boolean control = false;
 	private boolean prisonner = false; //le fantome est dans la prison
+
 	private CoordonneesFloat pointDeRespawn;
 	final static private int tempsPasserEnPrison = 1; 
 	
@@ -99,7 +100,7 @@ public class Ghost extends Personnage {
 		
 	}
 
-	public float getVision() {
+	public int getVision() {
 		return vision;
 	}
 

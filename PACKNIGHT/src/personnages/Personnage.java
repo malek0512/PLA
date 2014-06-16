@@ -202,8 +202,7 @@ public abstract class Personnage {
 	/**
 	 * Test si un objet est en contact d'un pacman author : alex
 	 * 
-	 * @param cord
-	 *            : coordonée de l'objet a tester
+	 * @param cord: coordonée de l'objet a tester
 	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquer
 	 */
 	static public boolean personnagePresent(CoordonneesFloat position) {
@@ -217,8 +216,7 @@ public abstract class Personnage {
 	}
 
 	/**
-	 * @param position
-	 *            a tester
+	 * @param position a tester
 	 * @return null si pas de personnage, la reference du perso si il n'y a pas
 	 *         de perso renvoie null
 	 */
