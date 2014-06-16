@@ -28,6 +28,10 @@ public class Case {
 		return (accessible!=0);
 	}
 	
+	public int caseValeur(){
+		return accessible;
+	}
+	
 	public String toString(){
 		String s;
 		

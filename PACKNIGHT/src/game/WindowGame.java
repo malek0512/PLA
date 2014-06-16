@@ -62,6 +62,7 @@ public class WindowGame extends BasicGame {
 			
     private GameContainer container;
 	private TiledMap map;
+	private Terrain playground;
 	private float x = 448, y = 320;
 	private float xCamera = x, yCamera = y;
 	private int direction = 0;
@@ -76,7 +77,8 @@ public class WindowGame extends BasicGame {
 	private Animation[] animations_GHOST_3 = new Animation[8];
 	private Animation[] animations_GHOST_4 = new Animation[8];
 	
-	Music M;
+	private Music M;
+	private Image PACGUM;
 	protected CoordonneesFloat coordFloat;
 	
 	public WindowGame() {
@@ -85,13 +87,14 @@ public class WindowGame extends BasicGame {
 
     public void init(GameContainer container) throws SlickException {
         this.container = container;
-
+        PACGUM = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
         this.map = new TiledMap(CHEMIN_MAP.concat(MAP));
         largueur_map =map.getWidth();
         hauteur_map = map.getHeight();
         Terrain terrain = new Terrain(largueur_map,hauteur_map);
         Personnage.initTerrain(terrain);
     	mapToTerrain(terrain);
+    	playground = terrain;
 
     			
         SpriteSheet spriteSheet_PACMAN_1 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_1), taillePersonnage, taillePersonnage);
@@ -121,14 +124,15 @@ public class WindowGame extends BasicGame {
     public void render(GameContainer container, Graphics g) throws SlickException {
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
         this.map.render(0, 0, 0);
+        drawPacGum(playground);
         g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x, PACMAN_1.getCoord().y);
         g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
         g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
         g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], PACMAN_4.getCoord().x, PACMAN_4.getCoord().y);
-        g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x, GHOST_1.getCoord().y);
-        g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x, GHOST_2.getCoord().y);
-        g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x, GHOST_3.getCoord().y);
-        g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x, GHOST_4.getCoord().y);
+        if(GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x, GHOST_1.getCoord().y);
+        if(GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x, GHOST_2.getCoord().y);
+        if(GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x, GHOST_3.getCoord().y);
+        if(GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x, GHOST_4.getCoord().y);
     }
 
     public void update(GameContainer container, int delta) throws SlickException {
@@ -208,13 +212,35 @@ public class WindowGame extends BasicGame {
 		{
 			for(int j=0;j<hauteur_map;j++)
 			{
-		        Image tile = this.map.getTileImage(i,j,this.map.getLayerIndex("logic"));
-		        boolean vide = tile != null;
+		        Image tile_vide = this.map.getTileImage(i,j,this.map.getLayerIndex("logic"));
+		        boolean vide = tile_vide != null;
 		        if (vide) terrain.terrain[i][j] = new Case(0);
-		        else terrain.terrain[i][j] = new Case(1);
+		        else 
+		        {
+				        Image tile_pacgomme = this.map.getTileImage(i,j,this.map.getLayerIndex("GUM"));
+				        boolean Pacgomme = tile_pacgomme == null;
+				        if (!Pacgomme) terrain.terrain[i][j] = new Case(2);
+				        else terrain.terrain[i][j] = new Case(1);
+		        }
 			}
 		}
 	}
+	
+	public void drawPacGum(Terrain terrain){
+			for(int i=0;i<largueur_map;i++)
+			{
+				for(int j=0;j<hauteur_map;j++)
+				{
+					if(terrain.terrain[i][j].caseValeur() == 2){
+						System.out.println("lul");
+					PACGUM.draw(i*tuile_size,j*tuile_size);}
+					int x = terrain.terrain[i][j].caseValeur();
+					System.out.println(+x);
+				}
+			}
+	}
+	
+	
 	
 	public void toSprite(Animation animation[],SpriteSheet Personnage){
 	
