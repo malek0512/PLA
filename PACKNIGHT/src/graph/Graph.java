@@ -151,7 +151,7 @@ public class Graph {
   
 
     public static void main(String[] args) {
-    	Terrain terrain = new Terrain(10, 10);
+    	Terrain terrain = new Terrain1(10, 10);
     	Personnage.initTerrain(terrain); 
     	CoordonneesFloat start = new CoordonneesFloat(1,1);
     	Graph g = new Graph(terrain);
