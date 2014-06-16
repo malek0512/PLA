@@ -93,7 +93,7 @@ public class WindowGame extends BasicGame {
 	float xBary = (PACMAN_1.getCoord().x + PACMAN_2.getCoord().x + PACMAN_3.getCoord().x + PACMAN_4.getCoord().x)/4;
 	float yBary = (PACMAN_1.getCoord().y + PACMAN_2.getCoord().y + PACMAN_3.getCoord().y + PACMAN_4.getCoord().y)/4;	
 	
-	private float xCamera = 32*28, yCamera = 32*31/2;
+	private float xCamera = 1600/2, yCamera = 900/2;
 	
 	private Music M;
 	private Image PACGUM,HEART,V,H;
@@ -144,26 +144,24 @@ public class WindowGame extends BasicGame {
 
     public void render(GameContainer container, Graphics g) throws SlickException {
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
-        this.map.render(0, 0, 0);
+        this.map.render(0, 0, 0, 0, 14, 14);
         drawPacGum(playground);
-        this.map.render(15*tuile_size, 0, 0);
+        this.map.render(15*tuile_size, 0, 0, 0, 14, 14);
         drawPacGum2(playground);
-        this.map.render(0, 15*tuile_size, 0);
+        this.map.render(0, 15*tuile_size, 0, 0, 14, 14);
         drawPacGum4(playground);
-        this.map.render(15*tuile_size, 15*tuile_size, 0);
+        this.map.render(15*tuile_size, 15*tuile_size, 0, 0, 14, 14);
         drawPacGum3(playground);
 
      
-     //   V = new Image("src/graphisme/main/ressources/map/image/Horizontale.png");
-     //   H = new Image("src/graphisme/main/ressources/map/image/Verticale.png");
-        
-     //   V.draw(14*tuile_size,0);
-     //   H.draw(0,14*tuile_size);
+        //   V = new Image("src/graphisme/main/ressources/map/image/Horizontale.png");
+        //   H = new Image("src/graphisme/main/ressources/map/image/Verticale.png");
         
 		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
     	drawHeart(xBary,yBary);
-     //   V.draw(14*tuile_size,0);
-     //   H.draw(0,14*tuile_size);
+       // H.draw(14*tuile_size,0);
+        //V.draw(0,14*tuile_size);
+        
         g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x, PACMAN_1.getCoord().y);
         g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
         g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
@@ -209,7 +207,7 @@ public class WindowGame extends BasicGame {
 
 	    		PACMAN_2.avancerAnimation();
 
-	    	
+	    	/*
 	        float w = container.getWidth() / 4;
 	        if (PACMAN_1.getCoord().x > (this.xCamera + w) && (PACMAN_1.getCoord().x + w  <  largueur_map*tuile_size))
 	        	this.xCamera = PACMAN_1.getCoord().x - w;
@@ -230,7 +228,7 @@ public class WindowGame extends BasicGame {
 	        if (PACMAN_2.getCoord().y > (this.yCamera + h) && (PACMAN_2.getCoord().y + h < hauteur_map*tuile_size)) 
 	        	this.yCamera = PACMAN_2.getCoord().y - h;
 	        if (PACMAN_2.getCoord().y < (this.yCamera - h) && (PACMAN_2.getCoord().y > h))
-	        	this.yCamera = PACMAN_2.getCoord().y + h;
+	        	this.yCamera = PACMAN_2.getCoord().y + h;*/
 	        
 	        try
 	        {
