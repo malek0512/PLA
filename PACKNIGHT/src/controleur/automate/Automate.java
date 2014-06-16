@@ -53,7 +53,7 @@ public class Automate extends Controleur {
 	public final static int DIRECTION_ALEATOIRE = 7;
 	public final static int PROCHAINE_DIRECTION = 8;
 	public final static int CHEMIN_PLUS_COURT=9;
-	public final static int AVANCER_VERS=10;
+	public final static int OBEIR=10;
 	public final static int END_LIFE=11;
 	public final static int SPAWN=12;
 	
@@ -142,7 +142,7 @@ public class Automate extends Controleur {
 				case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
 				case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
 				case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
-				case Automate.AVANCER_VERS: primitivesAction.avancerVersPoint(); break;
+				case Automate.OBEIR: primitivesAction.obeir(((Ghost)getPersonnage()).ordre); break;
 				case Automate.SPAWN:personnage.respawn();break;
 				case Automate.RIEN:primitivesAction.pass(); break;
 				}

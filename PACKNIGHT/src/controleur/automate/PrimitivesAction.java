@@ -81,8 +81,8 @@ public class PrimitivesAction extends Primitives{
 	/**
 	 * Reçoit un ordre du Fantôme Lord et avance vers la case désignée tant qu'il ne l'a pas atteinte
 	 * */
-	public void avancerVersPoint(){
-		((Ghost)auto.getPersonnage()).setControl(true);
+	public void obeir(List<Direction> d){
+		
 		
 		
 	}
