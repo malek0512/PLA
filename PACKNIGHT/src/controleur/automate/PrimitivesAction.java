@@ -53,7 +53,7 @@ public class PrimitivesAction extends Primitives{
 		}		
 	}
 	/**
-	 * Donne la direction du chemin le plus court vers le pacman
+	 * Donne la direction du chemin le plus court vers un pacman dans le rayon de vision
 	 * 
 	 * */
 	public void directionCheminPlusCourt(Personnage perso){
@@ -87,6 +87,12 @@ public class PrimitivesAction extends Primitives{
 		
 	}
 	
-	
+	/**
+	 * 
+	 * @param Perimetre
+	 */
+	public void protegerPrincesse(int Perimetre){
+		
+	}
 
 }

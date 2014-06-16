@@ -23,13 +23,9 @@ public abstract class Personnage {
 	protected Direction nextDirection; // prochaine direction que prendra personnage
 	protected Direction direction; // direction actuelle du personnage
 
-	/**Pourquoi ne pas mettre à jour ce constructeur et le faire de la même façon que pacman (avec les coordonnées de respawn)? et ainsi mettre
-	 * l'attribut point de respawn dans cette classe?
-	 * 
-	 *  
-	 * Donne un nom, une poisition et une direction au personnage Ajoute le
-	 * personnage a la liste des perso
-	 * 
+	/**
+	 * Donne un nom, une poisition et une direction au personnage 
+	 * Ajoute le personnage a la liste des perso
 	 * @author malek
 	 */
 	public Personnage(String nom, int x, int y, Direction d) {
