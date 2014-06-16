@@ -13,14 +13,18 @@ public class Ghost extends Personnage {
 	 * author : alex
 	 */
 	public static List<Ghost> liste = new LinkedList<Ghost>();
+
 	private final int vision = 5;
-	private boolean control=false;
-	private boolean isAlive;
+	private int compteurAction=4;
+	private boolean control = false;
+	private boolean prisonner = false; //le fantome est dans la prison
+
 	private CoordonneesFloat pointDeRespawn;
+	final static private int tempsPasserEnPrison = 1; 
 	
 	public Ghost(String nom, int x, int y, Direction d,CoordonneesFloat spawn) {
 		super(nom, x, y, d);
-		this.isAlive = true;
+		this.seMeurt = false;
 		this.pointDeRespawn = new CoordonneesFloat(spawn.x * 32, spawn.y * 32);
 		Ghost.liste.add(this);
 		
@@ -28,12 +32,12 @@ public class Ghost extends Personnage {
 	}
 	//getter de base
 	public boolean getisAlive(){
-		return isAlive;
+		return seMeurt;
 	}
 	/**
 	 * Met à jour l'état vivant ou mort du fantome*/
 	public void setIsAlive(boolean a){
-		isAlive=a;
+		seMeurt=a;
 		
 	}
 	
@@ -57,14 +61,12 @@ public class Ghost extends Personnage {
 	 */
 	protected static Map<Pacman, AvisDeRecherche> central;
 
-	
-
 	public void gererCollision() {
 		Iterator<PacKnight> i = PacKnight.liste.iterator();
-		while(i.hasNext()&& this.isAlive)
+		while(i.hasNext()&& this.seMeurt)
 		{
 			PacKnight g = i.next();
-			if(hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
+			if(g.hitting() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
 			{
 				this.meurtDansDatroceSouffrance();
 				g.meurtDansDatroceSouffrance();
@@ -73,7 +75,7 @@ public class Ghost extends Personnage {
 		}		
 		
   
-		if(this.isAlive)
+		if(this.seMeurt)
 		{
 			Iterator<PacPrincess> j = PacPrincess.liste.iterator();
 			while(i.hasNext())
@@ -106,15 +108,58 @@ public class Ghost extends Personnage {
 	/**
 	 * Pourquoi ne pas la mettre dans personnage car elle est commune aux pacman et aux Ghost
 	 * */
-	public void respawn() {
-		this.coord = new CoordonneesFloat(pointDeRespawn);
+	public void respawn()
+	{
+		this.seMeurt = true;
 	}
 	
+	/**
+	 * parametre le pac-man pour qu'il fasse un respawn sans animation
+	 * effectuer une fois que l'animation est fini
+	 */
+	protected void respawnWOA() {
+		this.coord = new CoordonneesFloat(this.pointDeRespawn);
+	}
 	
-	@Override
 	public void meurtDansDatroceSouffrance() {
-		isAlive = false;
-		System.out.println("fantome est mort : " + this.nom);
+		this.seMeurt = true;
+	}
+
+	public boolean parametrable() {
+		return !(seMeurt && prisonner);
+	}
+
+	public void avancerAnimation() {
+		if(seMeurt)
+		{
+			if(this.timerAnimation < Pacman.tempsPasserMort)
+			{
+				this.timerAnimation++;
+				//faire avancer d'un cran l'animation
+			}
+			else
+			{
+				this.timerAnimation=0;
+				this.seMeurt=false;
+				this.respawnWOA();
+			}
+		}
+		if(prisonner)
+		{
+			if(this.timerAnimation < Ghost.tempsPasserEnPrison)
+			{
+				this.timerAnimation++;
+			}
+			else
+			{
+				this.timerAnimation = 0;
+				this.prisonner = false;
+			}
+		}
+	}
+
+	public boolean hitting() {
+		return !(seMeurt);
 	}
 	
 	

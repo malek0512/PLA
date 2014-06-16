@@ -22,6 +22,8 @@ public abstract class Personnage {
 	protected boolean nextDirectionSet;
 	protected Direction nextDirection; // prochaine direction que prendra personnage
 	protected Direction direction; // direction actuelle du personnage
+	protected boolean seMeurt; //boolean vrai si le personnage est en animation de mort
+	protected int timerAnimation = 0; //timer pour les animations
 	private int compteurAction=0;//nombre permettant de compter le nombre d'appel à la fonction avancer
 
 	/**Pourquoi ne pas mettre à jour ce constructeur et le faire de la même façon que pacman (avec les coordonnées de respawn)? et ainsi mettre
@@ -179,7 +181,6 @@ public abstract class Personnage {
 	 * fait revivre le pacman NEED : determiner ou se situe les points de
 	 * respawn author : alex
 	 */
-
 	public abstract void respawn();
 
 	/**
@@ -245,6 +246,24 @@ public abstract class Personnage {
 	 * le pacman meurt dans d'atroces souffrances author : alex
 	 */
 	public abstract void meurtDansDatroceSouffrance();
+
+	/**
+	 * renvoie vraie si les changement de direction ou si les action de move sont autorisé
+	 * si false, lancer la fonction "avancerAnimation"
+	 * @return
+	 */
+	public abstract boolean parametrable();
+	
+	/**
+	 * fait avancer les animations, de mort, de deplacement auto, et tout le tralala
+	 */
+	public abstract void avancerAnimation();
+	
+	/**
+	 * renvoie vraie si le personnage peut etre touché
+	 * author : alex
+	 */
+	public abstract boolean hitting();
 
 	/***********************************************
 	 * fonction dont l'utiliter reste a prouver *
