@@ -97,6 +97,11 @@ public class CoordonneesFloat {
 		return new CoordonneesFloat((x+size-1) / size,(y+ size-1)/ size);
 	}
 	
+	public CoordonneesFloat CasCentre()
+	{
+		return new CoordonneesFloat((x + (size/2))/size, (y + (size/2))/size);
+	}
+	
 	public int casGX()
 	{
 		return (x/size);
@@ -135,6 +140,13 @@ public class CoordonneesFloat {
 	{
 		return new CoordonneesFloat(x+ size,y+ size);
 	}
+
+	
+	public CoordonneesFloat PixCentre()
+	{
+		return new CoordonneesFloat(x + (size/2), y + (size/2));
+	}
+
 	/**
 	 * @return : x abscisse d'un Pixel Gauche de la case*/
 	public int PixGX()

@@ -79,6 +79,15 @@ public class PacKnight extends Pacman{
 				break;
 			}
 		}
+		if(Personnage.terrain.ValueCase(this.coord.CasCentre()) == 2)
+		{
+			this.mangePacGomm();
+		}
+	}
+	
+	private void mangePacGomm()
+	{
+		Personnage.terrain.SetCase(this.coord.CasCentre(),1);
 	}
 
 	
