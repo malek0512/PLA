@@ -7,7 +7,6 @@ package structure_terrain;
 import game.WindowGame;
 import structure_terrain.Case;
 import personnages.Coordonnees;
-import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Personnage;
 

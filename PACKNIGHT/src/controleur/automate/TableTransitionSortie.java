@@ -1,6 +1,5 @@
 package controleur.automate;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +25,7 @@ public class TableTransitionSortie {
 	
 	Map<String, Map<Integer,Triplet>> table;
 	private int nbEtat;
+	
 	public TableTransitionSortie(int nbEtat){
 		table = new HashMap<String, Map<Integer,Triplet>>();
 		this.nbEtat = nbEtat;

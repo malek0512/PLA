@@ -15,7 +15,6 @@ import personnages.Pacman;
  */
 public class PrimitivesTest extends Primitives {
 
-	//TODO renseigner la doc, bien que petite
 	public PrimitivesTest(Automate a) {
 		super();
 		this.auto = a;
