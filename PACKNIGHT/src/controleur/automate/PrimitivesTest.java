@@ -25,7 +25,7 @@ public class PrimitivesTest extends Primitives {
 	 * @param d
 	 * @return True si un ou plusieurs pacman sont dans le rayon 
 	 */
-	protected boolean dansRayon(float d) {
+	protected boolean dansRayon(int d) {
 		int n=0;
 		List<Pacman> res = new LinkedList<Pacman>();
 		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
