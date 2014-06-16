@@ -53,14 +53,11 @@ public class PacKnight extends Pacman{
 		return null;
 	}
 	
-<<<<<<< HEAD
-=======
 	public PacKnight(String name, int x, int y, Direction d, CoordonneesFloat respawn) {
 		super(name,x,y,d,respawn);
 		PacKnight.liste.add(this);
 	}
 
->>>>>>> bb265956571c8dfa1a573926ba7d12370c38f33b
 	public boolean canRespawn() {
 		return vie != 0;
 	}
