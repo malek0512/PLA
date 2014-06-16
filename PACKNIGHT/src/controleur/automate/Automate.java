@@ -124,14 +124,14 @@ public class Automate extends Controleur {
 	 * @author malek
 	 */
 	public void suivant() throws Exception {
-		int entreeAutomate = getEntree();
-		int sortieAutomate = effectuerTransition(entreeAutomate);
 		//System.out.println();
 //		System.out.println(nbEntreeValide());
 		if(this.personnage.parametrable())
 		{
 			do
 			{
+				int entreeAutomate = getEntree();
+				int sortieAutomate = effectuerTransition(entreeAutomate);
 				switch (sortieAutomate) {
 				//TODO Ajouter chaque fonction d'action
 				case Automate.AVANCER: personnage.avancerAux(); break;

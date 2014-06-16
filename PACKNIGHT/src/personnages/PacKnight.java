@@ -17,6 +17,11 @@ public class PacKnight extends Pacman{
 	static public List<PacKnight> liste = new LinkedList<PacKnight>();
 	public static int vie = 10;
 	
+	public PacKnight(String name, int x, int y, Direction d, CoordonneesFloat respawn) {
+		super(name,x,y,d,respawn);
+		PacKnight.liste.add(this);
+	}
+	
 	/**
 	 * @param position ou on veut savoir si un personnage si trouve
 	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
@@ -48,10 +53,6 @@ public class PacKnight extends Pacman{
 		return null;
 	}
 	
-	public PacKnight(String name, int x, int y, Direction d, CoordonneesFloat respawn) {
-		super(name,x,y,d,respawn);
-		PacKnight.liste.add(this);
-	}
 
 	public boolean canRespawn() {
 		return vie != 0;

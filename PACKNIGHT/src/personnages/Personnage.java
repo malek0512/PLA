@@ -22,15 +22,14 @@ public abstract class Personnage {
 	protected boolean nextDirectionSet;
 	protected Direction nextDirection; // prochaine direction que prendra personnage
 	protected Direction direction; // direction actuelle du personnage
+
 	protected boolean seMeurt = false; //boolean vrai si le personnage est en animation de mort
 	protected int timerAnimation = 0; //timer pour les animations
 	private int compteurAction=0;//nombre permettant de compter le nombre d'appel à la fonction avancer
 	public List<CoordonneesFloat> ordre;
+
 	
-	/**Pourquoi ne pas mettre à jour ce constructeur et le faire de la même façon que pacman (avec les coordonnées de respawn)? et ainsi mettre
-	 * l'attribut point de respawn dans cette classe?
-	 * 
-	 *  
+	/**
 	 * Donne un nom, une poisition et une direction au personnage Ajoute le
 	 * personnage a la liste des perso
 	 * 
