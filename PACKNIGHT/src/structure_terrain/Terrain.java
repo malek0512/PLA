@@ -4,7 +4,6 @@
  */
 package structure_terrain;
 
-import game.WindowGame;
 import structure_terrain.Case;
 import personnages.Coordonnees;
 import personnages.CoordonneesFloat;
@@ -82,6 +81,13 @@ public class Terrain {
 		}
 	}
 	
+	/**
+	 * renvoie vrai si la case dans la direction est accessible
+	 * @param x : cord.x de la case
+	 * @param y : cord.y de la case
+	 * @param direction : direction ou doit etre tester la case
+	 * @return vraie si la case dans la direction de la case (x,y) est accessible
+	 */
 	public boolean caseAcessible(int x, int y,Direction direction)
 	{
 		if(estDansLeTerrain(x,y))
@@ -91,6 +97,30 @@ public class Terrain {
 			case bas : return terrain[x][y+1].isAccessable();
 			case droite : return terrain[x+1][y].isAccessable();
 			case gauche : return terrain[x-1][y].isAccessable();
+			default:
+				break; 
+			}
+		return false;
+	}
+	
+	/**
+	 * Renvoie si la case d'une distance distance dans la direction donnée est accessible
+	 * @param x : cord.x de la case de reference
+	 * @param y : cord.y de la case de reference
+	 * @param distance : distance de la case chercher par rapport a la case de depart
+	 * si distance = 0, on renvoie si la case (x,y) est accessible
+	 * @param direction : direction vers ou on veut connaitre la case
+	 * @return vraie si la case de distance distance et dans la direction donné est accessible
+	 */
+	public boolean caseAcessible(int x, int y, int distance, Direction direction)
+	{
+		if(estDansLeTerrain(x,y))
+			switch(direction)
+			{
+			case haut : return terrain[x][y-distance].isAccessable();
+			case bas : return terrain[x][y+distance].isAccessable();
+			case droite : return terrain[x+distance][y].isAccessable();
+			case gauche : return terrain[x-distance][y].isAccessable();
 			default:
 				break; 
 			}
@@ -159,5 +189,15 @@ public class Terrain {
 			break; 
 		}
 		return null;
+	}
+	
+	public int ValueCase(CoordonneesFloat cord)
+	{
+		return terrain[cord.x][cord.y].caseValeur(); 
+	}
+	
+	public void SetCase(CoordonneesFloat c, int v)
+	{
+		terrain[c.x][c.y].setAcessCase(v);
 	}
 }

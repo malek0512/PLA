@@ -68,51 +68,53 @@ public class Primitives {
 	 * @author rama/vivien
 	 */
 	protected boolean pacmanEstDansCroix(CoordonneesFloat position) {
-		CoordonneesFloat test=position;
+		int j=1;
 		boolean res=false;
+		
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
 			Pacman pac = i.next();
-			CoordonneesFloat cord = pac.getCoord();
-			if(cord.x == position.x){
-				if (cord.y<position.y){
-					while(!mur(test) && cord.y >= test.y && cord.y<(test.y-1)){
-						test.y--;
+			CoordonneesFloat coordFC=position.CasCentre(); //coordonnée du centre du fantome
+			CoordonneesFloat coord = pac.getCoord().CasCentre();//on récupére la case dans lequel est le centre du pacman
+			if(coord.x==coordFC.x){
+				if (coord.y<coordFC.y){
+					while(!mur(coordFC,j,Direction.haut) && coord.y != (coordFC.y -j)){
+						j++;
 					}
-					if(!mur(test)){
+					if(!mur(coordFC,j,Direction.haut)){
 						auto.getPersonnage().setDirection(Direction.haut);
 						return true;
 						
 					}
 				}
 				else {
-					while(!mur(test) && cord.y >= test.y && cord.y<(test.y+1)){
-					test.y++;
+					while(!mur(coordFC,j,Direction.bas) && coord.y != (coordFC.y + j)){
+						j++;
 					
 					}
-					if(!mur(test)){
+					if(!mur(coordFC,j,Direction.bas)){
 						auto.getPersonnage().setDirection(Direction.bas);
 						return true;
 					}
 				}
 				
 			}
-			else if(cord.y == position.y){
-					if (cord.x<position.x){
-						while(!mur(test) && cord.x >= test.x && cord.x<test.x-1){
-							test.x--;
+			else if(coord.y == coordFC.y){
+					if (coord.x<coordFC.x){
+						while(!mur(coordFC,j,Direction.gauche) && coord.x != (coordFC.x - j)){
+							j++;
 						}
-						if(!mur(test)){
+						if(!mur(coordFC,j,Direction.gauche)){
 							auto.getPersonnage().setDirection(Direction.gauche);
 							return true;
 						}
 					}
 				
 					else {
-						while(!mur(test) && cord.x >= test.x && cord.x<test.x+1){
-							test.x++;
+						while(!mur(coordFC,j,Direction.droite) && coord.x != (coordFC.x + j)){
+							j++;
 						}
-						if(!mur(test)){
+						if(!mur(coordFC,j,Direction.droite)){
 							auto.getPersonnage().setDirection(Direction.droite);
 							return true;
 						}
@@ -127,11 +129,9 @@ public class Primitives {
 	 * @return boolean Vrai si il y a un mur faux sinon
 	 * @author vivien
 	 * */
-	private boolean mur(CoordonneesFloat temp) {
-		boolean res=true;
-		if (Personnage.getTerrain().getCase(temp.x,temp.y).isAccessable())
-			res=false;
-		return res;
+	private boolean mur(CoordonneesFloat test, int i, Direction d) {
+		
+		return Personnage.getTerrain().caseAcessible(test.x, test.y, i, d);
 	}
 	
 	/**
@@ -175,4 +175,7 @@ public class Primitives {
 		return coord;
 	}
 	
+	public void pass(){
+		
+	}
 }

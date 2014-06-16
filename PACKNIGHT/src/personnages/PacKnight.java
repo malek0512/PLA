@@ -75,10 +75,19 @@ public class PacKnight extends Pacman{
 			{
 				System.out.println("fantome tester : " + g.nom );
 				this.meurtDansDatroceSouffrance();
-				g.meurtDansDatroceSouffrance(); //vengence !!!
+				g.meurtDansDatroceSouffrance(); //vengeance !!!
 				break;
 			}
 		}
+		if(Personnage.terrain.ValueCase(this.coord.CasCentre()) == 2)
+		{
+			this.mangePacGomm();
+		}
+	}
+	
+	private void mangePacGomm()
+	{
+		Personnage.terrain.SetCase(this.coord.CasCentre(),1);
 	}
 
 	
