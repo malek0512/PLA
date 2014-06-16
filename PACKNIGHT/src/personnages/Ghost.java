@@ -15,11 +15,19 @@ public class Ghost extends Personnage {
 	public static List<Ghost> liste = new LinkedList<Ghost>();
 	private final float vision = 5;
 	private int compteurAction=4;
-	private boolean control;
+	private boolean control = false;
 	private boolean prisonner = false; //le fantome est dans la prison
 	private CoordonneesFloat pointDeRespawn;
 	final static private int tempsPasserEnPrison = 1; 
 	
+	public Ghost(String nom, int x, int y, Direction d,CoordonneesFloat spawn) {
+		super(nom, x, y, d);
+		this.seMeurt = false;
+		this.pointDeRespawn = new CoordonneesFloat(spawn.x * 32, spawn.y * 32);
+		Ghost.liste.add(this);
+		
+		
+	}
 	//getter de base
 	public boolean getisAlive(){
 		return seMeurt;
@@ -51,13 +59,6 @@ public class Ghost extends Personnage {
 	 */
 	protected static Map<Pacman, AvisDeRecherche> central;
 
-	public Ghost(String nom, int x, int y, Direction d) {
-		super(nom, x, y, d);
-		this.seMeurt = true;
-		Ghost.liste.add(this);
-		
-	}
-
 	public void gererCollision() {
 		Iterator<PacKnight> i = PacKnight.liste.iterator();
 		while(i.hasNext()&& this.seMeurt)
@@ -87,12 +88,6 @@ public class Ghost extends Personnage {
 		}
 	}
 	
-	/**
-	 * @return Nombre d'action avancer() à effectuer pour avancer d'une case
-	 * */
-	public int getCompteurAction(){
-		return this.compteurAction;
-	}
 	
 	public boolean getControle(){
 		return control;

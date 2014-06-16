@@ -24,7 +24,8 @@ public abstract class Personnage {
 	protected Direction direction; // direction actuelle du personnage
 	protected boolean seMeurt; //boolean vrai si le personnage est en animation de mort
 	protected int timerAnimation = 0; //timer pour les animations
-	
+	private int compteurAction=0;//nombre permettant de compter le nombre d'appel à la fonction avancer
+
 	/**Pourquoi ne pas mettre à jour ce constructeur et le faire de la même façon que pacman (avec les coordonnées de respawn)? et ainsi mettre
 	 * l'attribut point de respawn dans cette classe?
 	 * 
@@ -61,6 +62,7 @@ public abstract class Personnage {
 	 * Ne fait pas de test, et avance Utiliser par les automates et c'est tout
 	 */
 	public void avancerAux() {
+		this.incrCompteur();
 		switch (this.direction) {
 		case droite:
 			this.coord.x += tauxDeDeplacement;
@@ -229,6 +231,18 @@ public abstract class Personnage {
 		}
 		return null;
 	}
+	
+	/**
+	 * Incrémente le compteur d'action*/
+	public void incrCompteur(){
+		this.compteurAction=(this.compteurAction+1)%8;
+	}
+	/**
+	 * @return Nombre d'action avancer() à effectuer pour avancer d'une case
+	 * */
+	public int getCompteurAction(){
+		return this.compteurAction;
+	}
 
 	/**
 	 * le pacman meurt dans d'atroces souffrances author : alex
@@ -267,7 +281,6 @@ public abstract class Personnage {
 		this.coord.x = x;
 		this.coord.y = y;
 	}
-
 	/**
 	 * @return String contenant le terrain et le personnage
 	 * @author malek

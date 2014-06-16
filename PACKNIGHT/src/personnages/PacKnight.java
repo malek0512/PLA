@@ -15,8 +15,7 @@ public class PacKnight extends Pacman{
 	 * liste des PacKnight sur le terrain
 	 */
 	static public List<PacKnight> liste = new LinkedList<PacKnight>();
-	static int vie = 10;
-
+	public static int vie = 10;
 	
 	/**
 	 * @param position ou on veut savoir si un personnage si trouve
