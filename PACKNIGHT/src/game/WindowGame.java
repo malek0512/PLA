@@ -31,10 +31,10 @@ public class WindowGame extends BasicGame {
 	private String SPRITE_PACMAN_3 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_4 = "PACMAN-SPRITES2.png";
 	
-	private String SPRITE_GHOST_1 = "TEST.png";
-	private String SPRITE_GHOST_2 = "TEST.png";
-	private String SPRITE_GHOST_3 = "TEST.png";
-	private String SPRITE_GHOST_4 = "TEST.png";
+	private String SPRITE_GHOST_1 = "Leona.png";
+	private String SPRITE_GHOST_2 = "Soraka.png";
+	private String SPRITE_GHOST_3 = "Janna.png";
+	private String SPRITE_GHOST_4 = "Lulu.png";
 	
 	
 	private String MAP = "PACMAN.tmx";
