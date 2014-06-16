@@ -11,11 +11,12 @@ import java.util.List;
 
 public abstract class Pacman extends Personnage {
 
-	private CoordonneesFloat pointDeRespawn;
+	protected CoordonneesFloat pointDeRespawn;
 	/**
 	 * liste des pacmans sur le terrain
 	 */
 	static public List<Pacman> liste = new LinkedList<Pacman>();
+	static final protected int tempsPasserMort = 1;
 	
 	/**
 	 * Construit le pacman en initialisant son point de spawn*/
@@ -61,7 +62,19 @@ public abstract class Pacman extends Personnage {
 	 */
 	public abstract boolean canRespawn();
 	
-	public void respawn() {
-		this.coord = new CoordonneesFloat(pointDeRespawn);
+	/**
+	 * parametre le pac-man pour qu'il passe en animation de mort
+	 */
+	public void respawn()
+	{
+		this.seMeurt = true;
+	}
+	
+	/**
+	 * parametre le pac-man pour qu'il fasse un respawn sans animation
+	 * effectuer une fois que l'animation est fini
+	 */
+	protected void respawnWOA() {
+		this.coord = new CoordonneesFloat(this.pointDeRespawn);
 	}
 }

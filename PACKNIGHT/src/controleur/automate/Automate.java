@@ -126,24 +126,34 @@ public class Automate extends Controleur {
 		int entreeAutomate = getEntree();
 		int sortieAutomate = effectuerTransition(entreeAutomate);
 //		System.out.println(nbEntreeValide());
-		switch (sortieAutomate) {
-		//TODO Ajouter chaque fonction d'action
-		case Automate.AVANCER: personnage.avancerAux(); break;
-		case Automate.DROIT: personnage.setDirection(Direction.droite); break;
-		case Automate.GAUCHE: personnage.setDirection(Direction.gauche); break;
-		case Automate.HAUT: personnage.setDirection(Direction.haut); break;
-		case Automate.BAS: personnage.setDirection(Direction.bas); break;
-		case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
-		case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
-		case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
-		case Automate.AVANCER_VERS: primitivesAction.avancerVersPoint(); break;
-		case Automate.SPAWN:personnage.respawn();break;
-		case Automate.RIEN:primitivesAction.pass(); break;
-		
-		}
-		incrementerTransition();
-	}
 
+		if(this.personnage.parametrable())
+		{
+			do
+			{
+				switch (sortieAutomate) {
+				//TODO Ajouter chaque fonction d'action
+				case Automate.AVANCER: personnage.avancerAux(); break;
+				case Automate.DROIT: personnage.setDirection(Direction.droite); break;
+				case Automate.GAUCHE: personnage.setDirection(Direction.gauche); break;
+				case Automate.HAUT: personnage.setDirection(Direction.haut); break;
+				case Automate.BAS: personnage.setDirection(Direction.bas); break;
+				case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
+				case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
+				case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
+				case Automate.AVANCER_VERS: primitivesAction.avancerVersPoint(); break;
+				case Automate.SPAWN:personnage.respawn();break;
+				case Automate.RIEN:primitivesAction.pass(); break;
+				}
+			}
+			while(this.personnage.parametrable() && !(isEtatBloquant()));
+			incrementerTransition();
+		}
+		else
+		{
+			this.personnage.avancerAnimation();
+		}
+	}
 
 	/**
 	 * A l'etatCourant X,
@@ -245,6 +255,10 @@ public class Automate extends Controleur {
 		return this.etatsFinals.contains(this.etatCourant);
 	}
 
+	public boolean isEtatBloquant()
+	{
+		return this.etatsBloquants.contains(this.etatCourant);
+	}
 	protected void incrementerTransition(){
 		nbTransition++;
 	}

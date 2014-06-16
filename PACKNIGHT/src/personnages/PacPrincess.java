@@ -68,12 +68,37 @@ public class PacPrincess extends Pacman{
 		while(i.hasNext())
 		{
 			Ghost g = i.next();
-			if(g.getisAlive() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
+			if(g.hitting() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
 			{
 				this.meurtDansDatroceSouffrance();
 				break;
 			}
 		}
+	}
+
+	public boolean parametrable() {
+		return !(this.seMeurt);
+	}
+
+	public void avancerAnimation() {
+		if(seMeurt)
+		{
+			if(this.timerAnimation < Pacman.tempsPasserMort)
+			{
+				this.timerAnimation++;
+				//faire avancer d'un cran l'animation
+			}
+			else
+			{
+				this.timerAnimation=0;
+				this.seMeurt=false;
+				this.respawnWOA();
+			}
+		}
+	}
+
+	public boolean hitting() {
+		return !(seMeurt);
 	}
 	
 
