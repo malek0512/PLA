@@ -175,4 +175,7 @@ public class Primitives {
 		return coord;
 	}
 	
+	public void pass(){
+		
+	}
 }
