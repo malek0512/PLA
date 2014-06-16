@@ -144,7 +144,7 @@ public class WindowGame extends BasicGame {
 
     public void render(GameContainer container, Graphics g) throws SlickException {
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
-        this.map.render(0, 0, 0, 0, 14, 14);
+        this.map.render(0, 0, PACMAN_1.getCoord().casGX(), PACMAN_1.getCoord().casHY(), 14, 14);
         drawPacGum(playground);
         this.map.render(15*tuile_size, 0, 0, 0, 14, 14);
         drawPacGum2(playground);
@@ -207,17 +207,12 @@ public class WindowGame extends BasicGame {
 
 	    		PACMAN_2.avancerAnimation();
 
-	    	/*
+	    	
 	        float w = container.getWidth() / 4;
 	        if (PACMAN_1.getCoord().x > (this.xCamera + w) && (PACMAN_1.getCoord().x + w  <  largueur_map*tuile_size))
 	        	this.xCamera = PACMAN_1.getCoord().x - w;
 	        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w)) 
 	        	this.xCamera = PACMAN_1.getCoord().x + w;
-	        
-	        if (PACMAN_2.getCoord().x > (this.xCamera + w) && (PACMAN_2.getCoord().x + w  <  largueur_map*tuile_size))
-	        	this.xCamera = PACMAN_2.getCoord().x - w;
-	        if (PACMAN_2.getCoord().x < (this.xCamera - w) && (PACMAN_2.getCoord().x > w)) 
-	        	this.xCamera = PACMAN_2.getCoord().x + w;
 	        
 	        float h = container.getHeight() / 4;
 	        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
@@ -225,10 +220,7 @@ public class WindowGame extends BasicGame {
 	        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
 	        	this.yCamera = PACMAN_1.getCoord().y + h;
 	        
-	        if (PACMAN_2.getCoord().y > (this.yCamera + h) && (PACMAN_2.getCoord().y + h < hauteur_map*tuile_size)) 
-	        	this.yCamera = PACMAN_2.getCoord().y - h;
-	        if (PACMAN_2.getCoord().y < (this.yCamera - h) && (PACMAN_2.getCoord().y > h))
-	        	this.yCamera = PACMAN_2.getCoord().y + h;*/
+
 	        
 	        try
 	        {
@@ -303,9 +295,9 @@ public class WindowGame extends BasicGame {
 	}
 	
 	public void drawPacGum(Terrain terrain){
-			for(int i=0;i<largueur_map;i++)
+			for(int i=0;i<14;i++)
 			{
-				for(int j=0;j<hauteur_map;j++)
+				for(int j=0;j<14;j++)
 				{
 					if(terrain.terrain[i][j].caseValeur() == 2){
 					PACGUM.draw(i*tuile_size,j*tuile_size);}
@@ -313,9 +305,9 @@ public class WindowGame extends BasicGame {
 			}
 	}
 	public void drawPacGum2(Terrain terrain){
-		for(int i=0;i<largueur_map;i++)
+		for(int i=0;i<14;i++)
 		{
-			for(int j=0;j<hauteur_map;j++)
+			for(int j=0;j<14;j++)
 			{
 				if(terrain.terrain[i][j].caseValeur() == 2){
 				PACGUM.draw(i*tuile_size+15*tuile_size,j*tuile_size);}
@@ -323,9 +315,9 @@ public class WindowGame extends BasicGame {
 		}
 }
 	public void drawPacGum3(Terrain terrain){
-		for(int i=0;i<largueur_map;i++)
+		for(int i=0;i<14;i++)
 		{
-			for(int j=0;j<hauteur_map;j++)
+			for(int j=0;j<14;j++)
 			{
 				if(terrain.terrain[i][j].caseValeur() == 2){
 				PACGUM.draw(i*tuile_size+15*tuile_size,j*tuile_size+15*tuile_size);}
@@ -333,9 +325,9 @@ public class WindowGame extends BasicGame {
 		}
 }
 	public void drawPacGum4(Terrain terrain){
-		for(int i=0;i<largueur_map;i++)
+		for(int i=0;i<14;i++)
 		{
-			for(int j=0;j<hauteur_map;j++)
+			for(int j=0;j<14;j++)
 			{
 				if(terrain.terrain[i][j].caseValeur() == 2){
 				PACGUM.draw(i*tuile_size,j*tuile_size+15*tuile_size);}
