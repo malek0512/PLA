@@ -137,7 +137,7 @@ public class Automate extends Controleur {
 		case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
 		case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
 		case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
-		case Automate.AVANCER_VERS: primitivesAction.avancerVersPoint(); break;
+		//case Automate.AVANCER_VERS: primitivesAction.avancerVersPoint(); break;
 		case Automate.SPAWN:personnage.respawn();break;
 		case Automate.RIEN:primitivesAction.pass(); break;
 		}
