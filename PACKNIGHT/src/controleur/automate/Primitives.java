@@ -68,52 +68,53 @@ public class Primitives {
 	 * @author rama/vivien
 	 */
 	protected boolean pacmanEstDansCroix(CoordonneesFloat position) {
-		CoordonneesFloat test=position;
 		int j=1;
 		boolean res=false;
+		
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
 			Pacman pac = i.next();
-			CoordonneesFloat coord = pac.getCoord();
-			if(position.casGX()==coord.){
-				if (coord.y<position.y){
-					while(!mur(position,j,Direction.haut) && coord.y >= test.y && coord.y<(test.y-1)){
+			CoordonneesFloat coordFC=position.CasCentre(); //coordonnée du centre du fantome
+			CoordonneesFloat coord = pac.getCoord().CasCentre();//on récupére la case dans lequel est le centre du pacman
+			if(coord.x==coordFC.x){
+				if (coord.y<coordFC.y){
+					while(!mur(coordFC,j,Direction.haut) && coord.y != (coordFC.y -j)){
 						j++;
 					}
-					if(!mur(position,j,Direction.haut)){
+					if(!mur(coordFC,j,Direction.haut)){
 						auto.getPersonnage().setDirection(Direction.haut);
 						return true;
 						
 					}
 				}
 				else {
-					while(!mur(position,j,Direction.bas) && coord.y >= test.y && coord.y<(test.y+1)){
+					while(!mur(coordFC,j,Direction.bas) && coord.y != (coordFC.y + j)){
 						j++;
 					
 					}
-					if(!mur(position,j,Direction.bas)){
+					if(!mur(coordFC,j,Direction.bas)){
 						auto.getPersonnage().setDirection(Direction.bas);
 						return true;
 					}
 				}
 				
 			}
-			else if(coord.y == position.y){
-					if (coord.x<position.x){
-						while(!mur(position,j,Direction.gauche) && coord.x >= test.x && coord.x<test.x-1){
+			else if(coord.y == coordFC.y){
+					if (coord.x<coordFC.x){
+						while(!mur(coordFC,j,Direction.gauche) && coord.x != (coordFC.x - j)){
 							j++;
 						}
-						if(!mur(position,j,Direction.gauche)){
+						if(!mur(coordFC,j,Direction.gauche)){
 							auto.getPersonnage().setDirection(Direction.gauche);
 							return true;
 						}
 					}
 				
 					else {
-						while(!mur(position,j,Direction.droite) && coord.x >= test.x && coord.x<test.x+1){
+						while(!mur(coordFC,j,Direction.droite) && coord.x != (coordFC.x + j)){
 							j++;
 						}
-						if(!mur(position,j,Direction.droite)){
+						if(!mur(coordFC,j,Direction.droite)){
 							auto.getPersonnage().setDirection(Direction.droite);
 							return true;
 						}
