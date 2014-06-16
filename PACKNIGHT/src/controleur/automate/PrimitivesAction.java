@@ -73,7 +73,7 @@ public class PrimitivesAction extends Primitives{
 		//calcul de la direction permettant de se rapprocher le plus de pacman
 		for(Direction d : Direction.values()){
 			
-			if(positionAdjacente(d).distance(min.getCoord())<positionAdjacente(mind).distance(min.getCoord()))
+			if(positionAdjacente(d).CasCentre().distance(min.getCoord().CasCentre())<positionAdjacente(mind).CasCentre().distance(min.getCoord().CasCentre()))
 				mind=d;
 		}
 	perso.setDirection(mind);

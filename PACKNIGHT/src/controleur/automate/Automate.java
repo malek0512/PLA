@@ -32,6 +32,7 @@ public class Automate extends Controleur {
 	public final static int SORTIE_TERRAIN = 2;
 	public final static int CASE_GHOST = 3;
 	public final static int PM_DANS_RAYON_X = 4;
+	public final static int NON_PM_DANS_RAYON_X = 13;
 	public final static int PM_DANS_CROIX = 5;
 	public final static int NON_PM_DANS_CROIX = 6;
 	public final static int INTERSECTION = 7;
@@ -117,7 +118,7 @@ public class Automate extends Controleur {
 
 	/**
 	 * Fonction effectuant l'action suivante, selon l'entree et la sortie de l'automate.
-	 * A modifier au fure et a mesure des ajout de fonction d'actions des personnages.
+	 * A modifier au fur et a mesure des ajout de fonction d'actions des personnages.
 	 * Ne pas oublier de CASTER selon le type de votre personnage, afin d'avoir accès aux actions qui y sont décrites 
 	 * @throws Exception
 	 * @author malek
@@ -175,6 +176,7 @@ public class Automate extends Controleur {
 				case CASE_NON_ATTEINTE:if(!primitivesTest.caseAtteinte()) return CASE_NON_ATTEINTE; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
 				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return PM_DANS_RAYON_X; break;
+				case NON_PM_DANS_RAYON_X : if(!primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return NON_PM_DANS_RAYON_X; break;
 				case INTERSECTION: if(primitivesTest.estIntersection()) return INTERSECTION; break;
 				case NON_INTERSECTION: if(!primitivesTest.estIntersection()) return NON_INTERSECTION; break;
 				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; break;

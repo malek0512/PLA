@@ -13,7 +13,7 @@ public class Ghost extends Personnage {
 	 * author : alex
 	 */
 	public static List<Ghost> liste = new LinkedList<Ghost>();
-	private final float vision = 5;
+	private final int vision = 5;
 	private boolean control=false;
 	private boolean isAlive;
 	private CoordonneesFloat pointDeRespawn;
@@ -99,7 +99,7 @@ public class Ghost extends Personnage {
 		
 	}
 
-	public float getVision() {
+	public int getVision() {
 		return vision;
 	}
 

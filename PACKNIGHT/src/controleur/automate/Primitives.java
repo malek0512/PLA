@@ -40,7 +40,7 @@ public class Primitives {
 	 * @param rayon : rayon de vision du Fantome a la position donnée
 	 * @return la liste des pacman de le champ de vision
 	 */
-	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position, float rayon) {
+	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position, int rayon) {
 		List<Pacman> res = new LinkedList<Pacman>();
 
 		float someXYSource = position.CasCentre().sommeXY();
