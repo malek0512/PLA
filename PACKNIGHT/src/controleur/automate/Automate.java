@@ -48,6 +48,7 @@ public class Automate extends Controleur {
 	public final static int DROIT = 2;
 	public final static int HAUT = 3;
 	public final static int BAS = 4;
+	public final static int RIEN = 5;
 	public final static int DIRECTION_ALEATOIRE = 7;
 	public final static int PROCHAINE_DIRECTION = 8;
 	public final static int CHEMIN_PLUS_COURT=9;
