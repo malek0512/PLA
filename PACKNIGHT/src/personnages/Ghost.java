@@ -5,14 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Ghost extends Personnage {
+	
 	/**
 	 * liste des fantomes du jeux
 	 * cette liste est utiliser pour gerer les collisions, et pour
 	 * que les fantomes puissent communiquer entre eux
 	 * author : alex
 	 */
-	
-	
 	public static List<Ghost> liste = new LinkedList<Ghost>();
 	private final float vision = 5;
 	private int compteurAction=4;
