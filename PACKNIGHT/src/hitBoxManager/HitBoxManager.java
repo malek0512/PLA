@@ -9,7 +9,7 @@ public class HitBoxManager {
 	static private int hitBox = 1;
 
 	/**
-	 * Warning : les tuiles doivent etre carré
+	 * Warning : les tuiles doivent etre carrées
 	 */
 	static private int tilesSize = game.WindowGame.tuile_size;
 	

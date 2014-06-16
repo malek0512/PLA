@@ -3,7 +3,6 @@ package graph;
 import java.util.List;
 
 import personnages.Coordonnees;
-import structure_terrain.Terrain;
 
 public class Noeud {
 

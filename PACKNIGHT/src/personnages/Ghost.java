@@ -18,6 +18,7 @@ public class Ghost extends Personnage {
 	private int compteurAction=4;
 	private boolean control;
 	private boolean isAlive;
+	private CoordonneesFloat pointDeRespawn;
 	
 	//getter de base
 	public boolean getisAlive(){
@@ -46,7 +47,7 @@ public class Ghost extends Personnage {
 	}
 
 	/**
-	 * Le central repertorie l'ensemble des information des PM en suite
+	 * Le central repertorie l'ensemble des information des PM en fuite
 	 */
 	protected static Map<Pacman, AvisDeRecherche> central;
 
@@ -107,10 +108,13 @@ public class Ghost extends Personnage {
 		return vision;
 	}
 
-	@Override
+	/**
+	 * Pourquoi ne pas la mettre dans personnage car elle est commune aux pacman et aux Ghost
+	 * */
 	public void respawn() {
-		// TODO Auto-generated method stub
+		this.coord = new CoordonneesFloat(pointDeRespawn);
 	}
+	
 	
 	@Override
 	public void meurtDansDatroceSouffrance() {
