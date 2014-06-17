@@ -42,20 +42,7 @@ public class PrimitivesAction extends Primitives{
 		alea=rnd.nextInt(i);
 		perso.setDirection(direct[alea]);
 	}
-	
-	/** Donne la prochaine direction disponible si la prochaine case est indisponible
-	 * @param personnage auquel on veut changer la direction aléatoirement
-	 * */
-	public void prochaineDirection(Personnage perso){
-		if(!perso.caseDevantDisponible()){
-			for(Direction d : Direction.values()){
-				System.out.println(perso.getOrientation());
-				if(perso.caseDisponible(d) && perso.getOrientation()!=d.opposer()){
-					perso.setDirection(d);
-				}
-			}
-		}		
-	}
+
 	/**
 	 * Donne la direction du chemin le plus court vers un pacman dans le rayon de vision
 	 * 

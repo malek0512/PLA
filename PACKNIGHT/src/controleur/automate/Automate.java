@@ -38,10 +38,11 @@ public class Automate extends Controleur {
 	public final static int INTERSECTION = 7;
 	public final static int NON_INTERSECTION=8;
 	public final static int CASE_NON_ATTEINTE=9;
+	public final static int CASE_ATTEINTE=14;
 	public final static int FREE=10;
 	public final static int NON_FREE=11;
 	public final static int ETOILE=12;
-	public final static int CASE_ATTEINTE=14;
+	
 	
 	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
@@ -52,7 +53,6 @@ public class Automate extends Controleur {
 	public final static int BAS = 4;
 	public final static int RIEN = 5;
 	public final static int DIRECTION_ALEATOIRE = 7;
-	public final static int PROCHAINE_DIRECTION = 8;
 	public final static int CHEMIN_PLUS_COURT=9;
 	public final static int OBEIR=10;
 	public final static int END_LIFE=11;
@@ -142,7 +142,6 @@ public class Automate extends Controleur {
 				case Automate.HAUT: personnage.setDirection(Direction.haut); break;
 				case Automate.BAS: personnage.setDirection(Direction.bas); break;
 				case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
-				case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
 				case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
 				case Automate.OBEIR: primitivesAction.obeir(((Ghost) getPersonnage()).ordre); break;
 				case Automate.SPAWN:personnage.respawn();break;
