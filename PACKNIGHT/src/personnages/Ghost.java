@@ -73,18 +73,17 @@ public class Ghost extends Personnage {
 			}
 		}		
 		
-  
-			Iterator<PacPrincess> j = PacPrincess.liste.iterator();
-			while(i.hasNext() && this.hitting())
+		Iterator<PacPrincess> j = PacPrincess.liste.iterator();
+		while(i.hasNext() && this.hitting() )
+		{
+			PacPrincess g = j.next();
+			if(hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
 			{
-				PacPrincess g = j.next();
-				if(hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
-				{
-					g.meurtDansDatroceSouffrance();
-					break;
-				}
+				g.meurtDansDatroceSouffrance();
+				break;
 			}
 		}
+	}
 	
 	
 	public boolean getControle(){

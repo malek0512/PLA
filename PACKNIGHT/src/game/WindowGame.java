@@ -147,11 +147,6 @@ public class WindowGame extends BasicGame {
     	//xCamera = xBary;
     	//yCamera = yBary;
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
-        this.map.render(0, 0, 2);
-        drawPacGum(playground);
-		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
-    	//drawHeart(xBary,yBary);
-
         g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x, PACMAN_1.getCoord().y);
        // g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
         //g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
