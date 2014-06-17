@@ -60,7 +60,7 @@ public class Primitives {
 	 * @author rama/vivien
 	 */
 	protected boolean pacmanEstDansCroix(CoordonneesFloat position) {
-		int j=1;
+		int j=0;
 		boolean res=false;
 		
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
@@ -70,21 +70,21 @@ public class Primitives {
 			CoordonneesFloat coord = pac.getCoord().CasCentre();//on récupére la case dans lequel est le centre du pacman
 			if(coord.x==coordFC.x){
 				if (coord.y<coordFC.y){
-					while(!mur(coordFC,j,Direction.haut) && coord.y != (coordFC.y -j)){
+					while(mur(coordFC,j,Direction.haut) && coord.y != (coordFC.y -j)){
 						j++;
 					}
-					if(!mur(coordFC,j,Direction.haut)){
+					if(mur(coordFC,j,Direction.haut)){
 						auto.getPersonnage().setDirection(Direction.haut);
 						return true;
 						
 					}
 				}
 				else {
-					while(!mur(coordFC,j,Direction.bas) && coord.y != (coordFC.y + j)){
+					while(mur(coordFC,j,Direction.bas) && coord.y != (coordFC.y + j)){
 						j++;
 					
 					}
-					if(!mur(coordFC,j,Direction.bas)){
+					if(mur(coordFC,j,Direction.bas)){
 						auto.getPersonnage().setDirection(Direction.bas);
 						return true;
 					}
@@ -93,20 +93,20 @@ public class Primitives {
 			}
 			else if(coord.y == coordFC.y){
 					if (coord.x<coordFC.x){
-						while(!mur(coordFC,j,Direction.gauche) && coord.x != (coordFC.x - j)){
+						while(mur(coordFC,j,Direction.gauche) && coord.x != (coordFC.x - j)){
 							j++;
 						}
-						if(!mur(coordFC,j,Direction.gauche)){
+						if(mur(coordFC,j,Direction.gauche)){
 							auto.getPersonnage().setDirection(Direction.gauche);
 							return true;
 						}
 					}
 				
 					else {
-						while(!mur(coordFC,j,Direction.droite) && coord.x != (coordFC.x + j)){
+						while(mur(coordFC,j,Direction.droite) && coord.x != (coordFC.x + j)){
 							j++;
 						}
-						if(!mur(coordFC,j,Direction.droite)){
+						if(mur(coordFC,j,Direction.droite)){
 							auto.getPersonnage().setDirection(Direction.droite);
 							return true;
 						}
@@ -122,7 +122,8 @@ public class Primitives {
 	 * @author vivien
 	 * */
 	private boolean mur(CoordonneesFloat test, int i, Direction d) {
-		
+		//System.out.println(test.x);
+		//System.out.println(test.y);
 		return Personnage.getTerrain().caseAcessible(test.x, test.y, i, d);
 	}
 	

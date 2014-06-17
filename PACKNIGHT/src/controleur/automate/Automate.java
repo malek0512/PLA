@@ -36,7 +36,7 @@ public class Automate extends Controleur {
 	public final static int PM_DANS_CROIX = 5;
 	public final static int NON_PM_DANS_CROIX = 6;
 	public final static int INTERSECTION = 7;
-	public final static int NON_INTERSECTION = 8;
+	public final static int NON_INTERSECTION=8;
 	public final static int CASE_NON_ATTEINTE=9;
 	public final static int FREE=10;
 	public final static int NON_FREE=11;
@@ -94,6 +94,7 @@ public class Automate extends Controleur {
 		//Initialisation des la table d'entree sortie
 		tableTransitionSortie = new TableTransitionSortie();
 		tableTransitionSortie.initTransitionSortie(liste);
+		System.out.println(tableTransitionSortie.toString());
 	}
 	
 	
@@ -108,8 +109,9 @@ public class Automate extends Controleur {
 //		if (nbTransition < nbTransitionMax){
 //			if (tableTransitionSortie.getValide(this.etatCourant, Entree)){
 //		System.out.println("Entreeee " + Entree);
+		String RAMA = this.etatCourant;
 				this.etatCourant = tableTransitionSortie.getEtatSuiv(this.etatCourant, Entree);
-				return tableTransitionSortie.getSortie(this.etatCourant, Entree);
+				return tableTransitionSortie.getSortie(RAMA, Entree);
 //			} else
 //				throw new Exception("Erreur l'etatCourant n'a pas le droit d'effectuer ce test");
 //		}
@@ -124,17 +126,19 @@ public class Automate extends Controleur {
 	 * @author malek
 	 */
 	public void suivant() throws Exception {
-		int entreeAutomate = getEntree();
-		int sortieAutomate = effectuerTransition(entreeAutomate);
+		
 		//System.out.println();
 //		System.out.println(nbEntreeValide());
 		if(this.personnage.parametrable())
 		{
 			do
 			{
+				int entreeAutomate = getEntree();
+				//System.out.println("yolo");
+				int sortieAutomate = effectuerTransition(entreeAutomate);
 				switch (sortieAutomate) {
 				//TODO Ajouter chaque fonction d'action
-				case Automate.AVANCER: personnage.avancerAux(); break;
+				case Automate.AVANCER: personnage.avancer(); break;
 				case Automate.DROIT: personnage.setDirection(Direction.droite); break;
 				case Automate.GAUCHE: personnage.setDirection(Direction.gauche); break;
 				case Automate.HAUT: personnage.setDirection(Direction.haut); break;
@@ -174,11 +178,13 @@ public class Automate extends Controleur {
 	 * @throws Exception 
 	 */ 
 	public int getEntree() throws Exception{
+//		System.out.println(this.etatCourant);
 		Map<Integer, Triplet> entries = tableTransitionSortie.getEtatAll(this.etatCourant);
 		//On parcours l'ensemble des Entree de l'automate, de l'etatCourant
 		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
 			Integer Entree = key.next();
 			//if ( entries.get(Entree).ok ){
+//			System.out.println(Entree);
 				switch ( Entree ){
 				//TODO Ajouter chaque fonction de test
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) return CASE_LIBRE; break;

@@ -235,6 +235,7 @@ public abstract class Personnage {
 	 * Incrémente le compteur d'action*/
 	public void incrCompteur(){
 		this.compteurAction=(this.compteurAction+1)%8;
+		System.out.println(this.compteurAction);
 	}
 	/**
 	 * @return Nombre d'action avancer() à effectuer pour avancer d'une case
