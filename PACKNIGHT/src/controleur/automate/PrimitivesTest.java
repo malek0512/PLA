@@ -44,12 +44,12 @@ public class PrimitivesTest extends Primitives {
 	 * @return Une ENTREE de l'automate. Selon la configuratoin de la case devant le robot
 	 * @author malek
 	 */
-	public int configCaseDevant() {
+	public Automate.Entree configCaseDevant() {
 		boolean caseDevantDispo = this.auto.getPersonnage().caseDevantDisponible();
 		if (!caseDevantDispo)
-			return Automate.CASE_OCCUPEE;
+			return Automate.Entree.CASE_OCCUPEE;
 		else
-			return Automate.CASE_LIBRE;
+			return Automate.Entree.CASE_LIBRE;
 	}
 	/**
 	 * Specification de la méthode dans primitive

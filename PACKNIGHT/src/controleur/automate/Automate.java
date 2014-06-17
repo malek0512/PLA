@@ -27,35 +27,43 @@ public class Automate extends Controleur {
 	PrimitivesAction primitivesAction = new PrimitivesAction(this);
 	
 	//ENTREES : CASE_OCCUPE, CASE_LIBRE, SORTIE_TERRAIN, CASE_GHOST
-	public final static int CASE_LIBRE = 0;
-	public final static int CASE_OCCUPEE = 1;
-	public final static int SORTIE_TERRAIN = 2;
-	public final static int CASE_GHOST = 3;
-	public final static int PM_DANS_RAYON_X = 4;
-	public final static int NON_PM_DANS_RAYON_X = 13;
-	public final static int PM_DANS_CROIX = 5;
-	public final static int NON_PM_DANS_CROIX = 6;
-	public final static int INTERSECTION = 7;
-	public final static int NON_INTERSECTION = 8;
-	public final static int CASE_NON_ATTEINTE=9;
-	public final static int FREE=10;
-	public final static int NON_FREE=11;
-	public final static int ETOILE=12;
+	public static enum Entree{
+		CASE_LIBRE, CASE_OCCUPEE, SORTIE_TERRAIN, CASE_GHOST, PM_DANS_RAYON_X, NON_PM_DANS_RAYON_X, PM_DANS_CROIX, 
+		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE
+	}
+//	public final static int CASE_LIBRE = 0;
+//	public final static int CASE_OCCUPEE = 1;
+//	public final static int SORTIE_TERRAIN = 2;
+//	public final static int CASE_GHOST = 3;
+//	public final static int PM_DANS_RAYON_X = 4;
+//	public final static int NON_PM_DANS_RAYON_X = 13;
+//	public final static int PM_DANS_CROIX = 5;
+//	public final static int NON_PM_DANS_CROIX = 6;
+//	public final static int INTERSECTION = 7;
+//	public final static int NON_INTERSECTION = 8;
+//	public final static int CASE_NON_ATTEINTE=9;
+//	public final static int FREE=10;
+//	public final static int NON_FREE=11;
+//	public final static int ETOILE=12;
 	
 	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
-	public final static int AVANCER = 0;
-	public final static int GAUCHE = 1;
-	public final static int DROIT = 2;
-	public final static int HAUT = 3;
-	public final static int BAS = 4;
-	public final static int RIEN = 5;
-	public final static int DIRECTION_ALEATOIRE = 7;
-	public final static int PROCHAINE_DIRECTION = 8;
-	public final static int CHEMIN_PLUS_COURT=9;
-	public final static int OBEIR=10;
-	public final static int END_LIFE=11;
-	public final static int SPAWN=12;
+	public static enum Sortie{
+		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, PROCHAINE_DIRECTION, CHEMIN_PLUS_COURT, OBEIR,
+		END_LIFE, SPAWN
+	}
+//	public final static int AVANCER = 0;
+//	public final static int GAUCHE = 1;
+//	public final static int DROIT = 2;
+//	public final static int HAUT = 3;
+//	public final static int BAS = 4;
+//	public final static int RIEN = 5;
+//	public final static int DIRECTION_ALEATOIRE = 7;
+//	public final static int PROCHAINE_DIRECTION = 8;
+//	public final static int CHEMIN_PLUS_COURT=9;
+//	public final static int OBEIR=10;
+//	public final static int END_LIFE=11;
+//	public final static int SPAWN=12;
 	
 	
 	TableTransitionSortie tableTransitionSortie;
@@ -104,12 +112,12 @@ public class Automate extends Controleur {
 	 * @author malek
 	 * @throws Exception 
 	 */
-	protected int effectuerTransition(int Entree) throws Exception {
+	protected Automate.Sortie effectuerTransition(Automate.Entree entree) throws Exception {
 //		if (nbTransition < nbTransitionMax){
 //			if (tableTransitionSortie.getValide(this.etatCourant, Entree)){
 //		System.out.println("Entreeee " + Entree);
-				this.etatCourant = tableTransitionSortie.getEtatSuiv(this.etatCourant, Entree);
-				return tableTransitionSortie.getSortie(this.etatCourant, Entree);
+				this.etatCourant = tableTransitionSortie.getEtatSuiv(this.etatCourant, entree);
+				return tableTransitionSortie.getSortie(this.etatCourant, entree);
 //			} else
 //				throw new Exception("Erreur l'etatCourant n'a pas le droit d'effectuer ce test");
 //		}
@@ -130,21 +138,21 @@ public class Automate extends Controleur {
 		{
 			do
 			{
-				int entreeAutomate = getEntree();
-				int sortieAutomate = effectuerTransition(entreeAutomate);
+				Automate.Entree entreeAutomate = getEntree();
+				Automate.Sortie sortieAutomate = effectuerTransition(entreeAutomate);
 				switch (sortieAutomate) {
 				//TODO Ajouter chaque fonction d'action
-				case Automate.AVANCER: personnage.avancerAux(); break;
-				case Automate.DROIT: personnage.setDirection(Direction.droite); break;
-				case Automate.GAUCHE: personnage.setDirection(Direction.gauche); break;
-				case Automate.HAUT: personnage.setDirection(Direction.haut); break;
-				case Automate.BAS: personnage.setDirection(Direction.bas); break;
-				case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
-				case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
-				case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
-				case Automate.OBEIR: primitivesAction.obeir(((Ghost) getPersonnage()).ordre); break;
-				case Automate.SPAWN:personnage.respawn();break;
-				case Automate.RIEN:primitivesAction.pass(); break;
+				case AVANCER: personnage.avancerAux(); break;
+				case DROIT: personnage.setDirection(Direction.droite); break;
+				case GAUCHE: personnage.setDirection(Direction.gauche); break;
+				case HAUT: personnage.setDirection(Direction.haut); break;
+				case BAS: personnage.setDirection(Direction.bas); break;
+				case DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
+				case PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
+				case CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
+				case OBEIR: primitivesAction.obeir(((Ghost) getPersonnage()).ordre); break;
+				case SPAWN:personnage.respawn();break;
+				case RIEN:primitivesAction.pass(); break;
 				}
 			}
 			while(this.personnage.parametrable() && !(isEtatBloquant()));
@@ -173,35 +181,35 @@ public class Automate extends Controleur {
 	 * @author malek
 	 * @throws Exception 
 	 */ 
-	public int getEntree() throws Exception{
-		Map<Integer, Triplet> entries = tableTransitionSortie.getEtatAll(this.etatCourant);
+	public Automate.Entree getEntree() throws Exception{
+		Map<Automate.Entree, Triplet> entries = tableTransitionSortie.getEtatAll(this.etatCourant);
 		//On parcours l'ensemble des Entree de l'automate, de l'etatCourant
-		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
-			Integer Entree = key.next();
+		for (Iterator<Automate.Entree> key = entries.keySet().iterator(); key.hasNext(); ){
+			Automate.Entree Entree = key.next();
 			//if ( entries.get(Entree).ok ){
 				switch ( Entree ){
 				//TODO Ajouter chaque fonction de test
-				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) return CASE_LIBRE; break;
-				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) return CASE_OCCUPEE; break;
-				case CASE_NON_ATTEINTE:if(!primitivesTest.caseAtteinte()) return CASE_NON_ATTEINTE; break;
-				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
-				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return PM_DANS_RAYON_X; break;
-				case NON_PM_DANS_RAYON_X : if(!primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return NON_PM_DANS_RAYON_X; break;
-				case INTERSECTION: if(primitivesTest.estIntersection()) return INTERSECTION; break;
-				case NON_INTERSECTION: if(!primitivesTest.estIntersection()) return NON_INTERSECTION; break;
-				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return PM_DANS_CROIX; break;
-				case NON_PM_DANS_CROIX: if(!primitivesTest.dansCroix()) return NON_PM_DANS_CROIX; break;
-				case FREE: if(!primitivesTest.isControled()) return FREE; break;
-				case NON_FREE: if(primitivesTest.isControled()) return NON_FREE; break;
-				case ETOILE: return ETOILE;
+				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==Entree.CASE_LIBRE) return controleur.automate.Automate.Entree.CASE_LIBRE; break;
+				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==Entree.CASE_OCCUPEE) return Entree.CASE_OCCUPEE; break;
+				case CASE_NON_ATTEINTE:if(!primitivesTest.caseAtteinte()) return Entree.CASE_NON_ATTEINTE; break;
+				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==Entree.SORTIE_TERRAIN) return Entree.SORTIE_TERRAIN;break;
+				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return Entree.PM_DANS_RAYON_X; break;
+				case NON_PM_DANS_RAYON_X : if(!primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return Automate.Entree.NON_PM_DANS_RAYON_X; break;
+				case INTERSECTION: if(primitivesTest.estIntersection()) return Entree.INTERSECTION; break;
+				case NON_INTERSECTION: if(!primitivesTest.estIntersection()) return Entree.NON_INTERSECTION; break;
+				case PM_DANS_CROIX: if(primitivesTest.dansCroix()) return Entree.PM_DANS_CROIX; break;
+				case NON_PM_DANS_CROIX: if(!primitivesTest.dansCroix()) return Entree.NON_PM_DANS_CROIX; break;
+				case FREE: if(!primitivesTest.isControled()) return Entree.FREE; break;
+				case NON_FREE: if(primitivesTest.isControled()) return Entree.NON_FREE; break;
+				case ETOILE: return Entree.ETOILE;
 			//	}
 			}
 		}
 		
 		//Affichage des ENTREES dans le cas où : Aucune entree n'est valide  
 		String Erreur = "C'est l'ETAT " + this.etatCourant + ", voici toutes mes ENTREES : ";
-		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
-			Integer Entree = key.next(); Erreur += Entree.intValue();
+		for (Iterator<Automate.Entree> key = entries.keySet().iterator(); key.hasNext(); ){
+			Automate.Entree Entree = key.next(); Erreur += Entree;
 		}
 		System.out.println(Erreur);
 		throw new Exception("Erreur dans l'automate. L'etat courant ne possède aucune entree valide. Manque t-il une transition ?");
@@ -217,15 +225,15 @@ public class Automate extends Controleur {
 	 */
 	public int nbEntreeValide() throws Exception {
 		int nb = 0;
-		Map<Integer, Triplet> entries = tableTransitionSortie.getEtatAll(this.etatCourant);
+		Map<Automate.Entree, Triplet> entries = tableTransitionSortie.getEtatAll(this.etatCourant);
 		//On parcout l'ensemble des Entree de l'automate, de l'etatCourant
-		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
-			Integer Entree = key.next();
+		for (Iterator<Automate.Entree> key = entries.keySet().iterator(); key.hasNext(); ){
+			Automate.Entree Entree = key.next();
 			//if ( entries.get(Entree).ok ){ 
 				switch ( Entree ){ 
-				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) nb++; break;
-				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) nb++; break;
-				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) nb++; break;
+				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==Entree.CASE_LIBRE) nb++; break;
+				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==Entree.CASE_OCCUPEE) nb++; break;
+				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==Entree.SORTIE_TERRAIN) nb++; break;
 				case PM_DANS_RAYON_X : if (primitivesTest.dansRayon(3)) nb++; break;
 				}
 			//}
