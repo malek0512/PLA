@@ -2,13 +2,13 @@ package Tests;
 
 
 import structure_terrain.Terrain;
-import structure_terrain.TerrainTest1;
+
 
 public class test_terrain {
 
 	public static void main(String[] args) {
-		int j;
-		Terrain terr=new TerrainTest1(5,7);
+		int j = 0;
+		Terrain terr=new Terrain(5,7, j);
 		
 		int mur=0;
 		int chemin=1;

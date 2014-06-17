@@ -17,9 +17,12 @@ public class Ghost extends Personnage {
 	private final int vision = 5;
 	private boolean control = false;
 	private boolean prisonner = false; //le fantome est dans la prison
-
+	
+	private boolean stun = false;
+	
 	private CoordonneesFloat pointDeRespawn;
 	final static private int tempsPasserEnPrison = 1; 
+	final static private int tempsStun = 10;
 	
 	public Ghost(String nom, int x, int y, Direction d,CoordonneesFloat spawn) {
 		super(nom, x, y, d);
@@ -73,19 +76,22 @@ public class Ghost extends Personnage {
 			}
 		}		
 		
-  
-			Iterator<PacPrincess> j = PacPrincess.liste.iterator();
-			while(i.hasNext() && this.hitting())
+		Iterator<PacPrincess> j = PacPrincess.liste.iterator();
+		while(i.hasNext() && this.hitting() )
+		{
+			PacPrincess g = j.next();
+			if(hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
 			{
-				PacPrincess g = j.next();
-				if(hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
-				{
-					g.meurtDansDatroceSouffrance();
-					break;
-				}
+				g.meurtDansDatroceSouffrance();
+				break;
 			}
 		}
+	}
 	
+	public void stun()
+	{
+		this.stun = true;
+	}
 	
 	public boolean getControle(){
 		return control;
@@ -122,7 +128,7 @@ public class Ghost extends Personnage {
 	}
 
 	public boolean parametrable() {
-		return !(seMeurt || prisonner);
+		return !(seMeurt || prisonner || stun);
 	}
 
 	public void avancerAnimation() {
@@ -150,6 +156,18 @@ public class Ghost extends Personnage {
 			{
 				this.timerAnimation = 0;
 				this.prisonner = false;
+			}
+		}
+		if(stun)
+		{
+			if(this.timerAnimation < Ghost.tempsStun)
+			{
+				this.timerAnimation++;
+			}
+			else
+			{
+				this.timerAnimation = 0;
+				this.stun = false;
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 <?xml version = "1.0" ?>
-<Automate ID= "A_ALEATOIRE" > 
+<Automate ID= "A_ALEATOIRE_AVEUGLE" > 
 <Etat Nom= "1" > 
  <Transition Entree= "12" Etat= "2" Action = "0" > </Transition> 
 </Etat> 

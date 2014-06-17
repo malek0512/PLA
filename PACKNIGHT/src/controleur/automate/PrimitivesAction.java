@@ -42,20 +42,7 @@ public class PrimitivesAction extends Primitives{
 		alea=rnd.nextInt(i);
 		perso.setDirection(direct[alea]);
 	}
-	
-	/** Donne la prochaine direction disponible si la prochaine case est indisponible
-	 * @param personnage auquel on veut changer la direction aléatoirement
-	 * */
-	public void prochaineDirection(Personnage perso){
-		
-		if(!perso.caseDevantDisponible()){
-			for(Direction d : Direction.values()){
-				if(perso.caseDisponible(d)){
-					perso.setDirection(d);
-				}
-			}
-		}		
-	}
+
 	/**
 	 * Donne la direction du chemin le plus court vers un pacman dans le rayon de vision
 	 * 
@@ -77,7 +64,7 @@ public class PrimitivesAction extends Primitives{
 		//calcul de la direction permettant de se rapprocher le plus de pacman
 		for(Direction d : Direction.values()){
 			
-			if(positionAdjacente(d).CasCentre().distance(min.getCoord().CasCentre())<positionAdjacente(mind).CasCentre().distance(min.getCoord().CasCentre()))
+			if(perso.caseDisponible(d) && positionAdjacente(d).CasCentre().distance(min.getCoord().CasCentre())<positionAdjacente(mind).CasCentre().distance(min.getCoord().CasCentre()))
 				mind=d;
 		}
 	perso.setDirection(mind);
@@ -88,6 +75,13 @@ public class PrimitivesAction extends Primitives{
 	 * */
 	public void obeir(List<CoordonneesFloat> d){
 		
+	}
+	
+	/**
+	 * Bloc le personnage pendant un certain temps (10 cycles actuellement)*/
+	public void stun(){
+		
+		((Ghost)auto.getPersonnage()).stun();
 	}
 	
 	/**

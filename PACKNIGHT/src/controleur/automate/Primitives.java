@@ -113,8 +113,6 @@ public class Primitives {
 	 * @author vivien
 	 * */
 	private boolean mur(CoordonneesFloat test, int i, Direction d) {
-		//System.out.println(test.x);
-		//System.out.println(test.y);
 		return Personnage.getTerrain().caseAcessible(test.x, test.y, i, d);
 	}
 	

@@ -38,9 +38,11 @@ public class Automate extends Controleur {
 	public final static int INTERSECTION = 7;
 	public final static int NON_INTERSECTION=8;
 	public final static int CASE_NON_ATTEINTE=9;
+	public final static int CASE_ATTEINTE=14;
 	public final static int FREE=10;
 	public final static int NON_FREE=11;
 	public final static int ETOILE=12;
+	
 	
 	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
@@ -51,11 +53,11 @@ public class Automate extends Controleur {
 	public final static int BAS = 4;
 	public final static int RIEN = 5;
 	public final static int DIRECTION_ALEATOIRE = 7;
-	public final static int PROCHAINE_DIRECTION = 8;
 	public final static int CHEMIN_PLUS_COURT=9;
 	public final static int OBEIR=10;
 	public final static int END_LIFE=11;
 	public final static int SPAWN=12;
+	public final static int STUN=13;
 	
 	
 	TableTransitionSortie tableTransitionSortie;
@@ -126,15 +128,11 @@ public class Automate extends Controleur {
 	 * @author malek
 	 */
 	public void suivant() throws Exception {
-
-		//System.out.println();
-//		System.out.println(nbEntreeValide());
 		if(this.personnage.parametrable())
 		{
 			do
 			{
 				int entreeAutomate = getEntree();
-
 				int sortieAutomate = effectuerTransition(entreeAutomate);
 				switch (sortieAutomate) {
 				//TODO Ajouter chaque fonction d'action
@@ -144,11 +142,11 @@ public class Automate extends Controleur {
 				case Automate.HAUT: personnage.setDirection(Direction.haut); break;
 				case Automate.BAS: personnage.setDirection(Direction.bas); break;
 				case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
-				case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
 				case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
 				case Automate.OBEIR: primitivesAction.obeir(((Ghost) getPersonnage()).ordre); break;
 				case Automate.SPAWN:personnage.respawn();break;
 				case Automate.RIEN:primitivesAction.pass(); break;
+				case Automate.STUN:primitivesAction.stun(); break;
 				}
 			}
 			while(this.personnage.parametrable() && !(isEtatBloquant()));
@@ -184,12 +182,12 @@ public class Automate extends Controleur {
 		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
 			Integer Entree = key.next();
 			//if ( entries.get(Entree).ok ){
-//			System.out.println(Entree);
 				switch ( Entree ){
 				//TODO Ajouter chaque fonction de test
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) return CASE_LIBRE; break;
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) return CASE_OCCUPEE; break;
 				case CASE_NON_ATTEINTE:if(!primitivesTest.caseAtteinte()) return CASE_NON_ATTEINTE; break;
+				case CASE_ATTEINTE:if(primitivesTest.caseAtteinte()) return CASE_ATTEINTE; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
 				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return PM_DANS_RAYON_X; break;
 				case NON_PM_DANS_RAYON_X : if(!primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return NON_PM_DANS_RAYON_X; break;
@@ -200,8 +198,8 @@ public class Automate extends Controleur {
 				case FREE: if(!primitivesTest.isControled()) return FREE; break;
 				case NON_FREE: if(primitivesTest.isControled()) return NON_FREE; break;
 				case ETOILE: return ETOILE;
-			//	}
-			}
+				
+				}
 		}
 		
 		//Affichage des ENTREES dans le cas où : Aucune entree n'est valide  
