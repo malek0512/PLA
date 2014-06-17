@@ -112,6 +112,7 @@ public class PrimitivesAction extends Primitives{
 	
 	/**
 	 * PACKNIGHT
+	 * Dirige le knight dans le perimetre de la princesse, et chasse le fantome poursuivant la princesse
 	 * @param Perimetre
 	 * @author malek
 	 * @throws Exception Si ghostEnChasse==null ou princesseEnDetresse==null
@@ -128,15 +129,15 @@ public class PrimitivesAction extends Primitives{
 			//Si la distance, bitch-Packnight^2 > perimetre^2, alors c'est que le packnight doit avancer 
 			//juqu'a arriver dans le perimetre de securité de bitch. Cela permet de se rapprocher de la princesse
 			//en priorite. Au lieu de courrir après un fantome, aleatoire, par exemple
-			Coordonnees prochain;
-			if (bitch.getCoord().toCoordonnees().distance_square(knight.getCoord().toCoordonnees())
+			CoordonneesFloat prochain;
+			if (bitch.getCoord().distance_square(knight.getCoord())
 					> Math.pow(Perimetre, 2)){
-				prochain = prochaineCase(knight.getCoord().toCoordonnees());
+				prochain = prochaineCase(knight.getCoord().CasCentre());
 				knight.setCoord(prochain);
 			} else {
 				//Une fois dans le perimetre, si la princesse a renseignée son violeur ghostEnChasse!=null 
 				if (knight.ghostEnChasse != null){
-					prochain = prochaineCase(auto.getPersonnage().getCoord().toCoordonnees());
+					prochain = prochaineCase(auto.getPersonnage().getCoord());
 					knight.setCoord(prochain);
 				} else {
 					throw new Exception("Erreur ! Je suis un knight, on me demande de chasser un ghost, sans renseignement (ghostEnChasse==null)");
@@ -153,6 +154,7 @@ public class PrimitivesAction extends Primitives{
 	 * Dirige le knight dans le perimetre de la princesse
 	 * @param Perimetre
 	 * @throws Exception
+	 * @author malek
 	 */
 	public void patrouiller(int Perimetre) throws Exception{
 		PacKnight knight = ((PacKnight) auto.getPersonnage());
@@ -166,10 +168,10 @@ public class PrimitivesAction extends Primitives{
 			//Si la distance, bitch-Packnight^2 > perimetre^2, alors c'est que le packnight doit avancer 
 			//juqu'a arriver dans le perimetre de securité de bitch. Cela permet de se rapprocher de la princesse
 			//en priorite. Au lieu de courrir après un fantome, aleatoire, par exemple
-			Coordonnees prochain;
+			CoordonneesFloat prochain;
 			if (bitch.getCoord().toCoordonnees().distance_square(knight.getCoord().toCoordonnees())
 					> Math.pow(Perimetre, 2)){
-				prochain = prochaineCase(knight.getCoord().toCoordonnees());
+				prochain = prochaineCase(knight.getCoord());
 				knight.setCoord(prochain);
 			}
 		}
