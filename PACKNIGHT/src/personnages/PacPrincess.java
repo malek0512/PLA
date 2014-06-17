@@ -15,6 +15,13 @@ public class PacPrincess extends Pacman{
 	 */
 	static public List<PacPrincess> liste = new LinkedList<PacPrincess>();
 	private int vie = 2;
+	public List<Ghost> violeurs; //Les fantomes qui ose toucher a la princesse. Pour l'instant un violeur a la fois ^^. Par la suite pk pas une liste :D
+	
+	public PacPrincess(String name, int x, int y, Direction d, CoordonneesFloat respawn) {
+		super(name,x,y,d,respawn);
+		PacPrincess.liste.add(this);
+		violeurs = new LinkedList<Ghost>();
+	}
 	
 	/**
 	 * @param position ou on veut savoir si un personnage si trouve
@@ -47,12 +54,6 @@ public class PacPrincess extends Pacman{
 		return null;
 	}
 	
-	
-	public PacPrincess(String name, int x, int y, Direction d, CoordonneesFloat respawn) {
-		super(name,x,y,d,respawn);
-		PacPrincess.liste.add(this);
-	}
-
 	public boolean canRespawn() {
 		return vie !=0;
 	}

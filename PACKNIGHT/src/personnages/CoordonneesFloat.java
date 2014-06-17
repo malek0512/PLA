@@ -55,6 +55,7 @@ public class CoordonneesFloat {
 		this.y = coord.y;
 	}
 	
+	
 	public boolean equals(CoordonneesFloat coord)
 	{
 		return (coord.x == this.x && coord.y == this.y);
@@ -191,5 +192,8 @@ public class CoordonneesFloat {
 	public String toString()
 	{return ""+ x + " " + y;}
 	
+	public Coordonnees toCoordonnees(){
+		return new Coordonnees(this.x, this.y);
+	}
 }
 

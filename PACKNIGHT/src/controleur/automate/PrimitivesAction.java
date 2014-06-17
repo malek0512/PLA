@@ -5,9 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import personnages.Coordonnees;
 import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Ghost;
+import personnages.PacKnight;
+import personnages.PacPrincess;
 import personnages.Pacman;
 import personnages.Personnage;
 
@@ -88,11 +91,39 @@ public class PrimitivesAction extends Primitives{
 	}
 	
 	/**
-	 * 
+	 * PACKPRINCESSE : Appelle le plus proche packnight de la princesse
+	 * @author malek
+	 */
+	public void auSecours(){
+		PacKnight p = this.whichHero((PacPrincess) auto.getPersonnage());
+		p.princesseEnDetresse = (PacPrincess) auto.getPersonnage();
+		p.ghostEnChasse = ((PacPrincess) auto.getPersonnage()).violeurs.get(0);
+	}
+	
+	/**
+	 * PACKNIGHT
 	 * @param Perimetre
+	 * @author malek
 	 */
 	public void protegerPrincesse(int Perimetre){
-		
+		assert (PacPrincess.liste.size()!=1) : "Il ne doit y a avoir qu'une seule princesse";
+		PacPrincess bitch = PacPrincess.liste.get(0);
+		Coordonnees prochain;
+		//Si la distance, bitch-Packnight^2 > perimetre^2, alors c'est que le packnight doit avancer 
+		//juqu'a arriver dans le perimetre de securité de bitch
+		if (bitch.getCoord().toCoordonnees().distance_square(auto.getPersonnage().getCoord().toCoordonnees())
+				> Math.pow(Perimetre, 2)){
+			prochain = prochaineCase(auto.getPersonnage().getCoord().toCoordonnees());
+			this.auto.getPersonnage().setCoord(prochain);
+		} else {
+			//Cherche les Fantome a tuer, indiquer par la princesse
+			List<Ghost> agresseurs = bitch.violeurs;
+			//S'il y a un un mechant violeur
+			if (agresseurs.size() != 0){
+				prochain = prochaineCase(auto.getPersonnage().getCoord().toCoordonnees());
+				this.auto.getPersonnage().setCoord(prochain);
+			}
+		}
 	}
 
 }
