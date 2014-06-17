@@ -274,6 +274,14 @@ public abstract class Personnage {
 		this.coord = coord;
 	}
 
+	/**
+	 * Plus simple de changer la position du Personnage, plutot que d'acceder au coordonnée, et puis changer
+	 * @param coord
+	 */
+	public void setCoord(Coordonnees coord) {
+		this.coord = coord.toCoordonneesFloat(); //Creer eventuellement un setteur de coordonnées
+	}
+	
 	// setter de base
 	public void setCoord(int x, int y) {
 		this.coord.x = x;
