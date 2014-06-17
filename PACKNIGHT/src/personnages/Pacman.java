@@ -1,5 +1,5 @@
 /**
- * author : Alex et Rama
+$******** * author : Alex et Rama
  * Class des pacmans
  * WARNING : Pensez à initialiser TERRAIN
  */
