@@ -209,5 +209,8 @@ public class CoordonneesFloat {
 	public String toString()
 	{return ""+ x + " " + y;}
 	
+	public Coordonnees toCoordonnees(){
+		return new Coordonnees(this.x, this.y);
+	}
 }
 
