@@ -17,16 +17,19 @@ public class Ghost extends Personnage {
 	private final int vision = 5;
 	private boolean control = false;
 	private boolean prisonner = false; //le fantome est dans la prison
-	
 	private boolean stun = false;
+	private boolean entendEtObei = false;
 	
-	private CoordonneesFloat pointDeRespawn;
 	final static private int tempsPasserEnPrison = 1; 
 	final static private int tempsStun = 10;
+	final static private int tempsPrisonner = 10;
+	private List<CoordonneesFloat> ordre;
+	
+	private CoordonneesFloat pointDeRespawn;
 	
 	public Ghost(String nom, int x, int y, Direction d,CoordonneesFloat spawn) {
 		super(nom, x, y, d);
-		this.seMeurt = false;
+		this.agonise = false;
 		this.pointDeRespawn = new CoordonneesFloat(spawn.x * 32, spawn.y * 32);
 		Ghost.liste.add(this);
 		
@@ -34,12 +37,12 @@ public class Ghost extends Personnage {
 	}
 	//getter de base
 	public boolean getisAlive(){
-		return !(seMeurt);
+		return !(agonise);
 	}
 	/**
 	 * Met à jour l'état vivant ou mort du fantome*/
 	public void setIsAlive(boolean a){
-		seMeurt=a;
+		agonise=a;
 		
 	}
 	
@@ -92,16 +95,6 @@ public class Ghost extends Personnage {
 	{
 		this.stun = true;
 	}
-	
-	public boolean getControle(){
-		return control;
-	}
-	
-	
-	public void setControl(boolean a){
-		control=a;
-		
-	}
 
 	public int getVision() {
 		return vision;
@@ -112,7 +105,7 @@ public class Ghost extends Personnage {
 	 * */
 	public void respawn()
 	{
-		this.seMeurt = true;
+		this.agonise = true;
 	}
 	
 	/**
@@ -121,18 +114,19 @@ public class Ghost extends Personnage {
 	 */
 	protected void respawnWOA() {
 		this.coord = new CoordonneesFloat(this.pointDeRespawn);
+		this.prisonner = true;
 	}
 	
 	public void meurtDansDatroceSouffrance() {
-		this.seMeurt = true;
+		this.agonise = true;
 	}
 
 	public boolean parametrable() {
-		return !(seMeurt || prisonner || stun);
+		return !(agonise || prisonner || stun || entendEtObei);
 	}
 
 	public void avancerAnimation() {
-		if(seMeurt)
+		if(agonise)
 		{
 			if(this.timerAnimation < Pacman.tempsPasserMort)
 			{
@@ -142,7 +136,7 @@ public class Ghost extends Personnage {
 			else
 			{
 				this.timerAnimation=0;
-				this.seMeurt=false;
+				this.agonise=false;
 				this.respawnWOA();
 			}
 		}
@@ -170,10 +164,14 @@ public class Ghost extends Personnage {
 				this.stun = false;
 			}
 		}
+		if(entendEtObei)
+		{
+			//TODO
+		}
 	}
 
 	public boolean hitting() {
-		return !(seMeurt);
+		return !(agonise);
 	}
 	
 	

@@ -155,6 +155,8 @@ public class Automate extends Controleur {
 		}
 		else
 		{
+			if(this.personnage.agonise)
+				this.etatCourant = etatInitial;
 			this.personnage.avancerAnimation();
 		}
 	}

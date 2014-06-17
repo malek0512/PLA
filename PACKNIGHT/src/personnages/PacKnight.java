@@ -99,7 +99,7 @@ public class PacKnight extends Pacman{
 	 */
 
 	public boolean parametrable() {
-		return !(this.seMeurt);
+		return !(this.agonise);
 	}
 
 
@@ -107,7 +107,7 @@ public class PacKnight extends Pacman{
 	 * fait avancer les animations en cours d'un cran
 	 */
 	public void avancerAnimation() {
-		if(seMeurt)
+		if(agonise)
 		{
 			if(this.timerAnimation < Pacman.tempsPasserMort)
 			{
@@ -117,7 +117,7 @@ public class PacKnight extends Pacman{
 			else
 			{
 				this.timerAnimation=0;
-				this.seMeurt=false;
+				this.agonise=false;
 				this.respawnWOA();
 			}
 		}
@@ -125,7 +125,7 @@ public class PacKnight extends Pacman{
 
 	@Override
 	public boolean hitting() {
-		return !(seMeurt);
+		return !(agonise);
 	}
 	
 }
