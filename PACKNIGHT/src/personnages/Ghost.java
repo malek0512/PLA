@@ -229,10 +229,14 @@ public class Ghost extends Personnage {
 	 */
 	public void recoitOrdre(List<CoordonneesFloat> l)
 	{
-		this.ordre = l;
-		this.entendEtObei = true;
-		this.caseDOrdre = l.get(0);
-		this.direction = mysteriousFunction(this.coord.CasCentre(), caseDOrdre);
+		l.remove(0); //on retire la tete, on y est déja !
+		if(!l.isEmpty())
+		{
+			this.ordre = l;
+			this.entendEtObei = true;
+			this.caseDOrdre = l.get(0);
+			this.direction = mysteriousFunction(this.coord.CasCentre(), caseDOrdre);
+		}
 	}
 	
 	/**
@@ -309,10 +313,12 @@ public class Ghost extends Personnage {
 			if(meilleurCandidat != null)
 			{
 				//supprime le fantome de la liste
-				l.remove(indice);
+				lg.remove(indice);
+				// ordonnee au fantome
+				//TODO : calculer l'itinineraire
+				// il ne s'agit pas de "l" !!!!
+				meilleurCandidat.recoitOrdre(l);
 			}
-			// ordonnee au fantome
-			
 		}
 			
 	}
