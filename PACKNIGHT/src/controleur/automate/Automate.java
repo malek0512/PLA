@@ -30,7 +30,8 @@ public class Automate extends Controleur {
 	//ENTREES : CASE_OCCUPE, CASE_LIBRE, SORTIE_TERRAIN, CASE_GHOST
 	public static enum Entree{
 		CASE_LIBRE, CASE_OCCUPEE, SORTIE_TERRAIN, CASE_GHOST, PM_DANS_RAYON_X, NON_PM_DANS_RAYON_X, PM_DANS_CROIX, 
-		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_ATTEINTE, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE;
+		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_ATTEINTE, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE,
+		EN_DETRESSE;
 		
 		public static boolean contains (String s){
 			try{
@@ -59,7 +60,7 @@ public class Automate extends Controleur {
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
 	public static enum Sortie{
 		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, PROCHAINE_DIRECTION, CHEMIN_PLUS_COURT, OBEIR,
-		END_LIFE, SPAWN, STUN;
+		END_LIFE, SPAWN, STUN, PROTEGER_PRINCESSE;
 		public static boolean contains (String s){
 			try{
 				Sortie.valueOf(s);
@@ -170,6 +171,7 @@ public class Automate extends Controleur {
 				case SPAWN:personnage.respawn();break;
 				case RIEN:primitivesAction.pass(); break;
 				case STUN:primitivesAction.stun(); break;
+				case PROTEGER_PRINCESSE:primitivesAction.protegerPrincesse(1); break;
 				}
 			}
 			while(this.personnage.parametrable() && !(isEtatBloquant()));
@@ -220,6 +222,7 @@ public class Automate extends Controleur {
 				case FREE: if(!primitivesTest.isControled()) return Entree.FREE; break;
 				case NON_FREE: if(primitivesTest.isControled()) return Entree.NON_FREE; break;
 				case ETOILE: return Entree.ETOILE;
+				case EN_DETRESSE: //if (primitivesTest.) break; 
 			//	}
 			}
 		}

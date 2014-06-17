@@ -212,5 +212,9 @@ public class CoordonneesFloat {
 	public Coordonnees toCoordonnees(){
 		return new Coordonnees(this.x, this.y);
 	}
+	
+	public double distance_square(CoordonneesFloat c){
+		return (Math.pow(this.x-c.x,2)+Math.pow(this.y-c.y,2));
+	}
 }
 
