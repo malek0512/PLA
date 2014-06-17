@@ -6,8 +6,8 @@
 package game;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -56,6 +56,7 @@ public class WindowGame extends BasicGame {
 	public static int tuile_size = 32;
 	public static int largueur_map , hauteur_map ;
 	int taillePersonnage =32;
+	public static int taille_ecran = 10;
 	
 
 	PacKnight PACMAN_1= new PacKnight("J1",1,1,Direction.droite,new CoordonneesFloat(1, 1));
@@ -144,24 +145,26 @@ public class WindowGame extends BasicGame {
 
     public void render(GameContainer container, Graphics g) throws SlickException {
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
-        this.map.render(0, 0, 0, 0, 14, 14);
+        this.map.render(0, 0, 0, 0, taille_ecran, taille_ecran);
         drawPacGum(playground);
-        this.map.render(15*tuile_size, 0, 0, 0, 14, 14);
+        this.map.render(taille_ecran*tuile_size+largueur_map, 0, 0, 0, taille_ecran, taille_ecran);
         drawPacGum2(playground);
-        this.map.render(0, 15*tuile_size, 0, 0, 14, 14);
+        this.map.render(0, taille_ecran*tuile_size+hauteur_map, 0, 0, taille_ecran, taille_ecran);
         drawPacGum4(playground);
-        this.map.render(15*tuile_size, 15*tuile_size, 0, 0, 14, 14);
+        this.map.render(taille_ecran*tuile_size+largueur_map, taille_ecran*tuile_size+hauteur_map, 0, 0, taille_ecran, taille_ecran);
         drawPacGum3(playground);
 
+        g.setColor(Color.gray);
+        g.fillRect(taille_ecran*tuile_size, 0, largueur_map,2*taille_ecran*tuile_size+hauteur_map );
+        g.setColor(Color.gray);
+        g.fillRect(0, taille_ecran*tuile_size, 2*taille_ecran*tuile_size+largueur_map,hauteur_map );
+        
+        Minimap(playground, g);
      
-        V = new Image("src/graphisme/main/ressources/map/image/Horizontale.png");
-        H = new Image("src/graphisme/main/ressources/map/image/Verticale.png");
         
 		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
     	drawHeart(xBary,yBary);
-        H.draw(14*tuile_size,0);
-        V.draw(0,14*tuile_size);
-        
+
         g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x, PACMAN_1.getCoord().y);
         g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
         g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
@@ -297,9 +300,9 @@ public class WindowGame extends BasicGame {
 	}
 	
 	public void drawPacGum(Terrain terrain){
-			for(int i=0;i<14;i++)
+			for(int i=0;i<taille_ecran;i++)
 			{
-				for(int j=0;j<14;j++)
+				for(int j=0;j<taille_ecran;j++)
 				{
 					if(terrain.terrain[i][j].caseValeur() == 2){
 					PACGUM.draw(i*tuile_size,j*tuile_size);}
@@ -307,35 +310,62 @@ public class WindowGame extends BasicGame {
 			}
 	}
 	public void drawPacGum2(Terrain terrain){
-		for(int i=0;i<14;i++)
+		for(int i=0;i<taille_ecran;i++)
 		{
-			for(int j=0;j<14;j++)
+			for(int j=0;j<taille_ecran;j++)
 			{
 				if(terrain.terrain[i][j].caseValeur() == 2){
-				PACGUM.draw(i*tuile_size+15*tuile_size,j*tuile_size);}
+				PACGUM.draw((i+taille_ecran)*tuile_size+largueur_map,j*tuile_size);}
 			}
 		}
 }
 	public void drawPacGum3(Terrain terrain){
-		for(int i=0;i<14;i++)
+		for(int i=0;i<taille_ecran;i++)
 		{
-			for(int j=0;j<14;j++)
+			for(int j=0;j<taille_ecran;j++)
 			{
 				if(terrain.terrain[i][j].caseValeur() == 2){
-				PACGUM.draw(i*tuile_size+15*tuile_size,j*tuile_size+15*tuile_size);}
+				PACGUM.draw((i+taille_ecran)*tuile_size+largueur_map,(j+taille_ecran)*tuile_size+hauteur_map);}
 			}
 		}
 }
 	public void drawPacGum4(Terrain terrain){
-		for(int i=0;i<14;i++)
+		for(int i=0;i<taille_ecran;i++)
 		{
-			for(int j=0;j<14;j++)
+			for(int j=0;j<taille_ecran;j++)
 			{
 				if(terrain.terrain[i][j].caseValeur() == 2){
-				PACGUM.draw(i*tuile_size,j*tuile_size+15*tuile_size);}
+				PACGUM.draw(i*tuile_size,(j+taille_ecran)*tuile_size+hauteur_map);}
 			}
 		}
 }
+	
+	public void Minimap(Terrain terrain,Graphics g){
+		for(int i=0;i<largueur_map;i++)
+		{
+			for(int j=0;j<hauteur_map;j++)
+			{
+
+		        if(terrain.terrain[i][j].caseValeur() == 0)
+		        {	
+		            g.setColor(Color.blue);
+		            g.fillRect(taille_ecran*tuile_size+i, taille_ecran*tuile_size+j,1,1);
+		        }
+		        else if(terrain.terrain[i][j].caseValeur() == 2)
+	        	{
+		            g.setColor(Color.yellow);
+		            g.fillRect(taille_ecran*tuile_size+i, taille_ecran*tuile_size+j,1,1);
+		        }
+		        else 
+		        {
+		            g.setColor(Color.black);
+		            g.fillRect(taille_ecran*tuile_size+i, taille_ecran*tuile_size+j,1,1);
+		        }
+			}
+		}	
+
+	
+	}
 	
 	public void drawHeart(float xBary, float yBary)
 	{
