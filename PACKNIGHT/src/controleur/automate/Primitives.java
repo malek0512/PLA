@@ -191,15 +191,15 @@ public class Primitives {
 	 * @param c
 	 * @author malek
 	 */
-	protected Coordonnees prochaineCase (Coordonnees c){
+	protected CoordonneesFloat prochaineCase (CoordonneesFloat c){
 		//Si nous somme deja sur la case demandé
-		if (auto.getPersonnage().getCoord().equals(c.pixelFromCase()))
+		if (auto.getPersonnage().getCoord().equals(c.CasCentre()))
 			return c;
 		
 		//On met a jour le chemin vers c, dans l'un des cas stipulé dans la condition 
 		if (chemin == null || chemin.size()==0 || nbCout >3 ){
-			Aetoile depart = new Aetoile(c.toCoordonneesFloat());
-			chemin = depart.algo(c.toCoordonneesFloat()); //case approximative TODO
+			Aetoile depart = new Aetoile(c);
+			chemin = depart.algo(auto.getPersonnage().getCoord().CasCentre()); //case approximative TODO
 			nbCout=0;
 		}
 		
@@ -208,7 +208,7 @@ public class Primitives {
 				"N'existe-t-il pas de chemin vers la coordonnées donnée en parametre ?"; 
 		
 		nbCout++;
-		Coordonnees prochain = chemin.get(0).toCoordonnees();
+		CoordonneesFloat prochain = chemin.get(0);
 		chemin.remove(0);
 		return prochain;
 	}

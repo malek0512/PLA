@@ -60,17 +60,19 @@ public class PrimitivesTest extends Primitives {
 	public boolean caseAtteinte(){
 		return auto.getPersonnage().getCoord().CasHG().equals(auto.getPersonnage().getCoord().CasBD());
 	}
+	
 	/**
 	 * @return : Vrai si le fantôme est controllé par le fantôme Lord*/
 	public boolean isControled(){
-		
-		return ((Ghost) auto.getPersonnage()).getControle();
+		return true;
+		//return ((Ghost) auto.getPersonnage()).getControle();
 	}
 	
 	/**
 	 * Fonction de test Automate.FM_DANS_RAYON
 	 * @param d
 	 * @return True si un ou plusieurs pacman sont dans le rayon 
+	 * @author malek
 	 */
 	protected boolean fmDansRayon(int d) {
 		return this.fantomeEstDansRayon(d).size()!=0;

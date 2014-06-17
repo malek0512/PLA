@@ -1,5 +1,5 @@
 /**
- * author : Alex et Rama
+$******** * author : Alex et Rama
  * Class des pacmans
  * WARNING : Pensez à initialiser TERRAIN
  */
@@ -67,7 +67,7 @@ public abstract class Pacman extends Personnage {
 	 */
 	public void respawn()
 	{
-		this.seMeurt = true;
+		this.agonise = true;
 	}
 	
 	/**
