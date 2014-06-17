@@ -59,7 +59,7 @@ public class Automate extends Controleur {
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
 	public static enum Sortie{
 		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, PROCHAINE_DIRECTION, CHEMIN_PLUS_COURT, OBEIR,
-		END_LIFE, SPAWN;
+		END_LIFE, SPAWN, STUN;
 		public static boolean contains (String s){
 			try{
 				Sortie.valueOf(s);
@@ -80,7 +80,7 @@ public class Automate extends Controleur {
 //	public final static int CHEMIN_PLUS_COURT=9;
 //	public final static int OBEIR=10;
 //	public final static int END_LIFE=11;
-//	public final static int SPAWN=12;
+//	public final static int SPAWN=12;	
 	
 	
 	TableTransitionSortie tableTransitionSortie;
@@ -165,11 +165,11 @@ public class Automate extends Controleur {
 				case HAUT: personnage.setDirection(Direction.haut); break;
 				case BAS: personnage.setDirection(Direction.bas); break;
 				case DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
-				case PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
 				case CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
 				case OBEIR: primitivesAction.obeir(((Ghost) getPersonnage()).ordre); break;
 				case SPAWN:personnage.respawn();break;
 				case RIEN:primitivesAction.pass(); break;
+				case STUN:primitivesAction.stun(); break;
 				}
 			}
 			while(this.personnage.parametrable() && !(isEtatBloquant()));

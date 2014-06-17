@@ -1,6 +1,7 @@
 <?xml version = "1.0" ?>
 <Automate ID= "A_ALEATOIRE" > 
 <Etat Nom= "1" > 
+<<<<<<< HEAD
  <Transition Entree= "NON_FREE" Etat= "2" Action = "OBEIR" > </Transition> 
  <Transition Entree= "FREE" Etat= "8" Action = "RIEN" > </Transition> 
 </Etat> 
@@ -29,6 +30,12 @@
 <Etat Nom= "8" > 
  <Transition Entree= "CASE_NON_ATTEINTE" Etat= "8" Action = "AVANCER" > </Transition> 
  <Transition Entree= "CASE_ATTEINTE" Etat= "7" Action = "RIEN" > </Transition> 
+=======
+ <Transition Entree= "12" Etat= "2" Action = "0" > </Transition> 
+</Etat> 
+<Etat Nom= "2" > 
+ <Transition Entree= "12" Etat= "1" Action = "7" > </Transition> 
+>>>>>>> f2ad36a5f841170b1ff660eb81759276bcdef1a4
 </Etat> 
 <Etat_Initial> 
 <Etat Nom= "1" > 
@@ -37,11 +44,7 @@
 <Etats_Finals> 
 </Etats_Finals> 
 <Etats_Bloquants> 
-<Etat Nom= "6" > 
-</Etat> 
-<Etat Nom= "8" > 
-</Etat> 
-<Etat Nom= "9" > 
+<Etat Nom= "1" > 
 </Etat> 
 </Etats_Bloquants> 
 </Automate> 
