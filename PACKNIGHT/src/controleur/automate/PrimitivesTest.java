@@ -74,4 +74,12 @@ public class PrimitivesTest extends Primitives {
 		return ((Ghost) auto.getPersonnage()).getControle();
 	}
 	
+	/**
+	 * Fonction de test Automate.FM_DANS_RAYON
+	 * @param d
+	 * @return True si un ou plusieurs pacman sont dans le rayon 
+	 */
+	protected boolean fmDansRayon(int d) {
+		return this.fantomeEstDansRayon(d).size()!=0;
+	}
 }

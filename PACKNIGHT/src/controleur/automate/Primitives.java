@@ -1,5 +1,7 @@
 package controleur.automate;
 
+import graph.Aetoile;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +15,7 @@ import personnages.*;
  */
 public class Primitives {
 	Automate auto;
-	List<Coordonnees> chemin; //Utilisé par prochaineCase. 
+	List<CoordonneesFloat> chemin; //Utilisé par prochaineCase. 
 	int nbCout = 0; //Utilisé par prochaineCase.
 	/**
 	 * TODO : a move dans PacMan
@@ -182,7 +184,8 @@ public class Primitives {
 		
 		//On met a jour le chemin vers c, dans l'un des cas stipulé dans la condition 
 		if (chemin == null || chemin.size()==0 || nbCout >3 ){
-			//chemin = A_etoile(c);
+			Aetoile depart = new Aetoile(c.toCoordonneesFloat());
+			chemin = depart.algo(c.toCoordonneesFloat()); //case approximative TODO
 			nbCout=0;
 		}
 		
@@ -191,7 +194,7 @@ public class Primitives {
 				"N'existe-t-il pas de chemin vers la coordonnées donnée en parametre ?"; 
 		
 		nbCout++;
-		Coordonnees prochain = chemin.get(0);
+		Coordonnees prochain = chemin.get(0).toCoordonnees();
 		chemin.remove(0);
 		return prochain;
 	}
@@ -210,4 +213,25 @@ public class Primitives {
 		}
 		return captainBitch;
 	}
+	
+	/**
+	 * PacPrincesse et PacKnight
+	 * @param rayon : rayon de vision du personnage de l'automate
+	 * @return la liste des fantomes de le champ de vision de la princesse
+	 */
+	protected List<Ghost> fantomeEstDansRayon(int rayon) {
+		List<Ghost> res = new LinkedList<Ghost>();
+		CoordonneesFloat position = auto.getPersonnage().getCoord();
+		
+		float someXYSource = position.CasCentre().sommeXY();
+		for(Ghost pac : Ghost.liste){
+			float someXYTester = pac.getCoord().CasCentre().sommeXY();
+			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
+				res.add(pac);
+		}
+		return res;
+	}
+	
+	
+	
 }
