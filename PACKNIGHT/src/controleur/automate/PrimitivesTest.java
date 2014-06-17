@@ -25,7 +25,9 @@ public class PrimitivesTest extends Primitives {
 	 */
 	protected boolean dansRayon(int d) {
 		List<Pacman> res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
+		System.out.println(res.size());
 		return res.size()!=0;
+		
 	}
 	
 	/**

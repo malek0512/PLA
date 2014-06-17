@@ -15,7 +15,7 @@ public class Ghost extends Personnage {
 	 */
 	public static List<Ghost> liste = new LinkedList<Ghost>();
 
-	private final int vision = 5;
+	private final int vision = 3;
 	private boolean control = false;
 	private boolean prisonner = false; //le fantome est dans la prison
 	
