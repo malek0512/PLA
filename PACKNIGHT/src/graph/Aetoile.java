@@ -8,6 +8,7 @@ import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Personnage;
 import structure_terrain.Terrain;
+import structure_terrain.Terrain1;
 
 public class Aetoile {
 
