@@ -7,7 +7,6 @@ package game;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -35,8 +34,8 @@ public class WindowGame extends BasicGame {
 	 */
 
 	
-	static int resolution_x = 1600;
-	static int resolution_y = 900;
+	static int resolution_x = 1024;
+	static int resolution_y = 768;
 	
 	private String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
@@ -49,14 +48,13 @@ public class WindowGame extends BasicGame {
 	private String SPRITE_GHOST_4 = "Lulu.png";
 	
 	
-	private String MAP = "PACMAN.tmx";
+	private String MAP = "FATMAP.tmx";
 	private String MUSIC = "AllBeat.ogg";
 	
 
 	public static int tuile_size = 32;
 	public static int largueur_map , hauteur_map ;
 	int taillePersonnage =32;
-	public static int taille_ecran = 10;
 	
 
 	PacKnight PACMAN_1= new PacKnight("J1",1,1,Direction.droite,new CoordonneesFloat(1, 1));
@@ -94,12 +92,13 @@ public class WindowGame extends BasicGame {
 	float xBary = (PACMAN_1.getCoord().x + PACMAN_2.getCoord().x + PACMAN_3.getCoord().x + PACMAN_4.getCoord().x)/4;
 	float yBary = (PACMAN_1.getCoord().y + PACMAN_2.getCoord().y + PACMAN_3.getCoord().y + PACMAN_4.getCoord().y)/4;	
 	
-	private float xCamera = 1600/2, yCamera = 900/2;
+	private float xCamera = xBary, yCamera = yBary;
 	
 	private Music M;
-	private Image PACGUM,HEART,V,H,PAUSE_IMAGE;
+	private Image PACGUM,HEART;;
 	protected CoordonneesFloat coordFloat;
 	boolean PAUSE = false;
+	
 	public WindowGame() {
         super("PACKNIGHT : THE RETURN");
     }
@@ -145,23 +144,8 @@ public class WindowGame extends BasicGame {
 
     public void render(GameContainer container, Graphics g) throws SlickException {
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
-        this.map.render(0, 0, 0, 0, taille_ecran, taille_ecran);
+        this.map.render(0, 0, 0);
         drawPacGum(playground);
-        this.map.render(taille_ecran*tuile_size+largueur_map, 0, 0, 0, taille_ecran, taille_ecran);
-        drawPacGum2(playground);
-        this.map.render(0, taille_ecran*tuile_size+hauteur_map, 0, 0, taille_ecran, taille_ecran);
-        drawPacGum4(playground);
-        this.map.render(taille_ecran*tuile_size+largueur_map, taille_ecran*tuile_size+hauteur_map, 0, 0, taille_ecran, taille_ecran);
-        drawPacGum3(playground);
-
-        g.setColor(Color.gray);
-        g.fillRect(taille_ecran*tuile_size, 0, largueur_map,2*taille_ecran*tuile_size+hauteur_map );
-        g.setColor(Color.gray);
-        g.fillRect(0, taille_ecran*tuile_size, 2*taille_ecran*tuile_size+largueur_map,hauteur_map );
-        
-        Minimap(playground, g);
-     
-        
 		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
     	drawHeart(xBary,yBary);
 
@@ -176,10 +160,8 @@ public class WindowGame extends BasicGame {
         
 		if(PAUSE==true)
 		{
-			PAUSE_IMAGE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
-			PAUSE_IMAGE.draw(0,0);
 			g.drawString("Resume (P)", 250, 100);
-			g.drawString("Main Menu (I'M WORKING ON IT >.<)", 250, 150);
+			g.drawString("Main Menu (M)", 250, 150);
 			g.drawString("Quit Game (ESCAPE)", 250, 250);
 		}
     }
@@ -191,9 +173,9 @@ public class WindowGame extends BasicGame {
 	    	else
 	    		PACMAN_1.avancerAnimation();
 
-	    	if (PACMAN_2.parametrable())
-	    	{
-	    		PACMAN_2.avancer();
+	    	//if (PACMAN_2.parametrable())
+	    	//{
+	    	//	PACMAN_2.avancer();
 	    	/*	if(PACMAN_2.caseDevantDisponible())
 	    		PACMAN_2.avancer();
 		    	else
@@ -207,10 +189,10 @@ public class WindowGame extends BasicGame {
 		        else if(PACMAN_2.getOrientation()==Direction.gauche)
 		        	PACMAN_2.setDirection(Direction.haut);
 		        }*/
-	    	}
-	    	else
+	    	//}
+	    	//else
 
-	    		PACMAN_2.avancerAnimation();
+	    	//	PACMAN_2.avancerAnimation();
 
 	    	
 	        float w = container.getWidth() / 4;
@@ -219,13 +201,21 @@ public class WindowGame extends BasicGame {
 	        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w)) 
 	        	this.xCamera = PACMAN_1.getCoord().x + w;
 	        
+	        if (PACMAN_2.getCoord().x > (this.xCamera + w) && (PACMAN_2.getCoord().x + w  <  largueur_map*tuile_size))
+	        	this.xCamera = PACMAN_2.getCoord().x - w;
+	        if (PACMAN_2.getCoord().x < (this.xCamera - w) && (PACMAN_2.getCoord().x > w)) 
+	        	this.xCamera = PACMAN_2.getCoord().x + w;
+	        
 	        float h = container.getHeight() / 4;
 	        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
 	        	this.yCamera = PACMAN_1.getCoord().y - h;
 	        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
 	        	this.yCamera = PACMAN_1.getCoord().y + h;
 	        
-
+	        if (PACMAN_2.getCoord().y > (this.yCamera + h) && (PACMAN_2.getCoord().y + h < hauteur_map*tuile_size)) 
+	        	this.yCamera = PACMAN_2.getCoord().y - h;
+	        if (PACMAN_2.getCoord().y < (this.yCamera - h) && (PACMAN_2.getCoord().y > h))
+	        	this.yCamera = PACMAN_2.getCoord().y + h;
 	        
 	        try
 	        {
@@ -300,71 +290,14 @@ public class WindowGame extends BasicGame {
 	}
 	
 	public void drawPacGum(Terrain terrain){
-			for(int i=0;i<taille_ecran;i++)
+			for(int i=0;i<largueur_map;i++)
 			{
-				for(int j=0;j<taille_ecran;j++)
+				for(int j=0;j<hauteur_map;j++)
 				{
 					if(terrain.terrain[i][j].caseValeur() == 2){
 					PACGUM.draw(i*tuile_size,j*tuile_size);}
 				}
 			}
-	}
-	public void drawPacGum2(Terrain terrain){
-		for(int i=0;i<taille_ecran;i++)
-		{
-			for(int j=0;j<taille_ecran;j++)
-			{
-				if(terrain.terrain[i][j].caseValeur() == 2){
-				PACGUM.draw((i+taille_ecran)*tuile_size+largueur_map,j*tuile_size);}
-			}
-		}
-}
-	public void drawPacGum3(Terrain terrain){
-		for(int i=0;i<taille_ecran;i++)
-		{
-			for(int j=0;j<taille_ecran;j++)
-			{
-				if(terrain.terrain[i][j].caseValeur() == 2){
-				PACGUM.draw((i+taille_ecran)*tuile_size+largueur_map,(j+taille_ecran)*tuile_size+hauteur_map);}
-			}
-		}
-}
-	public void drawPacGum4(Terrain terrain){
-		for(int i=0;i<taille_ecran;i++)
-		{
-			for(int j=0;j<taille_ecran;j++)
-			{
-				if(terrain.terrain[i][j].caseValeur() == 2){
-				PACGUM.draw(i*tuile_size,(j+taille_ecran)*tuile_size+hauteur_map);}
-			}
-		}
-}
-	
-	public void Minimap(Terrain terrain,Graphics g){
-		for(int i=0;i<largueur_map;i++)
-		{
-			for(int j=0;j<hauteur_map;j++)
-			{
-
-		        if(terrain.terrain[i][j].caseValeur() == 0)
-		        {	
-		            g.setColor(Color.blue);
-		            g.fillRect(taille_ecran*tuile_size+i, taille_ecran*tuile_size+j,1,1);
-		        }
-		        else if(terrain.terrain[i][j].caseValeur() == 2)
-	        	{
-		            g.setColor(Color.yellow);
-		            g.fillRect(taille_ecran*tuile_size+i, taille_ecran*tuile_size+j,1,1);
-		        }
-		        else 
-		        {
-		            g.setColor(Color.black);
-		            g.fillRect(taille_ecran*tuile_size+i, taille_ecran*tuile_size+j,1,1);
-		        }
-			}
-		}	
-
-	
 	}
 	
 	public void drawHeart(float xBary, float yBary)
