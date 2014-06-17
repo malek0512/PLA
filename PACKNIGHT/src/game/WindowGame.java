@@ -144,9 +144,9 @@ public class WindowGame extends BasicGame {
 
     public void render(GameContainer container, Graphics g) throws SlickException {
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
-        this.map.render(0, 0, PACMAN_1.getCoord().casGX(), PACMAN_1.getCoord().casHY(), 14, 14);
+        this.map.render(1, 1, PACMAN_1.getCoord().casGX(), PACMAN_1.getCoord().casHY(), 14, 14);
         drawPacGum(playground);
-        this.map.render(15*tuile_size, 0, 0, 0, 14, 14);
+        this.map.render(15*tuile_size, 0, 14, 14, 14, 14);
         drawPacGum2(playground);
         this.map.render(0, 15*tuile_size, 0, 0, 14, 14);
         drawPacGum4(playground);
