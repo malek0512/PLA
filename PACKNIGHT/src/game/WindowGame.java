@@ -63,12 +63,12 @@ public class WindowGame extends BasicGame {
 	//PacKnight PACMAN_4 = new PacKnight("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 
 	Ghost GHOST_1 = new Ghost("1", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	//Ghost GHOST_2 = new Ghost("2", 8, 1, Direction.droite,new CoordonneesFloat(1, 1));
+	Ghost GHOST_2 = new Ghost("2", 8, 1, Direction.droite,new CoordonneesFloat(1, 1));
 	//Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite,new CoordonneesFloat(1, 1));
 	//Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(1, 1));
 
 	
-	Automate aleatoire;
+	Automate aleatoire,berserk;
 	
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
@@ -112,7 +112,8 @@ public class WindowGame extends BasicGame {
     	mapToTerrain(terrain);
     	playground = terrain;
     	try{
-    		aleatoire = new Automate("Automate/A_ALEATOIRE.xml",GHOST_1);
+    		aleatoire = new Automate("Automate/A_ALEATOIRE_AVEUGLE.xml",GHOST_1);
+    		berserk = new Automate("Automate/A_ALEATOIRE_AVEUGLE.xml",GHOST_2);
     	}catch(Exception e)  
     		{System.out.println(e);};
     			
@@ -156,7 +157,7 @@ public class WindowGame extends BasicGame {
         //g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
         //g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], PACMAN_4.getCoord().x, PACMAN_4.getCoord().y);
         if(GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x, GHOST_1.getCoord().y);
-       // if(GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x, GHOST_2.getCoord().y);
+        if(GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x, GHOST_2.getCoord().y);
        // if(GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x, GHOST_3.getCoord().y);
        // if(GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x, GHOST_4.getCoord().y);
         

@@ -47,9 +47,9 @@ public class PrimitivesAction extends Primitives{
 	 * @param personnage auquel on veut changer la direction aléatoirement
 	 * */
 	public void prochaineDirection(Personnage perso){
-		
 		if(!perso.caseDevantDisponible()){
 			for(Direction d : Direction.values()){
+				System.out.println(perso.getOrientation());
 				if(perso.caseDisponible(d) && perso.getOrientation()!=d.opposer()){
 					perso.setDirection(d);
 				}

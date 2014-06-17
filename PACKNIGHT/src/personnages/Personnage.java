@@ -25,7 +25,6 @@ public abstract class Personnage {
 
 	protected boolean seMeurt = false; //boolean vrai si le personnage est en animation de mort
 	protected int timerAnimation = 0; //timer pour les animations
-	private int compteurAction=0;//nombre permettant de compter le nombre d'appel à la fonction avancer
 	public List<CoordonneesFloat> ordre;
 
 	
@@ -62,7 +61,6 @@ public abstract class Personnage {
 	 * Ne fait pas de test, et avance Utiliser par les automates et c'est tout
 	 */
 	public void avancerAux() {
-		this.incrCompteur();
 		switch (this.direction) {
 		case droite:
 			this.coord.x += tauxDeDeplacement;
@@ -228,19 +226,6 @@ public abstract class Personnage {
 				return p;
 		}
 		return null;
-	}
-	
-	/**
-	 * Incrémente le compteur d'action*/
-	public void incrCompteur(){
-		this.compteurAction=(this.compteurAction+1)%8;
-		System.out.println(compteurAction);
-	}
-	/**
-	 * @return Nombre d'action avancer() à effectuer pour avancer d'une case
-	 * */
-	public int getCompteurAction(){
-		return this.compteurAction;
 	}
 
 	/**
