@@ -9,7 +9,6 @@ public class Noeud {
     public int couleur; // 0 blanc // 1 gris // 2 noir
     public Noeud pere;
     
-    
 	public Noeud()
 	{
 		couleur =0;

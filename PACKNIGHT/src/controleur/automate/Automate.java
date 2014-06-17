@@ -126,7 +126,7 @@ public class Automate extends Controleur {
 	 * @author malek
 	 */
 	public void suivant() throws Exception {
-		
+
 		//System.out.println();
 //		System.out.println(nbEntreeValide());
 		if(this.personnage.parametrable())
@@ -134,7 +134,7 @@ public class Automate extends Controleur {
 			do
 			{
 				int entreeAutomate = getEntree();
-				//System.out.println("yolo");
+
 				int sortieAutomate = effectuerTransition(entreeAutomate);
 				switch (sortieAutomate) {
 				//TODO Ajouter chaque fonction d'action
