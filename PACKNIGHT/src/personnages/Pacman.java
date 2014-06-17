@@ -67,7 +67,7 @@ public abstract class Pacman extends Personnage {
 	 */
 	public void respawn()
 	{
-		this.seMeurt = true;
+		this.agonise = true;
 	}
 	
 	/**
