@@ -91,6 +91,13 @@ public class PrimitivesAction extends Primitives{
 	}
 	
 	/**
+	 * Bloc le personnage pendant un certain temps (10 cycles actuellement)*/
+	public void stun(){
+		
+		((Ghost)auto.getPersonnage()).stun();
+	}
+	
+	/**
 	 * PACKPRINCESSE : Appelle le plus proche packnight de la princesse
 	 * @author malek
 	 */
