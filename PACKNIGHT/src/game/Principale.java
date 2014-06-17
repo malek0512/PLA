@@ -14,8 +14,8 @@ static long duree = 10;
 
 	public static void main(String[] args) throws SlickException {
 		
-	  //	new AppGameContainer(new WindowGameSave(),WindowGameSave.resolution_x,WindowGameSave.resolution_y,true).start();
-	  	new AppGameContainer(new WindowGame(),WindowGame.resolution_x,WindowGame.resolution_y,true).start();
+	  	new AppGameContainer(new WindowGameSave2(),WindowGameSave2.resolution_x,WindowGameSave2.resolution_y,true).start();
+	  //	new AppGameContainer(new WindowGame(),WindowGame.resolution_x,WindowGame.resolution_y,true).start();
 	  //  new AppGameContainer(new WindowGame(),800,600,false).start();
 	}
 }
