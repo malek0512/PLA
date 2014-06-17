@@ -48,7 +48,7 @@ public class WindowGame extends BasicGame {
 	private String SPRITE_GHOST_4 = "Lulu.png";
 	
 	
-	private String MAP = "FATMAP.tmx";
+	private String MAP = "PACMAN-SANS-TORE.tmx";
 	private String MUSIC = "AllBeat.ogg";
 	
 
@@ -147,7 +147,7 @@ public class WindowGame extends BasicGame {
     	//xCamera = xBary;
     	//yCamera = yBary;
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
-        this.map.render(0, 0, 0);
+        this.map.render(0, 0, 2);
         drawPacGum(playground);
 		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
     	//drawHeart(xBary,yBary);
