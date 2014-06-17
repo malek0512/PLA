@@ -31,7 +31,7 @@ public class Ghost extends Personnage {
 	}
 	//getter de base
 	public boolean getisAlive(){
-		return seMeurt;
+		return !(seMeurt);
 	}
 	/**
 	 * Met à jour l'état vivant ou mort du fantome*/

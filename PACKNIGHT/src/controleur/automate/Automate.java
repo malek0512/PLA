@@ -124,29 +124,13 @@ public class Automate extends Controleur {
 	 * @author malek
 	 */
 	public void suivant() throws Exception {
-		int entreeAutomate = getEntree();
-		int sortieAutomate = effectuerTransition(entreeAutomate);
-		//System.out.println();
-		switch (sortieAutomate) {
-		//TODO Ajouter chaque fonction d'action
-		case Automate.AVANCER: personnage.avancer(); break;
-		case Automate.DROIT: personnage.setDirection(Direction.droite); break;
-		case Automate.GAUCHE: personnage.setDirection(Direction.gauche); break;
-		case Automate.HAUT: personnage.setDirection(Direction.haut); break;
-		case Automate.BAS: personnage.setDirection(Direction.bas); break;
-		case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
-		case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
-		case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
-		//case Automate.AVANCER_VERS: primitivesAction.avancerVersPoint(); break;
-		case Automate.SPAWN:personnage.respawn();break;
-		case Automate.RIEN:primitivesAction.pass(); break;
-		}
-//		System.out.println(nbEntreeValide());
-
+		//System.out.println(nbEntreeValide());
 		if(this.personnage.parametrable())
 		{
 			do
 			{
+				int entreeAutomate = getEntree();
+				int sortieAutomate = effectuerTransition(entreeAutomate);
 				switch (sortieAutomate) {
 				//TODO Ajouter chaque fonction d'action
 				case Automate.AVANCER: personnage.avancerAux(); break;
@@ -157,7 +141,7 @@ public class Automate extends Controleur {
 				case Automate.DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
 				case Automate.PROCHAINE_DIRECTION: primitivesAction.prochaineDirection(getPersonnage());break;
 				case Automate.CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
-				case Automate.OBEIR: primitivesAction.obeir(((Ghost)getPersonnage()).ordre); break;
+				case Automate.OBEIR: primitivesAction.obeir(((Ghost) getPersonnage()).ordre); break;
 				case Automate.SPAWN:personnage.respawn();break;
 				case Automate.RIEN:primitivesAction.pass(); break;
 				}
@@ -194,6 +178,7 @@ public class Automate extends Controleur {
 		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
 			Integer Entree = key.next();
 			//if ( entries.get(Entree).ok ){
+			System.out.println(Entree);
 				switch ( Entree ){
 				//TODO Ajouter chaque fonction de test
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) return CASE_LIBRE; break;
@@ -209,8 +194,8 @@ public class Automate extends Controleur {
 				case FREE: if(!primitivesTest.isControled()) return FREE; break;
 				case NON_FREE: if(primitivesTest.isControled()) return NON_FREE; break;
 				case ETOILE: return ETOILE;
-			//	}
-			}
+				
+				}
 		}
 		
 		//Affichage des ENTREES dans le cas où : Aucune entree n'est valide  

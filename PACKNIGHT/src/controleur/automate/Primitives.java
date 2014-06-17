@@ -117,7 +117,7 @@ public class Primitives {
 	}
 	
 	/**
-	 * @param temp: Cordonnees de la case à tester si présence d'un mur
+	 * @param temp: Coordonnees de la case à tester si présence d'un mur, A UNE DISTANCE i
 	 * @return boolean Vrai si il y a un mur faux sinon
 	 * @author vivien
 	 * */
@@ -143,6 +143,7 @@ public class Primitives {
 		}
 		return coord;
 	}
+
 	/**Pas merci ! :)
 	 * @return Vrai si la case est une intersection
 	 */
@@ -156,6 +157,11 @@ public class Primitives {
 		return n>2;
 	}
 	
+	/**
+	 * Renvoie les coordonnées de la case devant le robot selon sa direction
+	 * @param d
+	 * @return
+	 */
 	public CoordonneesFloat positionAdjacente(Direction d){
 		CoordonneesFloat coord = new CoordonneesFloat(0,0);
 		switch (d){
@@ -169,5 +175,15 @@ public class Primitives {
 	
 	public void pass(){
 		
+	}
+	
+	/**
+	 * Renvoie les coordonnées de la prochaine case, afin d'atteindre la coordonnée c
+	 * @param c
+	 */
+	protected Coordonnees prochaineCase (Coordonnees c){
+		Coordonnees prochain = new Coordonnees(0, 0);
+		
+		return prochain;
 	}
 }

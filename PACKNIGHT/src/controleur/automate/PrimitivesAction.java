@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Ghost;
 import personnages.Pacman;
@@ -53,7 +54,7 @@ public class PrimitivesAction extends Primitives{
 		}		
 	}
 	/**
-	 * Donne la direction du chemin le plus court vers le pacman
+	 * Donne la direction du chemin le plus court vers un pacman dans le rayon de vision
 	 * 
 	 * */
 	public void directionCheminPlusCourt(Personnage perso){
@@ -78,15 +79,20 @@ public class PrimitivesAction extends Primitives{
 		}
 	perso.setDirection(mind);
 	}
+	
 	/**
 	 * Reçoit un ordre du Fantôme Lord et avance vers la case désignée tant qu'il ne l'a pas atteinte
 	 * */
-	public void obeir(List<Direction> d){
-		
-		
+	public void obeir(List<CoordonneesFloat> d){
 		
 	}
 	
-	
+	/**
+	 * 
+	 * @param Perimetre
+	 */
+	public void protegerPrincesse(int Perimetre){
+		
+	}
 
 }

@@ -11,7 +11,6 @@ import personnages.Personnage;
 import structure_terrain.Terrain;
 //import structure_terrain.Terrain1;
 //import structure_terrain.Terrain1;
-import structure_terrain.TerrainTest1;
 
 public class Graph {
 
