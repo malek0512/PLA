@@ -7,6 +7,7 @@ package game;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -77,8 +78,7 @@ public class WindowGame extends BasicGame {
     private GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
-	private float x = 0, y =0;
-	private float xCamera = x, yCamera = y;
+	private float xCamera = resolution_x/2, yCamera = resolution_y/2;
 	private int direction = 0;
 	private boolean moving = false;
 
@@ -92,9 +92,10 @@ public class WindowGame extends BasicGame {
 	private Animation[] animations_GHOST_4 = new Animation[8];
 	
 	private Music M;
-	private Image PACGUM,HEART;;
+	private Image PACGUM,HEART,PAUSE_IMAGE;
 	protected CoordonneesFloat coordFloat;
 	boolean PAUSE = false;
+	private int taille_minimap = 4;
 	
 	public WindowGame() {
         super("PACKNIGHT : THE RETURN");
@@ -102,6 +103,7 @@ public class WindowGame extends BasicGame {
 
     public void init(GameContainer container) throws SlickException {
 
+    	container.setShowFPS(false);
         this.container = container;
         PACGUM = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
         this.map = new TiledMap(CHEMIN_MAP.concat(MAP));
@@ -111,6 +113,7 @@ public class WindowGame extends BasicGame {
         Personnage.initTerrain(terrain);
     	mapToTerrain(terrain);
     	playground = terrain;
+    	
     	try{
     		aleatoire = new Automate("Automate/A_ALEATOIRE_AVEUGLE.xml",GHOST_1);
     		berserk = new Automate("Automate/A_BERSERK.xml",GHOST_2);
@@ -142,29 +145,40 @@ public class WindowGame extends BasicGame {
     
 
     public void render(GameContainer container, Graphics g) throws SlickException {
-    	//float xBary = (PACMAN_1.getCoord().x + PACMAN_2.getCoord().x + PACMAN_3.getCoord().x + PACMAN_4.getCoord().x)/4;
-    	//float yBary = (PACMAN_1.getCoord().y + PACMAN_2.getCoord().y + PACMAN_3.getCoord().y + PACMAN_4.getCoord().y)/4;	
-    	//xCamera = xBary;
-    	//yCamera = yBary;
-        g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
-        this.map.render(0, 0, 0);
-        drawPacGum(playground);
-		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
-    	//drawHeart(xBary,yBary);
-
-        g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x, PACMAN_1.getCoord().y);
+    	g.translate(container.getWidth() / 2 -  this.xCamera, container.getHeight() / 2 - ( this.yCamera));
+        
+        this.map.render(largueur_map*taille_minimap,0, 2);
+        
+        int largueur_interface = largueur_map*taille_minimap;
+        int hauteur_interface = hauteur_map*tuile_size;
+        
+        drawPacGum(playground,largueur_map*taille_minimap);
+        g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x+largueur_interface, PACMAN_1.getCoord().y);
        // g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
         //g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
         //g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], PACMAN_4.getCoord().x, PACMAN_4.getCoord().y);
-        if(GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x, GHOST_1.getCoord().y);
-        if(GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x, GHOST_2.getCoord().y);
+        if(GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x+largueur_interface, GHOST_1.getCoord().y);
+        if(GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x+largueur_interface, GHOST_2.getCoord().y);
        // if(GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x, GHOST_3.getCoord().y);
        // if(GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x, GHOST_4.getCoord().y);
         
+        g.setColor(Color.gray);
+
+        g.fillRect(-resolution_x/2 + xCamera,-resolution_y/2 + yCamera, largueur_interface,hauteur_interface );
+        
+        Minimap(playground, g,-resolution_x/2 + xCamera,-resolution_y/2 + yCamera);
+        
+		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
+    	drawHeart(-resolution_x/2 + xCamera,-resolution_y/2 + yCamera+hauteur_map*taille_minimap);
+
+
+        
 		if(PAUSE==true)
 		{
+			PAUSE_IMAGE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
+			PAUSE_IMAGE.draw(0,0);
 			g.drawString("Resume (P)", 250, 100);
-			g.drawString("Main Menu (M)", 250, 150);
+			g.drawString("Main Menu (I'M WORKING ON IT >.<)", 250, 150);
 			g.drawString("Quit Game (ESCAPE)", 250, 250);
 		}
     }
@@ -176,37 +190,7 @@ public class WindowGame extends BasicGame {
 	    	else
 	    		PACMAN_1.avancerAnimation();
 	    	
-	        /**else
-	        {
-	        if(pacman.getOrientation()==Direction.haut)
-	        	pacman.setDirection(Direction.droite);
-	        else if(pacman.getOrientation()==Direction.droite)
-	        	pacman.setDirection(Direction.bas);
-	        else if(pacman.getOrientation()==Direction.bas)
-	        	pacman.setDirection(Direction.gauche);
-	        else if(pacman.getOrientation()==Direction.gauche)
-	        	pacman.setDirection(Direction.haut);
-	        }
-	    	*/
-	  /*  	if (PACMAN_2.parametrable())
-	    	{
-	    		if(PACMAN_2.caseDevantDisponible())
-	    		PACMAN_2.avancer();
-		    	else
-		        {
-		        if(PACMAN_2.getOrientation()==Direction.haut)
-		        	PACMAN_2.setDirection(Direction.droite);
-		        else if(PACMAN_2.getOrientation()==Direction.droite)
-		        	PACMAN_2.setDirection(Direction.bas);
-		        else if(PACMAN_2.getOrientation()==Direction.bas)
-		        	PACMAN_2.setDirection(Direction.gauche);
-		        else if(PACMAN_2.getOrientation()==Direction.gauche)
-		        	PACMAN_2.setDirection(Direction.haut);
-		        }
-	    	}
-	    	else
-	    		PACMAN_2.avancerAnimation();
-	*/    	
+	    	
 	        float w = container.getWidth() / 4;
 	        if (PACMAN_1.getCoord().x > (this.xCamera + w) && (PACMAN_1.getCoord().x + w  <  largueur_map*tuile_size))
 	        	this.xCamera = PACMAN_1.getCoord().x - w;
@@ -291,25 +275,34 @@ public class WindowGame extends BasicGame {
 		}
 	}
 	
-	public void drawPacGum(Terrain terrain){
-			for(int i=0;i<largueur_map;i++)
+	public void drawPacGum(Terrain terrain, int largueur_interface){
+		for(int i=0;i<largueur_map;i++)
+		{
+			for(int j=0;j<hauteur_map;j++)
 			{
-				for(int j=0;j<hauteur_map;j++)
-				{
-					if(terrain.terrain[i][j].caseValeur() == 2){
-					PACGUM.draw(i*tuile_size,j*tuile_size);}
-				}
+				if(terrain.terrain[i][j].caseValeur() == 2){
+				PACGUM.draw(i*tuile_size+largueur_interface,j*tuile_size);}
 			}
-	}
+		}
+}
 	
-	public void drawHeart(float xBary, float yBary)
+	public void drawHeart(float x, float y)
 	{
         int i = 0;
-		do {
-				HEART.draw(xBary+(float)resolution_x/2-(float)tuile_size,yBary-(float)resolution_y/2+(i+1)*(float)tuile_size);
+        while(i<PacKnight.vie ) 
+        {	
+        	if(i < 5)
+        	{
+				HEART.draw(x,y+i*tuile_size);
 				i++;
-		}while(i<PacKnight.vie);	
-		
+        	}
+        	else
+        	{
+	        	HEART.draw(x+tuile_size,y+(i-5)*tuile_size);
+	        	i++;
+        	}
+        }
+
 	}
 	
 	public void toSprite(Animation animation[],SpriteSheet Personnage){
@@ -325,4 +318,34 @@ public class WindowGame extends BasicGame {
     
 	}
 	
+	public void Minimap(Terrain terrain,Graphics g, float decalage_x,float decalage_y){
+		for(int i=0;i<largueur_map;i++)
+		{
+			for(int j=0;j<hauteur_map;j++)
+			{
+	
+		        if(terrain.terrain[i][j].caseValeur() == 0)
+		        {	
+		            g.setColor(Color.blue);
+		            g.fillRect(i*taille_minimap+decalage_x, j*taille_minimap,taille_minimap+decalage_y,taille_minimap);
+		        }
+		        else if(terrain.terrain[i][j].caseValeur() == 2)
+	        	{
+		            g.setColor(Color.yellow);
+		            g.fillRect(i*taille_minimap+decalage_x,j*taille_minimap,taille_minimap+decalage_y,taille_minimap);
+		        }
+		        else 
+		        {
+		            g.setColor(Color.black);
+		            g.fillRect(i*taille_minimap+decalage_x, j*taille_minimap,taille_minimap+decalage_y,taille_minimap);
+		        }
+			}
+		}	
+        g.setColor(Color.orange);
+        g.fillRect(PACMAN_1.getCoord().CasCentre().x*taille_minimap+decalage_x, PACMAN_1.getCoord().CasCentre().y*taille_minimap,taille_minimap,taille_minimap+decalage_y);
+        g.setColor(Color.red);
+        g.fillRect(GHOST_1.getCoord().CasCentre().x*taille_minimap+decalage_x, GHOST_1.getCoord().CasCentre().y*taille_minimap,taille_minimap,taille_minimap+decalage_y);
+        g.fillRect(GHOST_2.getCoord().CasCentre().x*taille_minimap+decalage_x, GHOST_2.getCoord().CasCentre().y*taille_minimap,taille_minimap,taille_minimap+decalage_y);
+        
+	}
 }
