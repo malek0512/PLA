@@ -50,7 +50,7 @@ public class PrimitivesAction extends Primitives{
 		
 		if(!perso.caseDevantDisponible()){
 			for(Direction d : Direction.values()){
-				if(perso.caseDisponible(d)){
+				if(perso.caseDisponible(d) && perso.getOrientation()!=d.opposer()){
 					perso.setDirection(d);
 				}
 			}
