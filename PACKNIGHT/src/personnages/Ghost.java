@@ -62,7 +62,7 @@ public class Ghost extends Personnage {
 
 	public void gererCollision() {
 		Iterator<PacKnight> i = PacKnight.liste.iterator();
-		while(i.hasNext()&& this.seMeurt)
+		while(i.hasNext() && this.hitting())
 		{
 			PacKnight g = i.next();
 			if(g.hitting() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
@@ -74,10 +74,8 @@ public class Ghost extends Personnage {
 		}		
 		
   
-		if(this.seMeurt)
-		{
 			Iterator<PacPrincess> j = PacPrincess.liste.iterator();
-			while(i.hasNext())
+			while(i.hasNext() && this.hitting())
 			{
 				PacPrincess g = j.next();
 				if(hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
@@ -87,7 +85,6 @@ public class Ghost extends Personnage {
 				}
 			}
 		}
-	}
 	
 	
 	public boolean getControle(){
@@ -125,7 +122,7 @@ public class Ghost extends Personnage {
 	}
 
 	public boolean parametrable() {
-		return !(seMeurt && prisonner);
+		return !(seMeurt || prisonner);
 	}
 
 	public void avancerAnimation() {

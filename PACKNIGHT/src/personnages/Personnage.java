@@ -234,6 +234,7 @@ public abstract class Personnage {
 	 * Incrémente le compteur d'action*/
 	public void incrCompteur(){
 		this.compteurAction=(this.compteurAction+1)%8;
+		System.out.println(this.compteurAction);
 	}
 	/**
 	 * @return Nombre d'action avancer() à effectuer pour avancer d'une case
@@ -274,6 +275,14 @@ public abstract class Personnage {
 		this.coord = coord;
 	}
 
+	/**
+	 * Plus simple de changer la position du Personnage, plutot que d'acceder au coordonnée, et puis changer
+	 * @param coord
+	 */
+	public void setCoord(Coordonnees coord) {
+		this.coord = coord.toCoordonneesFloat(); //Creer eventuellement un setteur de coordonnées
+	}
+	
 	// setter de base
 	public void setCoord(int x, int y) {
 		this.coord.x = x;

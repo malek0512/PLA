@@ -13,17 +13,8 @@ import personnages.*;
  */
 public class Primitives {
 	Automate auto;
-	
-	/**
-	 * RIP : getCase
-	 * a était move dans Terrain
-	 */
-
-	/**
-	 * RIP : estDansLeTerrain
-	 * deplacer dans Terrain
-	 */
-	
+	List<Coordonnees> chemin; //Utilisé par prochaineCase. 
+	int nbCout = 0; //Utilisé par prochaineCase.
 	/**
 	 * TODO : a move dans PacMan
 	 * Test si un objet est en contact d'un pacman
@@ -60,7 +51,7 @@ public class Primitives {
 	 * @author rama/vivien
 	 */
 	protected boolean pacmanEstDansCroix(CoordonneesFloat position) {
-		int j=1;
+		int j=0;
 		boolean res=false;
 		
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
@@ -70,21 +61,21 @@ public class Primitives {
 			CoordonneesFloat coord = pac.getCoord().CasCentre();//on récupére la case dans lequel est le centre du pacman
 			if(coord.x==coordFC.x){
 				if (coord.y<coordFC.y){
-					while(!mur(coordFC,j,Direction.haut) && coord.y != (coordFC.y -j)){
+					while(mur(coordFC,j,Direction.haut) && coord.y != (coordFC.y -j)){
 						j++;
 					}
-					if(!mur(coordFC,j,Direction.haut)){
+					if(mur(coordFC,j,Direction.haut)){
 						auto.getPersonnage().setDirection(Direction.haut);
 						return true;
 						
 					}
 				}
 				else {
-					while(!mur(coordFC,j,Direction.bas) && coord.y != (coordFC.y + j)){
+					while(mur(coordFC,j,Direction.bas) && coord.y != (coordFC.y + j)){
 						j++;
 					
 					}
-					if(!mur(coordFC,j,Direction.bas)){
+					if(mur(coordFC,j,Direction.bas)){
 						auto.getPersonnage().setDirection(Direction.bas);
 						return true;
 					}
@@ -93,20 +84,20 @@ public class Primitives {
 			}
 			else if(coord.y == coordFC.y){
 					if (coord.x<coordFC.x){
-						while(!mur(coordFC,j,Direction.gauche) && coord.x != (coordFC.x - j)){
+						while(mur(coordFC,j,Direction.gauche) && coord.x != (coordFC.x - j)){
 							j++;
 						}
-						if(!mur(coordFC,j,Direction.gauche)){
+						if(mur(coordFC,j,Direction.gauche)){
 							auto.getPersonnage().setDirection(Direction.gauche);
 							return true;
 						}
 					}
 				
 					else {
-						while(!mur(coordFC,j,Direction.droite) && coord.x != (coordFC.x + j)){
+						while(mur(coordFC,j,Direction.droite) && coord.x != (coordFC.x + j)){
 							j++;
 						}
-						if(!mur(coordFC,j,Direction.droite)){
+						if(mur(coordFC,j,Direction.droite)){
 							auto.getPersonnage().setDirection(Direction.droite);
 							return true;
 						}
@@ -122,7 +113,8 @@ public class Primitives {
 	 * @author vivien
 	 * */
 	private boolean mur(CoordonneesFloat test, int i, Direction d) {
-		
+		//System.out.println(test.x);
+		//System.out.println(test.y);
 		return Personnage.getTerrain().caseAcessible(test.x, test.y, i, d);
 	}
 	
@@ -178,12 +170,46 @@ public class Primitives {
 	}
 	
 	/**
-	 * Renvoie les coordonnées de la prochaine case, afin d'atteindre la coordonnée c
+	 * TODO A adapter lors de la disponibilité de l'algorithme A etoile
+	 * Renvoie les coordonnées de la prochaine case, afin d'atteindre la coordonnée c.
+	 * Le chemin est mis a jour tous les 3 couts. A eventuellement modifier afin de prendre en compte la distance
+	 * Utilise la variable globale, List<Coordonnees> chemin, et int nbCout
 	 * @param c
+	 * @author malek
 	 */
 	protected Coordonnees prochaineCase (Coordonnees c){
-		Coordonnees prochain = new Coordonnees(0, 0);
+		//Si nous somme deja sur la case demandé
+		if (auto.getPersonnage().getCoord().equals(c.pixelFromCase()))
+			return c;
 		
+		//On met a jour le chemin vers c, dans l'un des cas stipulé dans la condition 
+		if (chemin == null || chemin.size()==0 || nbCout >3 ){
+			//chemin = A_etoile(c);
+			nbCout=0;
+		}
+		
+		//Declenche une erreur si l'assertion est verifiée
+		assert (chemin.size()==0) : "Erreur fonction (primitives.java) prochaineCase. La chemin.size()==0. " +
+				"N'existe-t-il pas de chemin vers la coordonnées donnée en parametre ?"; 
+		
+		nbCout++;
+		Coordonnees prochain = chemin.get(0);
+		chemin.remove(0);
 		return prochain;
+	}
+
+	/**
+	 * @return le Packnight le plus proche de la princesse
+	 * @author malek
+	 */
+	protected PacKnight whichHero(PacPrincess bitch){
+		assert (PacKnight.liste.size()!=0) : "Il n'y a aucun Packnight dans PacKnight.liste !";
+		PacKnight captainBitch=PacKnight.liste.get(0);
+		for(PacKnight knight : PacKnight.liste){
+			if(knight.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees())
+					< captainBitch.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees()))
+				captainBitch = knight;
+		}
+		return captainBitch;
 	}
 }
