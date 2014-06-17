@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import personnages.Ghost;
-import personnages.PacKnight;
 import personnages.Pacman;
 
 

@@ -57,6 +57,7 @@ public class Automate extends Controleur {
 	public final static int OBEIR=10;
 	public final static int END_LIFE=11;
 	public final static int SPAWN=12;
+	public final static int STUN=13;
 	
 	
 	TableTransitionSortie tableTransitionSortie;
@@ -146,6 +147,7 @@ public class Automate extends Controleur {
 				case Automate.OBEIR: primitivesAction.obeir(((Ghost) getPersonnage()).ordre); break;
 				case Automate.SPAWN:personnage.respawn();break;
 				case Automate.RIEN:primitivesAction.pass(); break;
+				case Automate.STUN:primitivesAction.stun(); break;
 				}
 			}
 			while(this.personnage.parametrable() && !(isEtatBloquant()));
