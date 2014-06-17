@@ -113,7 +113,7 @@ public class WindowGame extends BasicGame {
     	playground = terrain;
     	try{
     		aleatoire = new Automate("Automate/A_ALEATOIRE_AVEUGLE.xml",GHOST_1);
-    		berserk = new Automate("Automate/A_ALEATOIRE_AVEUGLE.xml",GHOST_2);
+    		berserk = new Automate("Automate/A_BERSERK.xml",GHOST_2);
     	}catch(Exception e)  
     		{System.out.println(e);};
     			
@@ -221,6 +221,7 @@ public class WindowGame extends BasicGame {
 	        try
 	        {
 	        aleatoire.suivant();
+	        berserk.suivant();
 	        }
 	        catch (Exception e) {System.out.println(e);}
 		}
