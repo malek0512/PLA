@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import structure_terrain.*;
+import game.WindowGame;
 import hitBoxManager.*;
 
 public abstract class Personnage {
@@ -61,6 +62,7 @@ public abstract class Personnage {
 	 * Ne fait pas de test, et avance Utiliser par les automates et c'est tout
 	 */
 	public void avancerAux() {
+		if(!Personnage.terrain.estCore(coord.CasCentre().x,coord.CasCentre().y, direction))
 		switch (this.direction) {
 		case droite:
 			this.coord.x += tauxDeDeplacement;
@@ -78,6 +80,24 @@ public abstract class Personnage {
 
 		default:
 			break;
+		}
+		else
+		{
+			switch (this.direction)
+			{
+			case droite :
+				this.coord.x = 0;
+				break;
+			case gauche :
+				this.coord.x = Personnage.terrain.pixelBordDroit() - WindowGame.tuile_size;
+				break;
+			case bas :
+				this.coord.y = 0;
+				break;
+			case haut :
+				this.coord.x = Personnage.terrain.pixelBordBas() - WindowGame.tuile_size;
+				break;
+			}
 		}
 		this.gererCollision();
 	}

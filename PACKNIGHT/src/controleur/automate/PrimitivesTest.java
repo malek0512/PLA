@@ -66,11 +66,12 @@ public class PrimitivesTest extends Primitives {
 	public boolean caseAtteinte(){
 		return auto.getPersonnage().getCoord().CasHG().equals(auto.getPersonnage().getCoord().CasBD());
 	}
+	
 	/**
 	 * @return : Vrai si le fantôme est controllé par le fantôme Lord*/
 	public boolean isControled(){
-		
-		return ((Ghost) auto.getPersonnage()).getControle();
+		return true;
+		//return ((Ghost) auto.getPersonnage()).getControle();
 	}
 	
 	/**
