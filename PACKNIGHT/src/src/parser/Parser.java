@@ -21,7 +21,7 @@ import java.util.Map;
 import org.jdom2.*;
 import org.jdom2.input.*;
 
-import controleur.automate.TableTransitionSortie;
+
 public class Parser {
    
 

@@ -18,12 +18,12 @@ public class Ghost extends Personnage {
 	public static List<Ghost> liste = new LinkedList<Ghost>();
 
 
-	private final int vision = 3;
-	private boolean control = false;
+	
 		//info divers
+	private final int vision = 5;
 	private CoordonneesFloat pointDeRespawn;
 	private int nbInterChercher = 4; //nombre d'inter calculer par fantome lord pour les ganks
-
+	
 	
 	static public Graph g;
 	
