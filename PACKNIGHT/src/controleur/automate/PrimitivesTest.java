@@ -6,10 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import personnages.Ghost;
-import personnages.PacKnight;
-import personnages.PacPrincess;
 import personnages.Pacman;
-import personnages.Personnage;
 
 
 /**
@@ -30,7 +27,8 @@ public class PrimitivesTest extends Primitives {
 	 */
 	protected boolean dansRayon(int d) {
 		int n=0;
-		List<Pacman> res = pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
+		List<Pacman> res = new LinkedList<Pacman>();
+		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
 		Iterator<Pacman> i= res.iterator();
 		while(i.hasNext())
 		{
@@ -76,15 +74,6 @@ public class PrimitivesTest extends Primitives {
 	public boolean isControled(){
 		
 		return ((Ghost) auto.getPersonnage()).getControle();
-	}
-	
-	/**
-	 * PACKNIGHT
-	 * @return Vrai si une princesse est en detresse
-	 * @author malek
-	 */
-	public boolean princesseEnDetresse(){
-		return ((PacKnight) auto.getPersonnage()).princesseEnDetresse!=null;
 	}
 	
 }

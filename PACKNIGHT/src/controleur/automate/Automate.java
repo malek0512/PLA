@@ -41,6 +41,7 @@ public class Automate extends Controleur {
 	public final static int FREE=10;
 	public final static int NON_FREE=11;
 	public final static int ETOILE=12;
+	public final static int CASE_ATTEINTE=14;
 	
 	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
@@ -190,6 +191,7 @@ public class Automate extends Controleur {
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) return CASE_LIBRE; break;
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==CASE_OCCUPEE) return CASE_OCCUPEE; break;
 				case CASE_NON_ATTEINTE:if(!primitivesTest.caseAtteinte()) return CASE_NON_ATTEINTE; break;
+				case CASE_ATTEINTE:if(primitivesTest.caseAtteinte()) return CASE_ATTEINTE; break;
 				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==SORTIE_TERRAIN) return SORTIE_TERRAIN;break;
 				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return PM_DANS_RAYON_X; break;
 				case NON_PM_DANS_RAYON_X : if(!primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return NON_PM_DANS_RAYON_X; break;
