@@ -68,7 +68,7 @@ public class Aetoile {
 		return res;
 	}
 	
-	public List<NoeudEtoile> algo(CoordonneesFloat src)
+	public List<CoordonneesFloat> algo(CoordonneesFloat src)
 	{
 		NoeudEtoile init = new NoeudEtoile(distance(src), null, src);
 		ouvert.add(init);
@@ -98,13 +98,15 @@ public class Aetoile {
 			}
 		}
 		
-		List<NoeudEtoile> res = new LinkedList<NoeudEtoile>();
+		List<CoordonneesFloat> res = new LinkedList<CoordonneesFloat>();
 		//on crée la liste de resultat et on la retourne
 		while(init.pere != null)
 		{
-			res.add(init);
+			res.add(init.cord);
 			init = init.pere;
 		}
+		res.add(src);
+		res.remove(0);
 		return res;
 	}
 	
@@ -116,20 +118,16 @@ public class Aetoile {
 	    	CoordonneesFloat start = new CoordonneesFloat(1,1);
 	    	CoordonneesFloat finish = new CoordonneesFloat(3,6);
 	    	
-	    	System.out.println("here we go");
+	    	Aetoile a = new Aetoile(start);
+	    	List<CoordonneesFloat> l = a.algo(finish);
 	    	
-	    	Aetoile a = new Aetoile(finish);
-	    	List<NoeudEtoile> l = a.algo(start);
-	    	
-	    	System.out.println("here we go");
-	    	
-	    	Iterator<NoeudEtoile> i = l.iterator();
+	    	Iterator<CoordonneesFloat> i = l.iterator();
 	    	while(i.hasNext())
 	    	{
 	    		
-	    		NoeudEtoile x = i.next();
+	    		CoordonneesFloat x = i.next();
 	    		System.out.println(x);
-	    		Personnage.getTerrain().setCase(x.cord.x, x.cord.y, 2);
+	    		Personnage.getTerrain().setCase(x.x, x.y, 2);
 	    	}
 	    	terrain.afficher();
 	    }
