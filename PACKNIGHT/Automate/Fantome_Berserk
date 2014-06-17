@@ -1,0 +1,83 @@
+Etat 1
+Transition
+    ETATSUIVANT = 2
+    ENTREE = NON_FREE
+    SORTIE = OBEIR
+
+Transition
+    ETATSUIVANT = 8
+    ENTREE = FREE
+    SORTIE = RIEN
+
+Etat 2
+Transition
+    ETATSUIVANT = 2
+    ENTREE = NON_FREE
+    SORTIE = OBEIR
+
+Transition
+    ETATSUIVANT = 7
+    ENTREE = FREE
+    SORTIE = RIEN
+
+Etat 3
+Transition
+    ETATSUIVANT = 5
+    ENTREE = NON_PM_DANS_CROIX
+    SORTIE = AVANCER	
+
+Transition
+    ETATSUIVANT = 4
+    ENTREE = PM_DANS_CROIX
+    SORTIE = AVANCER
+        
+Etat 4
+Transition
+    ETATSUIVANT = 3
+    ENTREE = CASE_OCCUPEE
+    SORTIE = AVANCER
+    
+Transition
+    ETATSUIVANT = 6
+    ENTREE = CASE_LIBRE
+    SORTIE = AVANCER
+
+Etat 5
+Transition
+    ETATSUIVANT = 8
+    ENTREE = ETOILE
+    SORTIE = DIRECTION_ALEATOIRE
+    
+Etat 6
+Transition
+    ETATSUIVANT = 4
+    ENTREE = ETOILE
+    SORTIE = AVANCER
+    
+Etat 7
+Transition
+	ETATSUIVANT = 5
+	ENTREE = NON_INTERSECTION
+	SORTIE = AVANCER
+	
+Transition
+	ETATSUIVANT = 3
+	ENTREE = INTERSECTION
+	SORTIE = RIEN
+ 
+Etat 8
+Transition
+	ETATSUIVANT = 8
+    ENTREE = CASE_NON_ATTEINTE
+    SORTIE = AVANCER
+
+Transition
+	ETATSUIVANT = 7
+    ENTREE = CASE_ATTEINTE
+    SORTIE = RIEN
+ 
+       
+ETAT_INITIAL = 1
+ETAT_FINAL = 
+ETAT_BLOQUANT = 6 8 9
+AUTOMATE = A_ALEATOIRE
