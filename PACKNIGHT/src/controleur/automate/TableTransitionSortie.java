@@ -30,13 +30,20 @@ public class TableTransitionSortie {
 	 * contenant le type Quad = {int Entree, int EtatSuiv, int Sortie }
 	 * 
 	 * @param TransitionSortie
+	 * @throws Exception 
 	 */
-	public void initTransitionSortie(Map<String, List<Quad>> TransitionSortie) {
+	public void initTransitionSortie(Map<String, List<Quad>> TransitionSortie) throws Exception {
 		for (Entry<String, List<Quad>> i : TransitionSortie.entrySet()) {
 			table.put(i.getKey(), new HashMap<Automate.Entree, Triplet>());
 			for (Quad q : i.getValue()) {
-				table.get(i.getKey()).put(Automate.Entree.valueOf(Integer.toString(q.Entree)),
-						new Triplet(q.EtatSuiv, Automate.Sortie.valueOf(Integer.toString(q.Sortie))));
+				if (!Automate.Entree.contains(q.entree)) 
+					throw new Exception("Erreur a l'initialisation, l'entree " + q.entree + " n'existe pas dans le type enum Entree");
+				if(!Automate.Sortie.contains(q.sortie))
+					throw new Exception("Erreur a l'initialisation, la sortie " + q.sortie + " n'existe pas dans le type enum Sortie");
+				
+				table.get(i.getKey()).put(Automate.Entree.valueOf(q.entree),
+							new Triplet(q.EtatSuiv, Automate.Sortie.valueOf(q.sortie)));
+					
 			}
 		}
 	}

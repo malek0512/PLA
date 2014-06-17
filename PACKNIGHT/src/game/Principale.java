@@ -13,9 +13,9 @@ public class Principale {
 static long duree = 10;
 
 	public static void main(String[] args) throws SlickException {
-		
-	  	//new AppGameContainer(new WindowGame(),WindowGame.resolution_x,WindowGame.resolution_y,true).start();
-	    new AppGameContainer(new WindowGame(),800,600,false).start();
+
+	  new AppGameContainer(new WindowGame(),800,600,false).start();
+	  //new AppGameContainer(new WindowGame(),WindowGame.resolution_x,WindowGame.resolution_y,true).start();
 
 	}
 }

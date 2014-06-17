@@ -1,12 +1,16 @@
 package src.parser;
 
+import controleur.automate.Automate;
+
 public class Quad {
 	//Classe intermediaire de Quad
-		public int Entree, Sortie; public String EtatSuiv;
-		public Quad(int entree, String etatSuiv, int sortie) {
+		public String entree;
+		public String sortie; 
+		public String EtatSuiv;
+		public Quad(String entree, String etatSuiv, String sortie) {
 			super();
-			this.Entree = entree;
+			this.entree = entree;
 			EtatSuiv = etatSuiv;
-			Sortie = sortie;
+			this.sortie = sortie;
 		}
 }

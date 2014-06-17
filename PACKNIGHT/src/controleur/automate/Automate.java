@@ -11,6 +11,7 @@ import src.parser.Quad;
 import personnages.Direction;
 import personnages.Ghost;
 import personnages.Personnage;
+import personnages.testou.Entree;
 
 /**
  * Toute primitive de test doit etre ajoutée dans PrimitivesTest, et se voit attribuée, une constante en public, ci dessous.
@@ -29,7 +30,16 @@ public class Automate extends Controleur {
 	//ENTREES : CASE_OCCUPE, CASE_LIBRE, SORTIE_TERRAIN, CASE_GHOST
 	public static enum Entree{
 		CASE_LIBRE, CASE_OCCUPEE, SORTIE_TERRAIN, CASE_GHOST, PM_DANS_RAYON_X, NON_PM_DANS_RAYON_X, PM_DANS_CROIX, 
-		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE
+		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_ATTEINTE, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE;
+		
+		public static boolean contains (String s){
+			try{
+				Entree.valueOf(s);
+			} catch (Exception e){
+				return false;
+			}
+			return true;
+		}
 	}
 //	public final static int CASE_LIBRE = 0;
 //	public final static int CASE_OCCUPEE = 1;
@@ -49,7 +59,15 @@ public class Automate extends Controleur {
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
 	public static enum Sortie{
 		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, PROCHAINE_DIRECTION, CHEMIN_PLUS_COURT, OBEIR,
-		END_LIFE, SPAWN
+		END_LIFE, SPAWN;
+		public static boolean contains (String s){
+			try{
+				Sortie.valueOf(s);
+			} catch (Exception e){
+				return false;
+			}
+			return true;
+		}
 	}
 //	public final static int AVANCER = 0;
 //	public final static int GAUCHE = 1;
@@ -208,7 +226,7 @@ public class Automate extends Controleur {
 		//Affichage des ENTREES dans le cas où : Aucune entree n'est valide  
 		String Erreur = "C'est l'ETAT " + this.etatCourant + ", voici toutes mes ENTREES : ";
 		for (Iterator<Automate.Entree> key = entries.keySet().iterator(); key.hasNext(); ){
-			Automate.Entree Entree = key.next(); Erreur += Entree;
+			Automate.Entree Entree = key.next(); Erreur += Entree + ", ";
 		}
 		System.out.println(Erreur);
 		throw new Exception("Erreur dans l'automate. L'etat courant ne possède aucune entree valide. Manque t-il une transition ?");
