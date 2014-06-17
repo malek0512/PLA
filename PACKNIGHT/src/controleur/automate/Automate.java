@@ -127,15 +127,11 @@ public class Automate extends Controleur {
 	 * @author malek
 	 */
 	public void suivant() throws Exception {
-
-		//System.out.println();
-//		System.out.println(nbEntreeValide());
 		if(this.personnage.parametrable())
 		{
 			do
 			{
 				int entreeAutomate = getEntree();
-
 				int sortieAutomate = effectuerTransition(entreeAutomate);
 				switch (sortieAutomate) {
 				//TODO Ajouter chaque fonction d'action
@@ -185,7 +181,6 @@ public class Automate extends Controleur {
 		for (Iterator<Integer> key = entries.keySet().iterator(); key.hasNext(); ){
 			Integer Entree = key.next();
 			//if ( entries.get(Entree).ok ){
-//			System.out.println(Entree);
 				switch ( Entree ){
 				//TODO Ajouter chaque fonction de test
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==CASE_LIBRE) return CASE_LIBRE; break;
@@ -202,8 +197,8 @@ public class Automate extends Controleur {
 				case FREE: if(!primitivesTest.isControled()) return FREE; break;
 				case NON_FREE: if(primitivesTest.isControled()) return NON_FREE; break;
 				case ETOILE: return ETOILE;
-			//	}
-			}
+				
+				}
 		}
 		
 		//Affichage des ENTREES dans le cas où : Aucune entree n'est valide  

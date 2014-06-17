@@ -2,10 +2,10 @@ package controleur.automate;
 
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import personnages.Ghost;
+import personnages.PacKnight;
 import personnages.Pacman;
 
 
@@ -27,8 +27,7 @@ public class PrimitivesTest extends Primitives {
 	 */
 	protected boolean dansRayon(int d) {
 		int n=0;
-		List<Pacman> res = new LinkedList<Pacman>();
-		res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
+		List<Pacman> res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
 		Iterator<Pacman> i= res.iterator();
 		while(i.hasNext())
 		{

@@ -34,8 +34,8 @@ public class WindowGame extends BasicGame {
 	 */
 
 	
-	static int resolution_x = 1600;
-	static int resolution_y = 900;
+	static int resolution_x = 1024;
+	static int resolution_y = 768;
 	
 	private String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
@@ -48,7 +48,7 @@ public class WindowGame extends BasicGame {
 	private String SPRITE_GHOST_4 = "Lulu.png";
 	
 	
-	private String MAP = "PACMAN.tmx";
+	private String MAP = "PACMAN-SANS-TORE.tmx";
 	private String MUSIC = "AllBeat.ogg";
 	
 
@@ -91,6 +91,7 @@ public class WindowGame extends BasicGame {
 	private Animation[] animations_GHOST_3 = new Animation[8];
 	private Animation[] animations_GHOST_4 = new Animation[8];
 	
+
 	private Music M;
 	private Image PACGUM,HEART;;
 	protected CoordonneesFloat coordFloat;
@@ -146,7 +147,7 @@ public class WindowGame extends BasicGame {
     	//xCamera = xBary;
     	//yCamera = yBary;
         g.translate(container.getWidth() / 2 - this.xCamera, container.getHeight() / 2 - this.yCamera);
-        this.map.render(0, 0, 0);
+        this.map.render(0, 0, 2);
         drawPacGum(playground);
 		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
     	//drawHeart(xBary,yBary);
@@ -174,6 +175,7 @@ public class WindowGame extends BasicGame {
 	    		PACMAN_1.avancer();
 	    	else
 	    		PACMAN_1.avancerAnimation();
+
 	    	
 	        /**else
 	        {
@@ -190,6 +192,7 @@ public class WindowGame extends BasicGame {
 	  /*  	if (PACMAN_2.parametrable())
 	    	{
 	    		if(PACMAN_2.caseDevantDisponible())
+
 	    		PACMAN_2.avancer();
 		    	else
 		        {
@@ -201,22 +204,26 @@ public class WindowGame extends BasicGame {
 		        	PACMAN_2.setDirection(Direction.gauche);
 		        else if(PACMAN_2.getOrientation()==Direction.gauche)
 		        	PACMAN_2.setDirection(Direction.haut);
+
 		        }
 	    	}
 	    	else
 	    		PACMAN_2.avancerAnimation();
 	*/    	
+
 	        float w = container.getWidth() / 4;
 	        if (PACMAN_1.getCoord().x > (this.xCamera + w) && (PACMAN_1.getCoord().x + w  <  largueur_map*tuile_size))
 	        	this.xCamera = PACMAN_1.getCoord().x - w;
 	        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w)) 
 	        	this.xCamera = PACMAN_1.getCoord().x + w;
+
 	        float h = container.getHeight() / 4;
 	        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
 	        	this.yCamera = PACMAN_1.getCoord().y - h;
 	        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
 	        	this.yCamera = PACMAN_1.getCoord().y + h;
 	        
+
 	        try
 	        {
 	        aleatoire.suivant();
