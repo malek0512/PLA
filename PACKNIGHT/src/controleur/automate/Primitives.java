@@ -8,6 +8,7 @@ import java.util.List;
 
 import personnages.*;
 
+
 /**
  * Classe contenant l'ensemble de fonction intermedaire permettant l'elaboration des primitives 
  * de test et d'action 
@@ -41,8 +42,14 @@ public class Primitives {
 		{
 			Pacman pac = i.next();
 			float someXYTester = i.next().getCoord().CasCentre().sommeXY();
-			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
+			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon){
 				res.add(pac);
+				if(Ghost.central.containsKey(pac))
+					Ghost.central.get(pac).coord=pac.getCoord().CasCentre();
+				else
+					Ghost.central.put(pac,((Ghost)auto.getPersonnage()).new AvisDeRecherche(pac.getCoord().CasCentre()));
+			}
+				
 		}
 		return res;
 	}
@@ -170,6 +177,12 @@ public class Primitives {
 	}
 	
 	/**
+	 * Fait super attention aux transformations. Parfois tu parles en pixel alors que tu veux parler de case et vice versa
+	 * getCoord() te donne le PIXEL en haut à gauche
+	 * Attention aux transformations de Coordonnees à CoordonneesFloat il vaut mieux uniformiser plûtot que de faire des transformations invalides lorsqu'on changera le nom
+	 * Les méthodes du genre pixelFromCase case existe ou caseFromPixel existent déjà.(Nommées différement ^^)
+	 * 
+	 * 
 	 * TODO A adapter lors de la disponibilité de l'algorithme A etoile
 	 * Renvoie les coordonnées de la prochaine case, afin d'atteindre la coordonnée c.
 	 * Le chemin est mis a jour tous les 3 couts. A eventuellement modifier afin de prendre en compte la distance

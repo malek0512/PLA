@@ -1,7 +1,6 @@
 package controleur.automate;
 
 
-import java.util.Iterator;
 import java.util.List;
 
 import personnages.Ghost;
@@ -25,15 +24,8 @@ public class PrimitivesTest extends Primitives {
 	 * @return True si un ou plusieurs pacman sont dans le rayon 
 	 */
 	protected boolean dansRayon(int d) {
-		int n=0;
 		List<Pacman> res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
-		Iterator<Pacman> i= res.iterator();
-		while(i.hasNext())
-		{
-			n++;
-			i.next();
-		}
-		return n!=0;
+		return res.size()!=0;
 	}
 	
 	/**
@@ -66,11 +58,12 @@ public class PrimitivesTest extends Primitives {
 	public boolean caseAtteinte(){
 		return auto.getPersonnage().getCoord().CasHG().equals(auto.getPersonnage().getCoord().CasBD());
 	}
+	
 	/**
 	 * @return : Vrai si le fantôme est controllé par le fantôme Lord*/
 	public boolean isControled(){
-		
-		return ((Ghost) auto.getPersonnage()).getControle();
+		return true;
+		//return ((Ghost) auto.getPersonnage()).getControle();
 	}
 	
 	/**
