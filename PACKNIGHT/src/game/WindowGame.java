@@ -35,8 +35,8 @@ public class WindowGame extends BasicGame {
 	 */
 
 	
-	static int resolution_x = 1600;
-	static int resolution_y = 900;
+	static int resolution_x = 800;
+	static int resolution_y = 600;
 	
 	private String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
@@ -64,7 +64,7 @@ public class WindowGame extends BasicGame {
 	//PacKnight PACMAN_4 = new PacKnight("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 
 	Ghost GHOST_1 = new Ghost("1", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_2 = new Ghost("2", 8, 1, Direction.droite,new CoordonneesFloat(1, 1));
+	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
 	//Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite,new CoordonneesFloat(1, 1));
 	//Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(1, 1));
 
