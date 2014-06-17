@@ -11,7 +11,7 @@ import src.parser.Quad;
 import personnages.Direction;
 import personnages.Ghost;
 import personnages.Personnage;
-import personnages.testou.Entree;
+//import personnages.testou.Entree;
 
 /**
  * Toute primitive de test doit etre ajoutée dans PrimitivesTest, et se voit attribuée, une constante en public, ci dessous.
