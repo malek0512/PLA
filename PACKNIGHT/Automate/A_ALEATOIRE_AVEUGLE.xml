@@ -1,10 +1,10 @@
 <?xml version = "1.0" ?>
 <Automate ID= "A_ALEATOIRE_AVEUGLE" > 
 <Etat Nom= "1" > 
- <Transition Entree= "12" Etat= "2" Action = "0" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "2" Action = "AVANCER" > </Transition> 
 </Etat> 
 <Etat Nom= "2" > 
- <Transition Entree= "12" Etat= "1" Action = "7" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "1" Action = "DIRECTION_ALEATOIRE" > </Transition> 
 </Etat> 
 <Etat_Initial> 
 <Etat Nom= "1" > 
