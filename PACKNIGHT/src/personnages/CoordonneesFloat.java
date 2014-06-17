@@ -55,7 +55,24 @@ public class CoordonneesFloat {
 		this.y = coord.y;
 	}
 	
+	public CoordonneesFloat(CoordonneesFloat coord, Direction d)
+	{
+		switch(d)
+		{
+		case haut	: this.x=coord.x;	this.y=coord.y-1; break;
+		case bas 	: this.x=coord.x;	this.y=coord.y+1; break;	
+		case droite	: this.x=coord.x+1;	this.y=coord.y;	break;
+		case gauche	: this.x=coord.x-1;	this.y=coord.y;	break;
+		default:
+			break;
+		}
+	}
 	
+	/**
+	 * renvoie vrai si les coord corresponde a l'objet
+	 * @param coord
+	 * @return
+	 */
 	public boolean equals(CoordonneesFloat coord)
 	{
 		return (coord.x == this.x && coord.y == this.y);

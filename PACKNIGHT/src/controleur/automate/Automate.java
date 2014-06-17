@@ -46,7 +46,6 @@ public class Automate extends Controleur {
 //	public final static int NON_FREE=11;
 //	public final static int ETOILE=12;
 	
-	
 	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
 	public static enum Sortie{
 		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, PROCHAINE_DIRECTION, CHEMIN_PLUS_COURT, OBEIR,
@@ -102,6 +101,7 @@ public class Automate extends Controleur {
 		//Initialisation des la table d'entree sortie
 		tableTransitionSortie = new TableTransitionSortie();
 		tableTransitionSortie.initTransitionSortie(liste);
+		System.out.println(tableTransitionSortie.toString());
 	}
 	
 	
@@ -116,8 +116,9 @@ public class Automate extends Controleur {
 //		if (nbTransition < nbTransitionMax){
 //			if (tableTransitionSortie.getValide(this.etatCourant, Entree)){
 //		System.out.println("Entreeee " + Entree);
+				String RAMA = this.etatCourant;
 				this.etatCourant = tableTransitionSortie.getEtatSuiv(this.etatCourant, entree);
-				return tableTransitionSortie.getSortie(this.etatCourant, entree);
+				return tableTransitionSortie.getSortie(RAMA, entree);
 //			} else
 //				throw new Exception("Erreur l'etatCourant n'a pas le droit d'effectuer ce test");
 //		}
@@ -132,8 +133,6 @@ public class Automate extends Controleur {
 	 * @author malek
 	 */
 	public void suivant() throws Exception {
-		//System.out.println();
-//		System.out.println(nbEntreeValide());
 		if(this.personnage.parametrable())
 		{
 			do

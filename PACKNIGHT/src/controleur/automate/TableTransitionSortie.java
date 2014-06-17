@@ -83,7 +83,7 @@ public class TableTransitionSortie {
 
 	public String getEtatSuiv(String Etat, Automate.Entree Entree) throws Exception {
 		if (!table.containsKey(Etat))
-			throw new Exception("L'etat renseigner n'existe pas dans la table");
+			throw new Exception("L'etat renseigné n'existe pas dans la table");
 		if (!table.get(Etat).containsKey(Entree))
 			throw new Exception(
 					"L'entree renseignée n'existe pas dans la table");
@@ -92,10 +92,10 @@ public class TableTransitionSortie {
 
 	public Automate.Sortie getSortie(String Etat, Automate.Entree Entree) throws Exception {
 		if (!table.containsKey(Etat))
-			throw new Exception("L'etat renseigner n'existe pas dans la table");
+			throw new Exception("L'etat renseigné n'existe pas dans la table");
 		if (!table.get(Etat).containsKey(Entree))
 			throw new Exception(
-					"L'entree renseignée n'existe pas dans la table");
+				"Je a l'ETAT " + Etat + " L'entree " + Entree + "renseignée n'existe pas dans la table");
 		return table.get(Etat).get(Entree).Sortie;
 	}
 

@@ -2,14 +2,11 @@ package controleur.automate;
 
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import personnages.Ghost;
 import personnages.PacKnight;
-import personnages.PacPrincess;
 import personnages.Pacman;
-import personnages.Personnage;
 
 
 /**
