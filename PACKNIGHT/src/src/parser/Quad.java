@@ -1,7 +1,5 @@
 package src.parser;
 
-import controleur.automate.Automate;
-
 public class Quad {
 	//Classe intermediaire de Quad
 		public String entree;

@@ -1,4 +1,5 @@
 package personnages;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,21 +49,24 @@ public class Ghost extends Personnage {
 	 * */
 	public class AvisDeRecherche {
 		boolean repere, Mort;
-		Coordonnees coord;
+		public CoordonneesFloat coord;
 		int nbVu = 0;
 
-		public AvisDeRecherche(Coordonnees c) {
+		public AvisDeRecherche(CoordonneesFloat c) {
 			Mort = false;
 			repere = true;
-			coord = new Coordonnees(c);
+			coord = new CoordonneesFloat(c);
 		}
 	}
 
 	/**
 	 * Le central repertorie l'ensemble des information des PM en fuite
 	 */
-	protected static Map<Pacman, AvisDeRecherche> central;
+	public static Map<Pacman, AvisDeRecherche> central=new HashMap<Pacman, AvisDeRecherche>();
 
+
+	/**
+	 * Gère la collision avec les pacmans*/
 	public void gererCollision() {
 		Iterator<PacKnight> i = PacKnight.liste.iterator();
 		while(i.hasNext() && this.hitting())
@@ -75,7 +79,6 @@ public class Ghost extends Personnage {
 				break;
 			}
 		}		
-		
 		Iterator<PacPrincess> j = PacPrincess.liste.iterator();
 		while(i.hasNext() && this.hitting() )
 		{
