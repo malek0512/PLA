@@ -1,29 +1,29 @@
 <?xml version = "1.0" ?>
 <Automate ID= "A_BERSERK" > 
 <Etat Nom= "1" > 
- <Transition Entree= "9" Etat= "1" Action = "0" > </Transition> 
- <Transition Entree= "14" Etat= "2" Action = "5" > </Transition> 
+ <Transition Entree= "CASE_NON_ATTEINTE" Etat= "1" Action = "AVANCER" > </Transition> 
+ <Transition Entree= "CASE_ATTEINTE" Etat= "2" Action = "RIEN" > </Transition> 
 </Etat> 
 <Etat Nom= "2" > 
- <Transition Entree= "6" Etat= "3" Action = "5" > </Transition> 
- <Transition Entree= "5" Etat= "4" Action = "0" > </Transition> 
+ <Transition Entree= "NON_PM_DANS_CROIX" Etat= "3" Action = "RIEN" > </Transition> 
+ <Transition Entree= "PM_DANS_CROIX" Etat= "4" Action = "AVANCER" > </Transition> 
 </Etat> 
 <Etat Nom= "3" > 
- <Transition Entree= "7" Etat= "7" Action = "7" > </Transition> 
- <Transition Entree= "8" Etat= "7" Action = "7" > </Transition> 
+ <Transition Entree= "INTERSECTION" Etat= "7" Action = "DIRECTION_ALEATOIRE" > </Transition> 
+ <Transition Entree= "NON_INTERSECTION" Etat= "7" Action = "DIRECTION_ALEATOIRE" > </Transition> 
 </Etat> 
 <Etat Nom= "4" > 
- <Transition Entree= "1" Etat= "5" Action = "7" > </Transition> 
- <Transition Entree= "0" Etat= "6" Action = "0" > </Transition> 
+ <Transition Entree= "CASE_OCCUPEE" Etat= "5" Action = "DIRECTION_ALEATOIRE" > </Transition> 
+ <Transition Entree= "CASE_LIBRE" Etat= "6" Action = "AVANCER" > </Transition> 
 </Etat> 
 <Etat Nom= "5" > 
- <Transition Entree= "12" Etat= "1" Action = "13" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "1" Action = "STUN" > </Transition> 
 </Etat> 
 <Etat Nom= "6" > 
- <Transition Entree= "12" Etat= "4" Action = "0" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "4" Action = "AVANCER" > </Transition> 
 </Etat> 
 <Etat Nom= "7" > 
- <Transition Entree= "12" Etat= "1" Action = "0" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "1" Action = "AVANCER" > </Transition> 
 </Etat> 
 <Etat_Initial> 
 <Etat Nom= "1" > 

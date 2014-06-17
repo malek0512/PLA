@@ -209,7 +209,8 @@ public class Automate extends Controleur {
 				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==Entree.CASE_LIBRE) return controleur.automate.Automate.Entree.CASE_LIBRE; break;
 				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==Entree.CASE_OCCUPEE) return Entree.CASE_OCCUPEE; break;
 				case CASE_NON_ATTEINTE:if(!primitivesTest.caseAtteinte()) return Entree.CASE_NON_ATTEINTE; break;
-				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==Entree.SORTIE_TERRAIN) return Entree.SORTIE_TERRAIN;break;
+				case CASE_ATTEINTE:if(primitivesTest.caseAtteinte()) return Entree.CASE_ATTEINTE; break;
+				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==controleur.automate.Automate.Entree.SORTIE_TERRAIN) return Entree.SORTIE_TERRAIN;break;
 				case PM_DANS_RAYON_X : if(primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return Entree.PM_DANS_RAYON_X; break;
 				case NON_PM_DANS_RAYON_X : if(!primitivesTest.dansRayon(((Ghost) getPersonnage()).getVision())) return Automate.Entree.NON_PM_DANS_RAYON_X; break;
 				case INTERSECTION: if(primitivesTest.estIntersection()) return Entree.INTERSECTION; break;
