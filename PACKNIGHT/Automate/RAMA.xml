@@ -1,15 +1,15 @@
 <?xml version = "1.0" ?>
 <Automate ID= "RAMA" > 
 <Etat Nom= "0" > 
- <Transition Entree= "13" Etat= "1" Action = "12" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "1" Action = "SPAWN" > </Transition> 
 </Etat> 
 <Etat Nom= "1" > 
- <Transition Entree= "8" Etat= "1" Action = "0" > </Transition> 
- <Transition Entree= "7" Etat= "2" Action = "7" > </Transition> 
- <Transition Entree= "10" Etat= "3" Action = "11" > </Transition> 
+ <Transition Entree= "NON_INTERSECTION" Etat= "1" Action = "AVANCER" > </Transition> 
+ <Transition Entree= "INTERSECTION" Etat= "2" Action = "DIRECTION_ALEATOIRE" > </Transition> 
+ <Transition Entree= "EST_MORT" Etat= "3" Action = "END_LIFE" > </Transition> 
 </Etat> 
 <Etat Nom= "2" > 
- <Transition Entree= "13" Etat= "1" Action = "0" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "1" Action = "AVANCER" > </Transition> 
 </Etat> 
 <Etat_Initial> 
 <Etat Nom= "0" > 

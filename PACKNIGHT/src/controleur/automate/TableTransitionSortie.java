@@ -11,18 +11,18 @@ public class TableTransitionSortie {
 	// Classe intermediaire de triplet
 	public class Triplet {
 		public String EtatSuiv;
-		int Sortie;
+		public Automate.Sortie Sortie;
 
-		public Triplet(String etatSuiv, int sortie) {
+		public Triplet(String etatSuiv, Automate.Sortie sortie) {
 			EtatSuiv = etatSuiv;
 			Sortie = sortie;
 		}
 	}
 
-	Map<String, Map<Integer, Triplet>> table;
+	Map<String, Map<Automate.Entree, Triplet>> table;
 
 	public TableTransitionSortie() {
-		table = new HashMap<String, Map<Integer, Triplet>>();
+		table = new HashMap<String, Map<Automate.Entree, Triplet>>();
 	}
 
 	/**
@@ -30,13 +30,20 @@ public class TableTransitionSortie {
 	 * contenant le type Quad = {int Entree, int EtatSuiv, int Sortie }
 	 * 
 	 * @param TransitionSortie
+	 * @throws Exception 
 	 */
-	public void initTransitionSortie(Map<String, List<Quad>> TransitionSortie) {
+	public void initTransitionSortie(Map<String, List<Quad>> TransitionSortie) throws Exception {
 		for (Entry<String, List<Quad>> i : TransitionSortie.entrySet()) {
-			table.put(i.getKey(), new HashMap<Integer, Triplet>());
+			table.put(i.getKey(), new HashMap<Automate.Entree, Triplet>());
 			for (Quad q : i.getValue()) {
-				table.get(i.getKey()).put(q.Entree,
-						new Triplet(q.EtatSuiv, q.Sortie));
+				if (!Automate.Entree.contains(q.entree)) 
+					throw new Exception("Erreur a l'initialisation, l'entree " + q.entree + " n'existe pas dans le type enum Entree");
+				if(!Automate.Sortie.contains(q.sortie))
+					throw new Exception("Erreur a l'initialisation, la sortie " + q.sortie + " n'existe pas dans le type enum Sortie");
+				
+				table.get(i.getKey()).put(Automate.Entree.valueOf(q.entree),
+							new Triplet(q.EtatSuiv, Automate.Sortie.valueOf(q.sortie)));
+					
 			}
 		}
 	}
@@ -50,7 +57,7 @@ public class TableTransitionSortie {
 	 */
 	public boolean isEntreeExisteDansAutomate(int Entree) {
 		boolean OK = false;
-		for (Entry<String, Map<Integer, Triplet>> s : table.entrySet()) {
+		for (Entry<String, Map<Automate.Entree, Triplet>> s : table.entrySet()) {
 			// for(Map<Integer, Triplet> i : s.getValue())
 			OK = OK || s.getValue().containsKey(Entree);
 		}
@@ -75,13 +82,13 @@ public class TableTransitionSortie {
 	 * @throws Exception
 	 *             Si l'etat n'existe pas dans l'automate
 	 */
-	public Map<Integer, Triplet> getEtatAll(String Etat) throws Exception {
+	public Map<Automate.Entree, Triplet> getEtatAll(String Etat) throws Exception {
 		if (!table.containsKey(Etat))
 			throw new Exception("L'etat renseigner n'existe pas dans la table");
-		return (Map<Integer, Triplet>) table.get(Etat);
+		return (Map<Automate.Entree, Triplet>) table.get(Etat);
 	}
 
-	public String getEtatSuiv(String Etat, int Entree) throws Exception {
+	public String getEtatSuiv(String Etat, Automate.Entree Entree) throws Exception {
 		if (!table.containsKey(Etat))
 			throw new Exception("L'etat renseigné n'existe pas dans la table");
 		if (!table.get(Etat).containsKey(Entree))
@@ -90,7 +97,7 @@ public class TableTransitionSortie {
 		return table.get(Etat).get(Entree).EtatSuiv;
 	}
 
-	public int getSortie(String Etat, int Entree) throws Exception {
+	public Automate.Sortie getSortie(String Etat, Automate.Entree Entree) throws Exception {
 		if (!table.containsKey(Etat))
 			throw new Exception("L'etat renseigné n'existe pas dans la table");
 		if (!table.get(Etat).containsKey(Entree))
@@ -101,9 +108,9 @@ public class TableTransitionSortie {
 
 	public String toString() {
 		String res = "Table De Transition et Sortie \n";
-		for (Entry<String, Map<Integer, Triplet>> i : table.entrySet()) {
+		for (Entry<String, Map<Automate.Entree, Triplet>> i : table.entrySet()) {
 			res += "ETAT " + i.getKey() + " : ";
-			for (Map.Entry<Integer, Triplet> e : i.getValue().entrySet()) {
+			for (Map.Entry<Automate.Entree, Triplet> e : i.getValue().entrySet()) {
 				res += " [ENTREE " + e.getKey() + " : etatSuiv "
 						+ e.getValue().EtatSuiv + ", SORTIE "
 						+ e.getValue().Sortie + "], ";

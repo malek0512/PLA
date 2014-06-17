@@ -1,0 +1,19 @@
+<?xml version = "1.0" ?>
+<Automate ID= "A_ALEATOIRE_AVEUGLE" > 
+<Etat Nom= "1" > 
+ <Transition Entree= "12" Etat= "2" Action = "0" > </Transition> 
+</Etat> 
+<Etat Nom= "2" > 
+ <Transition Entree= "12" Etat= "1" Action = "7" > </Transition> 
+</Etat> 
+<Etat_Initial> 
+<Etat Nom= "1" > 
+</Etat> 
+</Etat_Initial> 
+<Etats_Finals> 
+</Etats_Finals> 
+<Etats_Bloquants> 
+<Etat Nom= "1" > 
+</Etat> 
+</Etats_Bloquants> 
+</Automate> 

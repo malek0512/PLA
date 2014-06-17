@@ -1,34 +1,41 @@
 <?xml version = "1.0" ?>
 <Automate ID= "A_ALEATOIRE" > 
 <Etat Nom= "1" > 
- <Transition Entree= "11" Etat= "2" Action = "10" > </Transition> 
- <Transition Entree= "10" Etat= "8" Action = "5" > </Transition> 
+<<<<<<< HEAD
+ <Transition Entree= "NON_FREE" Etat= "2" Action = "OBEIR" > </Transition> 
+ <Transition Entree= "FREE" Etat= "8" Action = "RIEN" > </Transition> 
 </Etat> 
 <Etat Nom= "2" > 
- <Transition Entree= "11" Etat= "2" Action = "10" > </Transition> 
- <Transition Entree= "10" Etat= "7" Action = "5" > </Transition> 
-</Etat> 
-<Etat Nom= "8" > 
- <Transition Entree= "9" Etat= "8" Action = "0" > </Transition> 
- <Transition Entree= "14" Etat= "7" Action = "5" > </Transition> 
-</Etat> 
-<Etat Nom= "7" > 
- <Transition Entree= "8" Etat= "5" Action = "0" > </Transition> 
- <Transition Entree= "7" Etat= "3" Action = "5" > </Transition> 
+ <Transition Entree= "NON_FREE" Etat= "2" Action = "OBEIR" > </Transition> 
+ <Transition Entree= "FREE" Etat= "7" Action = "RIEN" > </Transition> 
 </Etat> 
 <Etat Nom= "3" > 
- <Transition Entree= "6" Etat= "5" Action = "0" > </Transition> 
- <Transition Entree= "5" Etat= "4" Action = "0" > </Transition> 
+ <Transition Entree= "NON_PM_DANS_CROIX" Etat= "5" Action = "AVANCER" > </Transition> 
+ <Transition Entree= "PM_DANS_CROIX" Etat= "4" Action = "AVANCER" > </Transition> 
 </Etat> 
 <Etat Nom= "4" > 
- <Transition Entree= "1" Etat= "3" Action = "0" > </Transition> 
- <Transition Entree= "0" Etat= "6" Action = "0" > </Transition> 
+ <Transition Entree= "CASE_OCCUPEE" Etat= "3" Action = "AVANCER" > </Transition> 
+ <Transition Entree= "CASE_LIBRE" Etat= "6" Action = "AVANCER" > </Transition> 
 </Etat> 
 <Etat Nom= "5" > 
- <Transition Entree= "12" Etat= "8" Action = "7" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "8" Action = "DIRECTION_ALEATOIRE" > </Transition> 
 </Etat> 
 <Etat Nom= "6" > 
- <Transition Entree= "12" Etat= "4" Action = "0" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "4" Action = "AVANCER" > </Transition> 
+</Etat> 
+<Etat Nom= "7" > 
+ <Transition Entree= "NON_INTERSECTION" Etat= "5" Action = "AVANCER" > </Transition> 
+ <Transition Entree= "INTERSECTION" Etat= "3" Action = "RIEN" > </Transition> 
+</Etat> 
+<Etat Nom= "8" > 
+ <Transition Entree= "CASE_NON_ATTEINTE" Etat= "8" Action = "AVANCER" > </Transition> 
+ <Transition Entree= "CASE_ATTEINTE" Etat= "7" Action = "RIEN" > </Transition> 
+=======
+ <Transition Entree= "12" Etat= "2" Action = "0" > </Transition> 
+</Etat> 
+<Etat Nom= "2" > 
+ <Transition Entree= "12" Etat= "1" Action = "7" > </Transition> 
+>>>>>>> f2ad36a5f841170b1ff660eb81759276bcdef1a4
 </Etat> 
 <Etat_Initial> 
 <Etat Nom= "1" > 
@@ -37,11 +44,7 @@
 <Etats_Finals> 
 </Etats_Finals> 
 <Etats_Bloquants> 
-<Etat Nom= "6" > 
-</Etat> 
-<Etat Nom= "8" > 
-</Etat> 
-<Etat Nom= "9" > 
+<Etat Nom= "1" > 
 </Etat> 
 </Etats_Bloquants> 
 </Automate> 

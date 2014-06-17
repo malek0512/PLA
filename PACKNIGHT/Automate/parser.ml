@@ -119,7 +119,7 @@ let rec string_inputs = function in_channel ->
     with
         End_of_file -> []
 
-
+(*)
 (*Ouvre la TABLE de correspondance Nom / Code des primitive de test et action*)
 let getTable =
   let in_channel = open_in "TABLE" in
@@ -137,6 +137,7 @@ let rec filter liste_transition  =
   match liste_transition with
   |[] -> []
   |(osef, test, action) :: tail -> let test_code=(search_correspondance table (test)) and action_code=(search_correspondance table (action)) in (osef,test_code, action_code) :: filter tail
+*)
 
 let rec parse_transition (l) = match l with
   |[]->([],[])
@@ -145,7 +146,7 @@ let rec parse_transition (l) = match l with
 
 let rec parse_etat l = match l with
   |[]-> ([],[])
-  |V "Etat" :: S name :: tail -> let (a,b) = parse_transition tail in let (c,d)=parse_etat b in ({nom = name; transitions = (filter a)}::c, d)
+  |V "Etat" :: S name :: tail -> let (a,b) = parse_transition tail in let (c,d)=parse_etat b in ({nom = name; transitions = (a)}::c, d)
   |a::b -> ([],a::b)
 
 let parse_etat_init l = match l with
