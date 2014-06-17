@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import personnages.Coordonnees;
 import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Ghost;
