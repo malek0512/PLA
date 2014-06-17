@@ -40,12 +40,12 @@ public class PrimitivesTest extends Primitives {
 	 * @return Une ENTREE de l'automate. Selon la configuratoin de la case devant le robot
 	 * @author malek
 	 */
-	public int configCaseDevant() {
+	public Automate.Entree configCaseDevant() {
 		boolean caseDevantDispo = this.auto.getPersonnage().caseDevantDisponible();
 		if (!caseDevantDispo)
-			return Automate.CASE_OCCUPEE;
+			return Automate.Entree.CASE_OCCUPEE;
 		else
-			return Automate.CASE_LIBRE;
+			return Automate.Entree.CASE_LIBRE;
 	}
 	/**
 	 * Specification de la méthode dans primitive
@@ -73,4 +73,12 @@ public class PrimitivesTest extends Primitives {
 		return ((Ghost) auto.getPersonnage()).getControle();
 	}
 	
+	/**
+	 * Fonction de test Automate.FM_DANS_RAYON
+	 * @param d
+	 * @return True si un ou plusieurs pacman sont dans le rayon 
+	 */
+	protected boolean fmDansRayon(int d) {
+		return this.fantomeEstDansRayon(d).size()!=0;
+	}
 }

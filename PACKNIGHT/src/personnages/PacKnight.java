@@ -97,7 +97,6 @@ public class PacKnight extends Pacman{
 	/**
 	 * renvoie vrai si le pac-knight est parametrable
 	 */
-
 	public boolean parametrable() {
 		return !(this.seMeurt);
 	}
@@ -124,6 +123,7 @@ public class PacKnight extends Pacman{
 	}
 
 	@Override
+	//Renvoie vrai s'il est vivant
 	public boolean hitting() {
 		return !(seMeurt);
 	}

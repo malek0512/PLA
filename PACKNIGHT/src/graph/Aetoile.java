@@ -16,7 +16,7 @@ public class Aetoile {
 	
 	private List<NoeudEtoile> fermer;
 	
-	static private CoordonneesFloat dest;
+	static private CoordonneesFloat teteDeliste;
 	
 	private int distance(CoordonneesFloat c1, CoordonneesFloat c2)
 	{
@@ -25,7 +25,7 @@ public class Aetoile {
 	
 	private int distance(CoordonneesFloat c1)
 	{
-		return distance(c1,Aetoile.dest);
+		return distance(c1,Aetoile.teteDeliste);
 	}
 	
 	private boolean appartient(List<NoeudEtoile> l, NoeudEtoile fi)
@@ -43,7 +43,7 @@ public class Aetoile {
 	{
 		ouvert = new LinkedList<NoeudEtoile>();
 		fermer = new LinkedList<NoeudEtoile>();
-		Aetoile.dest = dest;
+		Aetoile.teteDeliste = dest;
 	}
 	
 	private NoeudEtoile extract(List<NoeudEtoile> list)
@@ -68,9 +68,9 @@ public class Aetoile {
 		return res;
 	}
 	
-	public List<CoordonneesFloat> algo(CoordonneesFloat src)
+	public List<CoordonneesFloat> algo(CoordonneesFloat queueDeListe)
 	{
-		NoeudEtoile init = new NoeudEtoile(distance(src), null, src);
+		NoeudEtoile init = new NoeudEtoile(distance(queueDeListe), null, queueDeListe);
 		ouvert.add(init);
 		
 		while(!ouvert.isEmpty())
@@ -87,7 +87,7 @@ public class Aetoile {
 					
 					fi.pere = m;
 					
-					if (fi.cord.equals(Aetoile.dest))
+					if (fi.cord.equals(Aetoile.teteDeliste))
 					{
 						init = fi;
 						break;
@@ -105,8 +105,7 @@ public class Aetoile {
 			res.add(init.cord);
 			init = init.pere;
 		}
-		res.add(src);
-		res.remove(0);
+		res.add(queueDeListe);
 		return res;
 	}
 	

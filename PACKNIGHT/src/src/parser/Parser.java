@@ -105,9 +105,9 @@ public class Parser {
 		   while(j.hasNext())
 		   {
 			   Element transition = (Element)j.next(); 
-			   Integer Ientree = Integer.parseInt(transition.getAttributeValue(attribue_Transition_Entree));
+			   String Ientree = (transition.getAttributeValue(attribue_Transition_Entree));
 			   String Iarriver = (transition.getAttributeValue(attribue_Transition_EtatArriver));
-			   Integer Isortie = Integer.parseInt(transition.getAttributeValue(attribue_Transition_Sortie));
+			   String Isortie = (transition.getAttributeValue(attribue_Transition_Sortie));
 
 			   transitionSortie.get(Ietat).add(new Quad(Ientree, Iarriver, Isortie));
 			   //tabSort[Ietat][Ientree] = Isortie;
