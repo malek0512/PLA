@@ -172,14 +172,16 @@ public class PrimitivesAction extends Primitives{
 	
 	public void suivre(){
 		Iterator<Pacman> i = Ghost.central.keySet().iterator();
-		Pacman min = i.next();
-		while (i.hasNext()){
-			Pacman next = i.next();
-			if (next.getCoord().CasCentre().distance(auto.getPersonnage().getCoord().CasCentre())
-					< next.getCoord().CasCentre().distance(min.getCoord().CasCentre()))
-				min = next;
+		if (i.hasNext()){
+			Pacman min = i.next();
+			while (i.hasNext()){
+				Pacman next = i.next();
+				if (next.getCoord().CasCentre().distance(auto.getPersonnage().getCoord().CasCentre())
+						< next.getCoord().CasCentre().distance(min.getCoord().CasCentre()))
+					min = next;
+			}
+			
+			suivre(min.getCoord());
 		}
-		
-		suivre(min.getCoord());
 	}
 }
