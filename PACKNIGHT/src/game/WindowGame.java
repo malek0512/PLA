@@ -23,7 +23,7 @@ import structure_terrain.*;
 
 
 public class WindowGame extends BasicGame {
-	
+
 	/*Les differentes resolutions possible sont
 	 * 
 	 * WindowGame.largueur*WindowGame*tuile_size,WindowGame.hauteur*WindowGame*tuile_size
@@ -34,31 +34,31 @@ public class WindowGame extends BasicGame {
 	 * 1360,768
 	 */
 
-	
+
 	static int resolution_x = 800;
 	static int resolution_y = 600;
-	
+
 	private String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_3 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_4 = "PACMAN-SPRITES2.png";
-	
+
 	private String SPRITE_GHOST_1 = "Leona.png";
 	private String SPRITE_GHOST_2 = "Soraka.png";
 	private String SPRITE_GHOST_3 = "Janna.png";
 	private String SPRITE_GHOST_4 = "Lulu.png";
-	
-	
-	private String MAP = "PACMAN-SANS-TORE.tmx";
+
+
+	private String MAP = "TEST2.tmx";
 	private String MUSIC = "AllBeat.ogg";
-	
+
 
 	public static int tuile_size = 32;
 	public static int largueur_map , hauteur_map ;
 	int taillePersonnage =32;
-	
 
-	PacKnight PACMAN_1= new PacKnight("J1",10,10,Direction.droite,new CoordonneesFloat(1, 1));
+
+	PacKnight PACMAN_1= new PacKnight("J1",14,10,Direction.droite,new CoordonneesFloat(1, 1));
 	//PacKnight PACMAN_2 = new PacKnight("J2",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 	//PacKnight PACMAN_3 = new PacKnight("J3",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 	//PacKnight PACMAN_4 = new PacKnight("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
@@ -68,13 +68,13 @@ public class WindowGame extends BasicGame {
 	//Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite,new CoordonneesFloat(1, 1));
 	//Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(1, 1));
 
-	
+
 	Automate aleatoire,berserk;
-	
+
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
 	private String CHEMIN_MUSIC = "src/graphisme/main/ressources/music/";
-			
+
     private GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
@@ -90,13 +90,13 @@ public class WindowGame extends BasicGame {
 	private Animation[] animations_GHOST_2 = new Animation[8];
 	private Animation[] animations_GHOST_3 = new Animation[8];
 	private Animation[] animations_GHOST_4 = new Animation[8];
-	
+
 	private Music M;
 	private Image PACGUM,HEART,PAUSE_IMAGE;
 	protected CoordonneesFloat coordFloat;
 	boolean PAUSE = false;
 	private int taille_minimap = 4;
-	
+
 	public WindowGame() {
         super("PACKNIGHT : THE RETURN");
     }
@@ -157,7 +157,7 @@ public class WindowGame extends BasicGame {
        // g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
         //g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
         //g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], PACMAN_4.getCoord().x, PACMAN_4.getCoord().y);
-        if(GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x+largueur_interface, GHOST_1.getCoord().y);
+       // if(GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x+largueur_interface, GHOST_1.getCoord().y);
         if(GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x+largueur_interface, GHOST_2.getCoord().y);
        // if(GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x, GHOST_3.getCoord().y);
        // if(GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x, GHOST_4.getCoord().y);
@@ -177,6 +177,7 @@ public class WindowGame extends BasicGame {
 		{
 			PAUSE_IMAGE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
 			PAUSE_IMAGE.draw(0,0);
+			g.setColor(Color.white);
 			g.drawString("Resume (P)", 250, 100);
 			g.drawString("Main Menu (I'M WORKING ON IT >.<)", 250, 150);
 			g.drawString("Quit Game (ESCAPE)", 250, 250);
@@ -189,22 +190,35 @@ public class WindowGame extends BasicGame {
 	    		PACMAN_1.avancer();
 	    	else
 	    		PACMAN_1.avancerAnimation();
-	    	
-	    	
-	        float w = container.getWidth() / 4;
-	        if (PACMAN_1.getCoord().x > (this.xCamera + w) && (PACMAN_1.getCoord().x + w  <  largueur_map*tuile_size))
-	        	this.xCamera = PACMAN_1.getCoord().x - w;
-	        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w)) 
-	        	this.xCamera = PACMAN_1.getCoord().x + w;
+
+	    	float w = container.getWidth() / 4;
+	    	if(!(PACMAN_1.getCoord().x -xCamera > resolution_x/2 || PACMAN_1.getCoord().x -xCamera < -resolution_x/2))
+	    	{
+
+		        if (PACMAN_1.getCoord().x +largueur_map*taille_minimap > (this.xCamera + w ) && (PACMAN_1.getCoord().x + w   <  largueur_map*tuile_size))
+		        	this.xCamera = PACMAN_1.getCoord().x - w + largueur_map*taille_minimap;
+		        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w )) 
+		        	this.xCamera = PACMAN_1.getCoord().x + w;
+	    	} 
+	    	else if((PACMAN_1.getCoord().x -xCamera > resolution_x/2)) this.xCamera = largueur_map*tuile_size-largueur_map*taille_minimap ;
+	    	else if((PACMAN_1.getCoord().x -xCamera < -resolution_x/2)) this.xCamera = resolution_x/2;
+
 	        float h = container.getHeight() / 4;
-	        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
-	        	this.yCamera = PACMAN_1.getCoord().y - h;
-	        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
-	        	this.yCamera = PACMAN_1.getCoord().y + h;
-	        
+	    	if(!(PACMAN_1.getCoord().y -yCamera > resolution_y/2 || PACMAN_1.getCoord().y -yCamera < -resolution_y/2))
+	    	{
+
+		        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
+		        	this.yCamera = PACMAN_1.getCoord().y - h;
+		        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
+		        	this.yCamera = PACMAN_1.getCoord().y + h;
+	    	}
+	    	else if((PACMAN_1.getCoord().y -yCamera > resolution_y/2)) this.yCamera = resolution_x-h;
+	    	else if((PACMAN_1.getCoord().y -yCamera < -resolution_y/2)) this.yCamera = resolution_y/2;
+
+
 	        try
 	        {
-	        aleatoire.suivant();
+	       // aleatoire.suivant();
 	        berserk.suivant();
 	        }
 	        catch (Exception e) {System.out.println(e);}
@@ -228,12 +242,12 @@ public class WindowGame extends BasicGame {
 			    case Input.KEY_LEFT:  PACMAN_1.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
 			    case Input.KEY_DOWN:  PACMAN_1.setNextDirection(Direction.bas);this.direction= 2; this.moving = true; break;
 			    case Input.KEY_RIGHT: PACMAN_1.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
-		
+
 			  //  case Input.KEY_Z:    PACMAN_2.setNextDirection(Direction.haut); this.direction= 0; this.moving = true;  break;
 			   // case Input.KEY_Q:  PACMAN_2.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
 			    //case Input.KEY_S:  PACMAN_2.setNextDirection(Direction.bas);this.direction= 2; this.moving = true;  break;
 			    //case Input.KEY_D: PACMAN_2.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
-			    
+
 			    case Input.KEY_P: PAUSE = true; break;
 			    }
 	    }
@@ -242,8 +256,8 @@ public class WindowGame extends BasicGame {
 		    case Input.KEY_M: if(this.M.playing()) this.M.pause() ;else this.M.resume(); break;
 	    }
 	}
-	
-	
+
+
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
 	    Animation animation = new Animation();
 	    for (int x = startX; x < endX; x++) {
@@ -274,7 +288,7 @@ public class WindowGame extends BasicGame {
 			}
 		}
 	}
-	
+
 	public void drawPacGum(Terrain terrain, int largueur_interface){
 		for(int i=0;i<largueur_map;i++)
 		{
@@ -285,7 +299,7 @@ public class WindowGame extends BasicGame {
 			}
 		}
 }
-	
+
 	public void drawHeart(float x, float y)
 	{
         int i = 0;
@@ -304,9 +318,9 @@ public class WindowGame extends BasicGame {
         }
 
 	}
-	
+
 	public void toSprite(Animation animation[],SpriteSheet Personnage){
-	
+
     animation[0] = loadAnimation(Personnage, 0, 1, 0);
     animation[1] = loadAnimation(Personnage, 0, 1, 1);
     animation[2] = loadAnimation(Personnage, 0, 1, 2);
@@ -317,35 +331,35 @@ public class WindowGame extends BasicGame {
     animation[7] = loadAnimation(Personnage, 1, 9, 3);
     
 	}
-	
+
 	public void Minimap(Terrain terrain,Graphics g, float decalage_x,float decalage_y){
 		for(int i=0;i<largueur_map;i++)
 		{
 			for(int j=0;j<hauteur_map;j++)
 			{
-	
+
 		        if(terrain.terrain[i][j].caseValeur() == 0)
 		        {	
 		            g.setColor(Color.blue);
-		            g.fillRect(i*taille_minimap+decalage_x, j*taille_minimap,taille_minimap+decalage_y,taille_minimap);
+		            g.fillRect(i*taille_minimap+decalage_x, j*taille_minimap+decalage_y,taille_minimap,taille_minimap);
 		        }
 		        else if(terrain.terrain[i][j].caseValeur() == 2)
 	        	{
 		            g.setColor(Color.yellow);
-		            g.fillRect(i*taille_minimap+decalage_x,j*taille_minimap,taille_minimap+decalage_y,taille_minimap);
+		            g.fillRect(i*taille_minimap+decalage_x,j*taille_minimap+decalage_y,taille_minimap,taille_minimap);
 		        }
 		        else 
 		        {
 		            g.setColor(Color.black);
-		            g.fillRect(i*taille_minimap+decalage_x, j*taille_minimap,taille_minimap+decalage_y,taille_minimap);
+		            g.fillRect(i*taille_minimap+decalage_x, j*taille_minimap+decalage_y,taille_minimap,taille_minimap);
 		        }
 			}
 		}	
         g.setColor(Color.orange);
-        g.fillRect(PACMAN_1.getCoord().CasCentre().x*taille_minimap+decalage_x, PACMAN_1.getCoord().CasCentre().y*taille_minimap,taille_minimap,taille_minimap+decalage_y);
+        g.fillRect(PACMAN_1.getCoord().CasCentre().x*taille_minimap+decalage_x, PACMAN_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
         g.setColor(Color.red);
-        g.fillRect(GHOST_1.getCoord().CasCentre().x*taille_minimap+decalage_x, GHOST_1.getCoord().CasCentre().y*taille_minimap,taille_minimap,taille_minimap+decalage_y);
-        g.fillRect(GHOST_2.getCoord().CasCentre().x*taille_minimap+decalage_x, GHOST_2.getCoord().CasCentre().y*taille_minimap,taille_minimap,taille_minimap+decalage_y);
+        g.fillRect(GHOST_1.getCoord().CasCentre().x*taille_minimap+decalage_x, GHOST_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+        g.fillRect(GHOST_2.getCoord().CasCentre().x*taille_minimap+decalage_x, GHOST_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
         
 	}
 }

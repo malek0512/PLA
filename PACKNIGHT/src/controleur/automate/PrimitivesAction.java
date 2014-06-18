@@ -108,6 +108,18 @@ public class PrimitivesAction extends Primitives{
 			}
 		}
 	}
+	public void auSecours2(){
+		PacPrincess bitch = (PacPrincess) auto.getPersonnage();
+//			if (PacKnight.liste.size()>0) {
+				PacKnight p = this.whichHero(bitch);
+				//Si le knight n'est pas déja au service d'une autre bitch
+					p.princesseEnDetresse = bitch;
+					p.ghostEnChasse = new Ghost("",1,1,Direction.droite,new CoordonneesFloat(1,1));
+//			}
+//			else {
+//				//TODO FUIRE, il n'y a aucun knight pour la proteger 
+//			}
+		}
 	
 	/**
 	 * PACKNIGHT

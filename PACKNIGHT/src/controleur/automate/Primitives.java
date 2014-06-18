@@ -198,7 +198,7 @@ public class Primitives {
 		
 		//On met a jour le chemin vers c, dans l'un des cas stipulé dans la condition 
 		if (chemin == null || chemin.size()==0 || nbCout >3 ){
-			Aetoile depart = new Aetoile(c);
+			Aetoile depart = new Aetoile(c.CasCentre());
 			chemin = depart.algo(auto.getPersonnage().getCoord().CasCentre()); //case approximative TODO
 			nbCout=0;
 		}
