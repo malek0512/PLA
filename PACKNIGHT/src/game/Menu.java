@@ -20,7 +20,7 @@ public class Menu extends StateBasedGame {
    public static void main(String[] argv) {
       try {
          AppGameContainer container = new AppGameContainer(new Menu());
-         container.setDisplayMode(800,600,false);
+         container.setDisplayMode(WindowGame.resolution_x,WindowGame.resolution_y,false);
          container.start();
       } catch (SlickException e) {
          e.printStackTrace();
