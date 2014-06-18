@@ -49,7 +49,7 @@ public class WindowGame extends BasicGame {
 	private String SPRITE_GHOST_4 = "Lulu.png";
 	
 	
-	private String MAP = "TEST2.tmx";
+	private String MAP = "PACMAN.tmx";
 	private String MUSIC = "AllBeat.ogg";
 	
 
@@ -157,7 +157,7 @@ public class WindowGame extends BasicGame {
        // g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
         //g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
         //g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], PACMAN_4.getCoord().x, PACMAN_4.getCoord().y);
-       // if(GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x+largueur_interface, GHOST_1.getCoord().y);
+       if(GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x+largueur_interface, GHOST_1.getCoord().y);
         if(GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x+largueur_interface, GHOST_2.getCoord().y);
        // if(GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x, GHOST_3.getCoord().y);
        // if(GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x, GHOST_4.getCoord().y);
@@ -200,7 +200,7 @@ public class WindowGame extends BasicGame {
 		        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w )) 
 		        	this.xCamera = PACMAN_1.getCoord().x + w;
 	    	} 
-	    	else if((PACMAN_1.getCoord().x -xCamera > resolution_x/2)) this.xCamera = largueur_map*tuile_size-largueur_map*taille_minimap ;
+	    	else if((PACMAN_1.getCoord().x -xCamera > resolution_x/2)) this.xCamera = largueur_map*tuile_size-resolution_x/2+largueur_map*taille_minimap ;
 	    	else if((PACMAN_1.getCoord().x -xCamera < -resolution_x/2)) this.xCamera = resolution_x/2;
 	    	
 	        float h = container.getHeight() / 4;
