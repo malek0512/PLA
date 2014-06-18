@@ -37,15 +37,15 @@ public class Primitives {
 	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position, int rayon) {
 		List<Pacman> res = new LinkedList<Pacman>();
 		
-		float someXYSource = position.CasCentre().sommeXY();
+
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
 			Pacman pac = i.next();
-			float someXYTester = pac.getCoord().CasCentre().sommeXY();
-			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon && !res.contains(pac)){
+			if(position.CasCentre().distance(pac.getCoord().CasCentre())<=rayon){
 				res.add(pac);
-				if(Ghost.central.containsKey(pac))
-					Ghost.central.get(pac).coord=pac.getCoord().CasCentre();
+				if(Ghost.central.containsKey(pac)){
+					Ghost.central.get(pac).majAvisDeRecherche(pac.getCoord().CasCentre());
+				}
 				else
 					Ghost.central.put(pac,((Ghost)auto.getPersonnage()).new AvisDeRecherche(pac.getCoord().CasCentre()));
 			}
@@ -198,7 +198,7 @@ public class Primitives {
 		
 		//On met a jour le chemin vers c, dans l'un des cas stipulé dans la condition 
 		if (chemin == null || chemin.size()==0 || nbCout >3 ){
-			Aetoile depart = new Aetoile(c);
+			Aetoile depart = new Aetoile(c.CasCentre());
 			chemin = depart.algo(auto.getPersonnage().getCoord().CasCentre()); //case approximative TODO
 			nbCout=0;
 		}
@@ -222,7 +222,8 @@ public class Primitives {
 		PacKnight captainBitch=PacKnight.liste.get(0);
 		for(PacKnight knight : PacKnight.liste){
 			if(knight.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees())
-					< captainBitch.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees()))
+					< captainBitch.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees())
+					&& knight.peutProteger())
 				captainBitch = knight;
 		}
 		return captainBitch;
@@ -245,7 +246,33 @@ public class Primitives {
 		}
 		return res;
 	}
-	
-	
-	
+
+	/**
+	 * fonction misterieuse qui renvoie la direction a prendre pour aller
+	 * de la case src vers la case dest
+	 * @param src : case source
+	 * @param dest : case destination
+	 * @return la direction a suivre pour aller a dest
+	 * @author Mysterious Guy
+	 */
+	public Direction mysteriousFunction(CoordonneesFloat src, CoordonneesFloat dest)
+	{
+		int x = src.x - dest.x;
+		int y = src.y - dest.y;
+		
+		if(x==0)
+		{
+			if(x==-1)
+				return Direction.droite; 
+			else
+				return Direction.gauche;
+		}
+		else//y == 0
+		{
+			if(y==-1)
+				return Direction.bas;
+			else
+				return Direction.haut;
+		}
+	}
 }

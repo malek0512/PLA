@@ -12,6 +12,7 @@ import personnages.Direction;
 import personnages.Ghost;
 import personnages.Personnage;
 
+
 /**
  * Toute primitive de test doit etre ajoutée dans PrimitivesTest, et se voit attribuée, une constante en public, ci dessous.
  * Une fois ajoutée en fin de fichier: 
@@ -30,7 +31,7 @@ public class Automate extends Controleur {
 	public static enum Entree{
 		CASE_LIBRE, CASE_OCCUPEE, SORTIE_TERRAIN, CASE_GHOST, PM_DANS_RAYON_X, NON_PM_DANS_RAYON_X, PM_DANS_CROIX, 
 		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_ATTEINTE, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE,
-		EN_DETRESSE;
+		EN_DETRESSE, VUE, PAS_VUE;
 		
 		public static boolean contains (String s){
 			try{
@@ -44,7 +45,7 @@ public class Automate extends Controleur {
 
 	public static enum Sortie{
 		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, PROCHAINE_DIRECTION, CHEMIN_PLUS_COURT, OBEIR,
-		END_LIFE, SPAWN, STUN, PROTEGER_PRINCESSE;
+		END_LIFE, SPAWN, STUN, PROTEGER_PRINCESSE, AU_SECOURS;
 		public static boolean contains (String s){
 			try{
 				Sortie.valueOf(s);
@@ -143,6 +144,7 @@ public class Automate extends Controleur {
 				case RIEN:primitivesAction.pass(); break;
 				case STUN:primitivesAction.stun(); break;
 				case PROTEGER_PRINCESSE:primitivesAction.protegerPrincesse(1); break;
+				case AU_SECOURS:primitivesAction.auSecours2(); break;
 				}
 			}
 			while(this.personnage.parametrable() && !(isEtatBloquant()));
@@ -195,7 +197,9 @@ public class Automate extends Controleur {
 				case FREE: if(!primitivesTest.isControled()) return Entree.FREE; break;
 				case NON_FREE: if(primitivesTest.isControled()) return Entree.NON_FREE; break;
 				case ETOILE: return Entree.ETOILE;
-				case EN_DETRESSE: //if (primitivesTest.) break; 
+				case EN_DETRESSE: return Entree.EN_DETRESSE;
+				case VUE:if(primitivesTest.vu())return Entree.VUE; break;
+				case PAS_VUE:if(!primitivesTest.vu())return Entree.PAS_VUE; break;
 			//	}
 			}
 		}
@@ -275,5 +279,6 @@ public class Automate extends Controleur {
 		res += " Etat Courant : " + etatCourant + "\n Nb Transition : " + nbTransition + "\n Etats Finals : " + etatsFinals.toString() + "\n";
 		return res;
 	}
+	
 
 }

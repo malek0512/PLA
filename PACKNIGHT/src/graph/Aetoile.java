@@ -39,13 +39,27 @@ public class Aetoile {
 		return false;
 	}
 	
-	public Aetoile(CoordonneesFloat dest)
+	public Aetoile(CoordonneesFloat teteDeliste)
 	{
 		ouvert = new LinkedList<NoeudEtoile>();
 		fermer = new LinkedList<NoeudEtoile>();
-		Aetoile.teteDeliste = dest;
+		Aetoile.teteDeliste = teteDeliste;
 	}
 	
+	/**
+	 * reinit le graph pour aetoile
+	 */
+	public void reinit()
+	{
+		ouvert = new LinkedList<NoeudEtoile>();
+		fermer = new LinkedList<NoeudEtoile>();
+	}
+	
+	/**
+	 * extrait le plus petit element
+	 * @param list
+	 * @return
+	 */
 	private NoeudEtoile extract(List<NoeudEtoile> list)
 	{
 		int min = 255;
@@ -68,6 +82,11 @@ public class Aetoile {
 		return res;
 	}
 	
+	/**
+	 * renvoie la l'itinairaire
+	 * @param queueDeListe
+	 * @return
+	 */
 	public List<CoordonneesFloat> algo(CoordonneesFloat queueDeListe)
 	{
 		NoeudEtoile init = new NoeudEtoile(distance(queueDeListe), null, queueDeListe);

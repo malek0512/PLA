@@ -1,7 +1,10 @@
 package controleur.automate;
 
 
+import java.util.Iterator;
 import java.util.List;
+
+import personnages.Ghost;
 import personnages.Pacman;
 
 
@@ -26,7 +29,18 @@ public class PrimitivesTest extends Primitives {
 		return res.size()!=0;
 		
 	}
-	
+	/**
+	 * Methode utilisant la centrale contrairement à dansrayon*/
+	protected boolean vu(){
+		boolean res=false;
+		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();){
+			Pacman pac = i.next();
+			if(dansRayon(((Ghost)auto.getPersonnage()).getVision())|| Ghost.central.containsKey(pac)){
+				res=true;
+			}
+		}
+		return res;
+	}
 	/**
 	 * @return Une ENTREE de l'automate. Selon la configuratoin de la case devant le robot
 	 * @author malek

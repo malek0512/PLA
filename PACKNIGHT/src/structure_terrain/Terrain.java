@@ -102,47 +102,26 @@ public class Terrain {
 	 */
 	public boolean caseAcessible(int x, int y, int distance, Direction direction)
 	{
-		//if(estDansLeTerrain(x,y))
 			switch(direction)
 			{
-			case haut : return terrain[x][(y-distance) % this.hauteur].isAccessable();
-			case bas : return terrain[x][(y+distance)  % this.hauteur].isAccessable();
-			case droite : return terrain[(x+distance) % this.largeur][y].isAccessable();
-			case gauche : return terrain[(x-distance) % this.largeur][y].isAccessable();
+			case haut :
+				if(estDansLeTerrain(x,y-distance))
+					return terrain[x][y-distance].isAccessable();
+			case bas :
+				if(estDansLeTerrain(x,y+distance))
+					return terrain[x][y+distance].isAccessable();
+			case droite :
+				if(estDansLeTerrain(x+distance,y))
+					return terrain[(x+distance)][y].isAccessable();
+			case gauche : 
+				if(estDansLeTerrain(x-distance,y))
+					return terrain[(x-distance)][y].isAccessable();
 			default:
 				break; 
 			}
 		return false;
 	}
 	
-	/**
-	 * ATTENTION : ceci ne fonctionne que pour des coordonnées de TERRAIN et non de PERSONNAGE
-	 * @param coord : coordonnée de la case a regarder 
-	 * @param direction : direction de la case que l'on veut retourner
-	 * @return case si avancer dans direction
-	 * @author alex
-	 * 
-	 * Pas de test si les coordonnées sont dans le terrain ? (malek)
-	 * @throws Exception 
-	 */
-
-	public Case getCase(int x, int y,Direction direction)
-	{
-	//	if(estDansLeTerrain(new Coordonnees((int) (x/WindowGame.tuile_size),(int) (y/WindowGame.tuile_size))))
-
-			switch(direction)
-			{
-			case haut : return terrain[x][y-1];
-			case bas : return terrain[x][y+1];
-			case droite :return terrain[x+1][y];
-			case gauche : return terrain[x-1][y];
-			default:
-
-				break; 
-			}
-		return null;
-
-	}
 	/**
 	 * TODO : a faire plus tard...
 	 * @author malek
@@ -170,10 +149,10 @@ public class Terrain {
 		int tmpY = y;
 		switch (d)
 		{
-		case haut : tmpY--; break;
-		case bas : tmpY++; break;
-		case droite : tmpX++; break;
-		case gauche : tmpX--; break;
+		case haut : tmpY-= 1; break;
+		case bas : tmpY+= 1; break;
+		case droite : tmpX+=1; break;
+		case gauche : tmpX-=1; break;
 		default : break;
 		}
 		return !(estDansLeTerrain(tmpX, tmpY));

@@ -1,6 +1,9 @@
 package controleur.automate;
 
 
+import graph.Aetoile;
+import graph.Graph;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -94,20 +97,25 @@ public class PrimitivesAction extends Primitives{
 		for(Ghost violeur : bitch.violeurs){
 			if (PacKnight.liste.size()>0) {
 				PacKnight p = this.whichHero(bitch);
-				//Si le knight n'est pas déja au service d'une autre bitch
-				if(p.princesseEnDetresse == null){ 
-					p.princesseEnDetresse = bitch;
-					p.ghostEnChasse = violeur;
-					
-				} else if (p.princesseEnDetresse == bitch) { //Si le knight est deja au service de la bitch
-					p.ghostEnChasse = violeur;
-				}
+				p.princesseEnDetresse = bitch;
+				p.ghostEnChasse = violeur;
 			}
 			else {
 				//TODO FUIRE, il n'y a aucun knight pour la proteger 
 			}
 		}
 	}
+	public void auSecours2(){
+		PacPrincess bitch = (PacPrincess) auto.getPersonnage();
+//			if (PacKnight.liste.size()>0) {
+				PacKnight p = this.whichHero(bitch);
+					p.princesseEnDetresse = bitch;
+					p.ghostEnChasse = new Ghost("",1,1,Direction.droite,new CoordonneesFloat(1,1));
+//			}
+//			else {
+//				//TODO FUIRE, il n'y a aucun knight pour la proteger 
+//			}
+		}
 	
 	/**
 	 * PACKNIGHT
@@ -128,19 +136,17 @@ public class PrimitivesAction extends Primitives{
 			//Si la distance, bitch-Packnight^2 > perimetre^2, alors c'est que le packnight doit avancer 
 			//juqu'a arriver dans le perimetre de securité de bitch. Cela permet de se rapprocher de la princesse
 			//en priorite. Au lieu de courrir après un fantome, aleatoire, par exemple
-			CoordonneesFloat prochain;
 			if (bitch.getCoord().distance_square(knight.getCoord())
-					> Math.pow(Perimetre, 2)){
-				prochain = prochaineCase(knight.getCoord().CasCentre());
-				knight.setCoord(prochain);
-			} else {
-				//Une fois dans le perimetre, si la princesse a renseignée son violeur ghostEnChasse!=null 
-				if (knight.ghostEnChasse != null){
-					prochain = prochaineCase(auto.getPersonnage().getCoord());
-					knight.setCoord(prochain);
-				} else {
+					> Math.pow(Perimetre, 2))
+			{
+				//Avance vers la princesse
+				suivre(bitch.getCoord());
+			} else 	{
+				//Une fois dans le perimetre, si la princesse a renseignée son violeur ghostEnChasse!=null
+				if (knight.ghostEnChasse == null)
 					throw new Exception("Erreur ! Je suis un knight, on me demande de chasser un ghost, sans renseignement (ghostEnChasse==null)");
-				}
+
+				suivre(knight.ghostEnChasse.getCoord());
 			}
 		} else {
 			//Sinon on le reinitialise
@@ -150,31 +156,15 @@ public class PrimitivesAction extends Primitives{
 	}
 	
 	/**
-	 * Dirige le knight dans le perimetre de la princesse
-	 * @param Perimetre
-	 * @throws Exception
-	 * @author malek
+	 * Donne des ordre au fantomes pour coincé un pacman donné
 	 */
-	public void patrouiller(int Perimetre) throws Exception{
-		PacKnight knight = ((PacKnight) auto.getPersonnage());
-		//Si le knight est vivant
-		if (knight.hitting()){
-			PacPrincess bitch = knight.princesseEnDetresse;
-			//Si la princesse ne s'est pas identifiée, princesseEnDetresse==null
-			if (bitch==null)
-				throw new Exception("Erreur ! Je suis un knight, on me demande de proteger princesse, sans renseignement (princesseEnDetresse==null)");
-			
-			//Si la distance, bitch-Packnight^2 > perimetre^2, alors c'est que le packnight doit avancer 
-			//juqu'a arriver dans le perimetre de securité de bitch. Cela permet de se rapprocher de la princesse
-			//en priorite. Au lieu de courrir après un fantome, aleatoire, par exemple
-			CoordonneesFloat prochain;
-			if (bitch.getCoord().toCoordonnees().distance_square(knight.getCoord().toCoordonnees())
-					> Math.pow(Perimetre, 2)){
-				prochain = prochaineCase(knight.getCoord());
-				knight.setCoord(prochain);
-			}
-		}
+	public void suivre(CoordonneesFloat ref)
+	{
+		CoordonneesFloat src = this.auto.getPersonnage().coord;
+		Aetoile graph = new Aetoile(src);
+		List<CoordonneesFloat> l = graph.algo(ref);
+		l.remove(0);
+		this.auto.getPersonnage().setDirection(mysteriousFunction(src, l.get(1)));
+		this.auto.getPersonnage().avancer();
 	}
-	
-	
 }
