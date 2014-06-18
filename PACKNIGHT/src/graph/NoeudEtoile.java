@@ -22,7 +22,7 @@ public class NoeudEtoile {
 	
 	public String toString()
 	{
-		return "" + this.cord;
+		return "coord : " + this.cord + " d : " + this.distance;
 		
 	}
 }
