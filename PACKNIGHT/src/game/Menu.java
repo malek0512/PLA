@@ -13,8 +13,8 @@ public class Menu extends StateBasedGame {
    
    public void initStatesList(GameContainer container) {
       addState(new WindowGame());
-      //addState(new TestState2());
-      //addState(new TestState3());
+      addState(new TestState2());
+      addState(new TestState3());
    }
    
    public static void main(String[] argv) {
