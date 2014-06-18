@@ -177,6 +177,7 @@ public class WindowGame extends BasicGame {
 		{
 			PAUSE_IMAGE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
 			PAUSE_IMAGE.draw(0,0);
+			g.setColor(Color.white);
 			g.drawString("Resume (P)", 250, 100);
 			g.drawString("Main Menu (I'M WORKING ON IT >.<)", 250, 150);
 			g.drawString("Quit Game (ESCAPE)", 250, 250);
@@ -189,19 +190,29 @@ public class WindowGame extends BasicGame {
 	    		PACMAN_1.avancer();
 	    	else
 	    		PACMAN_1.avancerAnimation();
-	    	
-	        float w = container.getWidth() / 4;
-	        if (PACMAN_1.getCoord().x +largueur_map*taille_minimap > (this.xCamera + w ) && (PACMAN_1.getCoord().x + w   <  largueur_map*tuile_size))
-	        	this.xCamera = PACMAN_1.getCoord().x - w + largueur_map*taille_minimap;
-	        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w )) 
-	        	this.xCamera = PACMAN_1.getCoord().x + w;
 
-	        float h = container.getHeight() / 4;
-	        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
-	        	this.yCamera = PACMAN_1.getCoord().y - h;
-	        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
-	        	this.yCamera = PACMAN_1.getCoord().y + h;
-	        
+	    	if(!(PACMAN_1.getCoord().x -xCamera > resolution_x/2 || PACMAN_1.getCoord().x -xCamera < -resolution_x/2))
+	    	{
+	    		float w = container.getWidth() / 4;
+		        if (PACMAN_1.getCoord().x +largueur_map*taille_minimap > (this.xCamera + w ) && (PACMAN_1.getCoord().x + w   <  largueur_map*tuile_size))
+		        	this.xCamera = PACMAN_1.getCoord().x - w + largueur_map*taille_minimap;
+		        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w )) 
+		        	this.xCamera = PACMAN_1.getCoord().x + w;
+	    	} 
+	    	else this.xCamera = resolution_x/2;
+	    	
+	    	if(!(PACMAN_1.getCoord().y -yCamera > resolution_y/2 || PACMAN_1.getCoord().y -yCamera < -resolution_y/2))
+	    	{
+	    	
+		        float h = container.getHeight() / 4;
+		        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
+		        	this.yCamera = PACMAN_1.getCoord().y - h;
+		        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
+		        	this.yCamera = PACMAN_1.getCoord().y + h;
+	    	}
+	    	else this.yCamera = resolution_y/2;
+	    	
+	    	
 	        try
 	        {
 	        aleatoire.suivant();
