@@ -66,9 +66,8 @@ public class PacKnight extends Pacman{
 		return null;
 	}
 	
-
 	public boolean canRespawn() {
-		return vie != 0;
+		return vie > 0;
 	}
 
 	public void meurtDansDatroceSouffrance() {
@@ -130,7 +129,6 @@ public class PacKnight extends Pacman{
 		}
 	}
 
-	@Override
 	//Renvoie vrai s'il est vivant
 	public boolean hitting() {
 		return !(agonise);

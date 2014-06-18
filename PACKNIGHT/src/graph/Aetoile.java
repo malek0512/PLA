@@ -62,7 +62,7 @@ public class Aetoile {
 	 */
 	private NoeudEtoile extract(List<NoeudEtoile> list)
 	{
-		int min = 255;
+		int min = Integer.MAX_VALUE;
 		int indice=0;
 		int indiceMin = 0;
 		NoeudEtoile res = null;
