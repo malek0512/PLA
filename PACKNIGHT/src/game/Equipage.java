@@ -19,7 +19,7 @@ public class Equipage {
 	}
 
 	PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(1, 1), true);
-	PacKnight PACMAN_2 = new PacKnight("J2",1,15,Direction.droite,new CoordonneesFloat(1, 1), false);
+	PacKnight PACMAN_2 = new PacKnight("J2",5,15,Direction.droite,new CoordonneesFloat(1, 1), false);
 //	PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1));
 	PacPrincess PACMAN_4 = new PacPrincess("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 

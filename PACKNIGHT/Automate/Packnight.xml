@@ -1,7 +1,11 @@
 <?xml version = "1.0" ?>
 <Automate ID= "Packnight" > 
 <Etat Nom= "1" > 
- <Transition Entree= "EN_DETRESSE" Etat= "1" Action = "PROTEGER_PRINCESSE" > </Transition> 
+ <Transition Entree= "EN_DETRESSE" Etat= "2" Action = "PROTEGER_PRINCESSE" > </Transition> 
+</Etat> 
+<Etat Nom= "2" > 
+ <Transition Entree= "CASE_ATTEINTE" Etat= "1" Action = "RIEN" > </Transition> 
+ <Transition Entree= "CASE_NON_ATTEINTE" Etat= "2" Action = "AVANCER" > </Transition> 
 </Etat> 
 <Etat_Initial> 
 <Etat Nom= "1" > 
@@ -11,6 +15,8 @@
 </Etats_Finals> 
 <Etats_Bloquants> 
 <Etat Nom= "1" > 
+</Etat> 
+<Etat Nom= "2" > 
 </Etat> 
 </Etats_Bloquants> 
 </Automate> 
