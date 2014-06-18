@@ -35,7 +35,7 @@ public class Ghost extends Personnage {
 	
 	//timeur des animation
 	final static private int tempsPasserEnPrison = 1; 
-	final static private int tempsStun = 10;
+	final static private int tempsStun = 15;
 	final static private int tempsPrisonner = 10;
 	
 	//attribut pour les fantomes qui recoivent des ordres
