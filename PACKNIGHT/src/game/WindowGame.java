@@ -94,19 +94,19 @@ public class WindowGame extends BasicGame {
         SpriteSheet spriteSheet_PACMAN_2 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_2), taillePersonnage, taillePersonnage);
         SpriteSheet spriteSheet_PACMAN_3 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_3), taillePersonnage, taillePersonnage);
         SpriteSheet spriteSheet_PACMAN_4 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_4), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_GHOST_1 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_1), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_GHOST_2 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_2), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_GHOST_3 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_3), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_GHOST_4 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_4), taillePersonnage, taillePersonnage);
+//        SpriteSheet spriteSheet_GHOST_1 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_1), taillePersonnage, taillePersonnage);
+//        SpriteSheet spriteSheet_GHOST_2 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_2), taillePersonnage, taillePersonnage);
+//        SpriteSheet spriteSheet_GHOST_3 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_3), taillePersonnage, taillePersonnage);
+//        SpriteSheet spriteSheet_GHOST_4 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_4), taillePersonnage, taillePersonnage);
 
         Sprite.toSprite(animations_PACMAN_1,spriteSheet_PACMAN_1);
         Sprite.toSprite(animations_PACMAN_2,spriteSheet_PACMAN_2);
         Sprite.toSprite(animations_PACMAN_3,spriteSheet_PACMAN_3);
         Sprite.toSprite(animations_PACMAN_4,spriteSheet_PACMAN_4);
-        Sprite.toSprite(animations_GHOST_1,spriteSheet_GHOST_1);
-        Sprite.toSprite(animations_GHOST_2,spriteSheet_GHOST_2);
-        Sprite.toSprite(animations_GHOST_3,spriteSheet_GHOST_3);
-        Sprite.toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
+//        Sprite.toSprite(animations_GHOST_1,spriteSheet_GHOST_1);
+//        Sprite.toSprite(animations_GHOST_2,spriteSheet_GHOST_2);
+//        Sprite.toSprite(animations_GHOST_3,spriteSheet_GHOST_3);
+//        Sprite.toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
         
         Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
         M = background;
@@ -120,14 +120,14 @@ public class WindowGame extends BasicGame {
         this.map.render(largueur_map*taille_minimap,0, 2);
         Interface_Joueur.drawPacGum(playground,PACGUM);
         
-        if(equip.GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], equip.GHOST_1.getCoord().x+largueur_map*taille_minimap, equip.GHOST_1.getCoord().y);
-        if(equip.GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], equip.GHOST_2.getCoord().x+largueur_map*taille_minimap, equip.GHOST_2.getCoord().y);
-        if(equip.GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], equip.GHOST_3.getCoord().x+largueur_map*taille_minimap, equip.GHOST_3.getCoord().y);
-        if(equip.GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], equip.GHOST_4.getCoord().x+largueur_map*taille_minimap, equip.GHOST_4.getCoord().y);
+//        if(equip.GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], equip.GHOST_1.getCoord().x+largueur_map*taille_minimap, equip.GHOST_1.getCoord().y);
+//        if(equip.GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], equip.GHOST_2.getCoord().x+largueur_map*taille_minimap, equip.GHOST_2.getCoord().y);
+//        if(equip.GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], equip.GHOST_3.getCoord().x+largueur_map*taille_minimap, equip.GHOST_3.getCoord().y);
+//        if(equip.GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], equip.GHOST_4.getCoord().x+largueur_map*taille_minimap, equip.GHOST_4.getCoord().y);
         
         g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], equip.PACMAN_1.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_1.getCoord().y);
         g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], equip.PACMAN_2.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_2.getCoord().y);
-        g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], equip.PACMAN_3.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_3.getCoord().y);
+//        g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], equip.PACMAN_3.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_3.getCoord().y);
         g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], equip.PACMAN_4.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_4.getCoord().y);
         
         Interface_Joueur.render(g, HEART);
@@ -234,14 +234,14 @@ public class WindowGame extends BasicGame {
 			}
 		}	
         g.setColor(Color.red);
-        g.fillRect(equip.GHOST_1.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(equip.GHOST_2.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(equip.GHOST_3.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_3.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(equip.GHOST_4.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_4.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+//        g.fillRect(equip.GHOST_1.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+//        g.fillRect(equip.GHOST_2.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+//        g.fillRect(equip.GHOST_3.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_3.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+//        g.fillRect(equip.GHOST_4.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_4.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
         
         g.setColor(Color.orange);
         g.fillRect(equip.PACMAN_4.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_4.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(equip.PACMAN_3.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_3.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+//        g.fillRect(equip.PACMAN_3.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_3.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
         g.fillRect(equip.PACMAN_2.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
         g.fillRect(equip.PACMAN_1.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
 	}

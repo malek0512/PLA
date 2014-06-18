@@ -112,7 +112,7 @@ public class PrimitivesAction extends Primitives{
 		PacPrincess bitch = (PacPrincess) auto.getPersonnage();
 //			if (PacKnight.liste.size()>0) {
 				PacKnight p = this.whichHero(bitch);
-//				System.out.println("yoyo");
+				System.out.println("yoyo" + p.nom);
 					p.princesseEnDetresse = bitch;
 					p.ghostEnChasse = new Ghost("",1,1,Direction.droite,new CoordonneesFloat(1,1));
 //			}
@@ -140,17 +140,17 @@ public class PrimitivesAction extends Primitives{
 			//Si la distance, bitch-Packnight^2 > perimetre^2, alors c'est que le packnight doit avancer 
 			//juqu'a arriver dans le perimetre de securité de bitch. Cela permet de se rapprocher de la princesse
 			//en priorite. Au lieu de courrir après un fantome, aleatoire, par exemple
-			if (bitch.getCoord().distance_square(knight.getCoord())
-					> Math.pow(Perimetre, 2))
+			if (bitch.getCoord().distance(knight.getCoord().CasCentre())
+					>=(Perimetre))
 			{
 				//Avance vers la princesse
-				suivre(bitch.getCoord());
+				suivre(bitch.getCoord().CasCentre());
 			} else 	{
 				//Une fois dans le perimetre, si la princesse a renseignée son violeur ghostEnChasse!=null
 				if (knight.ghostEnChasse == null)
 					throw new Exception("Erreur ! Je suis un knight, on me demande de chasser un ghost, sans renseignement (ghostEnChasse==null)");
 
-				suivre(knight.ghostEnChasse.getCoord());
+				suivre(knight.ghostEnChasse.getCoord().CasCentre());
 			}
 		} else {
 			//Sinon on le reinitialise

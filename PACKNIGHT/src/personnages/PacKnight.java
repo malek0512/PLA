@@ -16,15 +16,23 @@ public class PacKnight extends Pacman{
 	 */
 	static public List<PacKnight> liste = new LinkedList<PacKnight>();
 	public static int vie = 10;
-	
+	private boolean controlable;
+	/**
+	 * @return the controlable
+	 */
+	public boolean isControlable() {
+		return controlable;
+	}
+
 	//La princesse aurait une action, qui permet de signaler sa detresse, en mettant son referenceur dans cette variable
 	public PacPrincess princesseEnDetresse = null;
 	//Contient le fantome apres lequel le knight est a la recherche
 	public Ghost ghostEnChasse = null;
 	
-	public PacKnight(String name, int x, int y, Direction d, CoordonneesFloat respawn) {
+	public PacKnight(String name, int x, int y, Direction d, CoordonneesFloat respawn, boolean Controlable) {
 		super(name,x,y,d,respawn);
 		PacKnight.liste.add(this);
+		this.controlable = Controlable;
 	}
 	
 	/**

@@ -223,11 +223,13 @@ public class Primitives {
 			throw new Exception("Il n'y a aucun Packnight dans PacKnight.liste !");
 		PacKnight captain=PacKnight.liste.get(0);
 		for(PacKnight knight : PacKnight.liste){
-			if(knight.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees())
-					< captain.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees())
-					)//&& knight.peutProteger())
+			if(knight.getCoord().distance(bitch.getCoord().CasCentre())
+					< captain.getCoord().distance(bitch.getCoord().CasCentre())
+					&& !knight.isControlable())//&& knight.peutProteger())
 				captain = knight;
 		}
+		if (PacKnight.liste.get(0)==captain && captain.isControlable())
+			throw new Exception("Aucun knight controlable !");
 		return captain;
 	}
 	
