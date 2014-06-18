@@ -49,7 +49,7 @@ public class WindowGame extends BasicGame {
 	private String SPRITE_GHOST_4 = "Lulu.png";
 	
 	
-	private String MAP = "PACMAN.tmx";
+	private String MAP = "PACMAN-SANS-TORE.tmx";
 	private String MUSIC = "AllBeat.ogg";
 	
 
@@ -115,7 +115,7 @@ public class WindowGame extends BasicGame {
     	playground = terrain;
     	
     	try{
-    		aleatoire = new Automate("Automate/A_ALEATOIRE_AVEUGLE.xml",GHOST_1);
+    		aleatoire = new Automate("Automate/RAMA.xml",GHOST_1);
     		berserk = new Automate("Automate/A_BERSERK.xml",GHOST_2);
     	}catch(Exception e)  
     		{System.out.println(e);};

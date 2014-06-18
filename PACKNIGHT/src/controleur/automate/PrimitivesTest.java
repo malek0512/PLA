@@ -2,8 +2,6 @@ package controleur.automate;
 
 
 import java.util.List;
-
-import personnages.Ghost;
 import personnages.Pacman;
 
 
@@ -26,6 +24,7 @@ public class PrimitivesTest extends Primitives {
 	protected boolean dansRayon(int d) {
 		List<Pacman> res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
 		return res.size()!=0;
+		
 	}
 	
 	/**

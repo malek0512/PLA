@@ -1,4 +1,6 @@
 package personnages;
+import graph.Graph;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -15,18 +17,30 @@ public class Ghost extends Personnage {
 	 */
 	public static List<Ghost> liste = new LinkedList<Ghost>();
 
+
+	
+		//info divers
 	private final int vision = 5;
-	private boolean control = false;
+	private CoordonneesFloat pointDeRespawn;
+	private int nbInterChercher = 4; //nombre d'inter calculer par fantome lord pour les ganks
+	
+	
+	static public Graph g;
+	
+	
+	//boolean des animations
 	private boolean prisonner = false; //le fantome est dans la prison
 	private boolean stun = false;
 	private boolean entendEtObei = false;
 	
+	//timeur des animation
 	final static private int tempsPasserEnPrison = 1; 
 	final static private int tempsStun = 10;
 	final static private int tempsPrisonner = 10;
-	private List<CoordonneesFloat> ordre;
 	
-	private CoordonneesFloat pointDeRespawn;
+	//attribut pour les fantomes qui recoivent des ordres
+	private CoordonneesFloat caseDOrdre;
+	private List<CoordonneesFloat> ordre;
 	
 	public Ghost(String nom, int x, int y, Direction d,CoordonneesFloat spawn) {
 		super(nom, x, y, d);
@@ -67,7 +81,6 @@ public class Ghost extends Personnage {
 	 */
 	public static Map<Pacman, AvisDeRecherche> central=new HashMap<Pacman, AvisDeRecherche>();
 
-
 	/**
 	 * Gère la collision avec les pacmans*/
 	public void gererCollision() {
@@ -94,6 +107,9 @@ public class Ghost extends Personnage {
 		}
 	}
 	
+	/**
+	 * etourdi le fantome
+	 */
 	public void stun()
 	{
 		this.stun = true;
@@ -120,14 +136,23 @@ public class Ghost extends Personnage {
 		this.prisonner = true;
 	}
 	
+	/**
+	 * fait mourrir le ghost pour un moment restreint :D
+	 */
 	public void meurtDansDatroceSouffrance() {
 		this.agonise = true;
 	}
 
+	/**
+	 * renvoie vraie si le ghost est parametrable par un automate a un l'instant courant
+	 */
 	public boolean parametrable() {
 		return !(agonise || prisonner || stun || entendEtObei);
 	}
 
+	/**
+	 * fait avancer d'un cran les animations en cours
+	 */
 	public void avancerAnimation() {
 		if(agonise)
 		{
@@ -169,13 +194,135 @@ public class Ghost extends Personnage {
 		}
 		if(entendEtObei)
 		{
-			//TODO
+				executerOrdre();
 		}
 	}
 
+	/**
+	 * fonction misterieuse qui renvoie la direction a prendre pour aller
+	 * de la case src vers la case dest
+	 * @param src : case source
+	 * @param dest : case destination
+	 * @return la direction a suivre pour aller a dest
+	 */
+	public Direction mysteriousFunction(CoordonneesFloat src, CoordonneesFloat dest)
+	{
+		int x = src.x - dest.x;
+		int y = src.y - dest.y;
+		
+		if(x==0)
+		{
+			if(x==-1)
+				return Direction.droite; 
+			else
+				return Direction.gauche;
+		}
+		else//y == 0
+		{
+			if(y==-1)
+				return Direction.bas;
+			else
+				return Direction.haut;
+		}
+	}
+	
+	/**
+	 * fait recevoir au fantome un ordre
+	 * @param l : la liste des case a parcourir
+	 */
+	public void recoitOrdre(List<CoordonneesFloat> l)
+	{
+		l.remove(0); //on retire la tete, on y est déja !
+		if(!l.isEmpty())
+		{
+			this.ordre = l;
+			this.entendEtObei = true;
+			this.caseDOrdre = l.get(0);
+			this.direction = mysteriousFunction(this.coord.CasCentre(), caseDOrdre);
+		}
+	}
+	
+	/**
+	 * avance a la prochaine case de l'ordre
+	 */
+	private void executerOrdre()
+	{
+		if(this.coord == this.caseDOrdre)
+		{
+			ordre.remove(0);
+			if(!ordre.isEmpty())
+			{
+				caseDOrdre = ordre.get(0);
+				direction = mysteriousFunction(this.coord, caseDOrdre);
+				avancer();
+			}
+			else
+				entendEtObei = false;
+		}
+		else
+			avancer();
+	}
+
+	/**
+	 * renvoie vrai si la gestion de collision inter perso est autorisé pour le personnage
+	 */
 	public boolean hitting() {
 		return !(agonise);
 	}
 	
-	
+	/**
+	 * donne des ordre au fantomes pour coincé un pacman donné
+	 */
+	public void donnerDesOrdres(Pacman ref)
+	{
+		//reboot du graph
+		g.reset();
+		// calcule des intersection a occuper
+		List<CoordonneesFloat> l = g.visiterLargeur(ref.coord,nbInterChercher);
+		
+		//copie de la liste des fantomes
+		List<Ghost> lg = new LinkedList<>(Ghost.liste);
+		
+		// pour chaque inter
+		Iterator<CoordonneesFloat> i = l.iterator();
+		while(i.hasNext())
+		{
+			CoordonneesFloat tmp = i.next();
+			
+			// variable temporaire
+			Ghost meilleurCandidat = null;
+			int dcandidat = 255;
+			
+			// calcul de la distance max entre le fantome et l'inter
+			int dmax = Math.abs(ref.coord.x - tmp.x) + Math.abs(ref.coord.y - tmp.y);
+			dmax += 2; //parceque je suis sadic :3
+			
+			// calcul du fantome qui doit y aller
+			Iterator<Ghost> ig = lg.iterator();
+			
+			int indice = 0;
+			int cpt = 0;
+			while(ig.hasNext())
+			{	//creation du candidat
+				Ghost actuelCandidat = ig.next();
+				int dactuelCandidat = Math.abs(ref.coord.x - tmp.x) + Math.abs(ref.coord.y - tmp.y);
+				if(dactuelCandidat < dmax && dactuelCandidat < dcandidat)
+				{	//maj du candidat
+					meilleurCandidat = actuelCandidat;
+					indice = cpt;
+				}
+				cpt++;
+			}
+			if(meilleurCandidat != null)
+			{
+				//supprime le fantome de la liste
+				lg.remove(indice);
+				// ordonnee au fantome
+				//TODO : calculer l'itinineraire
+				// il ne s'agit pas de "l" !!!!
+				meilleurCandidat.recoitOrdre(l);
+			}
+		}
+			
+	}
 }

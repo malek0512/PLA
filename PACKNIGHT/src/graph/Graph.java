@@ -80,9 +80,8 @@ public class Graph {
      * @param noeud : coordonnée de la case a gank
      * @return : liste des points statégique pour le gank
      */
-    public List<CoordonneesFloat> visiterLargeur(CoordonneesFloat noeud){
+    public List<CoordonneesFloat> visiterLargeur(CoordonneesFloat noeud, int nbInter){
     
-    int nbInter = 2;
     int nbInterFind=0;
     int nbInterSearch = 0;
     
@@ -153,7 +152,7 @@ public class Graph {
     	Personnage.initTerrain(terrain); 
     	CoordonneesFloat start = new CoordonneesFloat(1,1);
     	Graph g = new Graph(terrain);
-    	List<CoordonneesFloat> l = g.visiterLargeur(start);
+    	List<CoordonneesFloat> l = g.visiterLargeur(start,2);
     	
     	Iterator<CoordonneesFloat> i = l.iterator();
     	while(i.hasNext())

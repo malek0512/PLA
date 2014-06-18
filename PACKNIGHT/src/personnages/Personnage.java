@@ -6,6 +6,7 @@ import java.util.List;
 
 import structure_terrain.*;
 import game.WindowGame;
+import graph.Graph;
 import hitBoxManager.*;
 
 public abstract class Personnage {
@@ -209,6 +210,7 @@ public abstract class Personnage {
 	 */
 	static public void initTerrain(Terrain terrain) {
 		Personnage.terrain = terrain;
+		Ghost.g = new Graph(terrain);
 	}
 
 	// get terrain
