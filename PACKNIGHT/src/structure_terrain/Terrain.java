@@ -207,4 +207,17 @@ public class Terrain {
 	{
 		terrain[c.x][c.y].setAcessCase(v);
 	}
+
+	/**Pas merci ! :)
+	 * @return Vrai si la case est une intersection
+	 */
+	public boolean estIntersection(int x, int y){
+		int n=0;
+
+		for(Direction d : Direction.values())
+			if(this.caseAcessible(x,y,d))
+				n++;
+		
+		return n>2;
+	}
 }

@@ -139,6 +139,9 @@ public class Aetoile {
 	    	Aetoile a = new Aetoile(start);
 	    	List<CoordonneesFloat> l = a.algo(finish);
 	    	
+	    	
+	    	
+	    	
 	    	Iterator<CoordonneesFloat> i = l.iterator();
 	    	while(i.hasNext())
 	    	{
@@ -147,6 +150,8 @@ public class Aetoile {
 	    		System.out.println(x);
 	    		Personnage.getTerrain().setCase(x.x, x.y, 2);
 	    	}
+	    	
+	    	
 	    	terrain.afficher();
 	    }
 }
