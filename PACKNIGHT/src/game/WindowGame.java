@@ -125,8 +125,8 @@ public class WindowGame extends BasicGame {
         Sprite.toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
         
         Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
-        M = background;
-        M.loop();
+       // M = background;
+       //M.loop();
     }
     
 
