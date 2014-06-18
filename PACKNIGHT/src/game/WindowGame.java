@@ -26,6 +26,7 @@ public class WindowGame extends BasicGame {
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
 	private String CHEMIN_MUSIC = "src/graphisme/main/ressources/music/";
 
+	Equipage equip = new Equipage(this);
 	private String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
 	private String SPRITE_PACMAN_3 = "PACMAN-SPRITES2.png";
@@ -38,18 +39,6 @@ public class WindowGame extends BasicGame {
 
 	private String MAP = "PACMAN.tmx";
 	private String MUSIC = "AllBeat.ogg";
-
-	PacKnight PACMAN_1= new PacKnight("J1",14,10,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_2 = new PacKnight("J2",1,1,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_3 = new PacKnight("J3",1,1,Direction.droite,new CoordonneesFloat(1, 1));
-	PacKnight PACMAN_4 = new PacKnight("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
-
-	Ghost GHOST_1 = new Ghost("1", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(1, 1));
-
-	Automate aleatoire,berserk;
 
 	public static float xCamera = resolution_x/2;
 	public static float yCamera = resolution_y/2;
@@ -96,16 +85,11 @@ public class WindowGame extends BasicGame {
         PACGUM = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
 		PAUSE_IMAGE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
 
-        Personnage.initTerrain(terrain);
+		equip.init(terrain);
+        
     	Map.mapToTerrain(terrain, largueur_map, hauteur_map, map);
     	playground = terrain;
-    	
-    	try{
-    		aleatoire = new Automate("Automate/RAMA.xml",GHOST_1);
-    		berserk = new Automate("Automate/A_BERSERK.xml",GHOST_2);
-    	}catch(Exception e)  
-    		{System.out.println(e);};
-    			
+    	    			
         SpriteSheet spriteSheet_PACMAN_1 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_1), taillePersonnage, taillePersonnage);
         SpriteSheet spriteSheet_PACMAN_2 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_2), taillePersonnage, taillePersonnage);
         SpriteSheet spriteSheet_PACMAN_3 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_3), taillePersonnage, taillePersonnage);
@@ -136,15 +120,15 @@ public class WindowGame extends BasicGame {
         this.map.render(largueur_map*taille_minimap,0, 2);
         Interface_Joueur.drawPacGum(playground,PACGUM);
         
-        if(GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x+largueur_map*taille_minimap, GHOST_1.getCoord().y);
-        if(GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x+largueur_map*taille_minimap, GHOST_2.getCoord().y);
-        if(GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x+largueur_map*taille_minimap, GHOST_3.getCoord().y);
-        if(GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x+largueur_map*taille_minimap, GHOST_4.getCoord().y);
+        if(equip.GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], equip.GHOST_1.getCoord().x+largueur_map*taille_minimap, equip.GHOST_1.getCoord().y);
+        if(equip.GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], equip.GHOST_2.getCoord().x+largueur_map*taille_minimap, equip.GHOST_2.getCoord().y);
+        if(equip.GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], equip.GHOST_3.getCoord().x+largueur_map*taille_minimap, equip.GHOST_3.getCoord().y);
+        if(equip.GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], equip.GHOST_4.getCoord().x+largueur_map*taille_minimap, equip.GHOST_4.getCoord().y);
         
-        g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x+largueur_map*taille_minimap, PACMAN_1.getCoord().y);
-        g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x+largueur_map*taille_minimap, PACMAN_2.getCoord().y);
-        g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x+largueur_map*taille_minimap, PACMAN_3.getCoord().y);
-        g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], PACMAN_4.getCoord().x+largueur_map*taille_minimap, PACMAN_4.getCoord().y);
+        g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], equip.PACMAN_1.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_1.getCoord().y);
+        g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], equip.PACMAN_2.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_2.getCoord().y);
+        g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], equip.PACMAN_3.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_3.getCoord().y);
+        g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], equip.PACMAN_4.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_4.getCoord().y);
         
         Interface_Joueur.render(g, HEART);
         Minimap(playground, g,-resolution_x/2 + xCamera,-resolution_y/2 + yCamera);
@@ -156,36 +140,37 @@ public class WindowGame extends BasicGame {
     
     public void update(GameContainer container, int delta) throws SlickException {
 		if(!PAUSE) {
-	    	if (PACMAN_1.parametrable())
-	    		PACMAN_1.avancer();
+	    	if (equip.PACMAN_1.parametrable())
+	    		equip.PACMAN_1.avancer();
 	    	else
-	    		PACMAN_1.avancerAnimation();
+	    		equip.PACMAN_1.avancerAnimation();
 
 	    	float w = container.getWidth() / 4;
-	    	if(!(PACMAN_1.getCoord().x -xCamera > resolution_x/2 || PACMAN_1.getCoord().x -xCamera < -resolution_x/2))
+	    	if(!(equip.PACMAN_1.getCoord().x -xCamera > resolution_x/2 || equip.PACMAN_1.getCoord().x -xCamera < -resolution_x/2))
 	    	{
-		        if (PACMAN_1.getCoord().x +largueur_map*taille_minimap > (xCamera + w ) && (PACMAN_1.getCoord().x + w   <  largueur_map*tuile_size))
-		        	xCamera = PACMAN_1.getCoord().x - w + largueur_map*taille_minimap;
-		        if (PACMAN_1.getCoord().x < (xCamera - w) && (PACMAN_1.getCoord().x > w )) 
-		        	xCamera = PACMAN_1.getCoord().x + w;
+		        if (equip.PACMAN_1.getCoord().x +largueur_map*taille_minimap > (xCamera + w ) && (equip.PACMAN_1.getCoord().x + w   <  largueur_map*tuile_size))
+		        	xCamera = equip.PACMAN_1.getCoord().x - w + largueur_map*taille_minimap;
+		        if (equip.PACMAN_1.getCoord().x < (xCamera - w) && (equip.PACMAN_1.getCoord().x > w )) 
+		        	xCamera = equip.PACMAN_1.getCoord().x + w;
 	    	} 
-	    	else if((PACMAN_1.getCoord().x -xCamera > resolution_x/2)) xCamera = largueur_map*tuile_size-resolution_x/2+largueur_map*taille_minimap ;
-	    	else if((PACMAN_1.getCoord().x -xCamera < -resolution_x/2)) xCamera = resolution_x/2;
+	    	else if((equip.PACMAN_1.getCoord().x -xCamera > resolution_x/2)) xCamera = largueur_map*tuile_size-resolution_x/2+largueur_map*taille_minimap ;
+	    	else if((equip.PACMAN_1.getCoord().x -xCamera < -resolution_x/2)) xCamera = resolution_x/2;
 
 	        float h = container.getHeight() / 4;
-	    	if(!(PACMAN_1.getCoord().y -yCamera > resolution_y/2 || PACMAN_1.getCoord().y -yCamera < -resolution_y/2))
+	    	if(!(equip.PACMAN_1.getCoord().y -yCamera > resolution_y/2 || equip.PACMAN_1.getCoord().y -yCamera < -resolution_y/2))
 	    	{
-		        if (PACMAN_1.getCoord().y > (yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
-		        	yCamera = PACMAN_1.getCoord().y - h;
-		        if (PACMAN_1.getCoord().y < (yCamera - h) && (PACMAN_1.getCoord().y > h))
-		        	yCamera = PACMAN_1.getCoord().y + h;
+		        if (equip.PACMAN_1.getCoord().y > (yCamera + h) && (equip.PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
+		        	yCamera = equip.PACMAN_1.getCoord().y - h;
+		        if (equip.PACMAN_1.getCoord().y < (yCamera - h) && (equip.PACMAN_1.getCoord().y > h))
+		        	yCamera = equip.PACMAN_1.getCoord().y + h;
 	    	}
-	    	else if((PACMAN_1.getCoord().y -yCamera > resolution_y/2)) yCamera = hauteur_map*tuile_size-resolution_y/2;
-	    	else if((PACMAN_1.getCoord().y -yCamera < -resolution_y/2)) yCamera = resolution_y/2;
-	        try
+	    	else if((equip.PACMAN_1.getCoord().y -yCamera > resolution_y/2)) yCamera = hauteur_map*tuile_size-resolution_y/2;
+	    	else if((equip.PACMAN_1.getCoord().y -yCamera < -resolution_y/2)) yCamera = resolution_y/2;
+	        
+	    	try
 	        {
-	       aleatoire.suivant();
-	       berserk.suivant();
+	       equip.suivant();
+	       
 	        }
 	        catch (Exception e) {System.out.println(e);}
 	        Ghost.disparitionPacman();
@@ -205,10 +190,10 @@ public class WindowGame extends BasicGame {
 		{
 		    switch (key)
 		    	{
-			    case Input.KEY_UP:    PACMAN_1.setNextDirection(Direction.haut); this.direction= 0; this.moving = true; break;
-			    case Input.KEY_LEFT:  PACMAN_1.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
-			    case Input.KEY_DOWN:  PACMAN_1.setNextDirection(Direction.bas);this.direction= 2; this.moving = true; break;
-			    case Input.KEY_RIGHT: PACMAN_1.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
+			    case Input.KEY_UP:    equip.PACMAN_1.setNextDirection(Direction.haut); this.direction= 0; this.moving = true; break;
+			    case Input.KEY_LEFT:  equip.PACMAN_1.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
+			    case Input.KEY_DOWN:  equip.PACMAN_1.setNextDirection(Direction.bas);this.direction= 2; this.moving = true; break;
+			    case Input.KEY_RIGHT: equip.PACMAN_1.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
 
 			  //  case Input.KEY_Z:    PACMAN_2.setNextDirection(Direction.haut); this.direction= 0; this.moving = true;  break;
 			   // case Input.KEY_Q:  PACMAN_2.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
@@ -249,15 +234,15 @@ public class WindowGame extends BasicGame {
 			}
 		}	
         g.setColor(Color.red);
-        g.fillRect(GHOST_1.getCoord().CasCentre().x*taille_minimap+decalage_x, GHOST_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(GHOST_2.getCoord().CasCentre().x*taille_minimap+decalage_x, GHOST_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(GHOST_3.getCoord().CasCentre().x*taille_minimap+decalage_x, GHOST_3.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(GHOST_4.getCoord().CasCentre().x*taille_minimap+decalage_x, GHOST_4.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+        g.fillRect(equip.GHOST_1.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+        g.fillRect(equip.GHOST_2.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+        g.fillRect(equip.GHOST_3.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_3.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+        g.fillRect(equip.GHOST_4.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_4.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
         
         g.setColor(Color.orange);
-        g.fillRect(PACMAN_4.getCoord().CasCentre().x*taille_minimap+decalage_x, PACMAN_4.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(PACMAN_3.getCoord().CasCentre().x*taille_minimap+decalage_x, PACMAN_3.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(PACMAN_2.getCoord().CasCentre().x*taille_minimap+decalage_x, PACMAN_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(PACMAN_1.getCoord().CasCentre().x*taille_minimap+decalage_x, PACMAN_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+        g.fillRect(equip.PACMAN_4.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_4.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+        g.fillRect(equip.PACMAN_3.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_3.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+        g.fillRect(equip.PACMAN_2.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+        g.fillRect(equip.PACMAN_1.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
 	}
 }
