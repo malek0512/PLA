@@ -6,7 +6,7 @@ import org.newdawn.slick.Image;
 
 public class Pause {
 	
-	public static void Pause(Graphics g, Image PAUSE_IMAGE)
+	public static void Pause_Game(Graphics g, Image PAUSE_IMAGE)
 	{
 		PAUSE_IMAGE.draw(0,0);
 		g.setColor(Color.white);
