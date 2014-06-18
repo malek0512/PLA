@@ -139,8 +139,8 @@ public class WindowGame extends BasicGame {
         toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
         
         Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
-        M = background;
-        M.loop();
+        //M = background;
+        //M.loop();
     }
     
 
@@ -212,7 +212,7 @@ public class WindowGame extends BasicGame {
 		        if (PACMAN_1.getCoord().y < (this.yCamera - h) && (PACMAN_1.getCoord().y > h))
 		        	this.yCamera = PACMAN_1.getCoord().y + h;
 	    	}
-	    	else if((PACMAN_1.getCoord().y -yCamera > resolution_y/2)) this.yCamera = resolution_x-h;
+	    	else if((PACMAN_1.getCoord().y -yCamera > resolution_y/2)) this.yCamera = hauteur_map*tuile_size-resolution_y/2;
 	    	else if((PACMAN_1.getCoord().y -yCamera < -resolution_y/2)) this.yCamera = resolution_y/2;
 	    	
 	    	
