@@ -43,8 +43,10 @@ public class Primitives {
 			Pacman pac = i.next();
 			if(position.CasCentre().distance(pac.getCoord().CasCentre())<=rayon){
 				res.add(pac);
-				if(Ghost.central.containsKey(pac))
+				if(Ghost.central.containsKey(pac)){
 					Ghost.central.get(pac).coord=pac.getCoord().CasCentre();
+					Ghost.central.get(pac).timer=24;
+				}
 				else
 					Ghost.central.put(pac,((Ghost)auto.getPersonnage()).new AvisDeRecherche(pac.getCoord().CasCentre()));
 			}

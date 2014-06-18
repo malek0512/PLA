@@ -65,14 +65,14 @@ public class Ghost extends Personnage {
 	 * Structure qui repertorie l'ensemble des information d'un PM en fuite
 	 * */
 	public class AvisDeRecherche {
-		boolean repere, Mort;
+		boolean Mort;
 		public CoordonneesFloat coord;
-		int nbVu = 0;
+		public int timer;
 
 		public AvisDeRecherche(CoordonneesFloat c) {
 			Mort = false;
-			repere = true;
 			coord = new CoordonneesFloat(c);
+			timer=24;
 		}
 	}
 
@@ -80,7 +80,21 @@ public class Ghost extends Personnage {
 	 * Le central repertorie l'ensemble des information des PM en fuite
 	 */
 	public static Map<Pacman, AvisDeRecherche> central=new HashMap<Pacman, AvisDeRecherche>();
-
+	
+	/**
+	 * Supprime le Pacman de la centrale si le timer est à 0*/
+	public void disparitionPacman(){
+		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();){
+			Pacman pac = i.next();
+			if(central.containsKey(pac)){
+				if(central.get(pac).timer==0)
+					central.remove(pac);
+				else 
+					central.get(pac).timer--;
+			}
+	
+		}
+	}
 	/**
 	 * Gère la collision avec les pacmans*/
 	public void gererCollision() {

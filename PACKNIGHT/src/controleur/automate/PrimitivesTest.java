@@ -32,14 +32,13 @@ public class PrimitivesTest extends Primitives {
 	/**
 	 * Methode utilisant la centrale contrairement à dansrayon*/
 	protected boolean vu(){
-		Pacman min;
-		pacmanEstDansRayon(auto.getPersonnage().getCoord(),((Ghost)auto.getPersonnage()).getVision());
+		boolean res=false;
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();){
 			Pacman pac = i.next();
 			if(Ghost.central.containsKey(pac)||dansRayon(((Ghost)auto.getPersonnage()).getVision()));
+				res=true;
 		}
-		
-		return Ghost.central.isEmpty();
+		return res;
 	}
 	/**
 	 * @return Une ENTREE de l'automate. Selon la configuratoin de la case devant le robot
