@@ -1,7 +1,6 @@
 package game;
 
-import game.Accueil;
-import game.TestState3;
+import game.Choix;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -13,10 +12,7 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.CrossStateTransition;
-import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
@@ -29,8 +25,8 @@ public class WindowGame extends BasicGameState {
 
 	public static final int ID = 2;
 	
-	public static int resolution_x = 800;
-	public static int resolution_y = 600;
+	protected static int resolution_x = 800;
+	protected static int resolution_y = 600;
 
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
@@ -50,22 +46,22 @@ public class WindowGame extends BasicGameState {
 	private String MAP = "PACMAN.tmx";
 	private String MUSIC = "AllBeat.ogg";
 
-	public static float xCamera = resolution_x/2;
-	public static float yCamera = resolution_y/2;
+	protected static float xCamera = resolution_x/2;
+	protected static float yCamera = resolution_y/2;
 
 	private int direction = 0;
 	public static int taille_minimap = 4;
 
 	public static int tuile_size = 32;
-	public static int largueur_map , hauteur_map ;
+	protected static int largueur_map , hauteur_map ;
 	private int taillePersonnage =32;
 
 
 	private StateBasedGame game;
-    private GameContainer container;
+    protected static GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
-	private Music M;
+	protected static Music M;
 	private Image PACGUM,HEART,PAUSE_IMAGE;
 	private boolean moving = false;//A VERIFIER SI UTILE
 	private boolean PAUSE = false;
@@ -92,7 +88,6 @@ public class WindowGame extends BasicGameState {
     {
     	this.game = game;
     	container.setShowFPS(false);
-        this.container = container;
         this.map = new TiledMap(CHEMIN_MAP.concat(MAP));        
         largueur_map =map.getWidth();
         hauteur_map = map.getHeight();
@@ -126,8 +121,8 @@ public class WindowGame extends BasicGameState {
 //        Sprite.toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
         
         Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
-       // M = background;
-       //M.loop();
+        M = background;
+        M.loop();
     }
     
 
@@ -221,27 +216,10 @@ public class WindowGame extends BasicGameState {
 			    }
 	    }
 	    switch (key){
+		    case Input.KEY_M: if(M.playing()) M.pause() ;else M.resume(); break;
+		    case Input.KEY_U : game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); break;
 	    	case Input.KEY_ESCAPE:container.exit(); break;
-		    case Input.KEY_M: if(this.M.playing()) this.M.pause() ;else this.M.resume(); break;
 	    }
-	    if (key == Input.KEY_2) {
-	         GameState target = game.getState(Accueil.ID);
-	         
-	         final long start = System.currentTimeMillis();
-	         CrossStateTransition t = new CrossStateTransition(target) {            
-	            public boolean isComplete() {
-	               return (System.currentTimeMillis() - start) > 2000;
-	            }
-
-	            public void init(GameState firstState, GameState secondState) {
-	            }
-	         };
-	         
-	         game.enterState(Accueil.ID, t, new EmptyTransition());
-	      }
-	      if (key == Input.KEY_3) {
-	         game.enterState(TestState3.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-	      }
 	}
 
 	

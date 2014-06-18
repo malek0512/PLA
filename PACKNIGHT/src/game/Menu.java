@@ -12,10 +12,10 @@ public class Menu extends StateBasedGame {
    }
    
    public void initStatesList(GameContainer container) {
-	  //addState(new Accueil());
+	  addState(new Accueil());
       addState(new WindowGame());
-      addState(new Accueil());
-      addState(new TestState3());
+      //addState(new Accueil());
+      addState(new Choix());
    }
    
    public static void main(String[] argv) {

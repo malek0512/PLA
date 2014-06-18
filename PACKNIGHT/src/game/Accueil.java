@@ -33,8 +33,10 @@ public class Accueil extends BasicGameState {
 	   }
 	   
 	   public void keyReleased(int key, char c) {
-	      if (key == Input.KEY_ENTER) {
-	         game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+	      switch (key) {
+	    	  case Input.KEY_ENTER: game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
+	    	  case Input.KEY_M: if(WindowGame.M.playing()) WindowGame.M.pause() ;else WindowGame.M.resume(); break;
+	    	  case Input.KEY_ESCAPE:WindowGame.container.exit(); break;
 
 	      }
 	   }
