@@ -6,11 +6,13 @@ import graph.Graph;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Ghost;
+import personnages.Ghost.AvisDeRecherche;
 import personnages.PacKnight;
 import personnages.PacPrincess;
 import personnages.Pacman;
@@ -166,5 +168,18 @@ public class PrimitivesAction extends Primitives{
 		l.remove(0);
 		this.auto.getPersonnage().setDirection(mysteriousFunction(src, l.get(1)));
 		this.auto.getPersonnage().avancer();
+	}
+	
+	public void suivre(){
+		Iterator<Pacman> i = Ghost.central.keySet().iterator();
+		Pacman min = i.next();
+		while (i.hasNext()){
+			Pacman next = i.next();
+			if (next.getCoord().CasCentre().distance(auto.getPersonnage().getCoord().CasCentre())
+					< next.getCoord().CasCentre().distance(min.getCoord().CasCentre()))
+				min = next;
+		}
+		
+		suivre(min.getCoord());
 	}
 }
