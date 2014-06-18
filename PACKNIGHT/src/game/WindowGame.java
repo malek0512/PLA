@@ -1,6 +1,6 @@
 package game;
 
-import game.TestState2;
+import game.Accueil;
 import game.TestState3;
 
 import org.newdawn.slick.Animation;
@@ -27,7 +27,7 @@ import structure_terrain.*;
 
 public class WindowGame extends BasicGameState {
 
-	public static final int ID = 1;
+	public static final int ID = 2;
 	
 	public static int resolution_x = 800;
 	public static int resolution_y = 600;
@@ -225,7 +225,7 @@ public class WindowGame extends BasicGameState {
 		    case Input.KEY_M: if(this.M.playing()) this.M.pause() ;else this.M.resume(); break;
 	    }
 	    if (key == Input.KEY_2) {
-	         GameState target = game.getState(TestState2.ID);
+	         GameState target = game.getState(Accueil.ID);
 	         
 	         final long start = System.currentTimeMillis();
 	         CrossStateTransition t = new CrossStateTransition(target) {            
@@ -237,7 +237,7 @@ public class WindowGame extends BasicGameState {
 	            }
 	         };
 	         
-	         game.enterState(TestState2.ID, t, new EmptyTransition());
+	         game.enterState(Accueil.ID, t, new EmptyTransition());
 	      }
 	      if (key == Input.KEY_3) {
 	         game.enterState(TestState3.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));

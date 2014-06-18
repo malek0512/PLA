@@ -54,11 +54,11 @@ public class TestState3 extends BasicGameState {
 	            selected = options.length - 1;
 	         }
 	      }
-	      if (key == Input.KEY_1) {
+	      if (key == Input.KEY_2) {
 	         game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 	      }
 	      if (key == Input.KEY_2) {
-	         game.enterState(TestState2.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+	         game.enterState(Accueil.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 	      }
 	   }
 	}
