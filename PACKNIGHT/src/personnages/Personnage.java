@@ -96,7 +96,7 @@ public abstract class Personnage {
 				this.coord.y = 0;
 				break;
 			case haut :
-				this.coord.x = Personnage.terrain.pixelBordBas() - WindowGame.tuile_size;
+				this.coord.y = Personnage.terrain.pixelBordBas() - WindowGame.tuile_size;
 				break;
 			}
 		}

@@ -49,7 +49,7 @@ public class WindowGame extends BasicGame {
 	private String SPRITE_GHOST_4 = "Lulu.png";
 	
 	
-	private String MAP = "FATMAP.tmx";
+	private String MAP = "PACMAN.tmx";
 	private String MUSIC = "AllBeat.ogg";
 	
 
