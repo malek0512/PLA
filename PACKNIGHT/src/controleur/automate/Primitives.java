@@ -259,15 +259,16 @@ public class Primitives {
 	{
 		int x = src.x - dest.x;
 		int y = src.y - dest.y;
-		
-		if(x==0)
+		System.out.println(src.x +" "+src.y);
+		System.out.println(dest);
+		if(y==0)
 		{
 			if(x==-1)
 				return Direction.droite; 
 			else
 				return Direction.gauche;
 		}
-		else//y == 0
+		else//y != 0
 		{
 			if(y==-1)
 				return Direction.bas;

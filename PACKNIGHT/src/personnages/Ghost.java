@@ -303,7 +303,7 @@ public class Ghost extends Personnage {
 		List<CoordonneesFloat> l = g.visiterLargeur(ref.coord,nbInterChercher);
 		
 		//copie de la liste des fantomes
-		List<Ghost> lg = new LinkedList<>(Ghost.liste);
+		List<Ghost> lg = new LinkedList<Ghost>(Ghost.liste);
 		
 		// pour chaque inter
 		Iterator<CoordonneesFloat> i = l.iterator();

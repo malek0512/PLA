@@ -99,7 +99,7 @@ public class WindowGame extends BasicGame {
     	
     	try{
     		aleatoire = new Automate("Automate/RAMA.xml",GHOST_1);
-    		berserk = new Automate("Automate/A_BERSERK.xml",GHOST_2);
+    		berserk = new Automate("Automate/A_SUIVEUR.xml",GHOST_2);
     	}catch(Exception e)  
     		{System.out.println(e);};
     			
@@ -205,7 +205,7 @@ public class WindowGame extends BasicGame {
 	        try
 	        {
 	       aleatoire.suivant();
-	       // berserk.suivant();
+	       berserk.suivant();
 	        }
 	        catch (Exception e) {System.out.println(e);}
 	        Ghost.disparitionPacman();

@@ -162,17 +162,20 @@ public class PrimitivesAction extends Primitives{
 	 */
 	public void suivre(CoordonneesFloat ref)
 	{
-		CoordonneesFloat src = this.auto.getPersonnage().coord;
+		CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
 		Aetoile graph = new Aetoile(src);
+		System.out.println("source : " + src);
 		List<CoordonneesFloat> l = graph.algo(ref);
+		System.out.println("dest : " + ref);
 		l.remove(0);
-		this.auto.getPersonnage().setDirection(mysteriousFunction(src, l.get(1)));
+		this.auto.getPersonnage().setDirection(mysteriousFunction(src, l.get(0)));
+		System.out.println(this.auto.getPersonnage().getOrientation());
 		this.auto.getPersonnage().avancer();
 	}
 	
 	public void suivre(){
 		Iterator<Pacman> i = Ghost.central.keySet().iterator();
-		if (i.hasNext()){
+	if (i.hasNext()){
 			Pacman min = i.next();
 			while (i.hasNext()){
 				Pacman next = i.next();
@@ -181,7 +184,7 @@ public class PrimitivesAction extends Primitives{
 					min = next;
 			}
 			
-			suivre(min.getCoord());
+			suivre(min.getCoord().CasCentre());
 		}
 	}
 }
