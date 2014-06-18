@@ -13,6 +13,7 @@ import personnages.Direction;
 import personnages.Ghost;
 import personnages.Personnage;
 
+
 /**
  * Toute primitive de test doit etre ajoutée dans PrimitivesTest, et se voit attribuée, une constante en public, ci dessous.
  * Une fois ajoutée en fin de fichier: 
