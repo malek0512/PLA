@@ -6,11 +6,13 @@ import graph.Graph;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Ghost;
+import personnages.Ghost.AvisDeRecherche;
 import personnages.PacKnight;
 import personnages.PacPrincess;
 import personnages.Pacman;
@@ -91,8 +93,9 @@ public class PrimitivesAction extends Primitives{
 	 * Si le knight est deja au service de la princesse :
 	 * 		- on lui renseigne le nouvel fantome a chasser, si pas mort
 	 * @author malek
+	 * @throws Exception 
 	 */
-	public void auSecours(){
+	public void auSecours() throws Exception{
 		PacPrincess bitch = (PacPrincess) auto.getPersonnage();
 		for(Ghost violeur : bitch.violeurs){
 			if (PacKnight.liste.size()>0) {
@@ -105,10 +108,11 @@ public class PrimitivesAction extends Primitives{
 			}
 		}
 	}
-	public void auSecours2(){
+	public void auSecours2() throws Exception{
 		PacPrincess bitch = (PacPrincess) auto.getPersonnage();
 //			if (PacKnight.liste.size()>0) {
 				PacKnight p = this.whichHero(bitch);
+//				System.out.println("yoyo");
 					p.princesseEnDetresse = bitch;
 					p.ghostEnChasse = new Ghost("",1,1,Direction.droite,new CoordonneesFloat(1,1));
 //			}
@@ -127,7 +131,7 @@ public class PrimitivesAction extends Primitives{
 	public void protegerPrincesse(int Perimetre) throws Exception{
 		PacKnight knight = ((PacKnight) auto.getPersonnage());
 		//Si le knight est vivant
-		if (knight.hitting()){
+		if (true){//knight.hitting()){
 			PacPrincess bitch = knight.princesseEnDetresse;
 			//Si la princesse ne s'est pas identifiée, princesseEnDetresse==null
 			if (bitch==null)
@@ -166,5 +170,20 @@ public class PrimitivesAction extends Primitives{
 		l.remove(0);
 		this.auto.getPersonnage().setDirection(mysteriousFunction(src, l.get(1)));
 		this.auto.getPersonnage().avancer();
+	}
+	
+	public void suivre(){
+		Iterator<Pacman> i = Ghost.central.keySet().iterator();
+		if (i.hasNext()){
+			Pacman min = i.next();
+			while (i.hasNext()){
+				Pacman next = i.next();
+				if (next.getCoord().CasCentre().distance(auto.getPersonnage().getCoord().CasCentre())
+						< next.getCoord().CasCentre().distance(min.getCoord().CasCentre()))
+					min = next;
+			}
+			
+			suivre(min.getCoord());
+		}
 	}
 }
