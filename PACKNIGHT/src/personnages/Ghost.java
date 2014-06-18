@@ -94,7 +94,6 @@ public class Ghost extends Personnage {
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();){
 			Pacman pac = i.next();
 			if(central.containsKey(pac)){
-				System.out.println(central.get(pac).timer);
 				if(central.get(pac).timer==0)
 					central.remove(pac);
 				else 
