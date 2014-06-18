@@ -44,11 +44,11 @@ public class Coordonnees {
 	{
 		return (coord.x == this.x && coord.y == this.y);
 	}
-	
+	//inutile déjà donné par CasHG
 	public Coordonnees caseFromPixel(){
 		return new Coordonnees(this.x/size, this.y/size);
 	}
-	
+	//ne donne que le premier pixel en haut à gauche de la case x,y utile?
 	public Coordonnees pixelFromCase(){
 		return new Coordonnees(this.x*size, this.y*size);
 	}

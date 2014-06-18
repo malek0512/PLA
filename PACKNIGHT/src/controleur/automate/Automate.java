@@ -30,7 +30,8 @@ public class Automate extends Controleur {
 	//ENTREES : CASE_OCCUPE, CASE_LIBRE, SORTIE_TERRAIN, CASE_GHOST
 	public static enum Entree{
 		CASE_LIBRE, CASE_OCCUPEE, SORTIE_TERRAIN, CASE_GHOST, PM_DANS_RAYON_X, NON_PM_DANS_RAYON_X, PM_DANS_CROIX, 
-		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_ATTEINTE, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE;
+		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_ATTEINTE, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE,
+		EN_DETRESSE;
 		
 		public static boolean contains (String s){
 			try{
@@ -40,26 +41,11 @@ public class Automate extends Controleur {
 			}
 			return true;
 		}
-	}
-//	public final static int CASE_LIBRE = 0;
-//	public final static int CASE_OCCUPEE = 1;
-//	public final static int SORTIE_TERRAIN = 2;
-//	public final static int CASE_GHOST = 3;
-//	public final static int PM_DANS_RAYON_X = 4;
-//	public final static int NON_PM_DANS_RAYON_X = 13;
-//	public final static int PM_DANS_CROIX = 5;
-//	public final static int NON_PM_DANS_CROIX = 6;
-//	public final static int INTERSECTION = 7;
-//	public final static int NON_INTERSECTION = 8;
-//	public final static int CASE_NON_ATTEINTE=9;
-//	public final static int FREE=10;
-//	public final static int NON_FREE=11;
-//	public final static int ETOILE=12;
-	
-	//SORTIES : AVANCER, GAUCHE, DROITE, RECHERCHER_PACMAN, SUIVRE_PACMAN (<=> Primitive)
+	}	
+
 	public static enum Sortie{
 		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, PROCHAINE_DIRECTION, CHEMIN_PLUS_COURT, OBEIR,
-		END_LIFE, SPAWN, STUN;
+		END_LIFE, SPAWN, STUN, PROTEGER_PRINCESSE;
 		public static boolean contains (String s){
 			try{
 				Sortie.valueOf(s);
@@ -68,20 +54,7 @@ public class Automate extends Controleur {
 			}
 			return true;
 		}
-	}
-//	public final static int AVANCER = 0;
-//	public final static int GAUCHE = 1;
-//	public final static int DROIT = 2;
-//	public final static int HAUT = 3;
-//	public final static int BAS = 4;
-//	public final static int RIEN = 5;
-//	public final static int DIRECTION_ALEATOIRE = 7;
-//	public final static int PROCHAINE_DIRECTION = 8;
-//	public final static int CHEMIN_PLUS_COURT=9;
-//	public final static int OBEIR=10;
-//	public final static int END_LIFE=11;
-//	public final static int SPAWN=12;	
-	
+	}	
 	
 	TableTransitionSortie tableTransitionSortie;
 	
@@ -159,17 +132,18 @@ public class Automate extends Controleur {
 				Automate.Sortie sortieAutomate = effectuerTransition(entreeAutomate);
 				switch (sortieAutomate) {
 				//TODO Ajouter chaque fonction d'action
-				case AVANCER: personnage.avancerAux(); break;
+				case AVANCER: personnage.avancer(); break;
 				case DROIT: personnage.setDirection(Direction.droite); break;
 				case GAUCHE: personnage.setDirection(Direction.gauche); break;
 				case HAUT: personnage.setDirection(Direction.haut); break;
 				case BAS: personnage.setDirection(Direction.bas); break;
 				case DIRECTION_ALEATOIRE: primitivesAction.setDirectionAleatoire(getPersonnage()); break;
 				case CHEMIN_PLUS_COURT: primitivesAction.directionCheminPlusCourt(getPersonnage()); break;
-				case OBEIR: primitivesAction.obeir(((Ghost) getPersonnage()).ordre); break;
+				//case OBEIR: primitivesAction.obeir(((Ghost) getPersonnage()).ordre); break;
 				case SPAWN:personnage.respawn();break;
 				case RIEN:primitivesAction.pass(); break;
 				case STUN:primitivesAction.stun(); break;
+				case PROTEGER_PRINCESSE:primitivesAction.protegerPrincesse(1); break;
 				}
 			}
 			while(this.personnage.parametrable() && !(isEtatBloquant()));
@@ -177,6 +151,8 @@ public class Automate extends Controleur {
 		}
 		else
 		{
+			if(this.personnage.agonise)
+				this.etatCourant = etatInitial;
 			this.personnage.avancerAnimation();
 		}
 	}
@@ -220,6 +196,7 @@ public class Automate extends Controleur {
 				case FREE: if(!primitivesTest.isControled()) return Entree.FREE; break;
 				case NON_FREE: if(primitivesTest.isControled()) return Entree.NON_FREE; break;
 				case ETOILE: return Entree.ETOILE;
+				case EN_DETRESSE: //if (primitivesTest.) break; 
 			//	}
 			}
 		}

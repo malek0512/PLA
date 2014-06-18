@@ -4,6 +4,7 @@
  */
 package structure_terrain;
 
+import game.WindowGame;
 import structure_terrain.Case;
 import personnages.Coordonnees;
 import personnages.CoordonneesFloat;
@@ -14,8 +15,8 @@ import personnages.Personnage;
 public class Terrain {
 
 	public Case[][] terrain;
-	protected int hauteur;
-	protected int largeur;
+	public int hauteur;
+	public int largeur;
 	static public int nb_pacgum;
 	
 	/**
@@ -87,17 +88,7 @@ public class Terrain {
 	 */
 	public boolean caseAcessible(int x, int y,Direction direction)
 	{
-		if(estDansLeTerrain(x,y))
-			switch(direction)
-			{
-			case haut : return terrain[x][y-1].isAccessable();
-			case bas : return terrain[x][y+1].isAccessable();
-			case droite : return terrain[x+1][y].isAccessable();
-			case gauche : return terrain[x-1][y].isAccessable();
-			default:
-				break; 
-			}
-		return false;
+		return caseAcessible(x,y,1,direction);
 	}
 	
 	/**
@@ -111,13 +102,13 @@ public class Terrain {
 	 */
 	public boolean caseAcessible(int x, int y, int distance, Direction direction)
 	{
-		if(estDansLeTerrain(x,y))
+		//if(estDansLeTerrain(x,y))
 			switch(direction)
 			{
-			case haut : return terrain[x][y-distance].isAccessable();
-			case bas : return terrain[x][y+distance].isAccessable();
-			case droite : return terrain[x+distance][y].isAccessable();
-			case gauche : return terrain[x-distance][y].isAccessable();
+			case haut : return terrain[x][(y-distance) % this.hauteur].isAccessable();
+			case bas : return terrain[x][(y+distance)  % this.hauteur].isAccessable();
+			case droite : return terrain[(x+distance) % this.largeur][y].isAccessable();
+			case gauche : return terrain[(x-distance) % this.largeur][y].isAccessable();
 			default:
 				break; 
 			}
@@ -152,7 +143,6 @@ public class Terrain {
 		return null;
 
 	}
-
 	/**
 	 * TODO : a faire plus tard...
 	 * @author malek
@@ -166,6 +156,47 @@ public class Terrain {
 		|| y < 0
 		|| y > Personnage.getTerrain().getHauteur() - 1));
 	}
+	
+	/**
+	 * renvoie vrai si les coordonné (x,y) et dans la direction d est dans un core
+	 * @param x
+	 * @param y
+	 * @param d
+	 * @return
+	 */
+	public boolean estCore(int x,int y, Direction d)
+	{
+		int tmpX = x;
+		int tmpY = y;
+		switch (d)
+		{
+		case haut : tmpY--; break;
+		case bas : tmpY++; break;
+		case droite : tmpX++; break;
+		case gauche : tmpX--; break;
+		default : break;
+		}
+		return !(estDansLeTerrain(tmpX, tmpY));
+	}
+	
+	/**
+	 * renvoie la valeur du pixel du bord droit 
+	 * @return
+	 */
+	public int pixelBordDroit()
+	{
+		return WindowGame.tuile_size * this.largeur;
+	}
+	
+	/**
+	 * renvoie la valeur du pixel du bord bas
+	 * @return
+	 */
+	public int pixelBordBas()
+	{
+		return WindowGame.tuile_size * this.hauteur;
+	}
+	
 	
 	/**
 	 * @require : les coordonnes sont dans le terrain

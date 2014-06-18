@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import structure_terrain.*;
+import game.WindowGame;
+import graph.Graph;
 import hitBoxManager.*;
 
 public abstract class Personnage {
@@ -23,7 +25,7 @@ public abstract class Personnage {
 	protected Direction nextDirection; // prochaine direction que prendra personnage
 	protected Direction direction; // direction actuelle du personnage
 
-	protected boolean seMeurt = false; //boolean vrai si le personnage est en animation de mort
+	public boolean agonise = false; //boolean vrai si le personnage est en animation de mort
 	protected int timerAnimation = 0; //timer pour les animations
 	public List<CoordonneesFloat> ordre;
 
@@ -61,6 +63,7 @@ public abstract class Personnage {
 	 * Ne fait pas de test, et avance Utiliser par les automates et c'est tout
 	 */
 	public void avancerAux() {
+		if(!Personnage.terrain.estCore(coord.CasCentre().x,coord.CasCentre().y, direction))
 		switch (this.direction) {
 		case droite:
 			this.coord.x += tauxDeDeplacement;
@@ -78,6 +81,24 @@ public abstract class Personnage {
 
 		default:
 			break;
+		}
+		else
+		{
+			switch (this.direction)
+			{
+			case droite :
+				this.coord.x = 0;
+				break;
+			case gauche :
+				this.coord.x = Personnage.terrain.pixelBordDroit() - WindowGame.tuile_size;
+				break;
+			case bas :
+				this.coord.y = 0;
+				break;
+			case haut :
+				this.coord.x = Personnage.terrain.pixelBordBas() - WindowGame.tuile_size;
+				break;
+			}
 		}
 		this.gererCollision();
 	}
@@ -189,6 +210,7 @@ public abstract class Personnage {
 	 */
 	static public void initTerrain(Terrain terrain) {
 		Personnage.terrain = terrain;
+		Ghost.g = new Graph(terrain);
 	}
 
 	// get terrain

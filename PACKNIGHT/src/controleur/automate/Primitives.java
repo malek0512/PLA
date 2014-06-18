@@ -8,6 +8,7 @@ import java.util.List;
 
 import personnages.*;
 
+
 /**
  * Classe contenant l'ensemble de fonction intermedaire permettant l'elaboration des primitives 
  * de test et d'action 
@@ -35,14 +36,21 @@ public class Primitives {
 	 */
 	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position, int rayon) {
 		List<Pacman> res = new LinkedList<Pacman>();
-
+		
 		float someXYSource = position.CasCentre().sommeXY();
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
 			Pacman pac = i.next();
-			float someXYTester = i.next().getCoord().CasCentre().sommeXY();
-			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
+			float someXYTester = pac.getCoord().CasCentre().sommeXY();
+			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon && !res.contains(pac)){
 				res.add(pac);
+				if(Ghost.central.containsKey(pac))
+					Ghost.central.get(pac).coord=pac.getCoord().CasCentre();
+				else
+					Ghost.central.put(pac,((Ghost)auto.getPersonnage()).new AvisDeRecherche(pac.getCoord().CasCentre()));
+			}
+			
+				
 		}
 		return res;
 	}
@@ -170,6 +178,12 @@ public class Primitives {
 	}
 	
 	/**
+	 * Fait super attention aux transformations. Parfois tu parles en pixel alors que tu veux parler de case et vice versa
+	 * getCoord() te donne le PIXEL en haut à gauche
+	 * Attention aux transformations de Coordonnees à CoordonneesFloat il vaut mieux uniformiser plûtot que de faire des transformations invalides lorsqu'on changera le nom
+	 * Les méthodes du genre pixelFromCase case existe ou caseFromPixel existent déjà.(Nommées différement ^^)
+	 * 
+	 * 
 	 * TODO A adapter lors de la disponibilité de l'algorithme A etoile
 	 * Renvoie les coordonnées de la prochaine case, afin d'atteindre la coordonnée c.
 	 * Le chemin est mis a jour tous les 3 couts. A eventuellement modifier afin de prendre en compte la distance
@@ -177,15 +191,15 @@ public class Primitives {
 	 * @param c
 	 * @author malek
 	 */
-	protected Coordonnees prochaineCase (Coordonnees c){
+	protected CoordonneesFloat prochaineCase (CoordonneesFloat c){
 		//Si nous somme deja sur la case demandé
-		if (auto.getPersonnage().getCoord().equals(c.pixelFromCase()))
+		if (auto.getPersonnage().getCoord().equals(c.CasCentre()))
 			return c;
 		
 		//On met a jour le chemin vers c, dans l'un des cas stipulé dans la condition 
 		if (chemin == null || chemin.size()==0 || nbCout >3 ){
-			Aetoile depart = new Aetoile(c.toCoordonneesFloat());
-			chemin = depart.algo(c.toCoordonneesFloat()); //case approximative TODO
+			Aetoile depart = new Aetoile(c);
+			chemin = depart.algo(auto.getPersonnage().getCoord().CasCentre()); //case approximative TODO
 			nbCout=0;
 		}
 		
@@ -194,7 +208,7 @@ public class Primitives {
 				"N'existe-t-il pas de chemin vers la coordonnées donnée en parametre ?"; 
 		
 		nbCout++;
-		Coordonnees prochain = chemin.get(0).toCoordonnees();
+		CoordonneesFloat prochain = chemin.get(0);
 		chemin.remove(0);
 		return prochain;
 	}
