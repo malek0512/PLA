@@ -45,9 +45,9 @@ public class Choix extends BasicGameState {
 	   public void keyReleased(int key, char c) {
 		  switch (key)
 		  {
-		  case Input.KEY_U : game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); break;
+		  	case Input.KEY_U : game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); break;
 		    case Input.KEY_M: if(WindowGame.M.playing()) WindowGame.M.pause() ;else WindowGame.M.resume(); break;
-	    //case Input.KEY_ESCAPE:container.exit(); break;		   
+		    case Input.KEY_ESCAPE:WindowGame.container.exit(); break;		   
 	      }
 
 	   }

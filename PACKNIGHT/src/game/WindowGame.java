@@ -25,8 +25,8 @@ public class WindowGame extends BasicGameState {
 
 	public static final int ID = 2;
 	
-	public static int resolution_x = 800;
-	public static int resolution_y = 600;
+	protected static int resolution_x = 800;
+	protected static int resolution_y = 600;
 
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
@@ -46,22 +46,22 @@ public class WindowGame extends BasicGameState {
 	private String MAP = "PACMAN.tmx";
 	private String MUSIC = "AllBeat.ogg";
 
-	public static float xCamera = resolution_x/2;
-	public static float yCamera = resolution_y/2;
+	protected static float xCamera = resolution_x/2;
+	protected static float yCamera = resolution_y/2;
 
 	private int direction = 0;
 	public static int taille_minimap = 4;
 
 	public static int tuile_size = 32;
-	public static int largueur_map , hauteur_map ;
+	protected static int largueur_map , hauteur_map ;
 	private int taillePersonnage =32;
 
 
 	private StateBasedGame game;
-    private GameContainer container;
+    protected static GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
-	public static Music M;
+	protected static Music M;
 	private Image PACGUM,HEART,PAUSE_IMAGE;
 	private boolean moving = false;//A VERIFIER SI UTILE
 	private boolean PAUSE = false;
@@ -88,7 +88,6 @@ public class WindowGame extends BasicGameState {
     {
     	this.game = game;
     	container.setShowFPS(false);
-        this.container = container;
         this.map = new TiledMap(CHEMIN_MAP.concat(MAP));        
         largueur_map =map.getWidth();
         hauteur_map = map.getHeight();
