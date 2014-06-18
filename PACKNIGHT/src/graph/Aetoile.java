@@ -70,6 +70,7 @@ public class Aetoile {
 		while(i.hasNext())
 		{
 			NoeudEtoile tmp = i.next();
+			System.out.println("d : " + tmp.distance);
 			if(tmp.distance < min)
 			{
 				min = tmp.distance;
@@ -78,6 +79,7 @@ public class Aetoile {
 			}
 			indice++;
 		}
+		System.out.println("min trouvé : " + min);
 		list.remove(indiceMin);
 		return res;
 	}
@@ -89,26 +91,32 @@ public class Aetoile {
 	 */
 	public List<CoordonneesFloat> algo(CoordonneesFloat queueDeListe)
 	{
+		boolean continu = true;
 		NoeudEtoile init = new NoeudEtoile(distance(queueDeListe), null, queueDeListe);
 		ouvert.add(init);
-		
-		while(!ouvert.isEmpty())
+		while(!ouvert.isEmpty() && continu)
 		{
 			NoeudEtoile m = extract(ouvert);
 			fermer.add(m);
 			
 			for(Direction d : Direction.values())
 			{
+				System.out.println("case tester : " + m);
+				System.out.println("Direction : " + d);
 				if(Personnage.getTerrain().caseAcessible(m.cord.x, m.cord.y, d))
 				{	
+					System.out.println("Accepter");
 					CoordonneesFloat cordFi = new CoordonneesFloat(m.cord,d);
 					NoeudEtoile fi = new NoeudEtoile(distance(cordFi), m, cordFi);
+					System.out.println("fils : "+fi);
 					
 					fi.pere = m;
 					
+					System.out.println();
 					if (fi.cord.equals(Aetoile.teteDeliste))
 					{
 						init = fi;
+						continu=false;
 						break;
 					}
 					else if(!appartient(ouvert,fi) && !appartient(fermer,fi))
@@ -134,13 +142,10 @@ public class Aetoile {
 	    	Personnage.initTerrain(terrain); 
 	    	
 	    	CoordonneesFloat start = new CoordonneesFloat(1,1);
-	    	CoordonneesFloat finish = new CoordonneesFloat(3,6);
+	    	CoordonneesFloat finish = new CoordonneesFloat(4,6);
 	    	
 	    	Aetoile a = new Aetoile(start);
 	    	List<CoordonneesFloat> l = a.algo(finish);
-	    	
-	    	
-	    	
 	    	
 	    	Iterator<CoordonneesFloat> i = l.iterator();
 	    	while(i.hasNext())
@@ -150,8 +155,6 @@ public class Aetoile {
 	    		System.out.println(x);
 	    		Personnage.getTerrain().setCase(x.x, x.y, 2);
 	    	}
-	    	
-	    	
 	    	terrain.afficher();
 	    }
 }
