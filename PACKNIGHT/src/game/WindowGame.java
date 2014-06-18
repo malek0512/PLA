@@ -20,8 +20,8 @@ import game.*;
 
 public class WindowGame extends BasicGame {
 
-	static int resolution_x = 800;
-	static int resolution_y = 600;
+	public static int resolution_x = 800;
+	public static int resolution_y = 600;
 
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
@@ -41,19 +41,19 @@ public class WindowGame extends BasicGame {
 	private String MUSIC = "AllBeat.ogg";
 
 	PacKnight PACMAN_1= new PacKnight("J1",14,10,Direction.droite,new CoordonneesFloat(1, 1));
-	//PacKnight PACMAN_2 = new PacKnight("J2",1,1,Direction.droite,new CoordonneesFloat(1, 1));
-	//PacKnight PACMAN_3 = new PacKnight("J3",1,1,Direction.droite,new CoordonneesFloat(1, 1));
-	//PacKnight PACMAN_4 = new PacKnight("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_2 = new PacKnight("J2",1,1,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_3 = new PacKnight("J3",1,1,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_4 = new PacKnight("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 
 	Ghost GHOST_1 = new Ghost("1", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
 	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	//Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite,new CoordonneesFloat(1, 1));
-	//Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(1, 1));
+	Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite,new CoordonneesFloat(1, 1));
+	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(1, 1));
 
 	Automate aleatoire,berserk;
 
-	static float xCamera = resolution_x/2;
-	static float yCamera = resolution_y/2;
+	public static float xCamera = resolution_x/2;
+	public static float yCamera = resolution_y/2;
 
 	private int direction = 0;
 	public static int taille_minimap = 4;
@@ -79,20 +79,24 @@ public class WindowGame extends BasicGame {
 	private Animation[] animations_GHOST_2 = new Animation[8];
 	private Animation[] animations_GHOST_3 = new Animation[8];
 	private Animation[] animations_GHOST_4 = new Animation[8];
-
+	
 	public WindowGame() {
         super("PACKNIGHT : THE RETURN");
     }
 
-    public void init(GameContainer container) throws SlickException {
-
+    public void init(GameContainer container) throws SlickException 
+    {
     	container.setShowFPS(false);
         this.container = container;
-        PACGUM = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
-        this.map = new TiledMap(CHEMIN_MAP.concat(MAP));
+        this.map = new TiledMap(CHEMIN_MAP.concat(MAP));        
         largueur_map =map.getWidth();
         hauteur_map = map.getHeight();
+        
         Terrain terrain = new Terrain(largueur_map,hauteur_map, 0);
+		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
+        PACGUM = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
+		PAUSE_IMAGE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
+
         Personnage.initTerrain(terrain);
     	Map.mapToTerrain(terrain, largueur_map, hauteur_map, map);
     	playground = terrain;
@@ -122,54 +126,35 @@ public class WindowGame extends BasicGame {
         Sprite.toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
         
         Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
-        //M = background;
-        //M.loop();
+        M = background;
+        M.loop();
     }
     
 
     public void render(GameContainer container, Graphics g) throws SlickException {
     	g.translate(container.getWidth() / 2 -  this.xCamera, container.getHeight() / 2 - ( this.yCamera));
-    	
-		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
         
         this.map.render(largueur_map*taille_minimap,0, 2);
+        Interface_Joueur.drawPacGum(playground,PACGUM);
         
-        Interface_Joueur.render(g,playground,PACGUM, HEART);
+        if(GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x+largueur_map*taille_minimap, GHOST_1.getCoord().y);
+        if(GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x+largueur_map*taille_minimap, GHOST_2.getCoord().y);
+        if(GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x+largueur_map*taille_minimap, GHOST_3.getCoord().y);
+        if(GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x+largueur_map*taille_minimap, GHOST_4.getCoord().y);
         
-        int largueur_interface = largueur_map*taille_minimap;
-        int hauteur_interface = hauteur_map*tuile_size;
+        g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x+largueur_map*taille_minimap, PACMAN_1.getCoord().y);
+        g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x+largueur_map*taille_minimap, PACMAN_2.getCoord().y);
+        g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x+largueur_map*taille_minimap, PACMAN_3.getCoord().y);
+        g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], PACMAN_4.getCoord().x+largueur_map*taille_minimap, PACMAN_4.getCoord().y);
         
-        
-        
-        g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], PACMAN_1.getCoord().x+largueur_interface, PACMAN_1.getCoord().y);
-       // g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], PACMAN_2.getCoord().x, PACMAN_2.getCoord().y);
-        //g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], PACMAN_3.getCoord().x, PACMAN_3.getCoord().y);
-        //g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], PACMAN_4.getCoord().x, PACMAN_4.getCoord().y);
-       if(GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], GHOST_1.getCoord().x+largueur_interface, GHOST_1.getCoord().y);
-        if(GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], GHOST_2.getCoord().x+largueur_interface, GHOST_2.getCoord().y);
-       // if(GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], GHOST_3.getCoord().x, GHOST_3.getCoord().y);
-       // if(GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], GHOST_4.getCoord().x, GHOST_4.getCoord().y);
-        
-
-        
+        Interface_Joueur.render(g, HEART);
         Minimap(playground, g,-resolution_x/2 + xCamera,-resolution_y/2 + yCamera);
         
-
-
-
-
-        
-		if(PAUSE==true)
-		{
-			PAUSE_IMAGE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
-			PAUSE_IMAGE.draw(0,0);
-			g.setColor(Color.white);
-			g.drawString("Resume (P)", 250, 100);
-			g.drawString("Main Menu (I'M WORKING ON IT >.<)", 250, 150);
-			g.drawString("Quit Game (ESCAPE)", 250, 250);
-		}
+		if(PAUSE==true) Pause.Pause(g,PAUSE_IMAGE);
+			
     }
 
+    
     public void update(GameContainer container, int delta) throws SlickException {
 		if(!PAUSE) {
 	    	if (PACMAN_1.parametrable())
@@ -244,12 +229,7 @@ public class WindowGame extends BasicGame {
 	    }
 	}
 
-
-
-
-
-
-
+	
 	public void Minimap(Terrain terrain,Graphics g, float decalage_x,float decalage_y){
 		for(int i=0;i<largueur_map;i++)
 		{
@@ -278,6 +258,5 @@ public class WindowGame extends BasicGame {
         g.setColor(Color.red);
         g.fillRect(GHOST_1.getCoord().CasCentre().x*taille_minimap+decalage_x, GHOST_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
         g.fillRect(GHOST_2.getCoord().CasCentre().x*taille_minimap+decalage_x, GHOST_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        
 	}
 }
