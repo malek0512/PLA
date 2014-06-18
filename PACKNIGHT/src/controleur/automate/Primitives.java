@@ -37,15 +37,15 @@ public class Primitives {
 	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position, int rayon) {
 		List<Pacman> res = new LinkedList<Pacman>();
 		
-		float someXYSource = position.CasCentre().sommeXY();
+
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();)
 		{
 			Pacman pac = i.next();
-			float someXYTester = pac.getCoord().CasCentre().sommeXY();
-			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon && !res.contains(pac)){
+			if(position.CasCentre().distance(pac.getCoord().CasCentre())<=rayon){
 				res.add(pac);
-				if(Ghost.central.containsKey(pac))
-					Ghost.central.get(pac).coord=pac.getCoord().CasCentre();
+				if(Ghost.central.containsKey(pac)){
+					Ghost.central.get(pac).majAvisDeRecherche(pac.getCoord().CasCentre());
+				}
 				else
 					Ghost.central.put(pac,((Ghost)auto.getPersonnage()).new AvisDeRecherche(pac.getCoord().CasCentre()));
 			}

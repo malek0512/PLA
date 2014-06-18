@@ -24,18 +24,18 @@ Transition
 
 Transition
     ETATSUIVANT = 3
-    ENTREE = PM_DANS_RAYON_X
+    ENTREE = VUE
     SORTIE = RIEN
     
 Etat 3
 Transition
     ETATSUIVANT = 3
-    ENTREE = PM_DANS_RAYON_X
+    ENTREE = VUE
     SORTIE = RIEN
     
     Transition
     ETATSUIVANT = 1
-    ENTREE = NON_PM_DANS_RAYON_X
+    ENTREE = PAS_VUE
     SORTIE = DIRECTION_ALEATOIRE
     
 

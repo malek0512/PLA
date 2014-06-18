@@ -204,10 +204,11 @@ public class WindowGame extends BasicGame {
 
 	        try
 	        {
-	       // aleatoire.suivant();
-	        berserk.suivant();
+	       aleatoire.suivant();
+	       // berserk.suivant();
 	        }
 	        catch (Exception e) {System.out.println(e);}
+	        Ghost.disparitionPacman();
 		}
     }
 
