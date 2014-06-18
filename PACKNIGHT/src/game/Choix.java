@@ -1,6 +1,7 @@
 package game;
 
 import org.newdawn.slick.Color;
+import game.WindowGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -10,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class TestState3 extends BasicGameState {
+public class Choix extends BasicGameState {
 	   public static final int ID = 3;
 	   private String[] options = new String[] {"Start Game","Credits","Highscores","Instructions","Exit"};
 	   /** The index of the selected option */
@@ -42,23 +43,12 @@ public class TestState3 extends BasicGameState {
 	   }
 
 	   public void keyReleased(int key, char c) {
-	      if (key == Input.KEY_DOWN) {
-	         selected++;
-	         if (selected >= options.length) {
-	            selected = 0;
-	         }
+		  switch (key)
+		  {
+		  case Input.KEY_U : game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); break;
+		    case Input.KEY_M: if(WindowGame.M.playing()) WindowGame.M.pause() ;else WindowGame.M.resume(); break;
+	    //case Input.KEY_ESCAPE:container.exit(); break;		   
 	      }
-	      if (key == Input.KEY_UP) {
-	         selected--;
-	         if (selected < 0) {
-	            selected = options.length - 1;
-	         }
-	      }
-	      if (key == Input.KEY_2) {
-	         game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-	      }
-	      if (key == Input.KEY_2) {
-	         game.enterState(Accueil.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-	      }
+
 	   }
 	}

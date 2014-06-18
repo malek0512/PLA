@@ -1,7 +1,6 @@
 package game;
 
-import game.Accueil;
-import game.TestState3;
+import game.Choix;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -13,10 +12,7 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.CrossStateTransition;
-import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
@@ -65,7 +61,7 @@ public class WindowGame extends BasicGameState {
     private GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
-	private Music M;
+	public static Music M;
 	private Image PACGUM,HEART,PAUSE_IMAGE;
 	private boolean moving = false;//A VERIFIER SI UTILE
 	private boolean PAUSE = false;
@@ -126,8 +122,8 @@ public class WindowGame extends BasicGameState {
         Sprite.toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
         
         Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
-       // M = background;
-       //M.loop();
+        M = background;
+        M.loop();
     }
     
 
@@ -221,27 +217,10 @@ public class WindowGame extends BasicGameState {
 			    }
 	    }
 	    switch (key){
+		    case Input.KEY_M: if(M.playing()) M.pause() ;else M.resume(); break;
+		    case Input.KEY_U : game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); break;
 	    	case Input.KEY_ESCAPE:container.exit(); break;
-		    case Input.KEY_M: if(this.M.playing()) this.M.pause() ;else this.M.resume(); break;
 	    }
-	    if (key == Input.KEY_2) {
-	         GameState target = game.getState(Accueil.ID);
-	         
-	         final long start = System.currentTimeMillis();
-	         CrossStateTransition t = new CrossStateTransition(target) {            
-	            public boolean isComplete() {
-	               return (System.currentTimeMillis() - start) > 2000;
-	            }
-
-	            public void init(GameState firstState, GameState secondState) {
-	            }
-	         };
-	         
-	         game.enterState(Accueil.ID, t, new EmptyTransition());
-	      }
-	      if (key == Input.KEY_3) {
-	         game.enterState(TestState3.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-	      }
 	}
 
 	
