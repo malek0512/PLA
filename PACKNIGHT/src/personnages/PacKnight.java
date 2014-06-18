@@ -128,4 +128,7 @@ public class PacKnight extends Pacman{
 		return !(agonise);
 	}
 	
+	public boolean peutProteger(){
+		return ghostEnChasse==null;
+	}
 }

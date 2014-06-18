@@ -149,10 +149,10 @@ public class Terrain {
 		int tmpY = y;
 		switch (d)
 		{
-		case haut : tmpY-= 2; break;
-		case bas : tmpY+= 2; break;
-		case droite : tmpX+=2; break;
-		case gauche : tmpX-=2; break;
+		case haut : tmpY-= 1; break;
+		case bas : tmpY+= 1; break;
+		case droite : tmpX+=1; break;
+		case gauche : tmpX-=1; break;
 		default : break;
 		}
 		return !(estDansLeTerrain(tmpX, tmpY));

@@ -36,7 +36,7 @@ public class Ghost extends Personnage {
 	
 	//timeur des animation
 	final static private int tempsPasserEnPrison = 1; 
-	final static private int tempsStun = 10;
+	final static private int tempsStun = 15;
 	final static private int tempsPrisonner = 10;
 	
 	//attribut pour les fantomes qui recoivent des ordres
@@ -66,14 +66,20 @@ public class Ghost extends Personnage {
 	 * Structure qui repertorie l'ensemble des information d'un PM en fuite
 	 * */
 	public class AvisDeRecherche {
-		boolean repere, Mort;
+		boolean Mort;
 		public CoordonneesFloat coord;
-		int nbVu = 0;
+		public int timer;
 
 		public AvisDeRecherche(CoordonneesFloat c) {
-			Mort = false;
-			repere = true;
 			coord = new CoordonneesFloat(c);
+			timer=300;
+		}
+		
+		public void majAvisDeRecherche(CoordonneesFloat c){
+			timer=300;
+			coord=c;
+			
+			
 		}
 	}
 
@@ -81,7 +87,21 @@ public class Ghost extends Personnage {
 	 * Le central repertorie l'ensemble des information des PM en fuite
 	 */
 	public static Map<Pacman, AvisDeRecherche> central=new HashMap<Pacman, AvisDeRecherche>();
-
+	
+	/**
+	 * Supprime le Pacman de la centrale si le timer est à 0*/
+	public static void disparitionPacman(){
+		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();){
+			Pacman pac = i.next();
+			if(central.containsKey(pac)){
+				if(central.get(pac).timer==0)
+					central.remove(pac);
+				else 
+					central.get(pac).timer--;
+			}
+	
+		}
+	}
 	/**
 	 * Gère la collision avec les pacmans*/
 	public void gererCollision() {
