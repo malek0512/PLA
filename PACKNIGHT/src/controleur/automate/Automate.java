@@ -8,7 +8,6 @@ import controleur.Controleur;
 import controleur.automate.TableTransitionSortie.Triplet;
 import src.parser.Parser;
 import src.parser.Quad;
-import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Ghost;
 import personnages.Personnage;
@@ -32,7 +31,7 @@ public class Automate extends Controleur {
 	public static enum Entree{
 		CASE_LIBRE, CASE_OCCUPEE, SORTIE_TERRAIN, CASE_GHOST, PM_DANS_RAYON_X, NON_PM_DANS_RAYON_X, PM_DANS_CROIX, 
 		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_ATTEINTE, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE,
-		EN_DETRESSE;
+		EN_DETRESSE, VUE, PAS_VUE;
 		
 		public static boolean contains (String s){
 			try{
@@ -198,6 +197,8 @@ public class Automate extends Controleur {
 				case NON_FREE: if(primitivesTest.isControled()) return Entree.NON_FREE; break;
 				case ETOILE: return Entree.ETOILE;
 				case EN_DETRESSE: //if (primitivesTest.) break; 
+				case VUE:if(primitivesTest.vu())return Entree.VUE; break;
+				case PAS_VUE:if(!primitivesTest.vu())return Entree.PAS_VUE; break;
 			//	}
 			}
 		}

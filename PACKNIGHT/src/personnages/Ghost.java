@@ -71,9 +71,15 @@ public class Ghost extends Personnage {
 		public int timer;
 
 		public AvisDeRecherche(CoordonneesFloat c) {
-			Mort = false;
 			coord = new CoordonneesFloat(c);
-			timer=24;
+			timer=300;
+		}
+		
+		public void majAvisDeRecherche(CoordonneesFloat c){
+			timer=300;
+			coord=c;
+			
+			
 		}
 	}
 
@@ -84,10 +90,11 @@ public class Ghost extends Personnage {
 	
 	/**
 	 * Supprime le Pacman de la centrale si le timer est à 0*/
-	public void disparitionPacman(){
+	public static void disparitionPacman(){
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();){
 			Pacman pac = i.next();
 			if(central.containsKey(pac)){
+				System.out.println(central.get(pac).timer);
 				if(central.get(pac).timer==0)
 					central.remove(pac);
 				else 

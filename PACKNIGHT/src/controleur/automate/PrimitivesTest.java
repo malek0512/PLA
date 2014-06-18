@@ -35,8 +35,9 @@ public class PrimitivesTest extends Primitives {
 		boolean res=false;
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();){
 			Pacman pac = i.next();
-			if(Ghost.central.containsKey(pac)||dansRayon(((Ghost)auto.getPersonnage()).getVision()));
+			if(dansRayon(((Ghost)auto.getPersonnage()).getVision())|| Ghost.central.containsKey(pac)){
 				res=true;
+			}
 		}
 		return res;
 	}

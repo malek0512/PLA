@@ -102,7 +102,7 @@ public class Terrain {
 	 */
 	public boolean caseAcessible(int x, int y, int distance, Direction direction)
 	{
-		//if(estDansLeTerrain(x,y))
+		if(estDansLeTerrain(x,y))
 			switch(direction)
 			{
 			case haut : return terrain[x][(y-distance) % this.hauteur].isAccessable();
