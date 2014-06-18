@@ -49,7 +49,7 @@ public class WindowGame extends BasicGame {
 	private String SPRITE_GHOST_4 = "Lulu.png";
 	
 	
-	private String MAP = "PACMAN-SANS-TORE.tmx";
+	private String MAP = "FATMAP.tmx";
 	private String MUSIC = "AllBeat.ogg";
 	
 
@@ -58,7 +58,7 @@ public class WindowGame extends BasicGame {
 	int taillePersonnage =32;
 	
 
-	PacKnight PACMAN_1= new PacKnight("J1",10,10,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_1= new PacKnight("J1",14,10,Direction.droite,new CoordonneesFloat(1, 1));
 	//PacKnight PACMAN_2 = new PacKnight("J2",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 	//PacKnight PACMAN_3 = new PacKnight("J3",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 	//PacKnight PACMAN_4 = new PacKnight("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
@@ -190,12 +190,12 @@ public class WindowGame extends BasicGame {
 	    	else
 	    		PACMAN_1.avancerAnimation();
 	    	
-	    	
 	        float w = container.getWidth() / 4;
-	        if (PACMAN_1.getCoord().x > (this.xCamera + w) && (PACMAN_1.getCoord().x + w  <  largueur_map*tuile_size))
-	        	this.xCamera = PACMAN_1.getCoord().x - w;
-	        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w)) 
+	        if (PACMAN_1.getCoord().x +largueur_map*taille_minimap > (this.xCamera + w ) && (PACMAN_1.getCoord().x + w   <  largueur_map*tuile_size))
+	        	this.xCamera = PACMAN_1.getCoord().x - w + largueur_map*taille_minimap;
+	        if (PACMAN_1.getCoord().x < (this.xCamera - w) && (PACMAN_1.getCoord().x > w )) 
 	        	this.xCamera = PACMAN_1.getCoord().x + w;
+
 	        float h = container.getHeight() / 4;
 	        if (PACMAN_1.getCoord().y > (this.yCamera + h) && (PACMAN_1.getCoord().y + h < hauteur_map*tuile_size)) 
 	        	this.yCamera = PACMAN_1.getCoord().y - h;
