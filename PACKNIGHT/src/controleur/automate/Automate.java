@@ -8,6 +8,7 @@ import controleur.Controleur;
 import controleur.automate.TableTransitionSortie.Triplet;
 import src.parser.Parser;
 import src.parser.Quad;
+import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Ghost;
 import personnages.Personnage;
@@ -275,5 +276,6 @@ public class Automate extends Controleur {
 		res += " Etat Courant : " + etatCourant + "\n Nb Transition : " + nbTransition + "\n Etats Finals : " + etatsFinals.toString() + "\n";
 		return res;
 	}
+	
 
 }

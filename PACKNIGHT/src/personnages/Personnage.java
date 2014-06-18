@@ -19,7 +19,7 @@ public abstract class Personnage {
 
 	// coordonne du personnage en pixel
 	// La coordonne corespond au pixel Haut-Gauche !!!
-	protected CoordonneesFloat coord;
+	public CoordonneesFloat coord;
 	protected String nom; // nom du personnage
 	protected boolean nextDirectionSet;
 	protected Direction nextDirection; // prochaine direction que prendra personnage
