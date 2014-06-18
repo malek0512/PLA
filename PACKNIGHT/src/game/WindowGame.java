@@ -33,15 +33,16 @@ public class WindowGame extends BasicGameState {
 	private String CHEMIN_MUSIC = "src/graphisme/main/ressources/music/";
 
 	Equipage equip = new Equipage(this);
-	private String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
-	private String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
-	private String SPRITE_PACMAN_3 = "PACMAN-SPRITES2.png";
-	private String SPRITE_PACMAN_4 = "PACMAN-SPRITES2.png";
+	
+	public String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
+	public String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
+	public String SPRITE_PACMAN_3 = "PACMAN-SPRITES2.png";
+	public String SPRITE_PACMAN_4 = "PACMAN-SPRITES2.png";
 
-	private String SPRITE_GHOST_1 = "Leona.png";
-	private String SPRITE_GHOST_2 = "Soraka.png";
-	private String SPRITE_GHOST_3 = "Janna.png";
-	private String SPRITE_GHOST_4 = "Lulu.png";
+	public String SPRITE_GHOST_1 = "Leona.png";
+	public String SPRITE_GHOST_2 = "Soraka.png";
+	public String SPRITE_GHOST_3 = "Janna.png";
+	public String SPRITE_GHOST_4 = "Lulu.png";
 
 	private String MAP = "PACMAN.tmx";
 	private String MUSIC = "AllBeat.ogg";
@@ -49,12 +50,12 @@ public class WindowGame extends BasicGameState {
 	protected static float xCamera = resolution_x/2;
 	protected static float yCamera = resolution_y/2;
 
-	private int direction = 0;
+	public int direction = 0;
 	public static int taille_minimap = 4;
 
 	public static int tuile_size = 32;
 	protected static int largueur_map , hauteur_map ;
-	private int taillePersonnage =32;
+	public int taillePersonnage =32;
 
 
 	private StateBasedGame game;
@@ -63,19 +64,9 @@ public class WindowGame extends BasicGameState {
 	private Terrain playground;
 	protected static Music M;
 	private Image PACGUM,HEART,PAUSE_IMAGE;
-	private boolean moving = false;//A VERIFIER SI UTILE
+	public boolean moving = false;//A VERIFIER SI UTILE
 	private boolean PAUSE = false;
 
-
-	private Animation[] animations_PACMAN_1 = new Animation[8];
-	private Animation[] animations_PACMAN_2 = new Animation[8];
-	private Animation[] animations_PACMAN_3 = new Animation[8];
-	private Animation[] animations_PACMAN_4 = new Animation[8];
-	private Animation[] animations_GHOST_1 = new Animation[8];
-	private Animation[] animations_GHOST_2 = new Animation[8];
-	private Animation[] animations_GHOST_3 = new Animation[8];
-	private Animation[] animations_GHOST_4 = new Animation[8];
-	
 
 	public int getID()
 	{
@@ -97,30 +88,17 @@ public class WindowGame extends BasicGameState {
         PACGUM = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
 		PAUSE_IMAGE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
 
-		equip.init(terrain);
+		Personnage.initTerrain(terrain);
+		equip.init();
         
     	Map.mapToTerrain(terrain, largueur_map, hauteur_map, map);
     	playground = terrain;
-    	    			
-        SpriteSheet spriteSheet_PACMAN_1 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_1), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_PACMAN_2 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_2), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_PACMAN_3 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_3), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_PACMAN_4 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_4), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_GHOST_1 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_1), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_GHOST_2 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_2), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_GHOST_3 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_3), taillePersonnage, taillePersonnage);
-        SpriteSheet spriteSheet_GHOST_4 = new  SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_GHOST_4), taillePersonnage, taillePersonnage);
+    	
+    	for(Joueur j: equip.liste){
+    		j.sprite();
+    	}
 
-        Sprite.toSprite(animations_PACMAN_1,spriteSheet_PACMAN_1);
-        Sprite.toSprite(animations_PACMAN_2,spriteSheet_PACMAN_2);
-        Sprite.toSprite(animations_PACMAN_3,spriteSheet_PACMAN_3);
-        Sprite.toSprite(animations_PACMAN_4,spriteSheet_PACMAN_4);
-        Sprite.toSprite(animations_GHOST_1,spriteSheet_GHOST_1);
-        Sprite.toSprite(animations_GHOST_2,spriteSheet_GHOST_2);
-        Sprite.toSprite(animations_GHOST_3,spriteSheet_GHOST_3);
-        Sprite.toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
-        
-        Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
+    	Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
         M = background;
         M.loop();
     }
@@ -132,16 +110,10 @@ public class WindowGame extends BasicGameState {
         this.map.render(largueur_map*taille_minimap,0, 2);
         Interface_Joueur.drawPacGum(playground,PACGUM);
         
-        if(equip.GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], equip.GHOST_1.getCoord().x+largueur_map*taille_minimap, equip.GHOST_1.getCoord().y);
-        if(equip.GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], equip.GHOST_2.getCoord().x+largueur_map*taille_minimap, equip.GHOST_2.getCoord().y);
-        if(equip.GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], equip.GHOST_3.getCoord().x+largueur_map*taille_minimap, equip.GHOST_3.getCoord().y);
-        if(equip.GHOST_4.getisAlive()) g.drawAnimation(animations_GHOST_4[direction + (moving ? 4 : 0)], equip.GHOST_4.getCoord().x+largueur_map*taille_minimap, equip.GHOST_4.getCoord().y);
-        
-        g.drawAnimation(animations_PACMAN_1[direction + (moving ? 4 : 0)], equip.PACMAN_1.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_1.getCoord().y);
-        g.drawAnimation(animations_PACMAN_2[direction + (moving ? 4 : 0)], equip.PACMAN_2.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_2.getCoord().y);
-        g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], equip.PACMAN_3.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_3.getCoord().y);
-        g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], equip.PACMAN_4.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_4.getCoord().y);
-        
+        for(Joueur j : equip.liste){
+        	j.render(g);
+        }
+
         Interface_Joueur.render(g, HEART);
         Minimap(playground, g,-resolution_x/2 + xCamera,-resolution_y/2 + yCamera);
         
@@ -181,8 +153,7 @@ public class WindowGame extends BasicGameState {
 	        
 	    	try
 	        {
-	       equip.suivant();
-	       
+	    		equip.suivant();
 	        }
 	        catch (Exception e) {System.out.println(e);}
 	        Ghost.disparitionPacman();
@@ -246,16 +217,14 @@ public class WindowGame extends BasicGameState {
 		        }
 			}
 		}	
-        g.setColor(Color.red);
-        g.fillRect(equip.GHOST_1.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(equip.GHOST_2.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(equip.GHOST_3.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_3.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(equip.GHOST_4.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_4.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
         
-        g.setColor(Color.orange);
-        g.fillRect(equip.PACMAN_4.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_4.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(equip.PACMAN_3.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_3.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(equip.PACMAN_2.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
-        g.fillRect(equip.PACMAN_1.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+        for(Joueur j: equip.liste){
+        	if (j.p instanceof Ghost){
+        		g.setColor(Color.red);
+        	} else {
+        		g.setColor(Color.orange);
+        	}
+        	g.fillRect(j.p.getCoord().CasCentre().x*taille_minimap+decalage_x, j.p.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+        }
 	}
 }

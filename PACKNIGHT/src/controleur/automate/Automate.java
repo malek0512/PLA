@@ -143,7 +143,7 @@ public class Automate extends Controleur {
 				case SPAWN:personnage.respawn();break;
 				case RIEN:primitivesAction.pass(); break;
 				case STUN:primitivesAction.stun(); break;
-				case PROTEGER_PRINCESSE:primitivesAction.protegerPrincesse(1); break;
+				case PROTEGER_PRINCESSE:primitivesAction.protegerPrincesse(5); break;
 				case AU_SECOURS:primitivesAction.auSecours2(); break;
 				}
 			}

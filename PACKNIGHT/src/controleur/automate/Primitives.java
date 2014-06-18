@@ -218,15 +218,27 @@ public class Primitives {
 	 * @author malek
 	 * @throws Exception 
 	 */
-	protected PacKnight whichHero(PacPrincess bitch) throws Exception{
-		if (PacKnight.liste.size()==0) 
-			throw new Exception("Il n'y a aucun Packnight dans PacKnight.liste !");
-		PacKnight captain=PacKnight.liste.get(0);
+	protected PacKnight whichHero(PacPrincess bitch){
+
+		PacKnight captain = null;
+		int d_bestFound =Integer.MAX_VALUE;
+		
 		for(PacKnight knight : PacKnight.liste){
-			if(knight.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees())
-					< captain.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees())
-					)//&& knight.peutProteger())
+			int d_candidat = knight.getCoord().CasCentre().distance(bitch.getCoord().CasCentre());
+			if(!knight.user() && d_candidat < d_bestFound)
+			{
+				//&& knight.peutProteger())
 				captain = knight;
+				d_bestFound =captain.getCoord().CasCentre().distance(bitch.getCoord().CasCentre());
+				//System.out.println("Position knight" +knight.getCoord().CasCentre());
+				//System.out.println("Distance knight" +knight.getCoord().CasCentre().distance(bitch.getCoord().CasCentre()));
+				//System.out.println("Position captain" +captain.getCoord().CasCentre());
+				//System.out.println("Distance captain" +captain.getCoord().CasCentre().distance(bitch.getCoord().CasCentre()));
+			}
+		}
+		if (captain == null)
+		{
+			System.out.println("Error");
 		}
 		return captain;
 	}
@@ -262,14 +274,14 @@ public class Primitives {
 		int x = src.x - dest.x;
 		int y = src.y - dest.y;
 		
-		if(x==0)
+		if(y==0)
 		{
 			if(x==-1)
 				return Direction.droite; 
 			else
 				return Direction.gauche;
 		}
-		else//y == 0
+		else//y != 0
 		{
 			if(y==-1)
 				return Direction.bas;
