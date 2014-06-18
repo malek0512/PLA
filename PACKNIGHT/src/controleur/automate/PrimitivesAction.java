@@ -1,6 +1,9 @@
 package controleur.automate;
 
 
+import graph.Aetoile;
+import graph.Graph;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -176,5 +179,15 @@ public class PrimitivesAction extends Primitives{
 		}
 	}
 	
-	
+	/**
+	 * donne des ordre au fantomes pour coincé un pacman donné
+	 */
+	public void suivre(Pacman ref)
+	{
+		CoordonneesFloat src = this.auto.getPersonnage().coord;
+		Aetoile graph = new Aetoile(src);
+		List<CoordonneesFloat> l = graph.algo(ref.coord);
+		l.remove(0);
+		this.auto.getPersonnage().setDirection(mysteriousFunction(src, l.get(1)));
+	}
 }

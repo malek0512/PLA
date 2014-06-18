@@ -246,7 +246,33 @@ public class Primitives {
 		}
 		return res;
 	}
-	
-	
-	
+
+	/**
+	 * fonction misterieuse qui renvoie la direction a prendre pour aller
+	 * de la case src vers la case dest
+	 * @param src : case source
+	 * @param dest : case destination
+	 * @return la direction a suivre pour aller a dest
+	 * @author Mysterious Guy
+	 */
+	public Direction mysteriousFunction(CoordonneesFloat src, CoordonneesFloat dest)
+	{
+		int x = src.x - dest.x;
+		int y = src.y - dest.y;
+		
+		if(x==0)
+		{
+			if(x==-1)
+				return Direction.droite; 
+			else
+				return Direction.gauche;
+		}
+		else//y == 0
+		{
+			if(y==-1)
+				return Direction.bas;
+			else
+				return Direction.haut;
+		}
+	}
 }

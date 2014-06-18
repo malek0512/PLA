@@ -1,4 +1,5 @@
 package personnages;
+import graph.Aetoile;
 import graph.Graph;
 
 import java.util.HashMap;
@@ -301,14 +302,14 @@ public class Ghost extends Personnage {
 		Iterator<CoordonneesFloat> i = l.iterator();
 		while(i.hasNext())
 		{
-			CoordonneesFloat tmp = i.next();
+			CoordonneesFloat interEnTraitement = i.next();
 			
 			// variable temporaire
 			Ghost meilleurCandidat = null;
 			int dcandidat = 255;
 			
 			// calcul de la distance max entre le fantome et l'inter
-			int dmax = Math.abs(ref.coord.x - tmp.x) + Math.abs(ref.coord.y - tmp.y);
+			int dmax = Math.abs(ref.coord.x - interEnTraitement.x) + Math.abs(ref.coord.y - interEnTraitement.y);
 			dmax += 2; //parceque je suis sadic :3
 			
 			// calcul du fantome qui doit y aller
@@ -319,7 +320,7 @@ public class Ghost extends Personnage {
 			while(ig.hasNext())
 			{	//creation du candidat
 				Ghost actuelCandidat = ig.next();
-				int dactuelCandidat = Math.abs(ref.coord.x - tmp.x) + Math.abs(ref.coord.y - tmp.y);
+				int dactuelCandidat = Math.abs(ref.coord.x - interEnTraitement.x) + Math.abs(ref.coord.y - interEnTraitement.y);
 				if(dactuelCandidat < dmax && dactuelCandidat < dcandidat)
 				{	//maj du candidat
 					meilleurCandidat = actuelCandidat;
@@ -331,10 +332,10 @@ public class Ghost extends Personnage {
 			{
 				//supprime le fantome de la liste
 				lg.remove(indice);
-				// ordonnee au fantome
-				//TODO : calculer l'itinineraire
-				// il ne s'agit pas de "l" !!!!
-				meilleurCandidat.recoitOrdre(l);
+				// calcul de l'itinéraire
+				Aetoile ga = new Aetoile(meilleurCandidat.coord);
+				List<CoordonneesFloat> ordre = ga.algo(interEnTraitement);
+				meilleurCandidat.recoitOrdre(ordre);
 			}
 		}
 			
