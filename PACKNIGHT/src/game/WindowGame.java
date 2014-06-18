@@ -1,7 +1,9 @@
 package game;
 
+import game.TestState2;
+import game.TestState3;
+
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -10,15 +12,23 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.GameState;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.CrossStateTransition;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
 
-import controleur.automate.Automate;
 import personnages.*;
 import structure_terrain.*;
 
 
-public class WindowGame extends BasicGame {
+public class WindowGame extends BasicGameState {
 
+	public static final int ID = 1;
+	
 	public static int resolution_x = 800;
 	public static int resolution_y = 600;
 
@@ -50,6 +60,8 @@ public class WindowGame extends BasicGame {
 	public static int largueur_map , hauteur_map ;
 	private int taillePersonnage =32;
 
+
+	private StateBasedGame game;
     private GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
@@ -68,12 +80,17 @@ public class WindowGame extends BasicGame {
 	private Animation[] animations_GHOST_3 = new Animation[8];
 	private Animation[] animations_GHOST_4 = new Animation[8];
 	
-	public WindowGame() {
-        super("PACKNIGHT : THE RETURN");
-    }
 
-    public void init(GameContainer container) throws SlickException 
+	public int getID()
+	{
+	      return ID;
+	}
+	
+	
+	
+    public void init(GameContainer container,StateBasedGame game) throws SlickException 
     {
+    	this.game = game;
     	container.setShowFPS(false);
         this.container = container;
         this.map = new TiledMap(CHEMIN_MAP.concat(MAP));        
@@ -109,12 +126,12 @@ public class WindowGame extends BasicGame {
 //        Sprite.toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
         
         Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
-        M = background;
-        M.loop();
+       // M = background;
+       //M.loop();
     }
     
 
-    public void render(GameContainer container, Graphics g) throws SlickException {
+    public void render(GameContainer container,StateBasedGame game, Graphics g) throws SlickException {
     	g.translate(container.getWidth() / 2 -  xCamera, container.getHeight() / 2 - ( yCamera));
         
         this.map.render(largueur_map*taille_minimap,0, 2);
@@ -138,7 +155,7 @@ public class WindowGame extends BasicGame {
     }
 
     
-    public void update(GameContainer container, int delta) throws SlickException {
+    public void update(GameContainer container,StateBasedGame game, int delta) throws SlickException {
 		if(!PAUSE) {
 	    	if (equip.PACMAN_1.parametrable())
 	    		equip.PACMAN_1.avancer();
@@ -207,6 +224,24 @@ public class WindowGame extends BasicGame {
 	    	case Input.KEY_ESCAPE:container.exit(); break;
 		    case Input.KEY_M: if(this.M.playing()) this.M.pause() ;else this.M.resume(); break;
 	    }
+	    if (key == Input.KEY_2) {
+	         GameState target = game.getState(TestState2.ID);
+	         
+	         final long start = System.currentTimeMillis();
+	         CrossStateTransition t = new CrossStateTransition(target) {            
+	            public boolean isComplete() {
+	               return (System.currentTimeMillis() - start) > 2000;
+	            }
+
+	            public void init(GameState firstState, GameState secondState) {
+	            }
+	         };
+	         
+	         game.enterState(TestState2.ID, t, new EmptyTransition());
+	      }
+	      if (key == Input.KEY_3) {
+	         game.enterState(TestState3.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+	      }
 	}
 
 	
