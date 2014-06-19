@@ -105,6 +105,8 @@ public class PrimitivesAction extends Primitives{
 			}
 			else {
 				//TODO FUIRE, il n'y a aucun knight pour la proteger 
+				setDirectionAleatoire(bitch);
+				bitch.avancer();
 			}
 		}
 	}
@@ -156,7 +158,7 @@ public class PrimitivesAction extends Primitives{
 				if (knight.ghostEnChasse == null)
 					throw new Exception("Erreur ! Je suis un knight, on me demande de chasser un ghost, sans renseignement (ghostEnChasse==null)");
 //				System.out.println("FM" + knight.ghostEnChasse.getCoord().CasCentre());
-//				suivre(knight.ghostEnChasse.getCoord().CasCentre());
+				suivre(knight.ghostEnChasse.getCoord().CasCentre());
 			}
 		} else {
 			//Sinon on le reinitialise

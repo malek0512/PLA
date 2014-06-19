@@ -1,7 +1,7 @@
 <?xml version = "1.0" ?>
 <Automate ID= "Princesse" > 
 <Etat Nom= "1" > 
- <Transition Entree= "ETOILE" Etat= "1" Action = "AU_SECOURS" > </Transition> 
+ <Transition Entree= "FM_DANS_RAYON" Etat= "1" Action = "AU_SECOURS" > </Transition> 
 </Etat> 
 <Etat_Initial> 
 <Etat Nom= "1" > 

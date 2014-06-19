@@ -15,13 +15,15 @@ public class Accueil extends BasicGameState {
 	   public static final int ID = 1;
 	   private Image PACGUM;
 	   private StateBasedGame game;
+
 	   
 	   public int getID() {
 	      return ID;
 	   }
 
 	   public void init(GameContainer container, StateBasedGame game) throws SlickException {
-	      this.game = game;
+		   	this.game = game;
+
 	   }
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -36,7 +38,7 @@ public class Accueil extends BasicGameState {
 	      switch (key) {
 	    	  case Input.KEY_ENTER: game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	    	  case Input.KEY_M: if(WindowGame.M.playing()) WindowGame.M.pause() ;else WindowGame.M.resume(); break;
-	    	  case Input.KEY_ESCAPE:WindowGame.container.exit(); break;
+	    	  case Input.KEY_ESCAPE:Menu.container.exit(); break;
 
 	      }
 	   }
