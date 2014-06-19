@@ -274,6 +274,22 @@ public class Primitives {
 	}
 
 	/**
+	 * PacPrincesse et PacKnight
+	 * @param rayon : rayon de vision du personnage de l'automate
+	 * @return Vrai si p2 est dans le rayon de p1
+	 */
+	protected boolean personnageEstDansRayon(int rayon, Personnage p1, Personnage p2) {
+		CoordonneesFloat position = p1.getCoord();
+
+		float someXYSource = position.CasCentre().sommeXY();
+		float someXYTester = p2.getCoord().CasCentre().sommeXY();
+		if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
+				return true;
+		
+		return false;
+	}
+	
+	/**
 	 * fonction misterieuse qui renvoie la direction a prendre pour aller
 	 * de la case src vers la case dest
 	 * @param src : case source

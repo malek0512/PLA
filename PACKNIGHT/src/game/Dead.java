@@ -14,7 +14,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class Dead extends BasicGameState {
 	   public static final int ID = 6;
-	   private Image PAUSE;
+	   private Image DEAD;
 	   private StateBasedGame game;
 
 	   
@@ -28,10 +28,10 @@ public class Dead extends BasicGameState {
 	   }
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		      PAUSE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
-		      PAUSE.draw(0,0);
+		      DEAD = new Image("src/graphisme/main/ressources/map/image/Dead.jpg");
+		      DEAD.draw(0,0);
 		      g.setColor(Color.white);
-		      g.drawString("You dead", 250, 100);
+		      g.drawString("You're dead", 250, 100);
 		      g.drawString("Main Menu (SPACE)", 250, 150);
 
 

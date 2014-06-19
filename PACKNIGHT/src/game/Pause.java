@@ -33,7 +33,7 @@ public class Pause extends BasicGameState {
 		      g.setColor(Color.white);
 		      g.drawString("Resume (P)", 250, 100);
 		      g.drawString("Main Menu (SPACE)", 250, 150);
-		      g.drawString("Quit Game (ESCAPE)", 250, 250);
+		      g.drawString("Quit Game (ESCAPE)", 250, 200);
 
 
 	   }

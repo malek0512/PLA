@@ -20,6 +20,7 @@ public class Equipage {
 	WindowGame g;
 	List<Joueur> liste = new LinkedList<Joueur>();
 
+
 	Automate aleatoire, berserk, knight, princess, lord, suiveur;
 	PacKnight PACMAN_1 = new PacKnight("J1", 17, 17, Direction.droite,
 			new CoordonneesFloat(1, 1), true);
@@ -63,7 +64,7 @@ public class Equipage {
 			// berserk = new Automate("Automate/A_BERSERK.xml",GHOST_2);
 			// lord=new Automate("Automate/RAMA.xml",GHOST_4);
 			// princess = new Automate("Automate/Princesse.xml",PACMAN_4);
-			knight = new Automate("Automate/RAMA.xml", PACMAN_2);
+			knight = new Automate("Automate/rama.xml", PACMAN_2);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -81,3 +82,4 @@ public class Equipage {
 		knight.suivant();
 	}
 }
+
