@@ -360,6 +360,7 @@ public class Primitives {
 				}
 				while(!estIntersectionCas(cordCaseAcutel))
 				{
+					System.out.println(cordCaseAcutel);
 					//tester si pac-gom
 					if(Personnage.getTerrain().ValueCase(cordCaseAcutel) == 2)
 						tab[nbInter][0] += Value_pacgom;
