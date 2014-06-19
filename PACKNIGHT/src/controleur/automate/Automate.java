@@ -27,9 +27,9 @@ public class Automate extends Controleur {
 	PrimitivesTest primitivesTest = new PrimitivesTest(this);
 	PrimitivesAction primitivesAction = new PrimitivesAction(this);
 	
-	//ENTREES : CASE_OCCUPE, CASE_LIBRE, SORTIE_TERRAIN, CASE_GHOST
+	//ENTREES : CASE_OCCUPE, CASE_LIBRE, SORTIE_TERRAIN...
 	public static enum Entree{
-		CASE_LIBRE, CASE_OCCUPEE, SORTIE_TERRAIN, CASE_GHOST, PM_DANS_RAYON_X, NON_PM_DANS_RAYON_X, PM_DANS_CROIX, 
+		CASE_LIBRE, CASE_OCCUPEE, SORTIE_TERRAIN, PM_DANS_RAYON_X, NON_PM_DANS_RAYON_X, PM_DANS_CROIX, 
 		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_ATTEINTE, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE,
 		EN_DETRESSE, NON_EN_DETRESSE, FM_DANS_RAYON, VUE, PAS_VUE;
 		
@@ -44,8 +44,7 @@ public class Automate extends Controleur {
 	}	
 
 	public static enum Sortie{
-		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, PROCHAINE_DIRECTION, CHEMIN_PLUS_COURT, OBEIR,
-		END_LIFE, SPAWN, STUN, PROTEGER_PRINCESSE, AU_SECOURS, SUIVRE;
+		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, CHEMIN_PLUS_COURT, OBEIR, SPAWN, STUN, PROTEGER_PRINCESSE, AU_SECOURS, SUIVRE, RAMASSER_PACGUM;
 		public static boolean contains (String s){
 			try{
 				Sortie.valueOf(s);
@@ -145,6 +144,8 @@ public class Automate extends Controleur {
 				case STUN:primitivesAction.stun(); break;
 				case PROTEGER_PRINCESSE:primitivesAction.protegerPrincesse(5); break;
 				case AU_SECOURS:primitivesAction.auSecours(); break;
+				case RAMASSER_PACGUM:primitivesAction.fetch();break;
+				case OBEIR:primitivesAction.obeir(); break;
 				}
 			}
 			while(this.personnage.parametrable() && !(isEtatBloquant()));

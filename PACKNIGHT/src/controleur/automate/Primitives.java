@@ -149,9 +149,21 @@ public class Primitives {
 	 */
 	public boolean estIntersection(CoordonneesFloat coord){
 		int n=0;
-
+		CoordonneesFloat coordo = new CoordonneesFloat(coord.CasCentre());
 		for(Direction d : Direction.values())
-			if(this.auto.getPersonnage().caseDisponible(d))
+			if(Personnage.getTerrain().caseAcessible(coordo.x, coordo.y, d))
+				n++;
+		
+		return n>2;
+	}
+	
+	/**Pas merci ? :(
+	 * @return Vrai si la case est une intersection
+	 */
+	public boolean estIntersectionCas(CoordonneesFloat coord){
+		int n=0;
+		for(Direction d : Direction.values())
+			if(Personnage.getTerrain().caseAcessible(coord.x, coord.y, d))
 				n++;
 		
 		return n>2;
@@ -273,7 +285,7 @@ public class Primitives {
 	{
 		int x = src.x - dest.x;
 		int y = src.y - dest.y;
-		
+
 		if(y==0)
 		{
 			if(x==-1)
@@ -295,10 +307,10 @@ public class Primitives {
 	 * implanter tout les commentaires %)
 	 */
 
-	final int Value_pacgom = 5;
+	final int Value_pacgom = 15;
 	final int Value_distance = -1;
 	final int Value_ghost = -100;
-	final int Value_pacKnight = -50;
+	final int Value_pacKnight = 0;
 	final int ImportanceRacine = 5;
 	final int ImportanceBranche = 1;
 	
@@ -330,7 +342,7 @@ public class Primitives {
 				{//si case accessible
 					//faire avancer le c dans la direction d
 					Direction directionCord = d;
-					while(!estIntersection(cord))
+					while(!estIntersectionCas(cord))
 					{
 						//tester si pac-gom
 						if(Personnage.getTerrain().ValueCase(cord) == 2)
@@ -384,8 +396,6 @@ public class Primitives {
 	 */
 	public int[][] laFonctionQuiFaitTout(CoordonneesFloat cord)
 	{
-
-		
 		// 0 : pac-gom
 		// 1 : distance
 		// 2 : personnage
@@ -410,7 +420,7 @@ public class Primitives {
 			{//si case accessible
 				//faire avancer le c dans la direction d
 				Direction directionCord = d;
-				while(!estIntersection(cord))
+				while(!estIntersectionCas(cord))
 				{
 					//tester si pac-gom
 					if(Personnage.getTerrain().ValueCase(cord) == 2)
@@ -455,47 +465,9 @@ public class Primitives {
 					for(int j= 0 ; i<3; i++)
 						tab[nbInter][4+j] += tabaux[i][j];
 			}
+			System.out.println("##############" + "\nDirection : " + d + "\nValeur des pac-gomm : " + tab[nbInter][0] + "\nValeur en distance : " + tab[nbInter][1] + "\nValeur en perso : " + tab[nbInter][3] + "\n############");
 		}
 		return tab;
 	}
 	
-	/**
-	 * envoie le personnage manger des pac-gomm
-	 */
-	public void fetch()
-	{
-		// 0 : pac-gom
-		// 1 : distance
-		// 2 : personnage
-		
-		// 3 : avenir pac-gom
-		// 4 : avenir distance
-		// 5 : avenir personnage
-		CoordonneesFloat c = new CoordonneesFloat(auto.getPersonnage().coord); 
-		if(estIntersection(c))
-		{
-			int tab[][] = laFonctionQuiFaitTout(c);
-			int cpt =0;
-			int meilleurCandidat = Integer.MIN_VALUE;
-			Direction meilleurCandidatDirection = null;
-			for(Direction d : Direction.values())
-			{
-				if(tab[cpt][1] != 0)
-				{//sinon la direction est un mur !!
-					int candidat = 0;
-					for(int k = 0; k <3; k++)
-						candidat += ImportanceRacine*tab[cpt][k];
-					for(int k = 3; k<6; k++)
-						candidat += ImportanceBranche*tab[cpt][k];
-					if(meilleurCandidat<candidat)
-					{
-						meilleurCandidat = candidat;
-						meilleurCandidatDirection = d;
-					}
-				}
-			}
-			this.auto.getPersonnage().setDirection(meilleurCandidatDirection);
-		}
-		this.auto.getPersonnage().avancer();
-	}
 }

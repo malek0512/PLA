@@ -17,51 +17,56 @@ import controleur.automate.Automate;
 
 public class Equipage {
 
-	WindowGame g;
-	List<Joueur> liste = new LinkedList<Joueur>();
-	
-	public Equipage(WindowGame g) {
-		this.g = g;
-	}
+WindowGame g;
+List<Joueur> liste = new LinkedList<Joueur>();
 
-	Automate aleatoire,berserk, knight, princess;
-	PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(1, 1), true);
-	PacKnight PACMAN_2 = new PacKnight("J2",5,15,Direction.droite,new CoordonneesFloat(1, 1), false);
-//	PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), false);
-	PacPrincess PACMAN_4 = new PacPrincess("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
+public Equipage(WindowGame g) {
+this.g = g;
+}
 
-	Ghost GHOST_1 = new Ghost("1", 2, 1, Direction.droite,new CoordonneesFloat(2, 1));
-//	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-//	Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite,new CoordonneesFloat(1, 1));
-//	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(1, 1));
+Automate aleatoire,berserk, knight, princess, lord,suiveur;
+PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(1, 1), true);
+//PacKnight PACMAN_2 = new PacKnight("J2",5,15,Direction.droite,new CoordonneesFloat(1, 1), false);
+// PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), false);
+//PacPrincess PACMAN_4 = new PacPrincess("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 
-	public void init() throws SlickException{
+Ghost GHOST_1 = new Ghost("1", 2, 1, Direction.droite,new CoordonneesFloat(2, 1));
+Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
+Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite,new CoordonneesFloat(1, 1));
+Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(1, 1));
 
-		liste.add(new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1));
-		liste.add(new Joueur(this.g.SPRITE_PACMAN_2,this.g, PACMAN_2));
-//		liste.add(new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_3));
-		liste.add(new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4));
-		
-		liste.add(new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1));
-//		liste.add(new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2));
-//		liste.add(new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3));
-//		liste.add(new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4));
-		
-    	try{
-    		aleatoire = new Automate("Automate/RAMA.xml",GHOST_1);
-//    		berserk = new Automate("Automate/A_BERSERK.xml",GHOST_2);
-    		princess = new Automate("Automate/Princesse.xml",PACMAN_4);
-    		knight = new Automate("Automate/Packnight.xml",PACMAN_2);
+public void init() throws SlickException{
 
-    		
-    	}catch(Exception e)  
-    		{System.out.println(e);};
-	}
-	
-	public void suivant() throws Exception{
-		aleatoire.suivant();
-//	    berserk.suivant();
-	    princess.suivant();
-	    knight.suivant();
-	}
+liste.add(new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1));
+//liste.add(new Joueur(this.g.SPRITE_PACMAN_2,this.g, PACMAN_2));
+// liste.add(new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_3));
+//liste.add(new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4));
+
+liste.add(new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1));
+liste.add(new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2));
+liste.add(new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3));
+liste.add(new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4));
+
+     try{
+     aleatoire = new Automate("Automate/A_ALEATOIRE_AVEUGLE.xml",GHOST_1);
+     suiveur=new Automate("Automate/A_ALEATOIRE_AVEUGLE.xml",GHOST_3);
+     berserk = new Automate("Automate/A_BERSERK.xml",GHOST_2);
+     lord=new Automate("Automate/RAMA.xml",GHOST_4);
+     //princess = new Automate("Automate/Princesse.xml",PACMAN_4);
+     // knight = new Automate("Automate/knight.xml",PACMAN_2);
+
+    
+     }catch(Exception e)
+     {System.out.println(e);};
+}
+
+public void suivant() throws Exception{
+
+aleatoire.suivant();
+berserk.suivant();
+suiveur.suivant();
+lord.suivant();
+// princess.suivant();
+//knight.suivant();
+}
 }
