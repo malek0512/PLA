@@ -4,8 +4,6 @@ package controleur.automate;
 import java.util.Iterator;
 import java.util.List;
 
-import personnages.Ghost;
-import personnages.Pacman;
 import personnages.*;
 
 
@@ -81,24 +79,38 @@ public class PrimitivesTest extends Primitives {
 	}
 	
 	/**
-	 * Fonction de test Automate.FM_DANS_RAYON. 
-	 * Elle met a jour la liste des agresseurs de la princesse, si c'est la princesse qui l'utilise
+	 * PacPrincess
+	 * Fonction de test Automate.FM_DANS_RAYON
+	 * Elle met a jour la liste des agresseurs de la princesse
 	 * @param d
-	 * @return True si un ou plusieurs pacman sont dans le rayon, du auto.personnage.
+	 * @return True si un ou plusieurs FM sont dans le rayon, de princessssse
 	 * @author malek
 	 */
-	protected boolean fmDansRayon(int d) {
-		List violeur = fantomeEstDansRayon(d);
-		if (auto.getPersonnage() instanceof PacPrincess)
-			((PacPrincess) auto.getPersonnage()).violeurs = violeur;
-		return violeur.size()!=0;
+	protected boolean fmDansRayon() {
+		if (auto.getPersonnage() instanceof PacPrincess){
+			int perimetre = ((PacPrincess) auto.getPersonnage()).perimetreSecurite ;
+			List agresseurs = fantomeEstDansRayon(perimetre);
+			((PacPrincess) auto.getPersonnage()).violeurs = agresseurs;
+		return agresseurs.size()!=0;
+		}
+		return false;
 	}
 
 	/**
-	 * @return Vrai si la princesse, designe le knight, comme son sauveur ie elle s'identifie, lors de l'appel au secours
+	 * PacKnight
+	 * @return Vrai si knight estime que le fantome est tojours dans le perimetre de la princesse. Et qu'il doit lui porter secour
+	 * @require La princesse s'identifie et identifie son agresseur, sinon exception
 	 * @author malek
+	 * @throws Exception 
 	 */
-	public boolean enDetresse(){
-		return ((PacKnight) auto.getPersonnage()).princesseEnDetresse!=null;
+	public boolean enDetresse() throws Exception{
+		if (((PacKnight) auto.getPersonnage()).princesseEnDetresse==null)
+			throw new Exception("PrimitiveTest.enDestresse : knight.princesseEnDetresse==null");
+		if (((PacKnight) auto.getPersonnage()).ghostEnChasse==null)
+			throw new Exception("PrimitiveTest.enDestresse : knight.princesseEnDetresse==null");
+		Ghost ghost = ((PacKnight) auto.getPersonnage()).ghostEnChasse;
+		PacPrincess princess = ((PacKnight) auto.getPersonnage()).princesseEnDetresse;
+		//Renvoie vrai si ghost dans rayon de princesse
+		return personnageEstDansRayon(princess.perimetreSecurite, princess, ghost);
 	}
 }

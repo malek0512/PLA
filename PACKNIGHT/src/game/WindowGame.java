@@ -6,7 +6,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -30,7 +29,7 @@ public class WindowGame extends BasicGameState {
 	
 	Equipage equip = new Equipage(this);
 	
-	private String MAP = "PACMAN.tmx";
+	private String MAP = "FATMAP.tmx";
 		
 	public String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
 	public String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
@@ -114,6 +113,8 @@ public class WindowGame extends BasicGameState {
 
         Interface_Joueur.render(g, HEART,FOND_INTERFACE);
         Minimap(playground, g,-resolution_x/2 + xCamera,-resolution_y/2 + yCamera);
+        if(time<3000)
+        g.drawString("GET READY " ,resolution_x/2, resolution_y/2);
 
     }
 
@@ -135,6 +136,8 @@ public class WindowGame extends BasicGameState {
     	
     	time += delta;
     	
+    	if(!(time < 3000)) 
+    	{	
     	
     	if (equip.PACMAN_1.parametrable())
     		equip.PACMAN_1.avancer();
@@ -169,7 +172,7 @@ public class WindowGame extends BasicGameState {
      equip.suivant();
         }
         catch (Exception e) {System.out.println(e);}
-        Ghost.disparitionPacman();
+        Ghost.disparitionPacman();}
     }
 
 
