@@ -149,9 +149,9 @@ public class Primitives {
 	 */
 	public boolean estIntersection(CoordonneesFloat coord){
 		int n=0;
-
+		coord=coord.CasCentre();
 		for(Direction d : Direction.values())
-			if(this.auto.getPersonnage().caseDisponible(d))
+			if(Personnage.getTerrain().caseAcessible(coord.x, coord.y, d))
 				n++;
 		
 		return n>2;
@@ -412,6 +412,7 @@ public class Primitives {
 				Direction directionCord = d;
 				while(!estIntersection(cord))
 				{
+					System.out.println("wtf");
 					//tester si pac-gom
 					if(Personnage.getTerrain().ValueCase(cord) == 2)
 						tab[nbInter][0] += Value_pacgom;
@@ -473,15 +474,18 @@ public class Primitives {
 		// 5 : avenir personnage
 		CoordonneesFloat c = new CoordonneesFloat(auto.getPersonnage().coord); 
 		if(estIntersection(c))
-		{
+		{	System.out.println("if done");
 			int tab[][] = laFonctionQuiFaitTout(c);
+			
 			int cpt =0;
 			int meilleurCandidat = Integer.MIN_VALUE;
 			Direction meilleurCandidatDirection = null;
 			for(Direction d : Direction.values())
 			{
+				System.out.println("valeur du truc tester : " + tab[cpt][1]);
 				if(tab[cpt][1] != 0)
 				{//sinon la direction est un mur !!
+					System.out.println("first if ok");
 					int candidat = 0;
 					for(int k = 0; k <3; k++)
 						candidat += ImportanceRacine*tab[cpt][k];
@@ -489,13 +493,18 @@ public class Primitives {
 						candidat += ImportanceBranche*tab[cpt][k];
 					if(meilleurCandidat<candidat)
 					{
+						System.out.println("second if ok");
 						meilleurCandidat = candidat;
 						meilleurCandidatDirection = d;
 					}
 				}
 			}
+			
 			this.auto.getPersonnage().setDirection(meilleurCandidatDirection);
+			
 		}
+		System.out.println("avant le avancer");
 		this.auto.getPersonnage().avancer();
+		System.out.println("après avancer");
 	}
 }

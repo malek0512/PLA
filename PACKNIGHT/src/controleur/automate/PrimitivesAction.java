@@ -77,7 +77,17 @@ public class PrimitivesAction extends Primitives{
 	/**
 	 * Reçoit un ordre du Fantôme Lord et avance vers la case désignée tant qu'il ne l'a pas atteinte
 	 * */
-	public void obeir(List<CoordonneesFloat> d){
+	public void obeir(){
+		Iterator<Pacman> i = Ghost.central.keySet().iterator();
+		if (i.hasNext()){
+			Pacman max = i.next();
+			while (i.hasNext()){
+				Pacman next = i.next();
+				if (Ghost.central.get(next).timer>Ghost.central.get(max).timer)
+					max = next;
+			}
+		((Ghost) auto.getPersonnage()).donnerDesOrdres(max);
+		}
 		
 	}
 	
