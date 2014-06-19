@@ -21,6 +21,8 @@ public class Interface_Joueur {
         g.setColor(Color.gray);
         g.fillRect(-WindowGame.resolution_x/2 + WindowGame.xCamera,-WindowGame.resolution_y/2 + WindowGame.yCamera, WindowGame.largueur_map*WindowGame.taille_minimap,WindowGame.hauteur_map*WindowGame.tuile_size );
         drawHeart(-WindowGame.resolution_x/2 + WindowGame.xCamera,-WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap, HEART);
+        g.setColor(Color.black);
+        g.drawString("Time : " + WindowGame.time/1000, -WindowGame.resolution_x/2 + WindowGame.xCamera, -WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap+5*WindowGame.tuile_size);
 	}
 	
 	public static void drawPacGum(Terrain terrain, Image PACGUM){

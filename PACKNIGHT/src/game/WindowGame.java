@@ -1,6 +1,5 @@
 package game;
 
-import game.Choix;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -28,7 +27,6 @@ public class WindowGame extends BasicGameState {
 	protected static int resolution_y = 600;
 
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
-	private String CHEMIN_MUSIC = "src/graphisme/main/ressources/music/";
 
 	Equipage equip = new Equipage(this);
 	
@@ -43,7 +41,6 @@ public class WindowGame extends BasicGameState {
 	public String SPRITE_GHOST_4 = "Lulu.png";
 
 	private String MAP = "PACMAN.tmx";
-	private String MUSIC = "AllBeat.ogg";
 
 	protected static float xCamera = resolution_x/2;
 	protected static float yCamera = resolution_y/2;
@@ -55,12 +52,12 @@ public class WindowGame extends BasicGameState {
 	protected static int largueur_map , hauteur_map ;
 	public int taillePersonnage =32;
 
-
+	static int time;
 	private StateBasedGame game;
     protected static GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
-	protected static Music M;
+	protected static Music Music_WindowGame;
 	private Image PACGUM,HEART;
 	public boolean moving = false;//A VERIFIER SI UTILE
 
@@ -69,7 +66,6 @@ public class WindowGame extends BasicGameState {
 	{
 	      return ID;
 	}
-	
 	
 	
     public void init(GameContainer container,StateBasedGame game) throws SlickException 
@@ -94,9 +90,6 @@ public class WindowGame extends BasicGameState {
     		j.sprite();
     	}
 
-    	Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
-        M = background;
-        M.loop();
     }
     
 
@@ -119,8 +112,20 @@ public class WindowGame extends BasicGameState {
     
     public void update(GameContainer container,StateBasedGame game, int delta) throws SlickException {
     	
-    	if (Terrain.nb_pacgum == 0) game.enterState(Win.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-    	if (PacKnight.vie == 0) game.enterState(Dead.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+    	if (Terrain.nb_pacgum == 0) 
+    		{
+    		Accueil.Music_Win.loop();
+    		game.enterState(Win.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+    		}
+    	
+    	if (PacKnight.vie == 0) 
+    		{
+    		Accueil.Music_Dead.loop();
+    		game.enterState(Dead.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+    		}
+    	
+    	time += delta;
+    	
     	
     	if (equip.PACMAN_1.parametrable())
     		equip.PACMAN_1.avancer();
@@ -173,7 +178,7 @@ public class WindowGame extends BasicGameState {
 
 			    }
 	    switch (key){
-		    case Input.KEY_M: if(M.playing()) M.pause() ;else M.resume(); break;
+		    case Input.KEY_M: if(Accueil.Music_WindowGame.playing()) Accueil.Music_WindowGame.pause() ;else Accueil.Music_WindowGame.resume(); break;
 		   // case Input.KEY_SPACE : game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); break;
 	    	case Input.KEY_ESCAPE:Menu.container.exit(); break;
 	    	case Input.KEY_P: game.enterState(Pause.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
@@ -209,7 +214,7 @@ public class WindowGame extends BasicGameState {
         	if (j.p instanceof Ghost){
         		g.setColor(Color.red);
         	} else {
-        		g.setColor(Color.orange);
+        		g.setColor(Color.green);
         	}
         	g.fillRect(j.p.getCoord().CasCentre().x*taille_minimap+decalage_x, j.p.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
         }

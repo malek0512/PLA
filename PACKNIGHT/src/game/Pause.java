@@ -46,7 +46,7 @@ public class Pause extends BasicGameState {
 	      switch (key) {
 	      		case Input.KEY_SPACE: game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	      		case Input.KEY_P: game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
-	      		case Input.KEY_M: if(WindowGame.M.playing()) WindowGame.M.pause() ;else WindowGame.M.resume(); break;
+	      		case Input.KEY_M: if(Accueil.Music_WindowGame.playing()) Accueil.Music_WindowGame.pause() ;else Accueil.Music_WindowGame.resume(); break;
 	      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
 
 	      }

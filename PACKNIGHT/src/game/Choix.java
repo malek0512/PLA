@@ -5,6 +5,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
@@ -58,9 +59,18 @@ public class Choix extends BasicGameState implements ComponentListener
         }
        if (source == play)
         {
+    	  Accueil.Music_WindowGame.loop();
     	  game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
         }
          
     }
+    
+	   public void keyReleased(int key, char c) {
+		      switch (key) {
+		      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
+		      		case Input.KEY_M: if(Accueil.Music_Choix.playing()) Accueil.Music_Choix.pause() ;else Accueil.Music_Choix.resume(); break;
+
+		      }
+		   }
  
 }
