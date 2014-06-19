@@ -8,7 +8,7 @@
  <Transition Entree= "CASE_ATTEINTE" Etat= "2" Action = "RIEN" > </Transition> 
 </Etat> 
 <Etat Nom= "2" > 
- <Transition Entree= "ETOILE" Etat= "4" Action = "OBEIR" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "2" Action = "RAMASSER_PACGUM" > </Transition> 
 </Etat> 
 <Etat_Initial> 
 <Etat Nom= "1" > 

@@ -1,8 +1,8 @@
 Etat 1
 Transition
     ETATSUIVANT = 2
-    ENTREE = VUE
-    SORTIE = OBEIR
+    ENTREE = ETOILE
+    SORTIE = DIRECTION_ALEATOIRE
     
 Etat 4
 Transition
@@ -20,7 +20,7 @@ Etat 2
 Transition
     ETATSUIVANT = 2
     ENTREE = ETOILE
-    SORTIE = RIEN
+    SORTIE = RAMASSER_PACGUM
  	
 
 ETAT_INITIAL = 1

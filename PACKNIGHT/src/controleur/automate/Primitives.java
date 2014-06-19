@@ -307,10 +307,10 @@ public class Primitives {
 	 * implanter tout les commentaires %)
 	 */
 
-	final int Value_pacgom = 5;
+	final int Value_pacgom = 15;
 	final int Value_distance = -1;
 	final int Value_ghost = -100;
-	final int Value_pacKnight = -50;
+	final int Value_pacKnight = 0;
 	final int ImportanceRacine = 5;
 	final int ImportanceBranche = 1;
 	
