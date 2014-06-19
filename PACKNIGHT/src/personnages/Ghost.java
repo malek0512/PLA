@@ -43,6 +43,31 @@ public class Ghost extends Personnage {
 	private CoordonneesFloat caseDOrdre;
 	private List<CoordonneesFloat> ordre;
 	
+	/**
+	 * @param position ou on veut savoir si un personnage si trouve
+	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
+	 */
+	static public boolean personnagePresent(CoordonneesFloat position)
+	{
+		Iterator<Ghost> i= Ghost.liste.iterator();
+		while (i.hasNext()) {
+			if (i.next().coord.CasCentre().equals(position))
+				return true;
+		}
+		return false;
+	}
+	
+	static public boolean personnagePresentCas(CoordonneesFloat position)
+	{
+		Iterator<Ghost> i= Ghost.liste.iterator();
+		while(i.hasNext())
+		{
+			if(position.equals(i.next().coord.CasCentre()))
+				return true;
+		}
+		return false;
+	}
+
 	public Ghost(String nom, int x, int y, Direction d,CoordonneesFloat spawn) {
 		super(nom, x, y, d);
 		this.agonise = false;
@@ -83,8 +108,6 @@ public class Ghost extends Personnage {
 		public void majAvisDeRecherche(CoordonneesFloat c){
 			timer=300;
 			coord=c;
-			
-			
 		}
 	}
 

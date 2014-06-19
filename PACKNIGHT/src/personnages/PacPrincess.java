@@ -39,6 +39,16 @@ public class PacPrincess extends Pacman{
 		return false;
 	}
 	
+	static public boolean personnagePresentCas(CoordonneesFloat position)
+	{
+		Iterator<PacPrincess> i= PacPrincess.liste.iterator();
+		while (i.hasNext()) {
+			if (i.next().coord.CasCentre().equals(position))
+				return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * @param position a tester
 	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null

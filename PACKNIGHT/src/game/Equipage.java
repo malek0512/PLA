@@ -21,13 +21,13 @@ public class Equipage {
 	List<Joueur> liste = new LinkedList<Joueur>();
 
 
-	Automate aleatoire, berserk, knight, princess, lord, suiveur;
+	Automate aleatoire, berserk, knight, knight2, princess, lord, suiveur;
 	PacKnight PACMAN_1 = new PacKnight("J1", 17, 17, Direction.droite,
 			new CoordonneesFloat(1, 1), true);
 	PacKnight PACMAN_2 = new PacKnight("J2", 5, 15, Direction.droite,
-			new CoordonneesFloat(1, 1), false);
+			new CoordonneesFloat(1, 1), true);
 
-	// PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new
+	PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), true);
 	// CoordonneesFloat(1, 1), false);
 	// PacPrincess PACMAN_4 = new PacPrincess("J4",1,1,Direction.droite,new
 	// CoordonneesFloat(1, 1));
@@ -49,7 +49,7 @@ public class Equipage {
 
 		liste.add(new Joueur(this.g.SPRITE_PACMAN_1, this.g, PACMAN_1));
 		liste.add(new Joueur(this.g.SPRITE_PACMAN_2, this.g, PACMAN_2));
-		// liste.add(new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_3));
+		liste.add(new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_3));
 		// liste.add(new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4));
 
 		// liste.add(new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1));
@@ -65,6 +65,7 @@ public class Equipage {
 			// lord=new Automate("Automate/RAMA.xml",GHOST_4);
 			// princess = new Automate("Automate/Princesse.xml",PACMAN_4);
 			knight = new Automate("Automate/rama.xml", PACMAN_2);
+			knight2 = new Automate("Automate/rama.xml", PACMAN_3);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -80,6 +81,7 @@ public class Equipage {
 		// lord.suivant();
 		// princess.suivant();
 		knight.suivant();
+		knight2.suivant();
 	}
 }
 

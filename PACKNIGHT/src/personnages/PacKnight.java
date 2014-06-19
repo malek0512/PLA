@@ -50,6 +50,16 @@ public class PacKnight extends Pacman{
 		return false;
 	}
 	
+	static public boolean personnagePresentCas(CoordonneesFloat position)
+	{
+		Iterator<PacKnight> i= PacKnight.liste.iterator();
+		while (i.hasNext()) {
+			if (i.next().coord.CasCentre().equals(position))
+				return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * @param position a tester
 	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null
@@ -83,7 +93,6 @@ public class PacKnight extends Pacman{
 			Ghost g = i.next();
 			if(g.hitting() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
 			{
-				System.out.println("fantome tester : " + g.nom );
 				this.meurtDansDatroceSouffrance();
 				g.meurtDansDatroceSouffrance(); //vengeance !!!
 				break;
