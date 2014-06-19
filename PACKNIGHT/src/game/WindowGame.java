@@ -174,7 +174,7 @@ public class WindowGame extends BasicGameState {
 			    }
 	    switch (key){
 		    case Input.KEY_M: if(M.playing()) M.pause() ;else M.resume(); break;
-		    case Input.KEY_SPACE : game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); break;
+		   // case Input.KEY_SPACE : game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); break;
 	    	case Input.KEY_ESCAPE:Menu.container.exit(); break;
 	    	case Input.KEY_P: game.enterState(Pause.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	    }

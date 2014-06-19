@@ -18,14 +18,11 @@ import game.Menu;
 
 public class Choix extends BasicGameState implements ComponentListener
 { 
-    // -- Initialisation
     private MouseOverArea play;
     private MouseOverArea quit;
     private StateBasedGame game;
      
-    // --Attributs
 	   public static final int ID = 3;
-    // --Constructeur
 
   
 	   public int getID() 
@@ -33,7 +30,6 @@ public class Choix extends BasicGameState implements ComponentListener
 		      return ID;
 	 }
 	   
-    // Initialisation
     public void init(GameContainer container, StateBasedGame game) throws SlickException { 
     	this.game = game;
         quit = new MouseOverArea(container, new Image("src/graphisme/main/ressources/map/image/Quit.png"), WindowGame.resolution_x/2+50, WindowGame.resolution_y/2-15, this);
@@ -46,20 +42,15 @@ public class Choix extends BasicGameState implements ComponentListener
  
     } 
  
-    // Le rendu
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
          
-        // Affichage des boutons
         quit.render(container, g);
         play.render(container, g);
          
     } 
  
-    // Les updates
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {}
  
-    // Gestion des boutons
-    @Override
     public void componentActivated(AbstractComponent source) {
         if (source == quit)
         {
