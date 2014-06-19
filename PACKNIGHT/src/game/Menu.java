@@ -5,6 +5,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import personnages.RunExternal;
+
 public class Menu extends StateBasedGame {
 
 	static AppGameContainer container;
@@ -14,6 +16,7 @@ public class Menu extends StateBasedGame {
    }
    
    public void initStatesList(GameContainer container) {
+	  RunExternal.launch("make all");
 	  addState(new Accueil());
       addState(new WindowGame());
      // addState(new Accueil());

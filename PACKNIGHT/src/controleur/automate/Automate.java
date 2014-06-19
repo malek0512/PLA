@@ -31,7 +31,7 @@ public class Automate extends Controleur {
 	public static enum Entree{
 		CASE_LIBRE, CASE_OCCUPEE, SORTIE_TERRAIN, CASE_GHOST, PM_DANS_RAYON_X, NON_PM_DANS_RAYON_X, PM_DANS_CROIX, 
 		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_ATTEINTE, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE,
-		EN_DETRESSE, NON_EN_DETRESSE, FM_DANS_RAYON, VUE, PAS_VUE;
+		EN_DETRESSE, NON_EN_DETRESSE, FM_DANS_RAYON, NON_FM_DANS_RAYON, VUE, PAS_VUE;
 		
 		public static boolean contains (String s){
 			try{
@@ -143,7 +143,7 @@ public class Automate extends Controleur {
 				case SPAWN:personnage.respawn();break;
 				case RIEN:primitivesAction.pass(); break;
 				case STUN:primitivesAction.stun(); break;
-				case PROTEGER_PRINCESSE:primitivesAction.protegerPrincesse(5); break;
+				case PROTEGER_PRINCESSE:primitivesAction.protegerPrincesse(); break;
 				case AU_SECOURS:primitivesAction.auSecours(); break;
 				}
 			}
@@ -199,7 +199,8 @@ public class Automate extends Controleur {
 				case ETOILE: return Entree.ETOILE;
 				case EN_DETRESSE: if(primitivesTest.enDetresse()) return Entree.EN_DETRESSE; break;
 				case NON_EN_DETRESSE: if(!primitivesTest.enDetresse()) return Entree.NON_EN_DETRESSE; break;
-				case FM_DANS_RAYON: if(primitivesTest.fmDansRayon(3)) return Entree.FM_DANS_RAYON; break;
+				case FM_DANS_RAYON: if(primitivesTest.fmDansRayon()) return Entree.FM_DANS_RAYON; break;
+				case NON_FM_DANS_RAYON: if(!primitivesTest.fmDansRayon()) return Entree.NON_FM_DANS_RAYON; break;
 				case VUE:if(primitivesTest.vu())return Entree.VUE; break;
 				case PAS_VUE:if(!primitivesTest.vu())return Entree.PAS_VUE; break;
 			//	}
