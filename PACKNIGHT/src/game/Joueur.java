@@ -40,4 +40,8 @@ public class Joueur {
 	public void sprite(){
 		Sprite.toSprite(animations,spriteSheet);
 	}
+	
+	public void suivant (){
+		
+	}
 }

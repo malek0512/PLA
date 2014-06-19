@@ -11,15 +11,17 @@ public class Menu extends StateBasedGame {
 
 	static AppGameContainer container;
 	
-   public Menu() {
+	Equipage equip;
+   public Menu(Equipage e) {
       super("PACKNIGHT : THE RETURN");
+      this.equip = e;
    }
    
    public void initStatesList(GameContainer container) {
 	  RunExternal.launch("make all");
 	  addState(new Accueil());
       addState(new Choix());
-      addState(new WindowGame());
+      addState(new WindowGame(equip));
       addState(new Pause());
       addState(new Win ());
       addState(new Dead());
@@ -28,7 +30,7 @@ public class Menu extends StateBasedGame {
    
    public static void main(String[] argv) {
       try {
-         container = new AppGameContainer(new Menu());
+         container = new AppGameContainer(new Menu(new EquipageMalek()));
          container.setDisplayMode(WindowGame.resolution_x,WindowGame.resolution_y,false);
          container.start();
       } catch (SlickException e) {

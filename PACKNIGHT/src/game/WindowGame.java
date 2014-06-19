@@ -28,7 +28,13 @@ public class WindowGame extends BasicGameState {
 	protected static int resolution_y = 600;
 	
 	
-	Equipage equip = new Equipage(this);
+//	EquipageMalek equip = new EquipageMalek(this);
+//	EquipageVivienAlex equip = new EquipageVivienAlex(this);
+//	Equipage equip = new Equipage(this);
+	public WindowGame(Equipage equip){
+		this.equip = equip;
+	}
+	Equipage equip;
 	
 	private String MAP = "PACMAN.tmx";
 		
@@ -136,37 +142,38 @@ public class WindowGame extends BasicGameState {
     	time += delta;
     	
     	
-    	if (equip.PACMAN_1.parametrable())
-    		equip.PACMAN_1.avancer();
+    	if (equip.joueurFleche.parametrable())
+    		equip.joueurFleche.avancer();
     	else
-    		equip.PACMAN_1.avancerAnimation();
+    		equip.joueurFleche.avancerAnimation();
 
     	float w = container.getWidth() / 4;
-    	if(!(equip.PACMAN_1.getCoord().x -xCamera > resolution_x/2 || equip.PACMAN_1.getCoord().x -xCamera < -resolution_x/2))
+    	if(!(equip.joueurFleche.getCoord().x -xCamera > resolution_x/2 || equip.joueurFleche.getCoord().x -xCamera < -resolution_x/2))
     	{
-	        if (equip.PACMAN_1.getCoord().x +largueur_map*taille_minimap > (xCamera + w ) && (equip.PACMAN_1.getCoord().x + w   <  largueur_map*tuile_size))
-	        	xCamera = equip.PACMAN_1.getCoord().x - w + largueur_map*taille_minimap;
-	        if (equip.PACMAN_1.getCoord().x < (xCamera - w) && (equip.PACMAN_1.getCoord().x > w )) 
-	        	xCamera = equip.PACMAN_1.getCoord().x + w;
+	        if (equip.joueurFleche.getCoord().x +largueur_map*taille_minimap > (xCamera + w ) && (equip.joueurFleche.getCoord().x + w   <  largueur_map*tuile_size))
+	        	xCamera = equip.joueurFleche.getCoord().x - w + largueur_map*taille_minimap;
+	        if (equip.joueurFleche.getCoord().x < (xCamera - w) && (equip.joueurFleche.getCoord().x > w )) 
+	        	xCamera = equip.joueurFleche.getCoord().x + w;
     	} 
-    	else if((equip.PACMAN_1.getCoord().x -xCamera > resolution_x/2)) xCamera = largueur_map*tuile_size-resolution_x/2+largueur_map*taille_minimap ;
-    	else if((equip.PACMAN_1.getCoord().x -xCamera < -resolution_x/2)) xCamera = resolution_x/2;
+    	else if((equip.joueurFleche.getCoord().x -xCamera > resolution_x/2)) xCamera = largueur_map*tuile_size-resolution_x/2+largueur_map*taille_minimap ;
+    	else if((equip.joueurFleche.getCoord().x -xCamera < -resolution_x/2)) xCamera = resolution_x/2;
 
 
         float h = container.getHeight() / 4;
-     if(!(equip.PACMAN_1.getCoord().y -yCamera > resolution_y/2 || equip.PACMAN_1.getCoord().y -yCamera < -resolution_y/2))
+     if(!(equip.joueurFleche.getCoord().y -yCamera > resolution_y/2 || equip.joueurFleche.getCoord().y -yCamera < -resolution_y/2))
      {
-    	 if (equip.PACMAN_1.getCoord().y > (yCamera + h) && (equip.PACMAN_1.getCoord().y + h < hauteur_map*tuile_size))
-    		 yCamera = equip.PACMAN_1.getCoord().y - h;
-    	 if (equip.PACMAN_1.getCoord().y < (yCamera - h) && (equip.PACMAN_1.getCoord().y > h))
-    		 yCamera = equip.PACMAN_1.getCoord().y + h;
+    	 if (equip.joueurFleche.getCoord().y > (yCamera + h) && (equip.joueurFleche.getCoord().y + h < hauteur_map*tuile_size))
+    		 yCamera = equip.joueurFleche.getCoord().y - h;
+    	 if (equip.joueurFleche.getCoord().y < (yCamera - h) && (equip.joueurFleche.getCoord().y > h))
+    		 yCamera = equip.joueurFleche.getCoord().y + h;
      }
-     else if((equip.PACMAN_1.getCoord().y -yCamera > resolution_y/2)) yCamera = hauteur_map*tuile_size-resolution_y/2;
-     else if((equip.PACMAN_1.getCoord().y -yCamera < -resolution_y/2)) yCamera = resolution_y/2;
+     else if((equip.joueurFleche.getCoord().y -yCamera > resolution_y/2)) yCamera = hauteur_map*tuile_size-resolution_y/2;
+     else if((equip.joueurFleche.getCoord().y -yCamera < -resolution_y/2)) yCamera = resolution_y/2;
         
      try
         {
      equip.suivant();
+
         }
         catch (Exception e) {System.out.println(e);}
         Ghost.disparitionPacman();
@@ -176,20 +183,20 @@ public class WindowGame extends BasicGameState {
 	public void keyReleased(int key, char c) {
 		    switch (key)
 		    	{
-			    case Input.KEY_UP:    equip.PACMAN_1.setNextDirection(Direction.haut); this.direction= 0; this.moving = true; break;
-			    case Input.KEY_LEFT:  equip.PACMAN_1.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
-			    case Input.KEY_DOWN:  equip.PACMAN_1.setNextDirection(Direction.bas);this.direction= 2; this.moving = true; break;
-			    case Input.KEY_RIGHT: equip.PACMAN_1.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
+			    case Input.KEY_UP:    equip.joueurFleche.setNextDirection(Direction.haut); this.direction= 0; this.moving = true; break;
+			    case Input.KEY_LEFT:  equip.joueurFleche.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
+			    case Input.KEY_DOWN:  equip.joueurFleche.setNextDirection(Direction.bas);this.direction= 2; this.moving = true; break;
+			    case Input.KEY_RIGHT: equip.joueurFleche.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
 
-			  //  case Input.KEY_Z:    PACMAN_2.setNextDirection(Direction.haut); this.direction= 0; this.moving = true;  break;
-			   // case Input.KEY_Q:  PACMAN_2.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
-			    //case Input.KEY_S:  PACMAN_2.setNextDirection(Direction.bas);this.direction= 2; this.moving = true;  break;
-			    //case Input.KEY_D: PACMAN_2.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
+			    case Input.KEY_Z: equip.joueurLettre.setNextDirection(Direction.haut); this.direction= 0; this.moving = true;  break;
+			    case Input.KEY_Q: equip.joueurLettre.setNextDirection(Direction.gauche);this.direction= 1; this.moving = true; break;
+			    case Input.KEY_S: equip.joueurLettre.setNextDirection(Direction.bas);this.direction= 2; this.moving = true;  break;
+			    case Input.KEY_D: equip.joueurLettre.setNextDirection(Direction.droite);this.direction= 3; this.moving = true; break;
 
 			    }
 	    switch (key){
 		    case Input.KEY_M: if(Accueil.Music_WindowGame.playing()) Accueil.Music_WindowGame.pause() ;else Accueil.Music_WindowGame.resume(); break;
-	    	case Input.KEY_ESCAPE:Menu.container.exit(); break;
+	    	case Input.KEY_ESCAPE: /*RunExternal.launch("make clean");*/ Menu.container.exit(); break;
 	    	case Input.KEY_P: game.enterState(Pause.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	    }
 	}
