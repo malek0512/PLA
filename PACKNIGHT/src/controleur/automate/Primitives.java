@@ -285,7 +285,7 @@ public class Primitives {
 	{
 		int x = src.x - dest.x;
 		int y = src.y - dest.y;
-		
+
 		if(y==0)
 		{
 			if(x==-1)
