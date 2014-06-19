@@ -6,6 +6,7 @@ import java.util.List;
 
 import personnages.Ghost;
 import personnages.Pacman;
+import personnages.*;
 
 
 /**
@@ -75,21 +76,29 @@ public class PrimitivesTest extends Primitives {
 	/**
 	 * @return : Vrai si le fantôme est controllé par le fantôme Lord*/
 	public boolean isControled(){
-		return true;
-		//return ((Ghost) auto.getPersonnage()).getControle();
+		
+		return ((Ghost) auto.getPersonnage()).getEntendEtObei();
 	}
 	
 	/**
-	 * Fonction de test Automate.FM_DANS_RAYON
+	 * Fonction de test Automate.FM_DANS_RAYON. 
+	 * Elle met a jour la liste des agresseurs de la princesse, si c'est la princesse qui l'utilise
 	 * @param d
-	 * @return True si un ou plusieurs pacman sont dans le rayon 
+	 * @return True si un ou plusieurs pacman sont dans le rayon, du auto.personnage.
 	 * @author malek
 	 */
 	protected boolean fmDansRayon(int d) {
-		return this.fantomeEstDansRayon(d).size()!=0;
+		List violeur = fantomeEstDansRayon(d);
+		if (auto.getPersonnage() instanceof PacPrincess)
+			((PacPrincess) auto.getPersonnage()).violeurs = violeur;
+		return violeur.size()!=0;
 	}
 
-//	public boolean enDetresse(){
-//		return 
-//	}
+	/**
+	 * @return Vrai si la princesse, designe le knight, comme son sauveur ie elle s'identifie, lors de l'appel au secours
+	 * @author malek
+	 */
+	public boolean enDetresse(){
+		return ((PacKnight) auto.getPersonnage()).princesseEnDetresse!=null;
+	}
 }

@@ -149,9 +149,21 @@ public class Primitives {
 	 */
 	public boolean estIntersection(CoordonneesFloat coord){
 		int n=0;
-
+		CoordonneesFloat coordo = new CoordonneesFloat(coord.CasCentre());
 		for(Direction d : Direction.values())
-			if(this.auto.getPersonnage().caseDisponible(d))
+			if(Personnage.getTerrain().caseAcessible(coordo.x, coordo.y, d))
+				n++;
+		
+		return n>2;
+	}
+	
+	/**Pas merci ? :(
+	 * @return Vrai si la case est une intersection
+	 */
+	public boolean estIntersectionCas(CoordonneesFloat coord){
+		int n=0;
+		for(Direction d : Direction.values())
+			if(Personnage.getTerrain().caseAcessible(coord.x, coord.y, d))
 				n++;
 		
 		return n>2;
@@ -273,12 +285,7 @@ public class Primitives {
 	{
 		int x = src.x - dest.x;
 		int y = src.y - dest.y;
-<<<<<<< HEAD
-		System.out.println(src.x +" "+src.y);
-		System.out.println(dest);
-=======
-		
->>>>>>> 2d0f014c83d57779d424bb29f9428996ca3cb9f3
+
 		if(y==0)
 		{
 			if(x==-1)
@@ -299,45 +306,83 @@ public class Primitives {
 	 * TODO :(
 	 * implanter tout les commentaires %)
 	 */
-	private final int Value_pacgom = 5;
-	private final int Value_distance = -1;
-	private final int Value_ghost = -100;
-	private final int Value_pacKnight = -50;
+
+	final int Value_pacgom = 15;
+	final int Value_distance = -1;
+	final int Value_ghost = -100;
+	final int Value_pacKnight = 0;
+	final int ImportanceRacine = 5;
+	final int ImportanceBranche = 1;
 	
-	public int[][] laFonctionQuiFaitPresqueTout(CoordonneesFloat cord)
+	/**
+	 * Fonction qui calcule le poids des toutes les intersection sauf celle de la source
+	 * @param cord : coord de l'intersection
+	 * @param src : direction vers la source
+	 * @return un tableau de int contenant les valeurs pour chaque inter
+	 */
+	public int[][] laFonctionQuiFaitPresqueTout(CoordonneesFloat cord,Direction src)
 	{
 		// 0 : pac-gom
 		// 1 : distance
 		// 2 : personnage
 
-		/************
-		 * ATTENTION
-		 ************/
-		// ce qui va suivre est fait par un professionel ateint de foli mais entrainer B-)
-		// merci de ne pas essayer de reproduire cela chez vous :°
-		// ca pourrais etre dangereux <~:)
-		// Ctrl + V *cris d'agonie* %)
 		int tab[][] = new int[4][3];
+		for(int i = 0; i<4; i++)
+			for(int j=0; j<3; j++)
+				tab[i][j]=0;
+		
 		int nbInter = -1;;
 				
 		for(Direction d : Direction.values())
 		{
-			nbInter++;
-//Debut de la chose
-			if(Personnage.getTerrain().caseAcessible(cord.x, cord.y, d))
-			{//si case accessible
-				//faire avancer le c dans la direction d
-				
-				while(!estIntersection(cord))
-				{
-					//tester si pac-gom
-					tab[nbInter][1] += Value_distance;
-					//tester si fantome
-					//tester si pacKnight
-					//prendre la bonne direction
-					//faire avancer coordCaseEnCours
+			if(d != src)
+			{
+				nbInter++;
+				if(Personnage.getTerrain().caseAcessible(cord.x, cord.y, d))
+				{//si case accessible
+					//faire avancer le c dans la direction d
+					Direction directionCord = d;
+					while(!estIntersectionCas(cord))
+					{
+						//tester si pac-gom
+						if(Personnage.getTerrain().ValueCase(cord) == 2)
+							tab[nbInter][0] += Value_pacgom;
+						//incremente la distance
+						tab[nbInter][1] += Value_distance;
+						//tester si fantome
+						if(Ghost.personnagePresent(cord))
+							tab[nbInter][2] += Value_ghost;
+						//tester si pacKnight
+						if(PacKnight.personnagePresent(cord))
+							tab[nbInter][2] += Value_pacKnight;
+						//faire avancer coordCaseEnCours
+						int x = cord.x;
+						int y = cord.y;
+						for(Direction dir : Direction.values()){
+							if(directionCord !=dir.opposer() && Personnage.getTerrain().caseAcessible(cord.x, cord.y, dir) )
+							{
+								switch(dir)
+								{
+								case haut:
+									y++;
+									break;
+								case bas :
+									y--;
+									break;
+								case droite:
+									x++;
+									break;
+								case gauche:
+									x--;
+									break;
+								default:
+								}
+								cord = new CoordonneesFloat(x,y);
+								directionCord = dir;
+							}
+						}
+					}
 				}
-//Fin de la chose
 			}
 
 		}
@@ -345,7 +390,9 @@ public class Primitives {
 	}
 	
 	/**
-	 * 
+	 * Fonction qui calcul le poids de toutes les intersection
+	 * @param cord : coord de l'intersection
+	 * @return un tableau de int contenant les valeurs pour chaque inter
 	 */
 	public int[][] laFonctionQuiFaitTout(CoordonneesFloat cord)
 	{
@@ -356,7 +403,7 @@ public class Primitives {
 		// 3 : avenir pac-gom
 		// 4 : avenir distance
 		// 5 : avenir personnage
-
+		
 		int[][] tab = new int[4][6];
 		
 		//init du tableau
@@ -372,45 +419,55 @@ public class Primitives {
 			if(Personnage.getTerrain().caseAcessible(cord.x, cord.y, d))
 			{//si case accessible
 				//faire avancer le c dans la direction d
-				
-				while(!estIntersection(cord))
+				Direction directionCord = d;
+				while(!estIntersectionCas(cord))
 				{
 					//tester si pac-gom
+					if(Personnage.getTerrain().ValueCase(cord) == 2)
+						tab[nbInter][0] += Value_pacgom;
+					//incremente la distance
 					tab[nbInter][1] += Value_distance;
 					//tester si fantome
+					if(Ghost.personnagePresent(cord))
+						tab[nbInter][2] += Value_ghost;
 					//tester si pacKnight
-					//prendre la bonne direction
+					if(PacKnight.personnagePresent(cord))
+						tab[nbInter][2] += Value_pacKnight;
 					//faire avancer coordCaseEnCours
+					int x = cord.x;
+					int y = cord.y;
+					for(Direction dir : Direction.values()){
+						if(directionCord !=dir.opposer() && Personnage.getTerrain().caseAcessible(cord.x, cord.y, dir) )
+						{
+							switch(dir)
+							{
+							case haut:
+								y++;
+								break;
+							case bas :
+								y--;
+								break;
+							case droite:
+								x++;
+								break;
+							case gauche:
+								x--;
+								break;
+							default:
+							}
+							cord = new CoordonneesFloat(x,y);
+							directionCord = dir;
+						}
+					}
 				}
-				int[][] tabaux = laFonctionQuiFaitPresqueTout(new CoordonneesFloat(cord));
+				int[][] tabaux = laFonctionQuiFaitPresqueTout(new CoordonneesFloat(cord),directionCord.opposer());
 				for(int i = 0; i<4; i++)
 					for(int j= 0 ; i<3; i++)
 						tab[nbInter][4+j] += tabaux[i][j];
 			}
+			System.out.println("##############" + "\nDirection : " + d + "\nValeur des pac-gomm : " + tab[nbInter][0] + "\nValeur en distance : " + tab[nbInter][1] + "\nValeur en perso : " + tab[nbInter][3] + "\n############");
 		}
 		return tab;
 	}
-	/**
-	 * envoie le personnage manger des pac-gomm
-	 */
-	public void fetch()
-	{
-		// 0 : pac-gom
-		// 1 : distance
-		// 2 : personnage
-		
-		// 3 : avenir pac-gom
-		// 4 : avenir distance
-		// 5 : avenir personnage
-		CoordonneesFloat c = new CoordonneesFloat(auto.getPersonnage().coord); 
-		if(estIntersection(c))
-		{
-			int tab[][] = laFonctionQuiFaitTout(c); 
-			//choix de la direction
-			//fin
-			
-		}
-		else
-			this.auto.getPersonnage().avancer();
-	}
+	
 }

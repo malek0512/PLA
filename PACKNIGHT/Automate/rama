@@ -1,8 +1,8 @@
 Etat 1
 Transition
-    ETATSUIVANT = 4
-    ENTREE = ETOILE
-    SORTIE = AVANCER
+    ETATSUIVANT = 2
+    ENTREE = VUE
+    SORTIE = OBEIR
     
 Etat 4
 Transition
@@ -18,28 +18,12 @@ Transition
     
 Etat 2
 Transition
-    ETATSUIVANT = 1
-    ENTREE = NON_PM_DANS_RAYON_X
-    SORTIE = DIRECTION_ALEATOIRE
-
-Transition
-    ETATSUIVANT = 3
-    ENTREE = VUE
+    ETATSUIVANT = 2
+    ENTREE = ETOILE
     SORTIE = RIEN
-    
-Etat 3
-Transition
-    ETATSUIVANT = 3
-    ENTREE = VUE
-    SORTIE = RIEN
-    
-    Transition
-    ETATSUIVANT = 1
-    ENTREE = PAS_VUE
-    SORTIE = DIRECTION_ALEATOIRE
-    
+ 	
 
 ETAT_INITIAL = 1
 ETAT_FINAL =
-ETAT_BLOQUANT = 1 3 4
+ETAT_BLOQUANT = 1 2
 AUTOMATE = RAMA

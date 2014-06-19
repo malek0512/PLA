@@ -1,19 +1,14 @@
 <?xml version = "1.0" ?>
 <Automate ID= "RAMA" > 
 <Etat Nom= "1" > 
- <Transition Entree= "ETOILE" Etat= "4" Action = "AVANCER" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "2" Action = "DIRECTION_ALEATOIRE" > </Transition> 
 </Etat> 
 <Etat Nom= "4" > 
  <Transition Entree= "CASE_NON_ATTEINTE" Etat= "4" Action = "AVANCER" > </Transition> 
  <Transition Entree= "CASE_ATTEINTE" Etat= "2" Action = "RIEN" > </Transition> 
 </Etat> 
 <Etat Nom= "2" > 
- <Transition Entree= "NON_PM_DANS_RAYON_X" Etat= "1" Action = "DIRECTION_ALEATOIRE" > </Transition> 
- <Transition Entree= "VUE" Etat= "3" Action = "RIEN" > </Transition> 
-</Etat> 
-<Etat Nom= "3" > 
- <Transition Entree= "VUE" Etat= "3" Action = "RIEN" > </Transition> 
- <Transition Entree= "PAS_VUE" Etat= "1" Action = "DIRECTION_ALEATOIRE" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "4" Action = "OBEIR" > </Transition> 
 </Etat> 
 <Etat_Initial> 
 <Etat Nom= "1" > 
@@ -24,9 +19,7 @@
 <Etats_Bloquants> 
 <Etat Nom= "1" > 
 </Etat> 
-<Etat Nom= "3" > 
-</Etat> 
-<Etat Nom= "4" > 
+<Etat Nom= "2" > 
 </Etat> 
 </Etats_Bloquants> 
 </Automate> 

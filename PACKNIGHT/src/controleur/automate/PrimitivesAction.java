@@ -77,7 +77,17 @@ public class PrimitivesAction extends Primitives{
 	/**
 	 * Reçoit un ordre du Fantôme Lord et avance vers la case désignée tant qu'il ne l'a pas atteinte
 	 * */
-	public void obeir(List<CoordonneesFloat> d){
+	public void obeir(){
+		Iterator<Pacman> i = Ghost.central.keySet().iterator();
+		if (i.hasNext()){
+			Pacman max = i.next();
+			while (i.hasNext()){
+				Pacman next = i.next();
+				if (Ghost.central.get(next).timer>Ghost.central.get(max).timer)
+					max = next;
+			}
+		((Ghost) auto.getPersonnage()).donnerDesOrdres(max);
+		}
 		
 	}
 	
@@ -105,6 +115,8 @@ public class PrimitivesAction extends Primitives{
 			}
 			else {
 				//TODO FUIRE, il n'y a aucun knight pour la proteger 
+				setDirectionAleatoire(bitch);
+				bitch.avancer();
 			}
 		}
 	}
@@ -156,7 +168,7 @@ public class PrimitivesAction extends Primitives{
 				if (knight.ghostEnChasse == null)
 					throw new Exception("Erreur ! Je suis un knight, on me demande de chasser un ghost, sans renseignement (ghostEnChasse==null)");
 //				System.out.println("FM" + knight.ghostEnChasse.getCoord().CasCentre());
-//				suivre(knight.ghostEnChasse.getCoord().CasCentre());
+				suivre(knight.ghostEnChasse.getCoord().CasCentre());
 			}
 		} else {
 			//Sinon on le reinitialise
@@ -177,6 +189,7 @@ public class PrimitivesAction extends Primitives{
 			l.remove(0);
 			this.auto.getPersonnage().setDirection(mysteriousFunction(src, l.get(0)));
 			this.auto.getPersonnage().avancer();
+	}
 
 	
 	public void suivre(){
@@ -191,6 +204,54 @@ public class PrimitivesAction extends Primitives{
 			}
 			
 			suivre(min.getCoord().CasCentre());
+		}
+	}
+	
+
+	/**
+	 * envoie le personnage manger des pac-gomm
+	 */
+	public void fetch()
+	{
+		// 0 : pac-gom
+		// 1 : distance
+		// 2 : personnage
+		
+		// 3 : avenir pac-gom
+		// 4 : avenir distance
+		// 5 : avenir personnage
+		CoordonneesFloat c = new CoordonneesFloat(auto.getPersonnage().coord); 
+		if(c.CasBG() == c.CasHD() && estIntersection(c))
+		{	
+			int tab[][] = laFonctionQuiFaitTout(c.CasCentre());
+			
+			int cpt =0;
+			int meilleurCandidat = Integer.MIN_VALUE;
+			Direction meilleurCandidatDirection = null;
+			for(Direction d : Direction.values())
+			{
+				if(tab[cpt][1] != 0)
+				{//sinon la direction est un mur !!
+					int candidat = 0;
+					for(int k = 0; k <3; k++)
+						candidat += ImportanceRacine*tab[cpt][k];
+					for(int k = 3; k<6; k++)
+						candidat += ImportanceBranche*tab[cpt][k];
+					if(meilleurCandidat<candidat)
+					{
+						meilleurCandidat = candidat;
+						meilleurCandidatDirection = d;
+					}
+				}
+			}
+			
+			this.auto.getPersonnage().setDirection(meilleurCandidatDirection);
+			this.auto.getPersonnage().avancer();
+		}
+		else
+		{
+			setDirectionAleatoire(this.auto.getPersonnage());
+			this.auto.getPersonnage().avancer();
 		}
 	}
 }

@@ -62,6 +62,11 @@ public class Ghost extends Personnage {
 		
 	}
 	
+	public boolean getEntendEtObei(){
+		
+		return entendEtObei;
+	}
+	
 	/**
 	 * Structure qui repertorie l'ensemble des information d'un PM en fuite
 	 * */
@@ -358,7 +363,6 @@ public class Ghost extends Personnage {
 				List<CoordonneesFloat> ordre = ga.algo(interEnTraitement);
 				meilleurCandidat.recoitOrdre(ordre);
 			}
-		}
-			
+		}	
 	}
 }

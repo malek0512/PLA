@@ -1,7 +1,12 @@
 Etat 1
 Transition
     ETATSUIVANT = 2
-    ENTREE = ETOILE
+    ENTREE = VUE
+    SORTIE = AVANCER
+    
+Transition
+    ETATSUIVANT = 2
+    ENTREE = PAS_VUE
     SORTIE = AVANCER
     
 Etat 2
