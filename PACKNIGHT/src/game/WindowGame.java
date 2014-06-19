@@ -51,7 +51,7 @@ public class WindowGame extends BasicGameState {
     protected static GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
-	private Image PACGUM,HEART;
+	private Image PACGUM,HEART,FOND_INTERFACE;
 	public boolean moving = false;//A VERIFIER SI UTILE
 
 
@@ -85,6 +85,7 @@ public class WindowGame extends BasicGameState {
         Terrain terrain = new Terrain(largueur_map,hauteur_map, 0);
         HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
         PACGUM = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
+        FOND_INTERFACE = new Image("src/graphisme/main/ressources/map/image/Interface.jpg");
 
         Personnage.initTerrain(terrain);
         equip.init();
@@ -111,7 +112,7 @@ public class WindowGame extends BasicGameState {
          j.render(g);
         }
 
-        Interface_Joueur.render(g, HEART);
+        Interface_Joueur.render(g, HEART,FOND_INTERFACE);
         Minimap(playground, g,-resolution_x/2 + xCamera,-resolution_y/2 + yCamera);
 
     }
@@ -122,13 +123,13 @@ public class WindowGame extends BasicGameState {
     	
     	if (Terrain.nb_pacgum == 0) 
     		{
-    		Accueil.Music_Win.loop();
+    		Accueil.Music_Win.play();
     		game.enterState(Win.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
     		}
     	
     	if (PacKnight.vie == 0) 
     		{
-    		Accueil.Music_Dead.loop();
+    		Accueil.Music_Dead.play();
     		game.enterState(Dead.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
     		}
     	
@@ -188,7 +189,6 @@ public class WindowGame extends BasicGameState {
 			    }
 	    switch (key){
 		    case Input.KEY_M: if(Accueil.Music_WindowGame.playing()) Accueil.Music_WindowGame.pause() ;else Accueil.Music_WindowGame.resume(); break;
-		   // case Input.KEY_SPACE : game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); break;
 	    	case Input.KEY_ESCAPE:Menu.container.exit(); break;
 	    	case Input.KEY_P: game.enterState(Pause.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	    }

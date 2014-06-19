@@ -16,13 +16,17 @@ public class Interface_Joueur {
 	}
 	
 	
-	public static void render(Graphics g, Image HEART)
+	public static void render(Graphics g, Image HEART, Image FOND_INTERFACE)
 	{
         g.setColor(Color.gray);
         g.fillRect(-WindowGame.resolution_x/2 + WindowGame.xCamera,-WindowGame.resolution_y/2 + WindowGame.yCamera, WindowGame.largueur_map*WindowGame.taille_minimap,WindowGame.hauteur_map*WindowGame.tuile_size );
+        FOND_INTERFACE.draw(-WindowGame.resolution_x/2 + WindowGame.xCamera,-WindowGame.resolution_y/2 + WindowGame.yCamera, WindowGame.largueur_map*WindowGame.taille_minimap,WindowGame.hauteur_map*WindowGame.tuile_size );
         drawHeart(-WindowGame.resolution_x/2 + WindowGame.xCamera,-WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap, HEART);
-        g.setColor(Color.black);
+        g.setColor(Color.white);
         g.drawString("Time : " + WindowGame.time/1000, -WindowGame.resolution_x/2 + WindowGame.xCamera, -WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap+5*WindowGame.tuile_size);
+        g.drawString("Pac-gum left", -WindowGame.resolution_x/2 + WindowGame.xCamera, -WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap+6*WindowGame.tuile_size);
+        
+        g.drawString(""+ Terrain.nb_pacgum, -WindowGame.resolution_x/2 + WindowGame.xCamera, -WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap+6*WindowGame.tuile_size+20);
 	}
 	
 	public static void drawPacGum(Terrain terrain, Image PACGUM){
