@@ -98,7 +98,7 @@ public class WindowGame extends BasicGameState {
     	Map.mapToTerrain(terrain, largueur_map, hauteur_map, map);
     	playground = terrain;
     	
-    	for(Joueur j: equip.liste){
+    	for(Joueur j: Joueur.liste){
     		j.sprite();
     	}
 
@@ -113,7 +113,7 @@ public class WindowGame extends BasicGameState {
         this.map.render(largueur_map*taille_minimap,0, 2);
         Interface_Joueur.drawPacGum(playground,PACGUM);
         
-        for(Joueur j : equip.liste){
+        for(Joueur j : Joueur.liste){
          j.render(g);
         }
 
@@ -229,7 +229,7 @@ public class WindowGame extends BasicGameState {
 			}
 		}	
         
-        for(Joueur j: equip.liste){
+        for(Joueur j: Joueur.liste){
         	if (j.p instanceof Ghost){
         		g.setColor(Color.red);
         	} else {
