@@ -1,14 +1,14 @@
 <?xml version = "1.0" ?>
-<Automate ID= "RAMA" > 
+<Automate ID= "rama" > 
 <Etat Nom= "1" > 
- <Transition Entree= "ETOILE" Etat= "2" Action = "DIRECTION_ALEATOIRE" > </Transition> 
+ <Transition Entree= "VUE" Etat= "2" Action = "OBEIR" > </Transition> 
 </Etat> 
 <Etat Nom= "4" > 
  <Transition Entree= "CASE_NON_ATTEINTE" Etat= "4" Action = "AVANCER" > </Transition> 
  <Transition Entree= "CASE_ATTEINTE" Etat= "2" Action = "RIEN" > </Transition> 
 </Etat> 
 <Etat Nom= "2" > 
- <Transition Entree= "ETOILE" Etat= "4" Action = "OBEIR" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "2" Action = "RIEN" > </Transition> 
 </Etat> 
 <Etat_Initial> 
 <Etat Nom= "1" > 
