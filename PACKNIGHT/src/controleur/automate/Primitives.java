@@ -218,15 +218,27 @@ public class Primitives {
 	 * @author malek
 	 * @throws Exception 
 	 */
-	protected PacKnight whichHero(PacPrincess bitch) throws Exception{
-		if (PacKnight.liste.size()==0) 
-			throw new Exception("Il n'y a aucun Packnight dans PacKnight.liste !");
-		PacKnight captain=PacKnight.liste.get(0);
+	protected PacKnight whichHero(PacPrincess bitch){
+
+		PacKnight captain = null;
+		int d_bestFound =Integer.MAX_VALUE;
+		
 		for(PacKnight knight : PacKnight.liste){
-			if(knight.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees())
-					< captain.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees())
-					)//&& knight.peutProteger())
+			int d_candidat = knight.getCoord().CasCentre().distance(bitch.getCoord().CasCentre());
+			if(!knight.user() && d_candidat < d_bestFound)
+			{
+				//&& knight.peutProteger())
 				captain = knight;
+				d_bestFound =captain.getCoord().CasCentre().distance(bitch.getCoord().CasCentre());
+				//System.out.println("Position knight" +knight.getCoord().CasCentre());
+				//System.out.println("Distance knight" +knight.getCoord().CasCentre().distance(bitch.getCoord().CasCentre()));
+				//System.out.println("Position captain" +captain.getCoord().CasCentre());
+				//System.out.println("Distance captain" +captain.getCoord().CasCentre().distance(bitch.getCoord().CasCentre()));
+			}
+		}
+		if (captain == null)
+		{
+			System.out.println("Error");
 		}
 		return captain;
 	}
@@ -261,8 +273,12 @@ public class Primitives {
 	{
 		int x = src.x - dest.x;
 		int y = src.y - dest.y;
+<<<<<<< HEAD
 		System.out.println(src.x +" "+src.y);
 		System.out.println(dest);
+=======
+		
+>>>>>>> 2d0f014c83d57779d424bb29f9428996ca3cb9f3
 		if(y==0)
 		{
 			if(x==-1)
@@ -277,5 +293,124 @@ public class Primitives {
 			else
 				return Direction.haut;
 		}
+	}
+
+	/**
+	 * TODO :(
+	 * implanter tout les commentaires %)
+	 */
+	private final int Value_pacgom = 5;
+	private final int Value_distance = -1;
+	private final int Value_ghost = -100;
+	private final int Value_pacKnight = -50;
+	
+	public int[][] laFonctionQuiFaitPresqueTout(CoordonneesFloat cord)
+	{
+		// 0 : pac-gom
+		// 1 : distance
+		// 2 : personnage
+
+		/************
+		 * ATTENTION
+		 ************/
+		// ce qui va suivre est fait par un professionel ateint de foli mais entrainer B-)
+		// merci de ne pas essayer de reproduire cela chez vous :°
+		// ca pourrais etre dangereux <~:)
+		// Ctrl + V *cris d'agonie* %)
+		int tab[][] = new int[4][3];
+		int nbInter = -1;;
+				
+		for(Direction d : Direction.values())
+		{
+			nbInter++;
+//Debut de la chose
+			if(Personnage.getTerrain().caseAcessible(cord.x, cord.y, d))
+			{//si case accessible
+				//faire avancer le c dans la direction d
+				
+				while(!estIntersection(cord))
+				{
+					//tester si pac-gom
+					tab[nbInter][1] += Value_distance;
+					//tester si fantome
+					//tester si pacKnight
+					//prendre la bonne direction
+					//faire avancer coordCaseEnCours
+				}
+//Fin de la chose
+			}
+
+		}
+		return tab;
+	}
+	
+	/**
+	 * 
+	 */
+	public int[][] laFonctionQuiFaitTout(CoordonneesFloat cord)
+	{
+		// 0 : pac-gom
+		// 1 : distance
+		// 2 : personnage
+		
+		// 3 : avenir pac-gom
+		// 4 : avenir distance
+		// 5 : avenir personnage
+
+		int[][] tab = new int[4][6];
+		
+		//init du tableau
+		for(int i = 0 ; i<4; i ++)
+			for(int j = 0 ; j<6; j++)
+				tab[i][j] = 0;
+		
+		int nbInter = -1;;
+		for(Direction d : Direction.values())
+		{
+			nbInter++;
+			
+			if(Personnage.getTerrain().caseAcessible(cord.x, cord.y, d))
+			{//si case accessible
+				//faire avancer le c dans la direction d
+				
+				while(!estIntersection(cord))
+				{
+					//tester si pac-gom
+					tab[nbInter][1] += Value_distance;
+					//tester si fantome
+					//tester si pacKnight
+					//prendre la bonne direction
+					//faire avancer coordCaseEnCours
+				}
+				int[][] tabaux = laFonctionQuiFaitPresqueTout(new CoordonneesFloat(cord));
+				for(int i = 0; i<4; i++)
+					for(int j= 0 ; i<3; i++)
+						tab[nbInter][4+j] += tabaux[i][j];
+			}
+		}
+		return tab;
+	}
+	/**
+	 * envoie le personnage manger des pac-gomm
+	 */
+	public void fetch()
+	{
+		// 0 : pac-gom
+		// 1 : distance
+		// 2 : personnage
+		
+		// 3 : avenir pac-gom
+		// 4 : avenir distance
+		// 5 : avenir personnage
+		CoordonneesFloat c = new CoordonneesFloat(auto.getPersonnage().coord); 
+		if(estIntersection(c))
+		{
+			int tab[][] = laFonctionQuiFaitTout(c); 
+			//choix de la direction
+			//fin
+			
+		}
+		else
+			this.auto.getPersonnage().avancer();
 	}
 }

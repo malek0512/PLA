@@ -1,7 +1,12 @@
 package game;
+<<<<<<< HEAD
 																																																			
+=======
+
+import game.Choix;
+
+>>>>>>> 2d0f014c83d57779d424bb29f9428996ca3cb9f3
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -10,72 +15,74 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
 
-import controleur.automate.Automate;
 import personnages.*;
 import structure_terrain.*;
 
 
-public class WindowGame extends BasicGame {
+public class WindowGame extends BasicGameState {
 
-	public static int resolution_x = 800;
-	public static int resolution_y = 600;
+	public static final int ID = 2;
+	
+	protected static int resolution_x = 800;
+	protected static int resolution_y = 600;
 
 	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
 	private String CHEMIN_MUSIC = "src/graphisme/main/ressources/music/";
 
 	Equipage equip = new Equipage(this);
-	private String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
-	private String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
-	private String SPRITE_PACMAN_3 = "PACMAN-SPRITES2.png";
-	private String SPRITE_PACMAN_4 = "PACMAN-SPRITES2.png";
+	
+	public String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
+	public String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
+	public String SPRITE_PACMAN_3 = "PACMAN-SPRITES2.png";
+	public String SPRITE_PACMAN_4 = "PACMAN-SPRITES2.png";
 
-	private String SPRITE_GHOST_1 = "Leona.png";
-	private String SPRITE_GHOST_2 = "Soraka.png";
-	private String SPRITE_GHOST_3 = "Janna.png";
-	private String SPRITE_GHOST_4 = "Lulu.png";
+	public String SPRITE_GHOST_1 = "Leona.png";
+	public String SPRITE_GHOST_2 = "Soraka.png";
+	public String SPRITE_GHOST_3 = "Janna.png";
+	public String SPRITE_GHOST_4 = "Lulu.png";
 
 	private String MAP = "PACMAN.tmx";
 	private String MUSIC = "AllBeat.ogg";
 
-	public static float xCamera = resolution_x/2;
-	public static float yCamera = resolution_y/2;
+	protected static float xCamera = resolution_x/2;
+	protected static float yCamera = resolution_y/2;
 
-	private int direction = 0;
+	public int direction = 0;
 	public static int taille_minimap = 4;
 
 	public static int tuile_size = 32;
-	public static int largueur_map , hauteur_map ;
-	private int taillePersonnage =32;
+	protected static int largueur_map , hauteur_map ;
+	public int taillePersonnage =32;
 
-    private GameContainer container;
+
+	private StateBasedGame game;
+    protected static GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
-	private Music M;
+	protected static Music M;
 	private Image PACGUM,HEART,PAUSE_IMAGE;
-	private boolean moving = false;//A VERIFIER SI UTILE
+	public boolean moving = false;//A VERIFIER SI UTILE
 	private boolean PAUSE = false;
 
 
-	private Animation[] animations_PACMAN_1 = new Animation[8];
-	private Animation[] animations_PACMAN_2 = new Animation[8];
-	private Animation[] animations_PACMAN_3 = new Animation[8];
-	private Animation[] animations_PACMAN_4 = new Animation[8];
-	private Animation[] animations_GHOST_1 = new Animation[8];
-	private Animation[] animations_GHOST_2 = new Animation[8];
-	private Animation[] animations_GHOST_3 = new Animation[8];
-	private Animation[] animations_GHOST_4 = new Animation[8];
+	public int getID()
+	{
+	      return ID;
+	}
 	
-	public WindowGame() {
-        super("PACKNIGHT : THE RETURN");
-    }
-
-    public void init(GameContainer container) throws SlickException 
+	
+	
+    public void init(GameContainer container,StateBasedGame game) throws SlickException 
     {
+    	this.game = game;
     	container.setShowFPS(false);
-        this.container = container;
         this.map = new TiledMap(CHEMIN_MAP.concat(MAP));        
         largueur_map =map.getWidth();
         hauteur_map = map.getHeight();
@@ -85,9 +92,11 @@ public class WindowGame extends BasicGame {
         PACGUM = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
 		PAUSE_IMAGE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
 
-		equip.init(terrain);
+		Personnage.initTerrain(terrain);
+		equip.init();
         
     	Map.mapToTerrain(terrain, largueur_map, hauteur_map, map);
+<<<<<<< HEAD
     	playground = terrain;    			
 
         SpriteSheet spriteSheet_PACMAN_1 = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE_PACMAN_1), taillePersonnage, taillePersonnage);
@@ -109,17 +118,27 @@ public class WindowGame extends BasicGame {
         Sprite.toSprite(animations_GHOST_4,spriteSheet_GHOST_4);
         
         Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
+=======
+    	playground = terrain;
+    	
+    	for(Joueur j: equip.liste){
+    		j.sprite();
+    	}
+
+    	Music background = new Music(CHEMIN_MUSIC.concat(MUSIC));
+>>>>>>> 2d0f014c83d57779d424bb29f9428996ca3cb9f3
         M = background;
         M.loop();
     }
     
 
-    public void render(GameContainer container, Graphics g) throws SlickException {
+    public void render(GameContainer container,StateBasedGame game, Graphics g) throws SlickException {
     	g.translate(container.getWidth() / 2 -  xCamera, container.getHeight() / 2 - ( yCamera));
         
         this.map.render(largueur_map*taille_minimap,0, 2);
         Interface_Joueur.drawPacGum(playground,PACGUM);
         
+<<<<<<< HEAD
         if(equip.GHOST_1.getisAlive()) g.drawAnimation(animations_GHOST_1[direction + (moving ? 4 : 0)], equip.GHOST_1.getCoord().x+largueur_map*taille_minimap, equip.GHOST_1.getCoord().y);
         if(equip.GHOST_2.getisAlive()) g.drawAnimation(animations_GHOST_2[direction + (moving ? 4 : 0)], equip.GHOST_2.getCoord().x+largueur_map*taille_minimap, equip.GHOST_2.getCoord().y);
         if(equip.GHOST_3.getisAlive()) g.drawAnimation(animations_GHOST_3[direction + (moving ? 4 : 0)], equip.GHOST_3.getCoord().x+largueur_map*taille_minimap, equip.GHOST_3.getCoord().y);
@@ -130,6 +149,12 @@ public class WindowGame extends BasicGame {
 //        g.drawAnimation(animations_PACMAN_3[direction + (moving ? 4 : 0)], equip.PACMAN_3.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_3.getCoord().y);
 //        g.drawAnimation(animations_PACMAN_4[direction + (moving ? 4 : 0)], equip.PACMAN_4.getCoord().x+largueur_map*taille_minimap, equip.PACMAN_4.getCoord().y);
 //        
+=======
+        for(Joueur j : equip.liste){
+        	j.render(g);
+        }
+
+>>>>>>> 2d0f014c83d57779d424bb29f9428996ca3cb9f3
         Interface_Joueur.render(g, HEART);
         Minimap(playground, g,-resolution_x/2 + xCamera,-resolution_y/2 + yCamera);
         
@@ -138,7 +163,7 @@ public class WindowGame extends BasicGame {
     }
 
     
-    public void update(GameContainer container, int delta) throws SlickException {
+    public void update(GameContainer container,StateBasedGame game, int delta) throws SlickException {
 		if(!PAUSE) {
 	    	if (equip.PACMAN_1.parametrable())
 	    		equip.PACMAN_1.avancer();
@@ -169,10 +194,14 @@ public class WindowGame extends BasicGame {
 	        
 	    	try
 	        {
+<<<<<<< HEAD
 
 	       equip.suivant();
 	       
 
+=======
+	    		equip.suivant();
+>>>>>>> 2d0f014c83d57779d424bb29f9428996ca3cb9f3
 	        }
 	        catch (Exception e) {System.out.println(e);}
 	        Ghost.disparitionPacman();
@@ -206,8 +235,9 @@ public class WindowGame extends BasicGame {
 			    }
 	    }
 	    switch (key){
+		    case Input.KEY_M: if(M.playing()) M.pause() ;else M.resume(); break;
+		    case Input.KEY_U : game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); break;
 	    	case Input.KEY_ESCAPE:container.exit(); break;
-		    case Input.KEY_M: if(this.M.playing()) this.M.pause() ;else this.M.resume(); break;
 	    }
 	}
 
@@ -235,6 +265,7 @@ public class WindowGame extends BasicGame {
 		        }
 			}
 		}	
+<<<<<<< HEAD
         g.setColor(Color.red);
         g.fillRect(equip.GHOST_1.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
         g.fillRect(equip.GHOST_2.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.GHOST_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
@@ -246,5 +277,16 @@ public class WindowGame extends BasicGame {
         //g.fillRect(equip.PACMAN_3.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_3.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
         //g.fillRect(equip.PACMAN_2.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_2.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
         g.fillRect(equip.PACMAN_1.getCoord().CasCentre().x*taille_minimap+decalage_x, equip.PACMAN_1.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+=======
+        
+        for(Joueur j: equip.liste){
+        	if (j.p instanceof Ghost){
+        		g.setColor(Color.red);
+        	} else {
+        		g.setColor(Color.orange);
+        	}
+        	g.fillRect(j.p.getCoord().CasCentre().x*taille_minimap+decalage_x, j.p.getCoord().CasCentre().y*taille_minimap+decalage_y,taille_minimap,taille_minimap);
+        }
+>>>>>>> 2d0f014c83d57779d424bb29f9428996ca3cb9f3
 	}
 }

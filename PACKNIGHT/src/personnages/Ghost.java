@@ -253,7 +253,9 @@ public class Ghost extends Personnage {
 	 */
 	public void recoitOrdre(List<CoordonneesFloat> l)
 	{
-		l.remove(0); //on retire la tete, on y est déja !
+		//HA HA
+		//l.remove(0); //on retire la tete, on y est déja !
+		//HA HA
 		if(!l.isEmpty())
 		{
 			this.ordre = l;
@@ -296,49 +298,62 @@ public class Ghost extends Personnage {
 	 */
 	public void donnerDesOrdres(Pacman ref)
 	{
+		int xref = ref.coord.x;
+		int yref = ref.coord.y;
 		//reboot du graph
-		g.reset();
+		Ghost.g.reset();
 		// calcule des intersection a occuper
-		List<CoordonneesFloat> l = g.visiterLargeur(ref.coord,nbInterChercher);
+		List<CoordonneesFloat> listeDesInter = Ghost.g.visiterLargeur(ref.coord,nbInterChercher);
 		
 		//copie de la liste des fantomes
-		List<Ghost> lg = new LinkedList<Ghost>(Ghost.liste);
+
+		List<Ghost> listeDesGhost = new LinkedList<Ghost>(Ghost.liste);
+
+
 		
 		// pour chaque inter
-		Iterator<CoordonneesFloat> i = l.iterator();
+		Iterator<CoordonneesFloat> i = listeDesInter.iterator();
 		while(i.hasNext())
 		{
 			CoordonneesFloat interEnTraitement = i.next();
-			
 			// variable temporaire
 			Ghost meilleurCandidat = null;
-			int dcandidat = 255;
+			int distanceMeilleurCandidat = Integer.MAX_VALUE;
 			
 			// calcul de la distance max entre le fantome et l'inter
-			int dmax = Math.abs(ref.coord.x - interEnTraitement.x) + Math.abs(ref.coord.y - interEnTraitement.y);
+			int dmax = Math.abs(xref - interEnTraitement.x) + Math.abs(yref - interEnTraitement.y);
 			dmax += 2; //parceque je suis sadic :3
 			
 			// calcul du fantome qui doit y aller
-			Iterator<Ghost> ig = lg.iterator();
+			Iterator<Ghost> ig = listeDesGhost.iterator();
 			
 			int indice = 0;
 			int cpt = 0;
 			while(ig.hasNext())
 			{	//creation du candidat
 				Ghost actuelCandidat = ig.next();
-				int dactuelCandidat = Math.abs(ref.coord.x - interEnTraitement.x) + Math.abs(ref.coord.y - interEnTraitement.y);
-				if(dactuelCandidat < dmax && dactuelCandidat < dcandidat)
-				{	//maj du candidat
-					meilleurCandidat = actuelCandidat;
-					indice = cpt;
+				//test si le candidat peut obtenir des ordres
+				if(actuelCandidat.parametrable())
+				{
+					int dactuelCandidat = Math.abs(actuelCandidat.coord.x - interEnTraitement.x) 
+										+ Math.abs(actuelCandidat.coord.y - interEnTraitement.y);
+					
+					if(dactuelCandidat < dmax && dactuelCandidat < distanceMeilleurCandidat)
+					{	//maj du candidat
+						meilleurCandidat = actuelCandidat;
+						distanceMeilleurCandidat = dactuelCandidat;
+						indice = cpt;
+					}
 				}
+				//on incremente notre compteur dans tout les cas !
 				cpt++;
 			}
 			if(meilleurCandidat != null)
 			{
 				//supprime le fantome de la liste
-				lg.remove(indice);
-				// calcul de l'itinéraire
+				listeDesGhost.remove(indice);
+				
+				//calcul de l'itinéraire
 				Aetoile ga = new Aetoile(meilleurCandidat.coord);
 				List<CoordonneesFloat> ordre = ga.algo(interEnTraitement);
 				meilleurCandidat.recoitOrdre(ordre);
