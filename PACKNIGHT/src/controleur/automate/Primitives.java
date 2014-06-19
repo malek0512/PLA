@@ -384,7 +384,6 @@ public class Primitives {
 					}
 				}
 			}
-
 		}
 		return tab;
 	}
