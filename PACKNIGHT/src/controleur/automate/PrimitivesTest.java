@@ -88,4 +88,8 @@ public class PrimitivesTest extends Primitives {
 	protected boolean fmDansRayon(int d) {
 		return this.fantomeEstDansRayon(d).size()!=0;
 	}
+
+//	public boolean enDetresse(){
+//		return 
+//	}
 }

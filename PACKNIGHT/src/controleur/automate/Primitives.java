@@ -216,17 +216,19 @@ public class Primitives {
 	/**
 	 * @return le Packnight le plus proche de la princesse
 	 * @author malek
+	 * @throws Exception 
 	 */
-	protected PacKnight whichHero(PacPrincess bitch){
-		assert (PacKnight.liste.size()!=0) : "Il n'y a aucun Packnight dans PacKnight.liste !";
-		PacKnight captainBitch=PacKnight.liste.get(0);
+	protected PacKnight whichHero(PacPrincess bitch) throws Exception{
+		if (PacKnight.liste.size()==0) 
+			throw new Exception("Il n'y a aucun Packnight dans PacKnight.liste !");
+		PacKnight captain=PacKnight.liste.get(0);
 		for(PacKnight knight : PacKnight.liste){
 			if(knight.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees())
-					< captainBitch.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees())
-					&& knight.peutProteger())
-				captainBitch = knight;
+					< captain.getCoord().toCoordonnees().distance_square(bitch.getCoord().toCoordonnees())
+					)//&& knight.peutProteger())
+				captain = knight;
 		}
-		return captainBitch;
+		return captain;
 	}
 	
 	/**

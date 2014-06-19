@@ -16,15 +16,14 @@ public class Interface_Joueur {
 	}
 	
 	
-	public static void render(Graphics g,Terrain terrain, Image PACGUM, Image HEART)
+	public static void render(Graphics g, Image HEART)
 	{
-        drawPacGum(terrain,PACGUM);
         g.setColor(Color.gray);
         g.fillRect(-WindowGame.resolution_x/2 + WindowGame.xCamera,-WindowGame.resolution_y/2 + WindowGame.yCamera, WindowGame.largueur_map*WindowGame.taille_minimap,WindowGame.hauteur_map*WindowGame.tuile_size );
         drawHeart(-WindowGame.resolution_x/2 + WindowGame.xCamera,-WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap, HEART);
 	}
 	
-	private static void drawPacGum(Terrain terrain, Image PACGUM){
+	public static void drawPacGum(Terrain terrain, Image PACGUM){
 		for(int i=0;i<WindowGame.largueur_map;i++)
 		{
 			for(int j=0;j<WindowGame.hauteur_map;j++)

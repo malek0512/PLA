@@ -1,12 +1,15 @@
 <?xml version = "1.0" ?>
 <Automate ID= "A_SUIVEUR" > 
 <Etat Nom= "1" > 
- <Transition Entree= "VUE" Etat= "2" Action = "SUIVRE" > </Transition> 
- <Transition Entree= "PAS_VUE" Etat= "1" Action = "RIEN" > </Transition> 
+ <Transition Entree= "VUE" Etat= "3" Action = "AVANCER" > </Transition> 
+ <Transition Entree= "PAS_VUE" Etat= "2" Action = "DIRECTION_ALEATOIRE" > </Transition> 
 </Etat> 
 <Etat Nom= "2" > 
- <Transition Entree= "CASE_NON_ATTEINTE" Etat= "2" Action = "AVANCER" > </Transition> 
- <Transition Entree= "CASE_ATTEINTE" Etat= "1" Action = "RIEN" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "1" Action = "AVANCER" > </Transition> 
+</Etat> 
+<Etat Nom= "3" > 
+ <Transition Entree= "CASE_NON_ATTEINTE" Etat= "3" Action = "AVANCER" > </Transition> 
+ <Transition Entree= "CASE_ATTEINTE" Etat= "1" Action = "SUIVRE" > </Transition> 
 </Etat> 
 <Etat_Initial> 
 <Etat Nom= "1" > 
@@ -17,7 +20,7 @@
 <Etats_Bloquants> 
 <Etat Nom= "1" > 
 </Etat> 
-<Etat Nom= "2" > 
+<Etat Nom= "3" > 
 </Etat> 
 </Etats_Bloquants> 
 </Automate> 

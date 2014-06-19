@@ -93,8 +93,9 @@ public class PrimitivesAction extends Primitives{
 	 * Si le knight est deja au service de la princesse :
 	 * 		- on lui renseigne le nouvel fantome a chasser, si pas mort
 	 * @author malek
+	 * @throws Exception 
 	 */
-	public void auSecours(){
+	public void auSecours() throws Exception{
 		PacPrincess bitch = (PacPrincess) auto.getPersonnage();
 		for(Ghost violeur : bitch.violeurs){
 			if (PacKnight.liste.size()>0) {
@@ -107,10 +108,11 @@ public class PrimitivesAction extends Primitives{
 			}
 		}
 	}
-	public void auSecours2(){
+	public void auSecours2() throws Exception{
 		PacPrincess bitch = (PacPrincess) auto.getPersonnage();
 //			if (PacKnight.liste.size()>0) {
 				PacKnight p = this.whichHero(bitch);
+//				System.out.println("yoyo");
 					p.princesseEnDetresse = bitch;
 					p.ghostEnChasse = new Ghost("",1,1,Direction.droite,new CoordonneesFloat(1,1));
 //			}
@@ -129,7 +131,7 @@ public class PrimitivesAction extends Primitives{
 	public void protegerPrincesse(int Perimetre) throws Exception{
 		PacKnight knight = ((PacKnight) auto.getPersonnage());
 		//Si le knight est vivant
-		if (knight.hitting()){
+		if (true){//knight.hitting()){
 			PacPrincess bitch = knight.princesseEnDetresse;
 			//Si la princesse ne s'est pas identifiée, princesseEnDetresse==null
 			if (bitch==null)
@@ -162,15 +164,12 @@ public class PrimitivesAction extends Primitives{
 	 */
 	public void suivre(CoordonneesFloat ref)
 	{
-		CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
-		Aetoile graph = new Aetoile(src);
-		System.out.println("source : " + src);
-		List<CoordonneesFloat> l = graph.algo(ref);
-		System.out.println("dest : " + ref);
-		l.remove(0);
-		this.auto.getPersonnage().setDirection(mysteriousFunction(src, l.get(0)));
-		System.out.println(this.auto.getPersonnage().getOrientation());
-		this.auto.getPersonnage().avancer();
+			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
+			Aetoile graph = new Aetoile(src);
+			List<CoordonneesFloat> l = graph.algo(ref);
+			l.remove(0);
+			this.auto.getPersonnage().setDirection(mysteriousFunction(src, l.get(0)));
+			this.auto.getPersonnage().avancer();
 	}
 	
 	public void suivre(){
