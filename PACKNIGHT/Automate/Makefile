@@ -1,4 +1,4 @@
-AUTOMATES = princesse.auto fm_aleatoire_aveugle.auto packnight.auto fm_berserk.auto 
+AUTOMATES = princesse.auto fm_aleatoire_aveugle.auto packnight.auto fm_berserk.auto fm_suiveur.auto rama.auto
 
 SUPPR = $(AUTOMATES:.auto=.xml)
 

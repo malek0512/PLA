@@ -1,0 +1,29 @@
+Etat 1
+Transition
+    ETATSUIVANT = 2
+    ENTREE = VUE
+    SORTIE = OBEIR
+    
+Etat 4
+Transition
+	ETATSUIVANT = 4
+    ENTREE = CASE_NON_ATTEINTE
+    SORTIE = AVANCER
+
+Transition
+	ETATSUIVANT = 2
+    ENTREE = CASE_ATTEINTE
+    SORTIE = RIEN
+    
+    
+Etat 2
+Transition
+    ETATSUIVANT = 2
+    ENTREE = ETOILE
+    SORTIE = RIEN
+ 	
+
+ETAT_INITIAL = 1
+ETAT_FINAL =
+ETAT_BLOQUANT = 1 2
+AUTOMATE = rama

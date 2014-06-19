@@ -74,8 +74,8 @@ public class PrimitivesTest extends Primitives {
 	/**
 	 * @return : Vrai si le fantôme est controllé par le fantôme Lord*/
 	public boolean isControled(){
-		return true;
-		//return ((Ghost) auto.getPersonnage()).getControle();
+		
+		return ((Ghost) auto.getPersonnage()).getEntendEtObei();
 	}
 	
 	/**

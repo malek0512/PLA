@@ -77,7 +77,17 @@ public class PrimitivesAction extends Primitives{
 	/**
 	 * Reçoit un ordre du Fantôme Lord et avance vers la case désignée tant qu'il ne l'a pas atteinte
 	 * */
-	public void obeir(List<CoordonneesFloat> d){
+	public void obeir(){
+		Iterator<Pacman> i = Ghost.central.keySet().iterator();
+		if (i.hasNext()){
+			Pacman max = i.next();
+			while (i.hasNext()){
+				Pacman next = i.next();
+				if (Ghost.central.get(next).timer>Ghost.central.get(max).timer)
+					max = next;
+			}
+		((Ghost) auto.getPersonnage()).donnerDesOrdres(max);
+		}
 		
 	}
 	
@@ -182,17 +192,19 @@ public class PrimitivesAction extends Primitives{
 	 */
 	public void suivre(CoordonneesFloat ref)
 	{
-		CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
-		Aetoile graph = new Aetoile(src);
-		List<CoordonneesFloat> l = graph.algo(ref);
-		l.remove(0);
-		this.auto.getPersonnage().setDirection(mysteriousFunction(src, l.get(0)));
-		this.auto.getPersonnage().avancer();
+
+			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
+			Aetoile graph = new Aetoile(src);
+			List<CoordonneesFloat> l = graph.algo(ref);
+			l.remove(0);
+			this.auto.getPersonnage().setDirection(mysteriousFunction(src, l.get(0)));
+			this.auto.getPersonnage().avancer();
 	}
+
 	
 	public void suivre(){
 		Iterator<Pacman> i = Ghost.central.keySet().iterator();
-		if (i.hasNext()){
+	if (i.hasNext()){
 			Pacman min = i.next();
 			while (i.hasNext()){
 				Pacman next = i.next();
@@ -201,7 +213,55 @@ public class PrimitivesAction extends Primitives{
 					min = next;
 			}
 			
-			suivre(min.getCoord());
+			suivre(min.getCoord().CasCentre());
+		}
+	}
+	
+
+	/**
+	 * envoie le personnage manger des pac-gomm
+	 */
+	public void fetch()
+	{
+		// 0 : pac-gom
+		// 1 : distance
+		// 2 : personnage
+		
+		// 3 : avenir pac-gom
+		// 4 : avenir distance
+		// 5 : avenir personnage
+		CoordonneesFloat c = new CoordonneesFloat(auto.getPersonnage().coord); 
+		if(c.CasBG() == c.CasHD() && estIntersection(c))
+		{	
+			int tab[][] = laFonctionQuiFaitTout(c.CasCentre());
+			
+			int cpt =0;
+			int meilleurCandidat = Integer.MIN_VALUE;
+			Direction meilleurCandidatDirection = null;
+			for(Direction d : Direction.values())
+			{
+				if(tab[cpt][1] != 0)
+				{//sinon la direction est un mur !!
+					int candidat = 0;
+					for(int k = 0; k <3; k++)
+						candidat += ImportanceRacine*tab[cpt][k];
+					for(int k = 3; k<6; k++)
+						candidat += ImportanceBranche*tab[cpt][k];
+					if(meilleurCandidat<candidat)
+					{
+						meilleurCandidat = candidat;
+						meilleurCandidatDirection = d;
+					}
+				}
+			}
+			
+			this.auto.getPersonnage().setDirection(meilleurCandidatDirection);
+			this.auto.getPersonnage().avancer();
+		}
+		else
+		{
+			setDirectionAleatoire(this.auto.getPersonnage());
+			this.auto.getPersonnage().avancer();
 		}
 	}
 }
