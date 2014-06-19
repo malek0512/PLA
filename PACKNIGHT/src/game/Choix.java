@@ -1,7 +1,9 @@
 package game;
 
 import org.newdawn.slick.Color;
+
 import game.WindowGame;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -28,8 +30,8 @@ public class Choix extends BasicGameState {
 	   }
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) {
-	      g.setColor(Color.blue);
-	      g.drawString("This is State 3", 200, 50);
+	      g.setColor(Color.white);
+	      g.drawString("Menu de Choix", 200, 50);
 	      g.setColor(Color.white);
 	      
 	      for (int i=0;i<options.length;i++) {
@@ -47,7 +49,7 @@ public class Choix extends BasicGameState {
 		  {
 		  	case Input.KEY_U : game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); break;
 		    case Input.KEY_M: if(WindowGame.M.playing()) WindowGame.M.pause() ;else WindowGame.M.resume(); break;
-		    case Input.KEY_ESCAPE:WindowGame.container.exit(); break;		   
+	    	case Input.KEY_ESCAPE:Menu.container.exit(); break;		   
 	      }
 
 	   }

@@ -17,6 +17,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
 
+import game.Menu;
 import personnages.*;
 import structure_terrain.*;
 
@@ -28,7 +29,6 @@ public class WindowGame extends BasicGameState {
 	protected static int resolution_x = 800;
 	protected static int resolution_y = 600;
 
-	private String CHEMIN_SPRITE = "src/graphisme/main/ressources/map/sprites/";
 	private String CHEMIN_MAP = "src/graphisme/main/ressources/map/";
 	private String CHEMIN_MUSIC = "src/graphisme/main/ressources/music/";
 
@@ -189,7 +189,7 @@ public class WindowGame extends BasicGameState {
 	    switch (key){
 		    case Input.KEY_M: if(M.playing()) M.pause() ;else M.resume(); break;
 		    case Input.KEY_U : game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); break;
-	    	case Input.KEY_ESCAPE:container.exit(); break;
+	    	case Input.KEY_ESCAPE:Menu.container.exit(); break;
 	    }
 	}
 

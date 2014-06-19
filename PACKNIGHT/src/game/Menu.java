@@ -7,21 +7,23 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Menu extends StateBasedGame {
 
+	static AppGameContainer container;
+	
    public Menu() {
       super("PACKNIGHT : THE RETURN");
    }
    
    public void initStatesList(GameContainer container) {
-	//  addState(new Accueil());
+	  addState(new Accueil());
       addState(new WindowGame());
-      addState(new Accueil());
+     // addState(new Accueil());
       addState(new Choix());
    }
    
    public static void main(String[] argv) {
       try {
     	  //exception levée à la ligne en dessous. Ne peut plus rien tester :/
-         AppGameContainer container = new AppGameContainer(new Menu());
+         container = new AppGameContainer(new Menu());
          container.setDisplayMode(WindowGame.resolution_x,WindowGame.resolution_y,false);
          container.start();
       } catch (SlickException e) {
