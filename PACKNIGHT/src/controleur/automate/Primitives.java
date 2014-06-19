@@ -465,6 +465,7 @@ public class Primitives {
 					for(int j= 0 ; i<3; i++)
 						tab[nbInter][4+j] += tabaux[i][j];
 			}
+			System.out.println("##############" + "\nDirection : " + d + "\nValeur des pac-gomm : " + tab[nbInter][0] + "\nValeur en distance : " + tab[nbInter][1] + "\nValeur en perso : " + tab[nbInter][3] + "\n############");
 		}
 		return tab;
 	}
