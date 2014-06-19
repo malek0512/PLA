@@ -328,58 +328,73 @@ public class Primitives {
 
 		int tab[][] = new int[4][3];
 		for(int i = 0; i<4; i++)
-			for(int j=0; j<3; j++)
-				tab[i][j]=0;
+		for(int j=0; j<3; j++)
+			tab[i][j]=0;
 		
 		int nbInter = -1;;
-				
+		
 		for(Direction d : Direction.values())
 		{
-			if(d != src)
-			{
-				nbInter++;
-				if(Personnage.getTerrain().caseAcessible(cord.x, cord.y, d))
-				{//si case accessible
-					//faire avancer le c dans la direction d
-					Direction directionCord = d;
-					while(!estIntersectionCas(cord))
+			nbInter++;
+			
+			if(d != src && Personnage.getTerrain().caseAcessible(cord.x, cord.y, d))
+			{//si case accessible
+				CoordonneesFloat cordCaseAcutel = new CoordonneesFloat(cord);
+				//faire avancer le c dans la direction d
+				Direction directionCord = d;
+				switch(d)
+				{
+				case haut:
+					cordCaseAcutel.y++;
+					break;
+				case bas :
+					cordCaseAcutel.y--;
+					break;
+				case droite:
+					cordCaseAcutel.x++;
+					break;
+				case gauche:
+					cordCaseAcutel.x--;
+					break;
+				default:
+				}
+				while(!estIntersectionCas(cordCaseAcutel))
+				{
+					//tester si pac-gom
+					if(Personnage.getTerrain().ValueCase(cordCaseAcutel) == 2)
+						tab[nbInter][0] += Value_pacgom;
+					//incremente la distance
+					tab[nbInter][1] += Value_distance;
+					//tester si fantome
+					if(Ghost.personnagePresent(cordCaseAcutel))
+						tab[nbInter][2] += Value_ghost;
+					//tester si pacKnight
+					if(PacKnight.personnagePresent(cordCaseAcutel))
+						tab[nbInter][2] += Value_pacKnight;
+					//faire avancer coordCaseEnCours
+					for(Direction dir : Direction.values())
 					{
-						//tester si pac-gom
-						if(Personnage.getTerrain().ValueCase(cord) == 2)
-							tab[nbInter][0] += Value_pacgom;
-						//incremente la distance
-						tab[nbInter][1] += Value_distance;
-						//tester si fantome
-						if(Ghost.personnagePresent(cord))
-							tab[nbInter][2] += Value_ghost;
-						//tester si pacKnight
-						if(PacKnight.personnagePresent(cord))
-							tab[nbInter][2] += Value_pacKnight;
-						//faire avancer coordCaseEnCours
-						int x = cord.x;
-						int y = cord.y;
-						for(Direction dir : Direction.values()){
-							if(directionCord !=dir.opposer() && Personnage.getTerrain().caseAcessible(cord.x, cord.y, dir) )
+						if(directionCord !=dir.opposer() && Personnage.getTerrain().caseAcessible(cordCaseAcutel.x, cordCaseAcutel.y, dir) )
+						{
+							switch(dir)
 							{
-								switch(dir)
-								{
-								case haut:
-									y++;
-									break;
-								case bas :
-									y--;
-									break;
-								case droite:
-									x++;
-									break;
-								case gauche:
-									x--;
-									break;
-								default:
-								}
-								cord = new CoordonneesFloat(x,y);
-								directionCord = dir;
+							case haut:
+								cordCaseAcutel.y++;
+								break;
+							case bas :
+								cordCaseAcutel.y--;
+								break;
+							case droite:
+								cordCaseAcutel.x++;
+								break;
+							case gauche:
+								cordCaseAcutel.x--;
+								break;
+							default:
 							}
+							
+							directionCord = dir;
+							break;
 						}
 					}
 				}
@@ -417,45 +432,61 @@ public class Primitives {
 			
 			if(Personnage.getTerrain().caseAcessible(cord.x, cord.y, d))
 			{//si case accessible
+				CoordonneesFloat cordCaseAcutel = new CoordonneesFloat(cord);
 				//faire avancer le c dans la direction d
 				Direction directionCord = d;
-				while(!estIntersectionCas(cord))
+				switch(d)
+				{
+				case haut:
+					cordCaseAcutel.y++;
+					break;
+				case bas :
+					cordCaseAcutel.y--;
+					break;
+				case droite:
+					cordCaseAcutel.x++;
+					break;
+				case gauche:
+					cordCaseAcutel.x--;
+					break;
+				default:
+				}
+				while(!estIntersectionCas(cordCaseAcutel))
 				{
 					//tester si pac-gom
-					if(Personnage.getTerrain().ValueCase(cord) == 2)
+					if(Personnage.getTerrain().ValueCase(cordCaseAcutel) == 2)
 						tab[nbInter][0] += Value_pacgom;
 					//incremente la distance
 					tab[nbInter][1] += Value_distance;
 					//tester si fantome
-					if(Ghost.personnagePresent(cord))
+					if(Ghost.personnagePresent(cordCaseAcutel))
 						tab[nbInter][2] += Value_ghost;
 					//tester si pacKnight
-					if(PacKnight.personnagePresent(cord))
+					if(PacKnight.personnagePresent(cordCaseAcutel))
 						tab[nbInter][2] += Value_pacKnight;
 					//faire avancer coordCaseEnCours
-					int x = cord.x;
-					int y = cord.y;
 					for(Direction dir : Direction.values()){
-						if(directionCord !=dir.opposer() && Personnage.getTerrain().caseAcessible(cord.x, cord.y, dir) )
+						if(directionCord !=dir.opposer() && Personnage.getTerrain().caseAcessible(cordCaseAcutel.x, cordCaseAcutel.y, dir) )
 						{
 							switch(dir)
 							{
 							case haut:
-								y++;
+								cordCaseAcutel.y++;
 								break;
 							case bas :
-								y--;
+								cordCaseAcutel.y--;
 								break;
 							case droite:
-								x++;
+								cordCaseAcutel.x++;
 								break;
 							case gauche:
-								x--;
+								cordCaseAcutel.x--;
 								break;
 							default:
 							}
-							cord = new CoordonneesFloat(x,y);
+							
 							directionCord = dir;
+							break;
 						}
 					}
 				}
