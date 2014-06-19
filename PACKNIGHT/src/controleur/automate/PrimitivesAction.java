@@ -231,7 +231,7 @@ public class PrimitivesAction extends Primitives{
 		// 4 : avenir distance
 		// 5 : avenir personnage
 		CoordonneesFloat c = new CoordonneesFloat(auto.getPersonnage().coord); 
-		if(c.CasBG() == c.CasHD() && estIntersection(c))
+		if(c.CasBG().equals(c.CasHD()) && estIntersection(c))
 		{	
 			int tab[][] = laFonctionQuiFaitTout(c.CasCentre());
 			
