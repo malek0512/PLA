@@ -204,4 +204,52 @@ public class PrimitivesAction extends Primitives{
 			suivre(min.getCoord());
 		}
 	}
+	
+
+	/**
+	 * envoie le personnage manger des pac-gomm
+	 */
+	public void fetch()
+	{
+		// 0 : pac-gom
+		// 1 : distance
+		// 2 : personnage
+		
+		// 3 : avenir pac-gom
+		// 4 : avenir distance
+		// 5 : avenir personnage
+		CoordonneesFloat c = new CoordonneesFloat(auto.getPersonnage().coord); 
+		if(c.CasBG() == c.CasHD() && estIntersection(c))
+		{	
+			int tab[][] = laFonctionQuiFaitTout(c.CasCentre());
+			
+			int cpt =0;
+			int meilleurCandidat = Integer.MIN_VALUE;
+			Direction meilleurCandidatDirection = null;
+			for(Direction d : Direction.values())
+			{
+				if(tab[cpt][1] != 0)
+				{//sinon la direction est un mur !!
+					int candidat = 0;
+					for(int k = 0; k <3; k++)
+						candidat += ImportanceRacine*tab[cpt][k];
+					for(int k = 3; k<6; k++)
+						candidat += ImportanceBranche*tab[cpt][k];
+					if(meilleurCandidat<candidat)
+					{
+						meilleurCandidat = candidat;
+						meilleurCandidatDirection = d;
+					}
+				}
+			}
+			
+			this.auto.getPersonnage().setDirection(meilleurCandidatDirection);
+			this.auto.getPersonnage().avancer();
+		}
+		else
+		{
+			setDirectionAleatoire(this.auto.getPersonnage());
+			this.auto.getPersonnage().avancer();
+		}
+	}
 }

@@ -149,7 +149,19 @@ public class Primitives {
 	 */
 	public boolean estIntersection(CoordonneesFloat coord){
 		int n=0;
-		coord=coord.CasCentre();
+		CoordonneesFloat coordo = new CoordonneesFloat(coord.CasCentre());
+		for(Direction d : Direction.values())
+			if(Personnage.getTerrain().caseAcessible(coordo.x, coordo.y, d))
+				n++;
+		
+		return n>2;
+	}
+	
+	/**Pas merci ? :(
+	 * @return Vrai si la case est une intersection
+	 */
+	public boolean estIntersectionCas(CoordonneesFloat coord){
+		int n=0;
 		for(Direction d : Direction.values())
 			if(Personnage.getTerrain().caseAcessible(coord.x, coord.y, d))
 				n++;
@@ -330,7 +342,7 @@ public class Primitives {
 				{//si case accessible
 					//faire avancer le c dans la direction d
 					Direction directionCord = d;
-					while(!estIntersection(cord))
+					while(!estIntersectionCas(cord))
 					{
 						//tester si pac-gom
 						if(Personnage.getTerrain().ValueCase(cord) == 2)
@@ -384,8 +396,6 @@ public class Primitives {
 	 */
 	public int[][] laFonctionQuiFaitTout(CoordonneesFloat cord)
 	{
-
-		
 		// 0 : pac-gom
 		// 1 : distance
 		// 2 : personnage
@@ -410,9 +420,8 @@ public class Primitives {
 			{//si case accessible
 				//faire avancer le c dans la direction d
 				Direction directionCord = d;
-				while(!estIntersection(cord))
+				while(!estIntersectionCas(cord))
 				{
-					System.out.println("wtf");
 					//tester si pac-gom
 					if(Personnage.getTerrain().ValueCase(cord) == 2)
 						tab[nbInter][0] += Value_pacgom;
@@ -460,51 +469,4 @@ public class Primitives {
 		return tab;
 	}
 	
-	/**
-	 * envoie le personnage manger des pac-gomm
-	 */
-	public void fetch()
-	{
-		// 0 : pac-gom
-		// 1 : distance
-		// 2 : personnage
-		
-		// 3 : avenir pac-gom
-		// 4 : avenir distance
-		// 5 : avenir personnage
-		CoordonneesFloat c = new CoordonneesFloat(auto.getPersonnage().coord); 
-		if(estIntersection(c))
-		{	System.out.println("if done");
-			int tab[][] = laFonctionQuiFaitTout(c);
-			
-			int cpt =0;
-			int meilleurCandidat = Integer.MIN_VALUE;
-			Direction meilleurCandidatDirection = null;
-			for(Direction d : Direction.values())
-			{
-				System.out.println("valeur du truc tester : " + tab[cpt][1]);
-				if(tab[cpt][1] != 0)
-				{//sinon la direction est un mur !!
-					System.out.println("first if ok");
-					int candidat = 0;
-					for(int k = 0; k <3; k++)
-						candidat += ImportanceRacine*tab[cpt][k];
-					for(int k = 3; k<6; k++)
-						candidat += ImportanceBranche*tab[cpt][k];
-					if(meilleurCandidat<candidat)
-					{
-						System.out.println("second if ok");
-						meilleurCandidat = candidat;
-						meilleurCandidatDirection = d;
-					}
-				}
-			}
-			
-			this.auto.getPersonnage().setDirection(meilleurCandidatDirection);
-			
-		}
-		System.out.println("avant le avancer");
-		this.auto.getPersonnage().avancer();
-		System.out.println("après avancer");
-	}
 }
