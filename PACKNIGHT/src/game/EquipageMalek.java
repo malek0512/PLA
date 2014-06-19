@@ -49,10 +49,6 @@ public class EquipageMalek extends Equipage{
 
 	}
 	
-	public void suivant() throws Exception{
-		for(Joueur j:Joueur.liste)
-			j.suivant();
-	}
 	
    public static void main(String[] argv) {
 	      try {

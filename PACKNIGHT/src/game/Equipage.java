@@ -28,5 +28,9 @@ public abstract class Equipage {
 	}
 
 	public abstract void init() throws SlickException;
-	public abstract void suivant() throws Exception;
+	
+	public void suivant() throws Exception{
+		for(Joueur j:Joueur.liste)
+			j.suivant();
+	}
 }

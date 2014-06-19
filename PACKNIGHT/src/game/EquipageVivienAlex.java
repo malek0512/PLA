@@ -17,6 +17,7 @@ import structure_terrain.Terrain;
 import controleur.automate.Automate;
 
 public class EquipageVivienAlex extends Equipage {
+
 	PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(1, 1), true);
 	PacKnight PACMAN_2 = new PacKnight("J2",5,15,Direction.droite,new CoordonneesFloat(5, 15), false);
 //	PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), false);
@@ -47,11 +48,6 @@ public class EquipageVivienAlex extends Equipage {
 
 	}
 
-	public void suivant() throws Exception {
-		for(Joueur j:Joueur.liste)
-			j.suivant();
-	}
-	
 	   public static void main(String[] argv) {
 		      try {
 		         Menu.container = new AppGameContainer(new Menu(new EquipageVivienAlex()));
