@@ -278,6 +278,13 @@ public class Primitives {
 		return prochain;
 	}
 
+	protected boolean isAlreadyChassed(Ghost g){
+		boolean res = false;
+		for(PacKnight knight : PacKnight.liste){
+			res = res || knight.ghostEnChasse==g;
+		}
+		return res;
+	}
 	/**
 	 * @return le Packnight le plus proche de la princesse
 	 * @author malek
@@ -286,28 +293,15 @@ public class Primitives {
 	protected PacKnight whichHero(PacPrincess bitch) {
 
 		PacKnight captain = null;
-		int d_bestFound = Integer.MAX_VALUE;
-
-		for (PacKnight knight : PacKnight.liste) {
-			int d_candidat = knight.getCoord().CasCentre()
-					.distance(bitch.getCoord().CasCentre());
-			if (!knight.user() && d_candidat < d_bestFound) {
-				// && knight.peutProteger())
+		int d_bestFound =Integer.MAX_VALUE;
+		
+		for(PacKnight knight : PacKnight.liste){
+			int d_candidat = knight.getCoord().CasCentre().distance(bitch.getCoord().CasCentre());
+			if(!knight.user() && d_candidat < d_bestFound && knight.ghostEnChasse ==null)
+			{
 				captain = knight;
-				d_bestFound = captain.getCoord().CasCentre()
-						.distance(bitch.getCoord().CasCentre());
-				// System.out.println("Position knight"
-				// +knight.getCoord().CasCentre());
-				// System.out.println("Distance knight"
-				// +knight.getCoord().CasCentre().distance(bitch.getCoord().CasCentre()));
-				// System.out.println("Position captain"
-				// +captain.getCoord().CasCentre());
-				// System.out.println("Distance captain"
-				// +captain.getCoord().CasCentre().distance(bitch.getCoord().CasCentre()));
+				d_bestFound =d_candidat;
 			}
-		}
-		if (captain == null) {
-			System.out.println("Error");
 		}
 		return captain;
 	}
@@ -323,13 +317,12 @@ public class Primitives {
 	protected List<Ghost> fantomeEstDansRayon(int rayon) {
 		List<Ghost> res = new LinkedList<Ghost>();
 		CoordonneesFloat position = auto.getPersonnage().getCoord();
-
-		float someXYSource = position.CasCentre().sommeXY();
-		for (Ghost pac : Ghost.liste) {
-			float someXYTester = pac.getCoord().CasCentre().sommeXY();
-			if (pac.hitting() && someXYSource - rayon <= someXYTester
-					&& someXYTester <= someXYSource + rayon)
+		
+		for(Ghost pac : Ghost.liste)
+		{
+			if(position.CasCentre().distance(pac.getCoord().CasCentre())<=rayon){
 				res.add(pac);
+			}
 		}
 		return res;
 	}
@@ -345,12 +338,8 @@ public class Primitives {
 			Personnage p2) {
 		CoordonneesFloat position = p1.getCoord();
 
-		float someXYSource = position.CasCentre().sommeXY();
-		float someXYTester = p2.getCoord().CasCentre().sommeXY();
-		if (someXYSource - rayon <= someXYTester
-				&& someXYTester <= someXYSource + rayon)
-			return true;
-
+		if(p2.hitting() && position.CasCentre().distance(p2.getCoord().CasCentre())<=rayon)
+				return true;
 		return false;
 	}
 
@@ -387,8 +376,7 @@ public class Primitives {
 	/**
 	 * TODO :( implanter tout les commentaires %)
 	 */
-
-	final int Value_pacgom = 2;
+	final int Value_pacgom = 15;
 	final int Value_distance = -1;
 	final int Value_ghost = -10000;
 	final int Value_pacKnight = -100;

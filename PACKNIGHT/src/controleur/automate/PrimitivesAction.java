@@ -129,106 +129,60 @@ public class PrimitivesAction extends Primitives {
 	 * @author malek
 	 * @throws Exception
 	 */
-	public void auSecours() throws Exception {
+	public void auSecours() throws Exception{
+		//recuperation du personnage
+//		System.out.println("COUCOU auSecours");
 		PacPrincess bitch = (PacPrincess) auto.getPersonnage();
-		for (Ghost violeur : bitch.violeurs) {
-			PacKnight p = this.whichHero(bitch);
-			if (p != null) {
-				p.princesseEnDetresse = bitch;
-				p.ghostEnChasse = violeur;
-			} else {
-				// TODO FUIRE, il n'y a aucun knight pour la proteger
-				// setDirectionAleatoire(bitch);
-				// bitch.avancer();
+		//pour chaque ghost dans le rayons
+		int i =0;
+		for(Ghost violeur : bitch.violeurs)
+		{
+			if(violeur.hitting() && !isAlreadyChassed(violeur))
+			{
+				//selection du héro
+				PacKnight p = this.whichHero(bitch);
+				if (p!=null) 
+				{
+//					System.out.println("trouver");
+					p.princesseEnDetresse = bitch; //on parametre le packnight
+					p.ghostEnChasse = violeur;
+					bitch.violeurs.remove(i); //on retire le violeur, il est en cours de "traitement"
+				}
 			}
+			else
+				bitch.violeurs.remove(i);
+		i++;
 		}
 	}
 
 	/**
-	 * PACKNIGHT Dirige le knight dans le perimetre de la princesse, et chasse
-	 * le fantome poursuivant la princesse
-	 * 
+	 * PACKNIGHT
+	 * chasse le fantome poursuivant la princesse
 	 * @author malek
 	 * @throws Exception
 	 *             Si ghostEnChasse==null ou princesseEnDetresse==null
 	 */
-	public void protegerPrincesse() throws Exception {
-
+	public void protegerPrincesse() throws Exception
+	{
+		//cast du perso
 		PacKnight knight = ((PacKnight) auto.getPersonnage());
-		// Si le knight est vivant
-		if (true) { // knight.hitting()){
-			PacPrincess bitch = knight.princesseEnDetresse;
-			// Si la princesse ne s'est pas identifiée,
-			// princesseEnDetresse==null
-			if (bitch == null)
-				throw new Exception(
-						"Erreur ! Je suis un knight, on me demande de proteger princesse, sans renseignement (princesseEnDetresse==null)");
-
-			int Perimetre = bitch.perimetreSecurite;
-			// Si la distance, bitch-Packnight^2 > perimetre^2, alors c'est que
-			// le packnight doit avancer
-			// juqu'a arriver dans le perimetre de securité de bitch. Cela
-			// permet de se rapprocher de la princesse
-			// en priorite. Au lieu de courrir après un fantome, aleatoire, par
-			// exemple
-			if (bitch.getCoord().CasCentre()
-					.distance(knight.getCoord().CasCentre()) >= (Perimetre)) {
-				// Avance vers la princesse
-				System.out.println("Coord princesse "
-						+ bitch.getCoord().CasCentre());
-				suivre(bitch.getCoord().CasCentre());
-			} else {
-				// Une fois dans le perimetre, si la princesse a renseignée son
-				// violeur ghostEnChasse!=null
-				if (knight.ghostEnChasse == null)
-					throw new Exception(
-							"Erreur ! Je suis un knight, on me demande de chasser un ghost, sans renseignement (ghostEnChasse==null)");
-				System.out.println("Coord FM"
-						+ knight.ghostEnChasse.getCoord().CasCentre());
-				suivre(knight.ghostEnChasse.getCoord().CasCentre());
-			}
-		} else {
-			// On theorie on ne wichHero ne renverrai jamais un knight mort. A
-			// supprimer condition plus tard
-			// Sinon on le reinitialise
-			knight.princesseEnDetresse = null;
-			knight.ghostEnChasse = null;
+		
+		if(knight.ghostEnChasse != null)
+		{
+			suivre(knight.ghostEnChasse.getCoord());
 		}
+
 	}
-
-	/**
-	 * PACKNIGHT Dirige le knight dans le perimetre de la princesse, et fetch si
-	 * possible les GUM, puis reveient dans le perimetre
-	 * 
-	 * @author malek
-	 * @throws Exception
-	 *             Si princesseEnDetresse==null
-	 */
-	public void patrouiller() throws Exception {
-		PacKnight knight = ((PacKnight) auto.getPersonnage());
-		PacPrincess bitch = knight.princesseEnDetresse;
-		// Si la princesse ne s'est pas identifiée, princesseEnDetresse==null
-		if (bitch == null)
-			throw new Exception(
-					"Erreur ! Je suis un knight, on me demande de proteger princesse, sans renseignement (princesseEnDetresse==null)");
-
-		int Perimetre = bitch.perimetreSecurite;
-
-		if (bitch.getCoord().CasCentre()
-				.distance(knight.getCoord().CasCentre()) >= (Perimetre)) {
-			// Avance vers la princesse
-			suivre(bitch.getCoord().CasCentre());
-		} else {
-			// FETCH Des le fecth on retourne dans le perimetre
-		}
-	}
+	
 
 	/**
 	 * Donne des ordre au fantomes pour coincé un pacman donné
 	 */
 	public void suivre(CoordonneesFloat ref) {
+		
 		if(auto.sneaky == null)
 		{
+			
 			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
 			Aetoile graph = new Aetoile(src);
 			List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
@@ -241,8 +195,10 @@ public class PrimitivesAction extends Primitives {
 		}
 		else
 		{
+			
 			if(auto.getPersonnage().caseDisponible(auto.sneaky))
 			{
+				
 				auto.getPersonnage().setDirection(auto.sneaky);
 				auto.sneaky = null;
 			}
@@ -250,6 +206,7 @@ public class PrimitivesAction extends Primitives {
 		this.auto.getPersonnage().avancer();
 	}
 
+	
 	public void suivre2(CoordonneesFloat ref) {
 		if(auto.sneaky == null)
 		{
@@ -361,6 +318,7 @@ public class PrimitivesAction extends Primitives {
 		// 3 : avenir pac-gom
 		// 4 : avenir distance
 		// 5 : avenir personnage
+		System.out.println("FETCH DEBUT");
 		CoordonneesFloat caseDuPerso = new CoordonneesFloat(
 				auto.getPersonnage().coord);
 		if (caseDuPerso.CasBG().equals(caseDuPerso.CasHD())
@@ -421,5 +379,7 @@ public class PrimitivesAction extends Primitives {
 			setDirectionAleatoire(this.auto.getPersonnage());
 			this.auto.getPersonnage().avancer();
 		}
+		System.out.println("FETCH FIN");
 	}
+	
 }

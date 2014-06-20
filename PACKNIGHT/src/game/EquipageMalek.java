@@ -20,25 +20,25 @@ public class EquipageMalek extends Equipage{
 	
 
 	PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(1, 1), true);
-	PacKnight PACMAN_2 = new PacKnight("J2",5,15,Direction.droite,new CoordonneesFloat(5, 15), false);
-//	PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), false);
-	PacPrincess PACMAN_4 = new PacPrincess("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_2 = new PacKnight("J2",25,15,Direction.droite,new CoordonneesFloat(25, 15), false);
+	PacKnight PACMAN_3 = new PacKnight("J3",6,15,Direction.droite,new CoordonneesFloat(6, 15), false);
+	PacPrincess PACMAN_4 = new PacPrincess("J4",5,15,Direction.droite,new CoordonneesFloat(1, 1));
 
-	Ghost GHOST_1 = new Ghost("1", 2, 1, Direction.droite,new CoordonneesFloat(5, 15));
+	Ghost GHOST_1 = new Ghost("1", 2, 1, Direction.droite,new CoordonneesFloat(2, 1));
 //	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
 //	Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite,new CoordonneesFloat(1, 1));
 //	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(1, 1));
 
 	public EquipageMalek() {
 		super();
-		this.joueurFleche =  PACMAN_1;
-		this.joueurLettre = GHOST_1;
+		this.joueurFleche =  GHOST_1;
+		this.joueurLettre = PACMAN_1;
 	}
 	
 	public void init() throws SlickException{
 		Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1);
 		Joueur PM_2 = new Joueur(this.g.SPRITE_PACMAN_2,this.g, PACMAN_2, "packnight.xml");
-//		Joueur PM_3 = new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_2, "packnight.xml");
+		Joueur PM_3 = new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_3, "packnight.xml");
 		Joueur PM_4 = new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4, "princesse.xml");
 		
 

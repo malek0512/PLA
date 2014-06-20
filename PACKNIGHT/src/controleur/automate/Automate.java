@@ -203,8 +203,8 @@ public class Automate extends Controleur {
 				case FREE: if(!primitivesTest.isControled()) return Entree.FREE; break;
 				case NON_FREE: if(primitivesTest.isControled()) return Entree.NON_FREE; break;
 				case ETOILE: return Entree.ETOILE;
-				case EN_DETRESSE: if(primitivesTest.enDetresse()) return Entree.EN_DETRESSE; break;
-				case NON_EN_DETRESSE: if(!primitivesTest.enDetresse()) return Entree.NON_EN_DETRESSE; break;
+				case EN_DETRESSE: if(primitivesTest.Chasse()) return Entree.EN_DETRESSE; break;
+				case NON_EN_DETRESSE: if(!primitivesTest.Chasse()) return Entree.NON_EN_DETRESSE; break;
 				case FM_DANS_RAYON: if(primitivesTest.fmDansRayon()) return Entree.FM_DANS_RAYON; break;
 				case NON_FM_DANS_RAYON: if(!primitivesTest.fmDansRayon()) return Entree.NON_FM_DANS_RAYON; break;
 				case VUE:if(primitivesTest.vu())return Entree.VUE; break;
