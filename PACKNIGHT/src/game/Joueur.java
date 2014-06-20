@@ -68,5 +68,6 @@ public class Joueur {
 	public void suivant () throws Exception{
 		if(this.auto != null)
 			auto.suivant();
+		p.avancer();
 	}
 }

@@ -132,7 +132,7 @@ public class PrimitivesAction extends Primitives{
 		
 		PacKnight knight = ((PacKnight) auto.getPersonnage());
 		//Si le knight est vivant
-		if (knight.hitting()){
+		if (true){ //knight.hitting()){
 			PacPrincess bitch = knight.princesseEnDetresse;
 			//Si la princesse ne s'est pas identifiée, princesseEnDetresse==null
 			if (bitch==null)
@@ -146,13 +146,13 @@ public class PrimitivesAction extends Primitives{
 					>=(Perimetre))
 			{
 				//Avance vers la princesse
-//				System.out.println(bitch.getCoord().CasCentre());
+				System.out.println("Coord princesse "+bitch.getCoord().CasCentre());
 				suivre(bitch.getCoord().CasCentre());
 			} else 	{
 				//Une fois dans le perimetre, si la princesse a renseignée son violeur ghostEnChasse!=null
 				if (knight.ghostEnChasse == null)
 					throw new Exception("Erreur ! Je suis un knight, on me demande de chasser un ghost, sans renseignement (ghostEnChasse==null)");
-//				System.out.println("FM" + knight.ghostEnChasse.getCoord().CasCentre());
+				System.out.println("Coord FM" + knight.ghostEnChasse.getCoord().CasCentre());
 				suivre(knight.ghostEnChasse.getCoord().CasCentre());
 			}
 		} else {
