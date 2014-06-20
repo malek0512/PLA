@@ -20,6 +20,9 @@ public class Joueur {
 	private String SPRITE;
 	private Animation[] animations;
 	public WindowGame game;
+	private int direction;
+	private boolean moving;
+	
 	SpriteSheet spriteSheet; 
 	Personnage p;
 	Automate auto=null;
