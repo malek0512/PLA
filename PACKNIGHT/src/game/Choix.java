@@ -67,9 +67,8 @@ public class Choix extends BasicGameState implements ComponentListener
         }
        if (source == multi)
        {
-    	   // Accueil.Music_WindowGame.loop();
-    	   WindowGame.Choix_Map = 1;
-    	  game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+           WindowGame.Choix_Map = 1;
+    	   game.enterState(Multi.ID);
        }
          
     }
