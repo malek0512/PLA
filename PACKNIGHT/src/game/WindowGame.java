@@ -54,9 +54,9 @@ public class WindowGame extends BasicGameState {
 	private TiledMap map;
 	private Terrain playground;
 	private Image PACGUM, HEART, FOND_INTERFACE;
-	public boolean moving = false;// A VERIFIER SI UTILE
+	public static boolean moving = false;// A VERIFIER SI UTILE
 
-	public int direction = 0;
+	public static int direction = 0;
 	public static int taille_minimap = 4;
 
 	public static int tuile_size = 32;
