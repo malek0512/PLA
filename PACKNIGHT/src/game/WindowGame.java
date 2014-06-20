@@ -146,7 +146,7 @@ public class WindowGame extends BasicGameState {
 		g.translate(container.getWidth() / 2 - xCamera, container.getHeight()
 				/ 2 - (yCamera));
 
-		this.map.render(largueur_map * taille_minimap, 0, 0);
+		this.map.render(largueur_map * taille_minimap, 0, 2);
 		Interface_Joueur.drawPacGum(playground, PACGUM);
 
 		for (Joueur j : Joueur.liste) {

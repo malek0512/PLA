@@ -20,7 +20,7 @@ import game.Menu;
 public class Choix extends BasicGameState 
 { 
     private StateBasedGame game;
-    private Image Quit,Solo,Multi,Mouse;
+    private Image Quit,Solo,Multi,Mouse,FOND_CHOIX;
     private int PG_X,PG_Y;
      
 	   public static final int ID = 3;
@@ -34,20 +34,22 @@ public class Choix extends BasicGameState
 	   
     public void init(GameContainer container, StateBasedGame game) throws SlickException { 
     	this.game = game;
+    	FOND_CHOIX = new Image("src/graphisme/main/ressources/map/image/Choix.jpg");
     	Quit = new Image("src/graphisme/main/ressources/map/image/Quit.png");
     	Solo = new Image("src/graphisme/main/ressources/map/image/Solo.png");
     	Multi = new Image("src/graphisme/main/ressources/map/image/Multi.png");
-    	Mouse  = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
-    	PG_X = WindowGame.resolution_x/2-90;
-    	PG_Y = WindowGame.resolution_y/2-100 ;
+    	Mouse  = new Image("src/graphisme/main/ressources/map/image/Mouse.png");
+    	PG_X = 9;
+    	PG_Y = 359 ;
     	
     } 
  
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
     {
-         Quit.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);
-         Solo.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-100);
-         Multi.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);
+    	FOND_CHOIX.draw();
+         Quit.draw(550, 350);
+         Solo.draw(50, 350);
+         Multi.draw(300, 350);
          Mouse.draw(PG_X,PG_Y);
          
     } 
@@ -72,31 +74,31 @@ public class Choix extends BasicGameState
 		      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
 		      		case Input.KEY_M: if(Accueil.Music_Choix.playing()) Accueil.Music_Choix.pause() ;else Accueil.Music_Choix.resume(); break;
 
-		      		case Input.KEY_DOWN:
-		      			if(PG_Y < WindowGame.resolution_y/2)
+		      		case Input.KEY_RIGHT:
+		      			if(PG_X < 250)
 		      			{
-		      				PG_Y = WindowGame.resolution_y/2;
+		      				PG_X = 259;
 		      	            WindowGame.Choix_Map = 1;
 		      	          quit = false;
 		      			}
 		      			else 
 		      			{
-		      				PG_Y = WindowGame.resolution_y/2+100;
+		      				PG_X = 509;
 		      				quit = true;
 		      			}
 		      			
 	      				break;
-	      			case Input.KEY_UP:
-		      			if(PG_Y > WindowGame.resolution_y/2-100)
+	      			case Input.KEY_LEFT:
+		      			if(PG_X > 300)
 		      			{
-		      				PG_Y = PG_Y-100;
+		      				PG_X = 259;
 		      	            WindowGame.Choix_Map = 0;
 		      	          quit = false;
 		      			}
 		      	        else 
 		      	        {
-		      	        	PG_Y = WindowGame.resolution_y/2-100;
-		      	        	quit = true;
+		      	        	PG_X = 9;
+		      	        	quit = false;
 		      	        }
 		      			break;
 		      }
