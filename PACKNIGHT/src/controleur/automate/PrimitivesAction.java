@@ -169,7 +169,7 @@ public class PrimitivesAction extends Primitives {
 		
 		if(knight.ghostEnChasse != null)
 		{
-			suivre(knight.ghostEnChasse.getCoord());
+			suivre2(knight.ghostEnChasse.getCoord());
 		}
 
 	}
