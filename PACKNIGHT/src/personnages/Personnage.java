@@ -124,8 +124,9 @@ public abstract class Personnage {
 			this.nextDirectionSet = false;
 			this.avancerAux();
 		} else {
-			if (this.caseDevantDisponible())
+			if (this.caseDevantDisponible()){
 				this.avancerAux();
+			}
 		}
 	}
 
@@ -228,8 +229,16 @@ public abstract class Personnage {
 	static public boolean personnagePresent(CoordonneesFloat position) {
 		Iterator<Personnage> i = Personnage.liste.iterator();
 		while (i.hasNext()) {
-			if (HitBoxManager.personnageHittingPersonnage(i.next().coord,
-					position))
+			if (HitBoxManager.personnageHittingPersonnage(i.next().coord,position))
+				return true;
+		}
+		return false;
+	}
+	
+	static public boolean personnagePresentCas(CoordonneesFloat position) {
+		Iterator<Personnage> i = Personnage.liste.iterator();
+		while (i.hasNext()) {
+			if (i.next().coord.CasCentre().equals(position))
 				return true;
 		}
 		return false;

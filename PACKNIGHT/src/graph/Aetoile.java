@@ -70,7 +70,6 @@ public class Aetoile {
 		while(i.hasNext())
 		{
 			NoeudEtoile tmp = i.next();
-			System.out.println("d : " + tmp.distance);
 			if(tmp.distance < min)
 			{
 				min = tmp.distance;
@@ -79,7 +78,6 @@ public class Aetoile {
 			}
 			indice++;
 		}
-		System.out.println("min trouvé : " + min);
 		list.remove(indiceMin);
 		return res;
 	}
@@ -101,18 +99,11 @@ public class Aetoile {
 			
 			for(Direction d : Direction.values())
 			{
-				System.out.println("case tester : " + m);
-				System.out.println("Direction : " + d);
 				if(Personnage.getTerrain().caseAcessible(m.cord.x, m.cord.y, d))
 				{	
-					System.out.println("Accepter");
 					CoordonneesFloat cordFi = new CoordonneesFloat(m.cord,d);
 					NoeudEtoile fi = new NoeudEtoile(distance(cordFi), m, cordFi);
-					System.out.println("fils : "+fi);
-					
 					fi.pere = m;
-					
-					System.out.println();
 					if (fi.cord.equals(Aetoile.teteDeliste))
 					{
 						init = fi;
@@ -152,7 +143,6 @@ public class Aetoile {
 	    	{
 	    		
 	    		CoordonneesFloat x = i.next();
-	    		System.out.println(x);
 	    		Personnage.getTerrain().setCase(x.x, x.y, 2);
 	    	}
 	    	terrain.afficher();

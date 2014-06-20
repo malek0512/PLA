@@ -66,6 +66,7 @@ public class Automate extends Controleur {
 	private String etatInitial;
 	private List<String>etatsFinals;
 	private List<String>etatsBloquants;
+	public Direction sneaky = null;
 	
 	/*
 	 * Prend un fichier XML et remplie les attributs de l'automate

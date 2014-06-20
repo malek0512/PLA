@@ -6,26 +6,26 @@ Transition
     
 Etat 4
 Transition
-	ETATSUIVANT = 4
-    ENTREE = CASE_NON_ATTEINTE
-    SORTIE = AVANCER
-
-Transition
-	ETATSUIVANT = 2
-    ENTREE = CASE_ATTEINTE
+    ETATSUIVANT = 4
+    ENTREE = ETOILE
     SORTIE = RIEN
     
     
 Etat 2
 Transition
+    ETATSUIVANT = 4
+    ENTREE = VUE
+    SORTIE = OBEIR
+    
+Transition
     ETATSUIVANT = 2
-    ENTREE = ETOILE
-    SORTIE = RAMASSER_PACGUM
- 	
- 	
+    ENTREE = PAS_VUE
+    SORTIE = RIEN
+    
+
  	
 
 ETAT_INITIAL = 1
 ETAT_FINAL =
-ETAT_BLOQUANT = 1 2
+ETAT_BLOQUANT = 1 2 4
 AUTOMATE = rama

@@ -95,7 +95,6 @@ public class Graph {
 	//algo de parcours
 	while (!file.isEmpty()){
 	    CoordonneesFloat u = file.remove(0);
-	    System.out.println(u);
 	    Noeud ncourant = table[u.x][u.y];
 	    //calcule du nombre d'adjacent
 		int cptAdj = this.nbAdjacent(u);
@@ -157,9 +156,7 @@ public class Graph {
     	Iterator<CoordonneesFloat> i = l.iterator();
     	while(i.hasNext())
     	{
-    		System.out.println("here we go");
     		CoordonneesFloat x = i.next();
-    		System.out.println(x);
     	}
     	terrain.afficher();
     			

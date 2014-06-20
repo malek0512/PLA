@@ -22,6 +22,7 @@
 
 package personnages;
 
+import structure_terrain.Terrain;
 import game.*;
 
 public class CoordonneesFloat {
@@ -206,6 +207,52 @@ public class CoordonneesFloat {
 		return y + (size/2);
 	}
 
+	/**
+	 * fait avancer les coordonné en case d'une case vers la direction donné
+	 * edit : prend en compte le tore 
+	 * @param d
+	 */
+	public void avancerDansDir(Direction d)
+	{
+		Terrain t = Personnage.getTerrain();
+		if(t.estCore(x, y, d))
+		{
+			switch(d)
+			{
+			case droite:
+				x=0;
+				break;
+			case bas:
+				y=0;
+				break;
+			case gauche:
+				y=t.getLargeur()-1;
+				break;
+			case haut:
+				x=t.getHauteur()-1;
+				break;
+			}
+		}
+		else if (t.caseAcessible(x, y, d))
+		{
+			switch(d)
+			{
+			case haut:
+				y--;
+				break;
+			case bas:
+				y++;
+				break;
+			case droite:
+				x++;
+				break;
+			case gauche:
+				x--;
+				break;
+			}
+		}
+	}
+	
 	public String toString()
 	{return ""+ x + " " + y;}
 	
