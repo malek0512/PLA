@@ -116,4 +116,14 @@ public class PrimitivesTest extends Primitives {
 			((PacKnight) auto.getPersonnage()).ghostEnChasse=null;
 		return e;
 	}
+
+	/**
+	 * Indique si les fantômes ont suivi  les ordres*/
+	public boolean finOrdre(){
+		
+		return false;
+	}
+
 }
+
+
