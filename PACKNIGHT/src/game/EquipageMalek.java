@@ -33,8 +33,6 @@ public class EquipageMalek extends Equipage{
 		super();
 		this.joueurFleche =  PACMAN_1;
 		this.joueurLettre = GHOST_1;
-		this.g.resolution_x = 1366;
-		this.g.resolution_y = 750;
 	}
 	
 	public void init() throws SlickException{

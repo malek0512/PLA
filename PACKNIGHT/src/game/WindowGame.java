@@ -33,7 +33,7 @@ public class WindowGame extends BasicGameState {
 
 	Equipage equip;
 
-	private String MAP = "FATMAP.tmx";
+	private String MAP = "PACMAN.tmx";
 
 	public String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
 	public String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
@@ -70,13 +70,49 @@ public class WindowGame extends BasicGameState {
 		return ID;
 	}
 
-	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) throws SlickException
+	{
 		
+		/*switch (Choix_Map)
+		{
+		case 0 : MAP = "PACMAN.tmx";break;
+		case 1 : MAP = "FATMAP.tmx";break;
+		}
+		System.out.println("MAP : "+Choix_Map);
+		
+		this.game = game;
+		container.setShowFPS(false);
+		this.map = new TiledMap(CHEMIN_MAP.concat(MAP));
+		largueur_map = map.getWidth();
+		hauteur_map = map.getHeight();
+
+		Terrain terrain = new Terrain(largueur_map, hauteur_map, 0);
+		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
+		PACGUM = new Image(
+				"src/graphisme/main/ressources/map/tuiles/pacgomme.png");
+		FOND_INTERFACE = new Image(
+				"src/graphisme/main/ressources/map/image/Interface.jpg");
+
+		Personnage.initTerrain(terrain);
+		equip.init();
+
+		Map.mapToTerrain(terrain, largueur_map, hauteur_map, map);
+		playground = terrain;
+
+		for (Joueur j : Joueur.liste) {
+			j.sprite();
+		}*/
+
+	}
+	
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException 
+		{
 		switch (Choix_Map)
 		{
-		case 0 : MAP = "PACMAN.tmx";
-		case 1 : MAP = "FATMAP.tmx";
+		case 0 : MAP = "PACMAN.tmx";break;
+		case 1 : MAP = "FATMAP.tmx";break;
 		}
+		System.out.println("MAP : "+Choix_Map);
 		
 		this.game = game;
 		container.setShowFPS(false);
@@ -100,11 +136,9 @@ public class WindowGame extends BasicGameState {
 		for (Joueur j : Joueur.liste) {
 			j.sprite();
 		}
-
-	}
-	
-	public void enter(GameContainer container, StateBasedGame game) {
-		   }
+		
+		  
+		}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {

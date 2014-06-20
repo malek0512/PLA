@@ -64,8 +64,8 @@ public class Accueil extends BasicGameState {
 	      switch (key) {
 	    	  case Input.KEY_ENTER: 
 	    	  {
-	    		  game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-	    	      //Music_Choix.loop();break;
+	    	      //Music_Choix.loop();
+	    		  game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	    	  }
 	    	  case Input.KEY_M: if(Music_Accueil.playing()) Music_Accueil.pause() ;else Music_Accueil.resume(); break;
 	    	  case Input.KEY_ESCAPE:Menu.container.exit(); break;
