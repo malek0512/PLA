@@ -87,13 +87,10 @@ public class PrimitivesTest extends Primitives {
 	 * @author malek
 	 */
 	protected boolean fmDansRayon() {
-		if (auto.getPersonnage() instanceof PacPrincess){
-			int perimetre = ((PacPrincess) auto.getPersonnage()).perimetreSecurite ;
-			List<Ghost> agresseurs = fantomeEstDansRayon(perimetre);
-			((PacPrincess) auto.getPersonnage()).violeurs = agresseurs;
+		int perimetre = ((PacPrincess) auto.getPersonnage()).perimetreSecurite ;
+		List<Ghost> agresseurs = fantomeEstDansRayon(perimetre);
+		((PacPrincess) auto.getPersonnage()).violeurs = agresseurs;
 		return agresseurs.size()!=0;
-		}
-		return false;
 	}
 
 	/**
@@ -103,16 +100,20 @@ public class PrimitivesTest extends Primitives {
 	 * @author malek
 	 * @throws Exception 
 	 */
-	public boolean enDetresse() throws Exception{
-//		if (((PacKnight) auto.getPersonnage()).princesseEnDetresse==null)
-//			throw new Exception("PrimitiveTest.enDestresse : knight.princesseEnDetresse==null");
-//		if (((PacKnight) auto.getPersonnage()).ghostEnChasse==null)
-//			throw new Exception("PrimitiveTest.enDestresse : knight.princesseEnDetresse==null");
-		Ghost ghost = ((PacKnight) auto.getPersonnage()).ghostEnChasse;
+	public boolean Chasse() throws Exception{ 
+		//casting des perso
+		Personnage gosthEnChasse = ((PacKnight) auto.getPersonnage()).ghostEnChasse;
 		PacPrincess princess = ((PacKnight) auto.getPersonnage()).princesseEnDetresse;
-		if (princess==null || ghost==null)
+		
+		if (gosthEnChasse==null)
+		{
+			//rien a chasse
 			return false;
+		}
 		//Renvoie vrai si ghost dans rayon de princesse
-		return personnageEstDansRayon(princess.perimetreSecurite, princess, ghost);
+		boolean e = personnageEstDansRayon(princess.perimetreSecurite, princess, gosthEnChasse);
+		if(!e)
+			((PacKnight) auto.getPersonnage()).ghostEnChasse=null;
+		return e;
 	}
 }

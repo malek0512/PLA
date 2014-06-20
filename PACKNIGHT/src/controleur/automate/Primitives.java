@@ -190,42 +190,6 @@ public class Primitives {
 	}
 	
 	/**
-	 * Fait super attention aux transformations. Parfois tu parles en pixel alors que tu veux parler de case et vice versa
-	 * getCoord() te donne le PIXEL en haut à gauche
-	 * Attention aux transformations de Coordonnees à CoordonneesFloat il vaut mieux uniformiser plûtot que de faire des transformations invalides lorsqu'on changera le nom
-	 * Les méthodes du genre pixelFromCase case existe ou caseFromPixel existent déjà.(Nommées différement ^^)
-	 * 
-	 * 
-	 * TODO A adapter lors de la disponibilité de l'algorithme A etoile
-	 * Renvoie les coordonnées de la prochaine case, afin d'atteindre la coordonnée c.
-	 * Le chemin est mis a jour tous les 3 couts. A eventuellement modifier afin de prendre en compte la distance
-	 * Utilise la variable globale, List<Coordonnees> chemin, et int nbCout
-	 * @param c
-	 * @author malek
-	 */
-	protected CoordonneesFloat prochaineCase (CoordonneesFloat c){
-		//Si nous somme deja sur la case demandé
-		if (auto.getPersonnage().getCoord().equals(c.CasCentre()))
-			return c;
-		
-		//On met a jour le chemin vers c, dans l'un des cas stipulé dans la condition 
-		if (chemin == null || chemin.size()==0 || nbCout >3 ){
-			Aetoile depart = new Aetoile(c.CasCentre());
-			chemin = depart.algo(auto.getPersonnage().getCoord().CasCentre()); //case approximative TODO
-			nbCout=0;
-		}
-		
-		//Declenche une erreur si l'assertion est verifiée
-		assert (chemin.size()==0) : "Erreur fonction (primitives.java) prochaineCase. La chemin.size()==0. " +
-				"N'existe-t-il pas de chemin vers la coordonnées donnée en parametre ?"; 
-		
-		nbCout++;
-		CoordonneesFloat prochain = chemin.get(0);
-		chemin.remove(0);
-		return prochain;
-	}
-
-	/**
 	 * @return le Packnight le plus proche de la princesse
 	 * @author malek
 	 * @throws Exception 
@@ -237,20 +201,11 @@ public class Primitives {
 		
 		for(PacKnight knight : PacKnight.liste){
 			int d_candidat = knight.getCoord().CasCentre().distance(bitch.getCoord().CasCentre());
-			if(!knight.user() && d_candidat < d_bestFound)
+			if(!knight.user() && d_candidat < d_bestFound && knight.ghostEnChasse ==null)
 			{
-				//&& knight.peutProteger())
 				captain = knight;
-				d_bestFound =captain.getCoord().CasCentre().distance(bitch.getCoord().CasCentre());
-				//System.out.println("Position knight" +knight.getCoord().CasCentre());
-				//System.out.println("Distance knight" +knight.getCoord().CasCentre().distance(bitch.getCoord().CasCentre()));
-				//System.out.println("Position captain" +captain.getCoord().CasCentre());
-				//System.out.println("Distance captain" +captain.getCoord().CasCentre().distance(bitch.getCoord().CasCentre()));
+				d_bestFound =d_candidat;
 			}
-		}
-		if (captain == null)
-		{
-			System.out.println("Error");
 		}
 		return captain;
 	}
@@ -264,11 +219,11 @@ public class Primitives {
 		List<Ghost> res = new LinkedList<Ghost>();
 		CoordonneesFloat position = auto.getPersonnage().getCoord();
 		
-		float someXYSource = position.CasCentre().sommeXY();
-		for(Ghost pac : Ghost.liste){
-			float someXYTester = pac.getCoord().CasCentre().sommeXY();
-			if(pac.hitting() && someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
+		for(Ghost pac : Ghost.liste)
+		{
+			if(position.CasCentre().distance(pac.getCoord().CasCentre())<=rayon){
 				res.add(pac);
+			}
 		}
 		return res;
 	}
@@ -281,11 +236,8 @@ public class Primitives {
 	protected boolean personnageEstDansRayon(int rayon, Personnage p1, Personnage p2) {
 		CoordonneesFloat position = p1.getCoord();
 
-		float someXYSource = position.CasCentre().sommeXY();
-		float someXYTester = p2.getCoord().CasCentre().sommeXY();
-		if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
+		if(p2.hitting() && position.CasCentre().distance(p2.getCoord().CasCentre())<=rayon)
 				return true;
-		
 		return false;
 	}
 	
@@ -322,7 +274,6 @@ public class Primitives {
 	 * TODO :(
 	 * implanter tout les commentaires %)
 	 */
-
 	final int Value_pacgom = 15;
 	final int Value_distance = -1;
 	final int Value_ghost = -100;

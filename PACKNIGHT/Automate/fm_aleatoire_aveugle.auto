@@ -17,5 +17,5 @@ Transition
         
 ETAT_INITIAL = 1
 ETAT_FINAL = 
-ETAT_BLOQUANT = 1
+ETAT_BLOQUANT = 1 2
 AUTOMATE = fm_aleatoire_aveugle
