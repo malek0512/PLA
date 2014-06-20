@@ -29,7 +29,7 @@ public class PrimitivesTest extends Primitives {
 		
 	}
 	/**
-	 * Methode utilisant la centrale contrairement à dansrayon*/
+	 * Methode utilisant le centrale contrairement à dansrayon*/
 	protected boolean vu(){
 		boolean res=false;
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();){
@@ -89,7 +89,7 @@ public class PrimitivesTest extends Primitives {
 	protected boolean fmDansRayon() {
 		if (auto.getPersonnage() instanceof PacPrincess){
 			int perimetre = ((PacPrincess) auto.getPersonnage()).perimetreSecurite ;
-			List agresseurs = fantomeEstDansRayon(perimetre);
+			List<Ghost> agresseurs = fantomeEstDansRayon(perimetre);
 			((PacPrincess) auto.getPersonnage()).violeurs = agresseurs;
 		return agresseurs.size()!=0;
 		}
@@ -104,12 +104,14 @@ public class PrimitivesTest extends Primitives {
 	 * @throws Exception 
 	 */
 	public boolean enDetresse() throws Exception{
-		if (((PacKnight) auto.getPersonnage()).princesseEnDetresse==null)
-			throw new Exception("PrimitiveTest.enDestresse : knight.princesseEnDetresse==null");
-		if (((PacKnight) auto.getPersonnage()).ghostEnChasse==null)
-			throw new Exception("PrimitiveTest.enDestresse : knight.princesseEnDetresse==null");
+//		if (((PacKnight) auto.getPersonnage()).princesseEnDetresse==null)
+//			throw new Exception("PrimitiveTest.enDestresse : knight.princesseEnDetresse==null");
+//		if (((PacKnight) auto.getPersonnage()).ghostEnChasse==null)
+//			throw new Exception("PrimitiveTest.enDestresse : knight.princesseEnDetresse==null");
 		Ghost ghost = ((PacKnight) auto.getPersonnage()).ghostEnChasse;
 		PacPrincess princess = ((PacKnight) auto.getPersonnage()).princesseEnDetresse;
+		if (princess==null || ghost==null)
+			return false;
 		//Renvoie vrai si ghost dans rayon de princesse
 		return personnageEstDansRayon(princess.perimetreSecurite, princess, ghost);
 	}
