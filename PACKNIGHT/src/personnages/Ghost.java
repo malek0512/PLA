@@ -252,7 +252,7 @@ public class Ghost extends Personnage {
 		}
 		if(entendEtObei)
 		{
-				executerOrdre();
+				this.executerOrdre();
 		}
 	}
 
@@ -267,17 +267,15 @@ public class Ghost extends Personnage {
 	{
 		int x = src.x - dest.x;
 		int y = src.y - dest.y;
-		
-		if(x==0)
-		{
-			if(x==-1)
-				return Direction.droite; 
+
+		if (y == 0) {
+			if (x == -1)
+				return Direction.droite;
 			else
 				return Direction.gauche;
-		}
-		else//y == 0
+		} else// y != 0
 		{
-			if(y==-1)
+			if (y == -1)
 				return Direction.bas;
 			else
 				return Direction.haut;
@@ -288,16 +286,20 @@ public class Ghost extends Personnage {
 	 * fait recevoir au fantome un ordre
 	 * @param l : la liste des case a parcourir
 	 */
+
 	public void recoitOrdre(List<CoordonneesFloat> l)
 	{
 		if(!l.isEmpty())
 		{
 			this.ordre = l;
-			System.out.println("je reçois un ordre");
 			this.entendEtObei = true;
-			this.fantomeUp--;
+			fantomeUp--;
+			this.caseDOrdre = l.get(0);
+			this.coord = new CoordonneesFloat(this.caseDOrdre.x*32,this.caseDOrdre.y*32);
+			ordre.remove(0);
 			this.caseDOrdre = l.get(0);
 			this.direction = mysteriousFunction(coord.CasCentre(), caseDOrdre);
+			this.avancer();
 		}
 	}
 	
@@ -308,41 +310,32 @@ public class Ghost extends Personnage {
 	 */
 	private void executerOrdre()
 	{
-		System.out.println("j'éxécute un ordre");
-		if(coord.CasBD().equals(coord.CasHG()) //on est sur une case
-				&& coord.CasCentre().equals(caseDOrdre)) //et sur la bonne case
+		
+		if(this.coord.CasBG().equals(this.coord.CasHD()))
+		{
+			ordre.remove(0);
+			if(!ordre.isEmpty())
 			{
-			System.out.println("je suis dans le 1er if de executerOrdre");
-				ordre.remove(0);
-				if(!ordre.isEmpty())
-				{
-					System.out.println("je suis dans le 2eme if de executerOrdre");
-					caseDOrdre = ordre.get(0);
-					System.out.println(caseDOrdre);
-					direction = mysteriousFunction(coord.CasCentre(), caseDOrdre);
-					System.out.println(direction);
-					avancer();
-				}
-				else
-				{
-					System.out.println("dans le else du 2nd if");
-					entendEtObei = false;
-					fantomeUp++;
-				}
+				caseDOrdre = ordre.get(0);
+				direction = mysteriousFunction(coord.CasCentre(), caseDOrdre);
+				avancer();
 			}
-		else{
-			System.out.println("j'avance tant que je ne suis pas sur une case");
-			avancer();
+			else
+			{
+				entendEtObei = false;
+				fantomeUp++;
 			}
-		System.out.println("Sortie de executerOrdre");
+		}
+		else
+			this.avancer();
+		
 	}
 
-	/**
-	 * renvoie vrai si la gestion de collision inter perso est autorisé pour le personnage
-	 */
+
 	public boolean hitting() {
 		return !(agonise) && !(prisonner);
 	}
+	
 	
 	/**
 	 * donne des ordre au fantomes pour coincé un pacman donné
@@ -406,7 +399,6 @@ public class Ghost extends Personnage {
 				{
 					//supprime le fantome de la liste
 					listeDesGhost.remove(indice);
-					
 					//calcul de l'itinéraire
 					Aetoile ga = new Aetoile(meilleurCandidat.coord.CasCentre());
 					List<CoordonneesFloat> ordre = ga.algo(interEnTraitement);
