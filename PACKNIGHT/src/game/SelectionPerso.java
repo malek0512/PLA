@@ -21,7 +21,7 @@ import game.Menu;
 public class SelectionPerso extends BasicGameState 
 { 
     private StateBasedGame game;
-    private Image Un_P,Deux_P,Trois_P,Quatre_P,Mouse;
+    private Image AI,PACKNIGHT,PRINCESS,FOND_SELECTION,MOUSE;
     private int PG_X,PG_Y;
      
 	   public static final int ID = 7;
@@ -35,23 +35,25 @@ public class SelectionPerso extends BasicGameState
 	   
     public void init(GameContainer container, StateBasedGame game) throws SlickException { 
     	this.game = game;
-    	Un_P = new Image("src/graphisme/main/ressources/map/image/1P.png");
-    	Deux_P = new Image("src/graphisme/main/ressources/map/image/2P.png");
-    	Trois_P = new Image("src/graphisme/main/ressources/map/image/3P.png");
-    	Quatre_P  = new Image("src/graphisme/main/ressources/map/image/4P.png");
-    	Mouse  = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
-    	PG_X = WindowGame.resolution_x/2-190;
-    	PG_Y = WindowGame.resolution_y/2-100 ;
+    	
+    	FOND_SELECTION  = new Image("src/graphisme/main/ressources/map/image/SelectionPerso.jpeg");
+    	AI = new Image("src/graphisme/main/ressources/map/image/AI.png");
+    	PACKNIGHT = new Image("src/graphisme/main/ressources/map/image/Packnight.png");
+    	PRINCESS = new Image("src/graphisme/main/ressources/map/image/Princess.png");
+    	MOUSE  = new Image("src/graphisme/main/ressources/map/image/Mouse.png");
+    	PG_X = WindowGame.resolution_x/2-50-39;
+    	PG_Y = WindowGame.resolution_y/2-200+9 ;
     	
     } 
  
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
     {
-         Un_P.draw(WindowGame.resolution_x/2-150, WindowGame.resolution_y/2-100);
-         Deux_P.draw(WindowGame.resolution_x/2+50, WindowGame.resolution_y/2-100);
-         Trois_P.draw(WindowGame.resolution_x/2-150, WindowGame.resolution_y/2);
-         Quatre_P.draw(WindowGame.resolution_x/2+50, WindowGame.resolution_y/2);
-         Mouse.draw(PG_X,PG_Y);
+         FOND_SELECTION.draw();
+         AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);
+         AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-100);
+         AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);
+         AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);
+         MOUSE.draw(PG_X,PG_Y);
          
     } 
  
