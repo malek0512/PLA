@@ -27,7 +27,7 @@ public class Win extends BasicGameState {
 	   }
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		      PAUSE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
+		      PAUSE = new Image("src/graphisme/main/ressources/map/image/Win.jpeg");
 		      PAUSE.draw(0,0);
 		      g.setColor(Color.white);
 		      g.drawString("You Win", 250, 100);

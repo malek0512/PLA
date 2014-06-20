@@ -92,12 +92,13 @@ public class Choix extends BasicGameState
 		      			if(PG_X > 300)
 		      			{
 		      				PG_X = 259;
-		      	            WindowGame.Choix_Map = 0;
+		      	            WindowGame.Choix_Map = 1;
 		      	          quit = false;
 		      			}
 		      	        else 
 		      	        {
 		      	        	PG_X = 9;
+		      	        	WindowGame.Choix_Map = 0;
 		      	        	quit = false;
 		      	        }
 		      			break;
