@@ -35,10 +35,10 @@ public class WindowGame extends BasicGameState {
 
 	private String MAP = "PACMAN.tmx";
 
-	public String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
-	public String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
-	public String SPRITE_PACMAN_3 = "PACMAN-SPRITES2.png";
-	public String SPRITE_PACMAN_4 = "PACMAN-SPRITES2.png";
+	public String SPRITE_PACMAN_1 = "Spectrum.png";
+	public String SPRITE_PACMAN_2 = "Pacman.png";
+	public String SPRITE_PACMAN_3 = "Pacman.png";
+	public String SPRITE_PACMAN_4 = "Pacman.png";
 
 	public String SPRITE_GHOST_1 = "Leona.png";
 	public String SPRITE_GHOST_2 = "Soraka.png";
