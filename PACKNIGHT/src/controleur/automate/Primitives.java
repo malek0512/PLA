@@ -398,6 +398,17 @@ public class Primitives {
 	final int Value_futur_ghost = -500;
 	final int Value_futur_pacKnight = -10;
 
+	final int Value_pacgom2 = 0;
+	final int Value_distance2 = -1;
+	final int Value_ghost2 = -10000;
+	final int Value_pacKnight2 = 0;
+
+	final int Value_futur_pacgom2 = 0;
+	final int Value_futur_distance2 = -1;
+	final int Value_futur_ghost2 = -500;
+	final int Value_futur_pacKnight2 = 0;
+
+	
 	final int ImportanceRacine = 4;
 	final int ImportanceBranche = 1;
 
@@ -412,7 +423,7 @@ public class Primitives {
 	 * @return un tableau de int contenant les valeurs pour chaque inter
 	 */
 	public int[][] laFonctionQuiFaitPresqueTout(CoordonneesFloat coordonne,
-			Direction src) {
+			Direction src, int mode) {
 		// 0 : pac-gom
 		// 1 : distance
 		// 2 : personnage
@@ -422,7 +433,6 @@ public class Primitives {
 				tab[i][j] = 0;
 
 		int nbInter = -1;
-		;
 
 		for (Direction d : Direction.values()) {
 			nbInter++;
@@ -434,17 +444,34 @@ public class Primitives {
 				coordonne.avancerDansDir(d);
 				tab[nbInter][1] += Value_distance;
 				while (!estIntersectionCas(coordonne)) {
-					// tester si pac-gom
-					if (Personnage.getTerrain().ValueCase(coordonne) == 2)
-						tab[nbInter][0] += Value_futur_pacgom;
-					// incremente la distance
-					tab[nbInter][1] += Value_futur_distance;
-					// tester si fantome
-					if (Ghost.personnagePresentCas(coordonne))
-						tab[nbInter][2] += Value_futur_ghost;
-					// tester si pacKnight
-					if (PacKnight.personnagePresentCas(coordonne))
-						tab[nbInter][2] += Value_futur_pacKnight;
+					if(mode == 1)
+					{
+						// tester si pac-gom
+						if (Personnage.getTerrain().ValueCase(coordonne) == 2)
+							tab[nbInter][0] += Value_futur_pacgom;
+						// incremente la distance
+						tab[nbInter][1] += Value_futur_distance;
+						// tester si fantome
+						if (Ghost.personnagePresentCas(coordonne))
+							tab[nbInter][2] += Value_futur_ghost;
+						// tester si pacKnight
+						if (PacKnight.personnagePresentCas(coordonne))
+							tab[nbInter][2] += Value_futur_pacKnight;
+					}
+					if(mode==2)
+					{
+						// tester si pac-gom
+						if (Personnage.getTerrain().ValueCase(coordonne) == 2)
+							tab[nbInter][0] += Value_futur_pacgom2;
+						// incremente la distance
+						tab[nbInter][1] += Value_futur_distance2;
+						// tester si fantome
+						if (Ghost.personnagePresentCas(coordonne))
+							tab[nbInter][2] += Value_futur_ghost2;
+						// tester si pacKnight
+						if (PacKnight.personnagePresentCas(coordonne))
+							tab[nbInter][2] += Value_futur_pacKnight2;
+					}
 					// faire avancer coordCaseEnCours
 					for (Direction d2 : Direction.values()) {
 						if (directionCord != d2.opposer()
@@ -468,7 +495,7 @@ public class Primitives {
 	 *            : coord de l'intersection exprimer en case
 	 * @return un tableau de int contenant les valeurs pour chaque inter
 	 */
-	public int[][] laFonctionQuiFaitTout(CoordonneesFloat cord) {
+	public int[][] laFonctionQuiFaitTout(CoordonneesFloat cord, int mode) {
 		// 0 : pac-gom
 		// 1 : distance
 		// 2 : personnage
@@ -485,7 +512,6 @@ public class Primitives {
 				tab[i][j] = 0;
 
 		int nbInter = -1;
-		;
 		for (Direction d : Direction.values()) {
 			nbInter++;
 			if (Personnage.getTerrain().caseAcessible(cord.x, cord.y, d)) {// si
@@ -497,6 +523,8 @@ public class Primitives {
 				cordCaseAcutel.avancerDansDir(d);
 				tab[nbInter][1] += Value_distance;
 				while (!estIntersectionCas(cordCaseAcutel)) {
+					if(mode == 1)
+					{
 					// tester si pac-gom
 					if (Personnage.getTerrain().ValueCase(cordCaseAcutel) == 2)
 						tab[nbInter][0] += Value_pacgom;
@@ -508,6 +536,21 @@ public class Primitives {
 					// tester si pacKnight
 					if (PacKnight.personnagePresentCas(cordCaseAcutel))
 						tab[nbInter][2] += Value_pacKnight;
+					}
+					if(mode ==2)
+					{
+						// tester si pac-gom
+						if (Personnage.getTerrain().ValueCase(cordCaseAcutel) == 2)
+							tab[nbInter][0] += Value_pacgom2;
+						// incremente la distance
+						tab[nbInter][1] += Value_distance2;
+						// tester si fantome
+						if (Ghost.personnagePresentCas(cordCaseAcutel))
+							tab[nbInter][2] += Value_ghost2;
+						// tester si pacKnight
+						if (PacKnight.personnagePresentCas(cordCaseAcutel))
+							tab[nbInter][2] += Value_pacKnight2;
+					}
 					// faire avancer cordCaseAcutel
 					for (Direction d2 : Direction.values()) {
 						if (directionCord != d2.opposer()
@@ -521,7 +564,7 @@ public class Primitives {
 				}
 				int[][] tabaux = laFonctionQuiFaitPresqueTout(
 						new CoordonneesFloat(cordCaseAcutel),
-						directionCord.opposer());
+						directionCord.opposer(),mode);
 				for (int i = 0; i < 4; i++)
 					for (int j = 0; j < 3; j++)
 						tab[nbInter][3 + j] += tabaux[i][j];

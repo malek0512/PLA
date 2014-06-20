@@ -8,8 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.org.apache.bcel.internal.generic.FNEG;
-
 public class Ghost extends Personnage {
 	
 	/**
@@ -324,6 +322,17 @@ public class Ghost extends Personnage {
 			{
 				entendEtObei = false;
 				fantomeUp++;
+				if(!this.caseDevantDisponible())
+				{
+					for(Direction d : Direction.values())
+					{
+						if(this.caseDisponible(d))
+						{
+							this.direction = d;
+							break;
+						}
+					}
+				}
 			}
 		}
 		else
@@ -344,6 +353,7 @@ public class Ghost extends Personnage {
 	{
 		if(Ghost.powerUp())
 		{
+			System.out.println("Fantomes dispos");
 			CoordonneesFloat refCasCentre = ref.coord.CasCentre();
 			
 			//reboot du graph
@@ -367,7 +377,7 @@ public class Ghost extends Personnage {
 				// calcul de la distance max entre le fantome et l'inter
 				int dmax = interEnTraitement.distance(refCasCentre);
 				
-				dmax += 110; //parceque je suis sadic :3
+				dmax += 25; //parceque je suis sadic :3
 				//des fantomes se deplaceront meme si ils ne sont pas sur de le coincé, ca fiche le stress
 				
 				// calcul du fantome qui doit y aller
@@ -405,6 +415,7 @@ public class Ghost extends Personnage {
 					meilleurCandidat.recoitOrdre(ordre);
 				}
 			}	
+			System.out.println("sortie");
 		}
 	}
 }

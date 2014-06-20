@@ -8,6 +8,7 @@ import controleur.Controleur;
 import controleur.automate.TableTransitionSortie.Triplet;
 import src.parser.Parser;
 import src.parser.Quad;
+import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Ghost;
 import personnages.Personnage;
@@ -44,7 +45,8 @@ public class Automate extends Controleur {
 	}	
 
 	public static enum Sortie{
-		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, CHEMIN_PLUS_COURT, OBEIR, SPAWN, STUN, PROTEGER_PRINCESSE, AU_SECOURS, SUIVRE, RAMASSER_PACGUM;
+		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, CHEMIN_PLUS_COURT, OBEIR, SPAWN, STUN, PROTEGER_PRINCESSE, AU_SECOURS, SUIVRE, RAMASSER_PACGUM
+		,FUIR;
 		public static boolean contains (String s){
 			try{
 				Sortie.valueOf(s);
@@ -126,6 +128,7 @@ public class Automate extends Controleur {
 	public void suivant() throws Exception {
 		if(this.personnage.parametrable())
 		{
+			
 			do
 			{
 				Automate.Entree entreeAutomate = getEntree();
@@ -147,6 +150,7 @@ public class Automate extends Controleur {
 				case AU_SECOURS:primitivesAction.auSecours(); break;
 				case RAMASSER_PACGUM:primitivesAction.fetch();break;
 				case OBEIR:primitivesAction.obeir(); break;
+				case FUIR:primitivesAction.fuir();break;
 				}
 			}
 			while(this.personnage.parametrable() && !(isEtatBloquant()));

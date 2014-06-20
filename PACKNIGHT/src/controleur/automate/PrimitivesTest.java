@@ -115,4 +115,14 @@ public class PrimitivesTest extends Primitives {
 		//Renvoie vrai si ghost dans rayon de princesse
 		return personnageEstDansRayon(princess.perimetreSecurite, princess, ghost);
 	}
+
+	/**
+	 * Indique si les fantômes ont suivi  les ordres*/
+	public boolean finOrdre(){
+		
+		return false;
+	}
+
 }
+
+
