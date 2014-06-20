@@ -59,7 +59,7 @@ public class Choix extends BasicGameState implements ComponentListener
         }
        if (source == play)
         {
-    	  Accueil.Music_WindowGame.loop();
+    	 // Accueil.Music_WindowGame.loop();
     	  game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
         }
          

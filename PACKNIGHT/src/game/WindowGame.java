@@ -62,13 +62,22 @@ public class WindowGame extends BasicGameState {
 	public static int tuile_size = 32;
 	protected static int largueur_map, hauteur_map;
 	public int taillePersonnage = 32;
+	
+	
+	static int Choix_Map = 0;
 
 	public int getID() {
 		return ID;
 	}
 
-	public void init(GameContainer container, StateBasedGame game)
-			throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		
+		switch (Choix_Map)
+		{
+		case 0 : MAP = "PACMAN.tmx";
+		case 1 : MAP = "FATMAP.tmx";
+		}
+		
 		this.game = game;
 		container.setShowFPS(false);
 		this.map = new TiledMap(CHEMIN_MAP.concat(MAP));
@@ -93,6 +102,9 @@ public class WindowGame extends BasicGameState {
 		}
 
 	}
+	
+	public void enter(GameContainer container, StateBasedGame game) {
+		   }
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
