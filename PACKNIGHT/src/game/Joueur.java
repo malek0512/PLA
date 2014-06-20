@@ -10,9 +10,6 @@ import org.newdawn.slick.SpriteSheet;
 
 import controleur.automate.Automate;
 
-import personnages.CoordonneesFloat;
-import personnages.Direction;
-import personnages.PacKnight;
 import personnages.Personnage;
 import personnages.Ghost;
 
@@ -25,7 +22,7 @@ public class Joueur {
 	public WindowGame game;
 	SpriteSheet spriteSheet; 
 	Personnage p;
-	Automate auto;
+	Automate auto=null;
 	
 	public Joueur(String SPRITE, WindowGame g, Personnage p) throws SlickException {
 		super();
@@ -68,6 +65,5 @@ public class Joueur {
 	public void suivant () throws Exception{
 		if(this.auto != null)
 			auto.suivant();
-		p.avancer();
 	}
 }

@@ -124,8 +124,9 @@ public abstract class Personnage {
 			this.nextDirectionSet = false;
 			this.avancerAux();
 		} else {
-			if (this.caseDevantDisponible())
+			if (this.caseDevantDisponible()){
 				this.avancerAux();
+			}
 		}
 	}
 

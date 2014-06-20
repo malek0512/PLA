@@ -293,6 +293,7 @@ public class Ghost extends Personnage {
 		if(!l.isEmpty())
 		{
 			this.ordre = l;
+			System.out.println("je reçois un ordre");
 			this.entendEtObei = true;
 			this.fantomeUp--;
 			this.caseDOrdre = l.get(0);
@@ -307,24 +308,33 @@ public class Ghost extends Personnage {
 	 */
 	private void executerOrdre()
 	{
+		System.out.println("j'éxécute un ordre");
 		if(coord.CasBD().equals(coord.CasHG()) //on est sur une case
-				&&coord.CasCentre().equals(caseDOrdre)) //et sur la bonne case
+				&& coord.CasCentre().equals(caseDOrdre)) //et sur la bonne case
 			{
+			System.out.println("je suis dans le 1er if de executerOrdre");
 				ordre.remove(0);
 				if(!ordre.isEmpty())
 				{
+					System.out.println("je suis dans le 2eme if de executerOrdre");
 					caseDOrdre = ordre.get(0);
+					System.out.println(caseDOrdre);
 					direction = mysteriousFunction(coord.CasCentre(), caseDOrdre);
+					System.out.println(direction);
 					avancer();
 				}
 				else
 				{
+					System.out.println("dans le else du 2nd if");
 					entendEtObei = false;
 					fantomeUp++;
 				}
 			}
-		else
+		else{
+			System.out.println("j'avance tant que je ne suis pas sur une case");
 			avancer();
+			}
+		System.out.println("Sortie de executerOrdre");
 	}
 
 	/**
@@ -364,7 +374,7 @@ public class Ghost extends Personnage {
 				// calcul de la distance max entre le fantome et l'inter
 				int dmax = interEnTraitement.distance(refCasCentre);
 				
-				dmax += 3; //parceque je suis sadic :3
+				dmax += 110; //parceque je suis sadic :3
 				//des fantomes se deplaceront meme si ils ne sont pas sur de le coincé, ca fiche le stress
 				
 				// calcul du fantome qui doit y aller
@@ -373,7 +383,8 @@ public class Ghost extends Personnage {
 				int indice = 0; //index de la liste fantome
 				int cpt = 0; //cpt pour savoir l'index en cours de test
 				while(ig.hasNext())
-				{	//creation du candidat
+				{
+					//creation du candidat
 					Ghost actuelCandidat = ig.next();
 					//test si le candidat peut obtenir des ordres
 					if(actuelCandidat.parametrable())
@@ -381,7 +392,8 @@ public class Ghost extends Personnage {
 						int dactuelCandidat = interEnTraitement.distance(actuelCandidat.coord.CasCentre());
 						
 						if(dactuelCandidat < dmax && dactuelCandidat < distanceMeilleurCandidat)
-						{	//maj du candidat
+						{
+							//maj du candidat
 							meilleurCandidat = actuelCandidat;
 							distanceMeilleurCandidat = dactuelCandidat;
 							indice = cpt;
