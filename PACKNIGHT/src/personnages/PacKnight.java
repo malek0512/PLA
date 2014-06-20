@@ -15,7 +15,7 @@ public class PacKnight extends Pacman{
 	 * liste des PacKnight sur le terrain
 	 */
 	static public List<PacKnight> liste = new LinkedList<PacKnight>();
-	public static int vie = 20;
+	public static int vie = 10;
 	private boolean user;
 	/**
 	 * @return the controlable
