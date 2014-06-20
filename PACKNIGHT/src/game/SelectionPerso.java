@@ -64,43 +64,36 @@ public class SelectionPerso extends BasicGameState
 		      			if (quit)Menu.container.exit(); 
 		      			else  
 		      			{
-		      				if(WindowGame.Choix_Map == 0)
-		      				{
 		      				game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
-		      				}
-		      				else game.enterState(SelectionPerso.ID);break;
 		      			}
 		      				
-		      			
 		      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
 		      		case Input.KEY_M: if(Accueil.Music_Choix.playing()) Accueil.Music_Choix.pause() ;else Accueil.Music_Choix.resume(); break;
 
 		      		case Input.KEY_DOWN:
 		      			if(PG_Y < WindowGame.resolution_y/2)
 		      			{
-		      				PG_Y = WindowGame.resolution_y/2;
-		      	            WindowGame.Choix_Map = 1;
-		      	          quit = false;
+		      				PG_Y = PG_Y+100;
+		      	         // quit = false;
 		      			}
-		      			else 
-		      			{
-		      				PG_Y = WindowGame.resolution_y/2+100;
-		      				quit = true;
-		      			}
+		      			//else 
+		      		//{
+		      		//		PG_Y = WindowGame.resolution_y/2+100;
+		      		//		quit = true;
+		      		//	}
 		      			
 	      				break;
 	      			case Input.KEY_UP:
 		      			if(PG_Y > WindowGame.resolution_y/2-100)
 		      			{
 		      				PG_Y = PG_Y-100;
-		      	            WindowGame.Choix_Map = 0;
-		      	          quit = false;
+		      	         // quit = false;
 		      			}
-		      	        else 
-		      	        {
-		      	        	PG_Y = WindowGame.resolution_y/2-100;
-		      	        	quit = true;
-		      	        }
+		      	       // else 
+		      	       // {
+		      	       // 	PG_Y = WindowGame.resolution_y/2+100;
+		      	       // 	quit = true;
+		      	      //  }
 		      			break;
 		      }
 	   }
