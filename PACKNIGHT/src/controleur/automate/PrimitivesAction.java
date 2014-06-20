@@ -17,6 +17,7 @@ import personnages.PacKnight;
 import personnages.PacPrincess;
 import personnages.Pacman;
 import personnages.Personnage;
+import structure_terrain.Terrain;
 
 /**
  * Classe contenant l'ensemble des primitives d'action 
@@ -230,33 +231,63 @@ public class PrimitivesAction extends Primitives{
 		// 3 : avenir pac-gom
 		// 4 : avenir distance
 		// 5 : avenir personnage
-		CoordonneesFloat c = new CoordonneesFloat(auto.getPersonnage().coord); 
-		if(c.CasBG().equals(c.CasHD()) && estIntersection(c))
-		{	
-			int tab[][] = laFonctionQuiFaitTout(c.CasCentre());
-			
-			int cpt =0;
+		CoordonneesFloat caseDuPerso = new CoordonneesFloat(auto.getPersonnage().coord); 
+		if(caseDuPerso.CasBG().equals(caseDuPerso.CasHD()) && estIntersection(caseDuPerso))
+		{//si le perso est bien sur une case, et donc si il est sur une intersection :
+			int tab[][] = laFonctionQuiFaitTout(caseDuPerso.CasCentre());
+
 			int meilleurCandidat = Integer.MIN_VALUE;
 			Direction meilleurCandidatDirection = null;
+			int cpt=0;
 			for(Direction d : Direction.values())
-			{
+			{//pour chaque direction
 				if(tab[cpt][1] != 0)
-				{//sinon la direction est un mur !!
-					int candidat = 0;
-					for(int k = 0; k <3; k++)
-						candidat += ImportanceRacine*tab[cpt][k];
-					for(int k = 3; k<6; k++)
-						candidat += ImportanceBranche*tab[cpt][k];
-					if(meilleurCandidat<candidat)
-					{
-						meilleurCandidat = candidat;
-						meilleurCandidatDirection = d;
+				{//sinon la direction est un mur ou il y a aucun pac-gomm
+					if(tab[cpt][0] + tab[cpt][3] > 0)
+					{//sinon il n'y a pas de pac-gomm
+						int candidat = 0;
+						for(int k = 0; k <3; k++)
+							candidat += ImportanceRacine*tab[cpt][k];
+						for(int k = 3; k<6; k++)
+							candidat += ImportanceBranche*tab[cpt][k];
+						if(meilleurCandidat<candidat)
+						{
+							meilleurCandidat = candidat;
+							meilleurCandidatDirection = d;
+						}
 					}
 				}
+				cpt++;
 			}
-			
-			this.auto.getPersonnage().setDirection(meilleurCandidatDirection);
-			this.auto.getPersonnage().avancer();
+			if(meilleurCandidatDirection!=null)
+			{
+				this.auto.getPersonnage().setDirection(meilleurCandidatDirection);
+				this.auto.getPersonnage().avancer();
+			}
+			else
+			{
+				//aucun candidat n'a aboutie vers des pac-gomm
+				//Actuellement on fait un set alea
+				//faudrai faire en sorte qu'il se dirige vers un pac-gomm
+				//setDirectionAleatoire(this.auto.getPersonnage());
+				//this.auto.getPersonnage().avancer();
+				Terrain t = Personnage.getTerrain();
+				CoordonneesFloat dest=null;
+				for(int i = 0; i<t.largeur;i++)
+				{
+					for(int j = 0; j<t.hauteur;j++)
+					{
+						if(t.ValueCase(i, j)==2)
+						{
+							dest = new CoordonneesFloat(i,j);
+							break;
+						}
+					}
+					if(dest!=null)
+						break;
+				}
+				suivre(dest);
+			}
 		}
 		else
 		{

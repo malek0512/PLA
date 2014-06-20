@@ -323,20 +323,26 @@ public class Primitives {
 	 * implanter tout les commentaires %)
 	 */
 
-	final int Value_pacgom = 15;
+	final int Value_pacgom = 2;
 	final int Value_distance = -1;
-	final int Value_ghost = -100;
-	final int Value_pacKnight = 0;
-	final int ImportanceRacine = 5;
+	final int Value_ghost = -10000;
+	final int Value_pacKnight = -100;
+	
+	final int Value_futur_pacgom = 2;
+	final int Value_futur_distance = -1;
+	final int Value_futur_ghost = -500;
+	final int Value_futur_pacKnight = -10;
+	
+	final int ImportanceRacine = 4;
 	final int ImportanceBranche = 1;
 	
 	/**
 	 * Fonction qui calcule le poids des toutes les intersection sauf celle de la source
-	 * @param argcordDonne : coord de l'intersection
+	 * @param argcordDonne : coord de l'intersection, exprimer en case
 	 * @param src : direction vers la source
 	 * @return un tableau de int contenant les valeurs pour chaque inter
 	 */
-	public int[][] laFonctionQuiFaitPresqueTout(CoordonneesFloat argcordDonne,Direction src)
+	public int[][] laFonctionQuiFaitPresqueTout(CoordonneesFloat coordonne,Direction src)
 	{
 		// 0 : pac-gom
 		// 1 : distance
@@ -351,88 +357,44 @@ public class Primitives {
 		for(Direction d : Direction.values())
 		{
 			nbInter++;
-			System.out.println("Test la dir : " + d);
-			if(d != src && Personnage.getTerrain().caseAcessible(argcordDonne.x, argcordDonne.y, d))
+			if(d != src && Personnage.getTerrain().caseAcessible(coordonne.x, coordonne.y, d))
 			{//si case accessible
-				System.out.println("dir en question ok");
-				CoordonneesFloat cordCaseAcutel = new CoordonneesFloat(argcordDonne);
 				//faire avancer le c dans la direction d
 				Direction directionCord = d;
-				switch(d)
+				coordonne.avancerDansDir(d);
+				tab[nbInter][1] +=Value_distance;
+				while(!estIntersectionCas(coordonne))
 				{
-				case haut:
-					cordCaseAcutel.y--;
-					break;
-				case bas :
-					cordCaseAcutel.y++;
-					break;
-				case droite:
-					cordCaseAcutel.x++;
-					break;
-				case gauche:
-					cordCaseAcutel.x--;
-					break;
-				default:
-				}
-				while(!estIntersectionCas(cordCaseAcutel))
-				{
-					int cptpourri = 0;
 					//tester si pac-gom
-					if(Personnage.getTerrain().ValueCase(cordCaseAcutel) == 2)
-						tab[nbInter][0] += Value_pacgom;
+					if(Personnage.getTerrain().ValueCase(coordonne) == 2)
+						tab[nbInter][0] += Value_futur_pacgom;
 					//incremente la distance
-					tab[nbInter][1] += Value_distance;
+					tab[nbInter][1] += Value_futur_distance;
 					//tester si fantome
-					if(Ghost.personnagePresent(cordCaseAcutel))
-						tab[nbInter][2] += Value_ghost;
+					if(Ghost.personnagePresentCas(coordonne))
+						tab[nbInter][2] += Value_futur_ghost;
 					//tester si pacKnight
-					if(PacKnight.personnagePresent(cordCaseAcutel))
-						tab[nbInter][2] += Value_pacKnight;
+					if(PacKnight.personnagePresentCas(coordonne))
+						tab[nbInter][2] += Value_futur_pacKnight;
 					//faire avancer coordCaseEnCours
 					for(Direction d2 : Direction.values())
 					{
-						if(directionCord !=d2.opposer() && Personnage.getTerrain().caseAcessible(cordCaseAcutel.x, cordCaseAcutel.y, d2) )
+						if(directionCord !=d2.opposer() && Personnage.getTerrain().caseAcessible(coordonne.x, coordonne.y, d2) )
 						{
-							
-							System.out.println("direction choisie pour juste");
-							System.out.println(d2);
-							switch(d2)
-							{
-							case haut:
-								cordCaseAcutel.y--;
-								break;
-							case bas :
-								cordCaseAcutel.y++;
-								break;
-							case droite:
-								cordCaseAcutel.x++;
-								break;
-							case gauche:
-								cordCaseAcutel.x--;
-								break;
-							default:
-							}
-							
+							coordonne.avancerDansDir(d2);
 							directionCord = d2;
 							break;
 						}
 					}
-					cptpourri++;
-					if(cptpourri == 100)
-						while(true)
-							nbInter++;
 				}
-				System.out.println("Lot de donné numeros 1");
-				System.out.println("##############" + "\nDirection : " + d + "\nValeur des pac-gomm : " + tab[nbInter][0] + "\nValeur en distance : " + tab[nbInter][1] + "\nValeur en perso : " + tab[nbInter][2] + "\n############");
 			}
 		}
-		System.out.println("Sortie !!");
 		return tab;
 	}
 	
 	/**
 	 * Fonction qui calcul le poids de toutes les intersection
-	 * @param cord : coord de l'intersection
+	 * @param cord : coord de l'intersection exprimer en case
 	 * @return un tableau de int contenant les valeurs pour chaque inter
 	 */
 	public int[][] laFonctionQuiFaitTout(CoordonneesFloat cord)
@@ -445,144 +407,52 @@ public class Primitives {
 		// 4 : avenir distance
 		// 5 : avenir personnage
 		
-		int[][] tab = new int[4][3];
+		int[][] tab = new int[4][6];
 		
 		//init du tableau
 		for(int i = 0 ; i<4; i ++)
-			for(int j = 0 ; j<3; j++)
+			for(int j = 0 ; j<6; j++)
 				tab[i][j] = 0;
 		
 		int nbInter = -1;;
 		for(Direction d : Direction.values())
 		{
-			System.out.println();
-			System.out.println();
-			System.out.println();
-			
 			nbInter++;
-			System.out.println("dir proposer pour la prochaine recherche de direction : " + d);
-			System.out.println("Cord de base : " + cord);
 			if(Personnage.getTerrain().caseAcessible(cord.x, cord.y, d))
 			{//si case accessible
 				CoordonneesFloat cordCaseAcutel = new CoordonneesFloat(cord);
 				//faire avancer le c dans la direction d
 				Direction directionCord = d;
-				if(Personnage.getTerrain().estCore(cordCaseAcutel.x, cordCaseAcutel.y, d))
-				{
-					switch(d)
-					{
-					case haut:
-						cordCaseAcutel.y = Personnage.getTerrain().pixelBordBas()-1;
-						cordCaseAcutel.y = cordCaseAcutel.casBY();
-						break;
-					case bas :
-						cordCaseAcutel.y=0;
-						break;
-					case droite:
-						cordCaseAcutel.y = Personnage.getTerrain().pixelBordDroit()-1;
-						cordCaseAcutel.y = cordCaseAcutel.casDX();
-						break;
-					case gauche:
-						cordCaseAcutel.x=0;
-						break;
-					default:
-					}
-				}
-				else
-				{
-					switch(d)
-					{
-					case haut:
-						cordCaseAcutel.y--;
-						break;
-					case bas :
-						cordCaseAcutel.y++;
-						break;
-					case droite:
-						cordCaseAcutel.x++;
-						break;
-					case gauche:
-						cordCaseAcutel.x--;
-						break;
-					default:
-					}
-				}
-				System.out.println("Cord de la direction : " + cordCaseAcutel);
-				int cptpoorhave = 0;
+				cordCaseAcutel.avancerDansDir(d);
+				tab[nbInter][1] +=Value_distance;
 				while(!estIntersectionCas(cordCaseAcutel))
 				{
-					System.out.println("Cord Dans le While: " + cordCaseAcutel);
-					cptpoorhave++;
-					if (cptpoorhave== 20)
-						while(true)
-							cptpoorhave++;
 					//tester si pac-gom
 					if(Personnage.getTerrain().ValueCase(cordCaseAcutel) == 2)
 						tab[nbInter][0] += Value_pacgom;
 					//incremente la distance
 					tab[nbInter][1] += Value_distance;
 					//tester si fantome
-					if(Ghost.personnagePresent(cordCaseAcutel))
+					if(Ghost.personnagePresentCas(cordCaseAcutel))
 						tab[nbInter][2] += Value_ghost;
 					//tester si pacKnight
-					if(PacKnight.personnagePresent(cordCaseAcutel))
+					if(PacKnight.personnagePresentCas(cordCaseAcutel))
 						tab[nbInter][2] += Value_pacKnight;
-					//faire avancer coordCaseEnCours
-					for(Direction dir : Direction.values()){
-						if(Personnage.getTerrain().estCore(cordCaseAcutel.x, cordCaseAcutel.y, dir))
+					//faire avancer cordCaseAcutel
+					for(Direction d2 : Direction.values()){
+						if(directionCord !=d2.opposer() && Personnage.getTerrain().caseAcessible(cordCaseAcutel.x, cordCaseAcutel.y, d2) )
 						{
-							switch(dir)
-							{
-							case haut:
-								cordCaseAcutel.y = Personnage.getTerrain().pixelBordBas()-1;
-								cordCaseAcutel.y = cordCaseAcutel.casBY();
-								break;
-							case bas :
-								cordCaseAcutel.y=0;
-								break;
-							case droite:
-								cordCaseAcutel.y = Personnage.getTerrain().pixelBordDroit()-1;
-								cordCaseAcutel.y = cordCaseAcutel.casDX();
-								break;
-							case gauche:
-								cordCaseAcutel.x=0;
-								break;
-							default:
-							}
-						}
-						else if(directionCord !=dir.opposer() && Personnage.getTerrain().caseAcessible(cordCaseAcutel.x, cordCaseAcutel.y, dir) )
-						{
-							
-							switch(dir)
-							{
-							case haut:
-								cordCaseAcutel.y--;
-								break;
-							case bas :
-								cordCaseAcutel.y++;
-								break;
-							case droite:
-								cordCaseAcutel.x++;
-								break;
-							case gauche:
-								cordCaseAcutel.x--;
-								break;
-							default:
-							}
-							directionCord = dir;
+							cordCaseAcutel.avancerDansDir(d2);
+							directionCord = d2;
 							break;
 						}
 					}
 				}
-				System.out.println("### Apel de la fonction presque tout avec ###");
-				System.out.println("Cord : " + cordCaseAcutel + " Dir : " + directionCord.opposer());
-				System.out.println("###");
 				int[][] tabaux = laFonctionQuiFaitPresqueTout(new CoordonneesFloat(cordCaseAcutel),directionCord.opposer());
 				for(int i = 0; i<4; i++)
 					for(int j= 0 ; j<3; j++)
-						tab[nbInter][j] += tabaux[i][j];
+						tab[nbInter][3+j] += tabaux[i][j];
 			}
-			System.out.println("##############" + "\nDirection : " + d + "\nValeur des pac-gomm : " + tab[nbInter][0] + "\nValeur en distance : " + tab[nbInter][1] + "\nValeur en perso : " + tab[nbInter][2] + "\n############");
 		}
 		return tab;
 	}

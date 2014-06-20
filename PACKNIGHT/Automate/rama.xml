@@ -1,0 +1,25 @@
+<?xml version = "1.0" ?>
+<Automate ID= "rama" > 
+<Etat Nom= "1" > 
+ <Transition Entree= "ETOILE" Etat= "1" Action = "RAMASSER_PACGUM" > </Transition> 
+</Etat> 
+<Etat Nom= "4" > 
+ <Transition Entree= "CASE_NON_ATTEINTE" Etat= "4" Action = "AVANCER" > </Transition> 
+ <Transition Entree= "CASE_ATTEINTE" Etat= "2" Action = "RIEN" > </Transition> 
+</Etat> 
+<Etat Nom= "2" > 
+ <Transition Entree= "ETOILE" Etat= "2" Action = "RAMASSER_PACGUM" > </Transition> 
+</Etat> 
+<Etat_Initial> 
+<Etat Nom= "1" > 
+</Etat> 
+</Etat_Initial> 
+<Etats_Finals> 
+</Etats_Finals> 
+<Etats_Bloquants> 
+<Etat Nom= "1" > 
+</Etat> 
+<Etat Nom= "2" > 
+</Etat> 
+</Etats_Bloquants> 
+</Automate> 

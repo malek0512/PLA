@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.org.apache.bcel.internal.generic.FNEG;
+
 public class Ghost extends Personnage {
 	
 	/**
@@ -23,31 +25,63 @@ public class Ghost extends Personnage {
 		//info divers
 	private final int vision = 5;
 	private CoordonneesFloat pointDeRespawn;
-	private int nbInterChercher = 4; //nombre d'inter calculer par fantome lord pour les ganks
 	
+		//info pour le pouvoir de controle
+	static private int nbInterChercher = 4; //nombre d'inter calculer par fantome lord pour les ganks
+	static private int fantomeUp=0; //fantome up pour le pouvoir
+	static public Graph g; //graph pour le pouvoir
+	//attribut pour les fantomes qui recoivent des ordres
+	private CoordonneesFloat caseDOrdre = null; //case en cours
+	private List<CoordonneesFloat> ordre = null; //liste des case de l'ordre en cours
 	
-	static public Graph g;
-	
-	
-	//boolean des animations
+		//boolean des animations
 	private boolean prisonner = false; //le fantome est dans la prison
 	private boolean stun = false;
 	private boolean entendEtObei = false;
 	
-	//timeur des animation
+		//timeur des animation
 	final static private int tempsPasserEnPrison = 1; 
 	final static private int tempsStun = 15;
 	final static private int tempsPrisonner = 10;
 	
-	//attribut pour les fantomes qui recoivent des ordres
-	private CoordonneesFloat caseDOrdre;
-	private List<CoordonneesFloat> ordre;
+
+	
+	/**
+	 * @param position ou on veut savoir si un personnage si trouve
+	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
+	 */
+	static public boolean personnagePresent(CoordonneesFloat position)
+	{
+		Iterator<Ghost> i= Ghost.liste.iterator();
+		while (i.hasNext()) {
+			if (i.next().coord.CasCentre().equals(position))
+				return true;
+		}
+		return false;
+	}
+	
+	static public boolean personnagePresentCas(CoordonneesFloat position)
+	{
+		Iterator<Ghost> i= Ghost.liste.iterator();
+		while(i.hasNext())
+		{
+			if(position.equals(i.next().coord.CasCentre()))
+				return true;
+		}
+		return false;
+	}
+
+	static public boolean powerUp()
+	{
+		return fantomeUp>=nbInterChercher;
+	}
 	
 	public Ghost(String nom, int x, int y, Direction d,CoordonneesFloat spawn) {
 		super(nom, x, y, d);
 		this.agonise = false;
 		this.pointDeRespawn = new CoordonneesFloat(spawn.x * 32, spawn.y * 32);
 		Ghost.liste.add(this);
+		Ghost.fantomeUp++;
 		
 		
 	}
@@ -83,8 +117,6 @@ public class Ghost extends Personnage {
 		public void majAvisDeRecherche(CoordonneesFloat c){
 			timer=300;
 			coord=c;
-			
-			
 		}
 	}
 
@@ -258,35 +290,39 @@ public class Ghost extends Personnage {
 	 */
 	public void recoitOrdre(List<CoordonneesFloat> l)
 	{
-		//HA HA
-		//l.remove(0); //on retire la tete, on y est déja !
-		//HA HA
 		if(!l.isEmpty())
 		{
 			this.ordre = l;
 			this.entendEtObei = true;
+			this.fantomeUp--;
 			this.caseDOrdre = l.get(0);
-			this.direction = mysteriousFunction(this.coord.CasCentre(), caseDOrdre);
+			this.direction = mysteriousFunction(coord.CasCentre(), caseDOrdre);
 		}
 	}
 	
 	/**
 	 * avance a la prochaine case de l'ordre
+	 * cette case doit se situé dans l'index 1 de la liste
+	 * si il n'y a pas cette case, on arrete d'executer des ordres
 	 */
 	private void executerOrdre()
 	{
-		if(this.coord == this.caseDOrdre)
-		{
-			ordre.remove(0);
-			if(!ordre.isEmpty())
+		if(coord.CasBD().equals(coord.CasHG()) //on est sur une case
+				&&coord.CasCentre().equals(caseDOrdre)) //et sur la bonne case
 			{
-				caseDOrdre = ordre.get(0);
-				direction = mysteriousFunction(this.coord, caseDOrdre);
-				avancer();
+				ordre.remove(0);
+				if(!ordre.isEmpty())
+				{
+					caseDOrdre = ordre.get(0);
+					direction = mysteriousFunction(coord.CasCentre(), caseDOrdre);
+					avancer();
+				}
+				else
+				{
+					entendEtObei = false;
+					fantomeUp++;
+				}
 			}
-			else
-				entendEtObei = false;
-		}
 		else
 			avancer();
 	}
@@ -295,7 +331,7 @@ public class Ghost extends Personnage {
 	 * renvoie vrai si la gestion de collision inter perso est autorisé pour le personnage
 	 */
 	public boolean hitting() {
-		return !(agonise);
+		return !(agonise) && !(prisonner);
 	}
 	
 	/**
@@ -303,66 +339,68 @@ public class Ghost extends Personnage {
 	 */
 	public void donnerDesOrdres(Pacman ref)
 	{
-		int xref = ref.coord.x;
-		int yref = ref.coord.y;
-		//reboot du graph
-		Ghost.g.reset();
-		// calcule des intersection a occuper
-		List<CoordonneesFloat> listeDesInter = Ghost.g.visiterLargeur(ref.coord,nbInterChercher);
-		
-		//copie de la liste des fantomes
-
-		List<Ghost> listeDesGhost = new LinkedList<Ghost>(Ghost.liste);
-
-
-		
-		// pour chaque inter
-		Iterator<CoordonneesFloat> i = listeDesInter.iterator();
-		while(i.hasNext())
+		if(Ghost.powerUp())
 		{
-			CoordonneesFloat interEnTraitement = i.next();
-			// variable temporaire
-			Ghost meilleurCandidat = null;
-			int distanceMeilleurCandidat = Integer.MAX_VALUE;
+			CoordonneesFloat refCasCentre = ref.coord.CasCentre();
 			
-			// calcul de la distance max entre le fantome et l'inter
-			int dmax = Math.abs(xref - interEnTraitement.x) + Math.abs(yref - interEnTraitement.y);
-			dmax += 2; //parceque je suis sadic :3
+			//reboot du graph
+			Ghost.g.reset();
 			
-			// calcul du fantome qui doit y aller
-			Iterator<Ghost> ig = listeDesGhost.iterator();
+			// calcule des intersection a occuper
+			List<CoordonneesFloat> listeDesInter = Ghost.g.visiterLargeur(ref.coord.CasCentre(),nbInterChercher);
 			
-			int indice = 0;
-			int cpt = 0;
-			while(ig.hasNext())
-			{	//creation du candidat
-				Ghost actuelCandidat = ig.next();
-				//test si le candidat peut obtenir des ordres
-				if(actuelCandidat.parametrable())
-				{
-					int dactuelCandidat = Math.abs(actuelCandidat.coord.x - interEnTraitement.x) 
-										+ Math.abs(actuelCandidat.coord.y - interEnTraitement.y);
-					
-					if(dactuelCandidat < dmax && dactuelCandidat < distanceMeilleurCandidat)
-					{	//maj du candidat
-						meilleurCandidat = actuelCandidat;
-						distanceMeilleurCandidat = dactuelCandidat;
-						indice = cpt;
-					}
-				}
-				//on incremente notre compteur dans tout les cas !
-				cpt++;
-			}
-			if(meilleurCandidat != null)
+			//copie de la liste des fantomes
+			List<Ghost> listeDesGhost = new LinkedList<Ghost>(Ghost.liste);
+	
+			// pour chaque inter
+			Iterator<CoordonneesFloat> i = listeDesInter.iterator();
+			while(i.hasNext())
 			{
-				//supprime le fantome de la liste
-				listeDesGhost.remove(indice);
+				CoordonneesFloat interEnTraitement = i.next();
+				// variable temporaire
+				Ghost meilleurCandidat = null;
+				int distanceMeilleurCandidat = Integer.MAX_VALUE;
 				
-				//calcul de l'itinéraire
-				Aetoile ga = new Aetoile(meilleurCandidat.coord);
-				List<CoordonneesFloat> ordre = ga.algo(interEnTraitement);
-				meilleurCandidat.recoitOrdre(ordre);
-			}
-		}	
+				// calcul de la distance max entre le fantome et l'inter
+				int dmax = interEnTraitement.distance(refCasCentre);
+				
+				dmax += 3; //parceque je suis sadic :3
+				//des fantomes se deplaceront meme si ils ne sont pas sur de le coincé, ca fiche le stress
+				
+				// calcul du fantome qui doit y aller
+				Iterator<Ghost> ig = listeDesGhost.iterator();
+				
+				int indice = 0; //index de la liste fantome
+				int cpt = 0; //cpt pour savoir l'index en cours de test
+				while(ig.hasNext())
+				{	//creation du candidat
+					Ghost actuelCandidat = ig.next();
+					//test si le candidat peut obtenir des ordres
+					if(actuelCandidat.parametrable())
+					{
+						int dactuelCandidat = interEnTraitement.distance(actuelCandidat.coord.CasCentre());
+						
+						if(dactuelCandidat < dmax && dactuelCandidat < distanceMeilleurCandidat)
+						{	//maj du candidat
+							meilleurCandidat = actuelCandidat;
+							distanceMeilleurCandidat = dactuelCandidat;
+							indice = cpt;
+						}
+					}
+					//on incremente notre compteur dans tout les cas !
+					cpt++;
+				}
+				if(meilleurCandidat != null)
+				{
+					//supprime le fantome de la liste
+					listeDesGhost.remove(indice);
+					
+					//calcul de l'itinéraire
+					Aetoile ga = new Aetoile(meilleurCandidat.coord.CasCentre());
+					List<CoordonneesFloat> ordre = ga.algo(interEnTraitement);
+					meilleurCandidat.recoitOrdre(ordre);
+				}
+			}	
+		}
 	}
 }
