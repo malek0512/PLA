@@ -1,6 +1,7 @@
 package game;
 
 
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -17,13 +18,13 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import game.Menu;
 
-public class Choix extends BasicGameState 
+public class SelectionPerso extends BasicGameState 
 { 
     private StateBasedGame game;
-    private Image Quit,Solo,Multi,Mouse;
+    private Image Un_P,Deux_P,Trois_P,Quatre_P,Mouse;
     private int PG_X,PG_Y;
      
-	   public static final int ID = 3;
+	   public static final int ID = 7;
 	   boolean quit = false;
 
   
@@ -34,20 +35,22 @@ public class Choix extends BasicGameState
 	   
     public void init(GameContainer container, StateBasedGame game) throws SlickException { 
     	this.game = game;
-    	Quit = new Image("src/graphisme/main/ressources/map/image/Quit.png");
-    	Solo = new Image("src/graphisme/main/ressources/map/image/Solo.png");
-    	Multi = new Image("src/graphisme/main/ressources/map/image/Multi.png");
+    	Un_P = new Image("src/graphisme/main/ressources/map/image/1P.png");
+    	Deux_P = new Image("src/graphisme/main/ressources/map/image/2P.png");
+    	Trois_P = new Image("src/graphisme/main/ressources/map/image/3P.png");
+    	Quatre_P  = new Image("src/graphisme/main/ressources/map/image/4P.png");
     	Mouse  = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
-    	PG_X = WindowGame.resolution_x/2-90;
+    	PG_X = WindowGame.resolution_x/2-190;
     	PG_Y = WindowGame.resolution_y/2-100 ;
     	
     } 
  
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
     {
-         Quit.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);
-         Solo.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-100);
-         Multi.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);
+         Un_P.draw(WindowGame.resolution_x/2-150, WindowGame.resolution_y/2-100);
+         Deux_P.draw(WindowGame.resolution_x/2+50, WindowGame.resolution_y/2-100);
+         Trois_P.draw(WindowGame.resolution_x/2-150, WindowGame.resolution_y/2);
+         Quatre_P.draw(WindowGame.resolution_x/2+50, WindowGame.resolution_y/2);
          Mouse.draw(PG_X,PG_Y);
          
     } 
