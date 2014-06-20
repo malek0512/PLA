@@ -338,6 +338,7 @@ public class Primitives {
 	 */
 	public int[][] laFonctionQuiFaitPresqueTout(CoordonneesFloat argcordDonne,Direction src)
 	{
+		System.out.println("On est au début de presque tout");
 		// 0 : pac-gom
 		// 1 : distance
 		// 2 : personnage
@@ -422,8 +423,6 @@ public class Primitives {
 						while(true)
 							nbInter++;
 				}
-				System.out.println("Lot de donné numeros 1");
-				System.out.println("##############" + "\nDirection : " + d + "\nValeur des pac-gomm : " + tab[nbInter][0] + "\nValeur en distance : " + tab[nbInter][1] + "\nValeur en perso : " + tab[nbInter][2] + "\n############");
 			}
 		}
 		System.out.println("Sortie !!");
@@ -444,7 +443,7 @@ public class Primitives {
 		// 3 : avenir pac-gom
 		// 4 : avenir distance
 		// 5 : avenir personnage
-		
+		System.out.println("On est au début de fonction qui fait tout");
 		int[][] tab = new int[4][3];
 		
 		//init du tableau
@@ -455,40 +454,13 @@ public class Primitives {
 		int nbInter = -1;;
 		for(Direction d : Direction.values())
 		{
-			System.out.println();
-			System.out.println();
-			System.out.println();
-			
 			nbInter++;
-			System.out.println("dir proposer pour la prochaine recherche de direction : " + d);
-			System.out.println("Cord de base : " + cord);
 			if(Personnage.getTerrain().caseAcessible(cord.x, cord.y, d))
 			{//si case accessible
 				CoordonneesFloat cordCaseAcutel = new CoordonneesFloat(cord);
 				//faire avancer le c dans la direction d
 				Direction directionCord = d;
 				if(Personnage.getTerrain().estCore(cordCaseAcutel.x, cordCaseAcutel.y, d))
-				{
-					switch(d)
-					{
-					case haut:
-						cordCaseAcutel.y = Personnage.getTerrain().pixelBordBas()-1;
-						cordCaseAcutel.y = cordCaseAcutel.casBY();
-						break;
-					case bas :
-						cordCaseAcutel.y=0;
-						break;
-					case droite:
-						cordCaseAcutel.y = Personnage.getTerrain().pixelBordDroit()-1;
-						cordCaseAcutel.y = cordCaseAcutel.casDX();
-						break;
-					case gauche:
-						cordCaseAcutel.x=0;
-						break;
-					default:
-					}
-				}
-				else
 				{
 					switch(d)
 					{
@@ -507,15 +479,8 @@ public class Primitives {
 					default:
 					}
 				}
-				System.out.println("Cord de la direction : " + cordCaseAcutel);
-				int cptpoorhave = 0;
 				while(!estIntersectionCas(cordCaseAcutel))
 				{
-					System.out.println("Cord Dans le While: " + cordCaseAcutel);
-					cptpoorhave++;
-					if (cptpoorhave== 20)
-						while(true)
-							cptpoorhave++;
 					//tester si pac-gom
 					if(Personnage.getTerrain().ValueCase(cordCaseAcutel) == 2)
 						tab[nbInter][0] += Value_pacgom;
@@ -574,16 +539,12 @@ public class Primitives {
 						}
 					}
 				}
-				System.out.println("### Apel de la fonction presque tout avec ###");
-				System.out.println("Cord : " + cordCaseAcutel + " Dir : " + directionCord.opposer());
-				System.out.println("###");
 				int[][] tabaux = laFonctionQuiFaitPresqueTout(new CoordonneesFloat(cordCaseAcutel),directionCord.opposer());
 				for(int i = 0; i<4; i++)
 					for(int j= 0 ; j<3; j++)
 						tab[nbInter][j] += tabaux[i][j];
 			}
-			System.out.println("##############" + "\nDirection : " + d + "\nValeur des pac-gomm : " + tab[nbInter][0] + "\nValeur en distance : " + tab[nbInter][1] + "\nValeur en perso : " + tab[nbInter][2] + "\n############");
-		}
+		}System.out.println("On à la fin de fonction qui fait tout");
 		return tab;
 	}
 	

@@ -22,6 +22,8 @@ Transition
     ENTREE = ETOILE
     SORTIE = RAMASSER_PACGUM
  	
+ 	
+ 	
 
 ETAT_INITIAL = 1
 ETAT_FINAL =

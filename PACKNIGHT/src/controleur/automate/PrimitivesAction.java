@@ -245,8 +245,6 @@ public class PrimitivesAction extends Primitives{
 					int candidat = 0;
 					for(int k = 0; k <3; k++)
 						candidat += ImportanceRacine*tab[cpt][k];
-					for(int k = 3; k<6; k++)
-						candidat += ImportanceBranche*tab[cpt][k];
 					if(meilleurCandidat<candidat)
 					{
 						meilleurCandidat = candidat;

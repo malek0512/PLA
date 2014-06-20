@@ -1,18 +1,14 @@
 <?xml version = "1.0" ?>
 <Automate ID= "rama" > 
 <Etat Nom= "1" > 
- <Transition Entree= "VUE" Etat= "2" Action = "OBEIR" > </Transition> 
+ <Transition Entree= "ETOILE" Etat= "2" Action = "DIRECTION_ALEATOIRE" > </Transition> 
 </Etat> 
 <Etat Nom= "4" > 
  <Transition Entree= "CASE_NON_ATTEINTE" Etat= "4" Action = "AVANCER" > </Transition> 
  <Transition Entree= "CASE_ATTEINTE" Etat= "2" Action = "RIEN" > </Transition> 
 </Etat> 
 <Etat Nom= "2" > 
-<<<<<<< HEAD:PACKNIGHT/Automate/RAMA.xml
  <Transition Entree= "ETOILE" Etat= "2" Action = "RAMASSER_PACGUM" > </Transition> 
-=======
- <Transition Entree= "ETOILE" Etat= "2" Action = "RIEN" > </Transition> 
->>>>>>> b3a639f373018d2dc4aca5cc104123e811908e22:PACKNIGHT/Automate/rama.xml
 </Etat> 
 <Etat_Initial> 
 <Etat Nom= "1" > 
