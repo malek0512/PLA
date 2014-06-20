@@ -90,6 +90,12 @@ public class Aetoile {
 	public List<CoordonneesFloat> algo(CoordonneesFloat queueDeListe)
 	{
 		boolean continu = true;
+		if(queueDeListe.equals(teteDeliste))
+		{
+			List<CoordonneesFloat>resultat = new LinkedList<CoordonneesFloat>();
+			resultat.add(queueDeListe);
+			return resultat;
+		}
 		NoeudEtoile init = new NoeudEtoile(distance(queueDeListe), null, queueDeListe);
 		ouvert.add(init);
 		while(!ouvert.isEmpty() && continu)

@@ -6,7 +6,7 @@ public class HitBoxManager {
 
 	//taille de la hitBox des personnages
 	//on peut voir la valeur comme un cercle 
-	static private int hitBox = 1;
+	static private int hitBox = 7;
 
 	/**
 	 * Warning : les tuiles doivent etre carrées

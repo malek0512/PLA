@@ -126,18 +126,19 @@ public class PrimitivesAction extends Primitives {
 	 */
 	public void auSecours() throws Exception{
 		//recuperation du personnage
+//		System.out.println("COUCOU auSecours");
 		PacPrincess bitch = (PacPrincess) auto.getPersonnage();
 		//pour chaque ghost dans le rayons
 		int i =0;
 		for(Ghost violeur : bitch.violeurs)
 		{
-			if(violeur.hitting())
+			if(violeur.hitting() && !isAlreadyChassed(violeur))
 			{
 				//selection du héro
 				PacKnight p = this.whichHero(bitch);
 				if (p!=null) 
 				{
-					System.out.println("trouver");
+//					System.out.println("trouver");
 					p.princesseEnDetresse = bitch; //on parametre le packnight
 					p.ghostEnChasse = violeur;
 					bitch.violeurs.remove(i); //on retire le violeur, il est en cours de "traitement"
@@ -156,14 +157,16 @@ public class PrimitivesAction extends Primitives {
 	 * @throws Exception
 	 *             Si ghostEnChasse==null ou princesseEnDetresse==null
 	 */
-	public void protegerPrincesse()
+	public void protegerPrincesse() throws Exception
 	{
 		//cast du perso
 		PacKnight knight = ((PacKnight) auto.getPersonnage());
+		
 		if(knight.ghostEnChasse != null)
 		{
-			suivre(knight.ghostEnChasse.getCoord().CasCentre());
+			suivre(knight.ghostEnChasse.getCoord());
 		}
+
 	}
 	
 
@@ -171,20 +174,36 @@ public class PrimitivesAction extends Primitives {
 	 * Donne des ordre au fantomes pour coincé un pacman donné
 	 */
 	public void suivre(CoordonneesFloat ref) {
+		
 		if(auto.sneaky == null)
 		{
+			
 			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
 			Aetoile graph = new Aetoile(src);
 			List<CoordonneesFloat> l = graph.algo(ref.CasCentre());
-			l.remove(0);
+			System.out.println(l.size());
+				l.remove(0);
 			auto.sneaky = mysteriousFunction(src, l.get(0));
-		}
+			}
+		
 		else
 		{
+			
 			if(auto.getPersonnage().caseDisponible(auto.sneaky))
 			{
+				System.out.println("COUCOU Suivre");
+				
 				auto.getPersonnage().setDirection(auto.sneaky);
 				auto.sneaky = null;
+			}
+			else {
+				CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
+				Aetoile graph = new Aetoile(src);
+				List<CoordonneesFloat> l = graph.algo(ref.CasCentre());
+				System.out.println(l.size());
+				if(l.size()!=0){
+					l.remove(0);}
+				auto.sneaky = mysteriousFunction(src, l.get(0));
 			}
 		}
 		this.auto.getPersonnage().avancer();
@@ -218,6 +237,7 @@ public class PrimitivesAction extends Primitives {
 		// 3 : avenir pac-gom
 		// 4 : avenir distance
 		// 5 : avenir personnage
+		System.out.println("FETCH DEBUT");
 		CoordonneesFloat caseDuPerso = new CoordonneesFloat(
 				auto.getPersonnage().coord);
 		if (caseDuPerso.CasBG().equals(caseDuPerso.CasHD())
@@ -276,5 +296,7 @@ public class PrimitivesAction extends Primitives {
 			setDirectionAleatoire(this.auto.getPersonnage());
 			this.auto.getPersonnage().avancer();
 		}
+		System.out.println("FETCH FIN");
 	}
+	
 }

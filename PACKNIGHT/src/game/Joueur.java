@@ -30,7 +30,7 @@ public class Joueur {
 		this.SPRITE = SPRITE;
 		this.game= g;
 		this.animations = new Animation[8];
-		spriteSheet = new SpriteSheet(CHEMIN_SPRITE.concat(SPRITE), taillePersonnage, taillePersonnage);
+		spriteSheet = new SpriteSheet(CHEMIN_SPRITE.concat(this.SPRITE), taillePersonnage, taillePersonnage);
 		this.p = p;
 		liste.add(this);
 		

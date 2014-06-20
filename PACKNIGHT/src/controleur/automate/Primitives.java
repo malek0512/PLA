@@ -235,8 +235,6 @@ public class Primitives {
 	}
 
 	/**
-<<<<<<< HEAD
-=======
 	 * Fait super attention aux transformations. Parfois tu parles en pixel
 	 * alors que tu veux parler de case et vice versa getCoord() te donne le
 	 * PIXEL en haut à gauche Attention aux transformations de Coordonnees à
@@ -280,8 +278,14 @@ public class Primitives {
 		return prochain;
 	}
 
+	protected boolean isAlreadyChassed(Ghost g){
+		boolean res = false;
+		for(PacKnight knight : PacKnight.liste){
+			res = res || knight.ghostEnChasse==g;
+		}
+		return res;
+	}
 	/**
->>>>>>> 611a427b5f88d41f766e068a5b4a829089fc73f4
 	 * @return le Packnight le plus proche de la princesse
 	 * @author malek
 	 * @throws Exception
