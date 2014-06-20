@@ -258,7 +258,7 @@ public class Primitives {
 	/**
 	 * PacPrincesse et PacKnight
 	 * @param rayon : rayon de vision du personnage de l'automate
-	 * @return la liste des fantomes de le champ de vision de la princesse
+	 * @return la liste des fantomes vivants dans champ de vision de la princesse
 	 */
 	protected List<Ghost> fantomeEstDansRayon(int rayon) {
 		List<Ghost> res = new LinkedList<Ghost>();
@@ -267,7 +267,7 @@ public class Primitives {
 		float someXYSource = position.CasCentre().sommeXY();
 		for(Ghost pac : Ghost.liste){
 			float someXYTester = pac.getCoord().CasCentre().sommeXY();
-			if(someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
+			if(pac.hitting() && someXYSource - rayon <= someXYTester && someXYTester <= someXYSource + rayon)
 				res.add(pac);
 		}
 		return res;
