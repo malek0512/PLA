@@ -40,13 +40,13 @@ public class Accueil extends BasicGameState {
 	   public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		   	this.game = game;
 		   	
-		   	Music_Accueil = new Music(CHEMIN_MUSIC.concat(MUSIC_ACCUEIL));
-		   	Music_WindowGame = new Music(CHEMIN_MUSIC.concat(MUSIC_WINDOWGAME));
-		   	Music_Choix = new Music(CHEMIN_MUSIC.concat(MUSIC_CHOIX));
-		   	Music_Win = new Music(CHEMIN_MUSIC.concat(MUSIC_WIN));
-		   	Music_Dead = new Music(CHEMIN_MUSIC.concat(MUSIC_DEAD));
+		   //	Music_Accueil = new Music(CHEMIN_MUSIC.concat(MUSIC_ACCUEIL));
+		   //	Music_WindowGame = new Music(CHEMIN_MUSIC.concat(MUSIC_WINDOWGAME));
+		   	//Music_Choix = new Music(CHEMIN_MUSIC.concat(MUSIC_CHOIX));
+		   //	Music_Win = new Music(CHEMIN_MUSIC.concat(MUSIC_WIN));
+		   	//Music_Dead = new Music(CHEMIN_MUSIC.concat(MUSIC_DEAD));
 		   	
-		   	Music_Accueil.loop();
+		   //	Music_Accueil.loop();
 
 	   }
 
@@ -65,7 +65,7 @@ public class Accueil extends BasicGameState {
 	    	  case Input.KEY_ENTER: 
 	    	  {
 	    		  game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-	    	      Music_Choix.loop();break;
+	    	      //Music_Choix.loop();break;
 	    	  }
 	    	  case Input.KEY_M: if(Music_Accueil.playing()) Music_Accueil.pause() ;else Music_Accueil.resume(); break;
 	    	  case Input.KEY_ESCAPE:Menu.container.exit(); break;
