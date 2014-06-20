@@ -27,7 +27,7 @@ public class Win extends BasicGameState {
 	   }
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		      PAUSE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
+		      PAUSE = new Image("src/graphisme/main/ressources/map/image/Win.jpeg");
 		      PAUSE.draw(0,0);
 		      g.setColor(Color.white);
 		      g.drawString("You Win", 250, 100);
@@ -42,8 +42,8 @@ public class Win extends BasicGameState {
 	   
 	   public void keyReleased(int key, char c) {
 	      switch (key) {
-	      		case Input.KEY_SPACE: game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-	      		//Accueil.Music_Choix.loop();break;
+	      		//Accueil.Music_Choix.loop();
+	      		case Input.KEY_SPACE: game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	      		case Input.KEY_M: if(Accueil.Music_Win.playing()) Accueil.Music_Win.pause() ;else Accueil.Music_Win.resume(); break;
 	      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
 
