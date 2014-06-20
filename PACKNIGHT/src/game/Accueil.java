@@ -46,7 +46,7 @@ public class Accueil extends BasicGameState {
 		   	Music_Win = new Music(CHEMIN_MUSIC.concat(MUSIC_WIN));
 		   	Music_Dead = new Music(CHEMIN_MUSIC.concat(MUSIC_DEAD));
 		   	
-		   	Music_Accueil.loop();
+		   //	Music_Accueil.loop();
 
 	   }
 
