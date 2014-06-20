@@ -43,7 +43,7 @@ public class Win extends BasicGameState {
 	   public void keyReleased(int key, char c) {
 	      switch (key) {
 	      		case Input.KEY_SPACE: game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-	      		Accueil.Music_Choix.loop();break;
+	      		//Accueil.Music_Choix.loop();break;
 	      		case Input.KEY_M: if(Accueil.Music_Win.playing()) Accueil.Music_Win.pause() ;else Accueil.Music_Win.resume(); break;
 	      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
 

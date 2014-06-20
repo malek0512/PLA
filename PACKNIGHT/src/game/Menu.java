@@ -21,6 +21,7 @@ public class Menu extends StateBasedGame {
 	  RunExternal.launch("make all");
 	  addState(new Accueil());
       addState(new Choix());
+      addState(new Multi());
       addState(new WindowGame(equip));
       addState(new Pause());
       addState(new Win ());
@@ -30,7 +31,7 @@ public class Menu extends StateBasedGame {
    
    public static void main(String[] argv) {
       try {
-         container = new AppGameContainer(new Menu(new EquipageMalek()));
+         container = new AppGameContainer(new Menu(new EquipageVivienAlex()));
          container.setDisplayMode(WindowGame.resolution_x,WindowGame.resolution_y,false);
          container.start();
       } catch (SlickException e) {

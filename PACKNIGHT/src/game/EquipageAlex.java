@@ -16,7 +16,7 @@ import personnages.Personnage;
 import structure_terrain.Terrain;
 import controleur.automate.Automate;
 
-public class EquipageVivienAlex extends Equipage {
+public class EquipageAlex extends Equipage {
 
 	PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(1, 1), true);
 //	PacKnight PACMAN_2 = new PacKnight("J2",5,15,Direction.droite,new CoordonneesFloat(5, 15), false);
@@ -24,11 +24,11 @@ public class EquipageVivienAlex extends Equipage {
 //	PacPrincess PACMAN_4 = new PacPrincess("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 
 	Ghost GHOST_1 = new Ghost("1", 25, 1, Direction.droite,new CoordonneesFloat(5, 15));
-	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_3 = new Ghost("3", 12, 5, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(1, 1));
+//	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
+//	Ghost GHOST_3 = new Ghost("3", 12, 5, Direction.droite,new CoordonneesFloat(1, 1));
+//	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(1, 1));
 
-	public EquipageVivienAlex() {
+	public EquipageAlex() {
 		super();
 		this.joueurFleche =  PACMAN_1;
 		this.joueurLettre = PACMAN_1;
@@ -41,16 +41,16 @@ public class EquipageVivienAlex extends Equipage {
 //		Joueur PM_4 = new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4, "princesse.xml");
 
 
-		Joueur FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_immobile.xml");
-		Joueur FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_immobile.xml");
-		Joueur FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_immobile.xml");
-		Joueur FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"rama.xml");
+		Joueur FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"alex.xml");
+//		Joueur FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_immobile.xml");
+//		Joueur FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_immobile.xml");
+//		Joueur FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"rama.xml");
 
 	}
 
 	   public static void main(String[] argv) {
 		      try {
-		         Menu.container = new AppGameContainer(new Menu(new EquipageVivienAlex()));
+		         Menu.container = new AppGameContainer(new Menu(new EquipageAlex()));
 		         Menu.container.setDisplayMode(WindowGame.resolution_x,WindowGame.resolution_y,false);
 		         Menu.container.start();
 		      } catch (SlickException e) {

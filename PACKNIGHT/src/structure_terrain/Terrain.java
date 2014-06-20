@@ -203,6 +203,12 @@ public class Terrain {
 		return terrain[cord.x][cord.y].caseValeur(); 
 	}
 	
+	public int ValueCase(int x, int y)
+	{
+		return terrain[x][y].caseValeur(); 
+	}
+	
+	
 	public void SetCase(CoordonneesFloat c, int v)
 	{
 		terrain[c.x][c.y].setAcessCase(v);
