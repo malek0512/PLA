@@ -23,6 +23,9 @@ public class SelectionPerso extends BasicGameState
     private StateBasedGame game;
     private Image AI,PACKNIGHT,PRINCESS,FOND_SELECTION,MOUSE;
     private int PG_X,PG_Y;
+    public static int Perso_1=1,Perso_2=1,Perso_3=1,Perso_4=1;
+    private int choix = 1;
+    
      
 	   public static final int ID = 7;
 	   boolean quit = false;
@@ -49,10 +52,22 @@ public class SelectionPerso extends BasicGameState
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
     {
          FOND_SELECTION.draw();
-         AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);
-         AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-100);
-         AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);
-         AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);
+         if ( Perso_1 ==1)
+         PRINCESS.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);
+         else AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);
+        	 
+         if ( Perso_2 ==1)
+         PACKNIGHT.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-100);
+         else AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-100);
+         
+         if ( Perso_3 ==1)
+         PACKNIGHT.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);
+         else AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);
+         
+         if ( Perso_4 ==1)
+         PACKNIGHT.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);
+         else AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);
+         
          MOUSE.draw(PG_X,PG_Y);
          
     } 
@@ -73,30 +88,39 @@ public class SelectionPerso extends BasicGameState
 		      		case Input.KEY_M: if(Accueil.Music_Choix.playing()) Accueil.Music_Choix.pause() ;else Accueil.Music_Choix.resume(); break;
 
 		      		case Input.KEY_DOWN:
-		      			if(PG_Y < WindowGame.resolution_y/2)
+		      			if(PG_Y < WindowGame.resolution_y/2+100)
 		      			{
 		      				PG_Y = PG_Y+100;
-		      	         // quit = false;
+		      				choix++;
 		      			}
-		      			//else 
-		      		//{
-		      		//		PG_Y = WindowGame.resolution_y/2+100;
-		      		//		quit = true;
-		      		//	}
 		      			
 	      				break;
 	      			case Input.KEY_UP:
 		      			if(PG_Y > WindowGame.resolution_y/2-100)
 		      			{
 		      				PG_Y = PG_Y-100;
-		      	         // quit = false;
+		      				choix--;
 		      			}
-		      	       // else 
-		      	       // {
-		      	       // 	PG_Y = WindowGame.resolution_y/2+100;
-		      	       // 	quit = true;
-		      	      //  }
 		      			break;
+		      			
+	      			case Input.KEY_LEFT:	
+	      				switch(choix)
+	      				{
+	      				case 1 :if (Perso_1==0) Perso_1 = 1; else Perso_1 =0 ;break;
+	      				case 2 :if (Perso_2==0) Perso_2 = 1; else Perso_2 =0 ;break;
+	      				case 3 :if (Perso_3==0) Perso_3 = 1; else Perso_3 =0 ;break;
+	      				case 4 :if (Perso_4==0) Perso_4 = 1; else Perso_4 =0 ;break;
+	      				}
+	      				break;
+	      			case Input.KEY_RIGHT:	
+	      				switch(choix)
+	      				{
+	      				case 1 :if (Perso_1==0) Perso_1 = 1; else Perso_1 =0 ;break;
+	      				case 2 :if (Perso_2==0) Perso_2 = 1; else Perso_2 =0 ;break;
+	      				case 3 :if (Perso_3==0) Perso_3 = 1; else Perso_3 =0 ;break;
+	      				case 4 :if (Perso_4==0) Perso_4 = 1; else Perso_4 =0 ;break;
+	      				}
+	      				break;
 		      }
 	   }
 }
