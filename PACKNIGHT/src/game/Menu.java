@@ -21,6 +21,7 @@ public class Menu extends StateBasedGame {
 	  RunExternal.launch("make all");
 	  addState(new Accueil());
       addState(new Choix());
+      addState(new Multi());
       addState(new WindowGame(equip));
       addState(new Pause());
       addState(new Win ());

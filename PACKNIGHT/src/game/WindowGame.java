@@ -35,10 +35,10 @@ public class WindowGame extends BasicGameState {
 
 	private String MAP = "PACMAN.tmx";
 
-	public String SPRITE_PACMAN_1 = "PACMAN-SPRITES2.png";
-	public String SPRITE_PACMAN_2 = "PACMAN-SPRITES2.png";
-	public String SPRITE_PACMAN_3 = "PACMAN-SPRITES2.png";
-	public String SPRITE_PACMAN_4 = "PACMAN-SPRITES2.png";
+	public String SPRITE_PACMAN_1 = "Spectrum.png";
+	public String SPRITE_PACMAN_2 = "Pacman.png";
+	public String SPRITE_PACMAN_3 = "Pacman.png";
+	public String SPRITE_PACMAN_4 = "Pacman.png";
 
 	public String SPRITE_GHOST_1 = "Leona.png";
 	public String SPRITE_GHOST_2 = "Soraka.png";
@@ -165,13 +165,13 @@ public class WindowGame extends BasicGameState {
 			throws SlickException {
 
 		if (Terrain.nb_pacgum == 0) {
-			Accueil.Music_Win.play();
+			//Accueil.Music_Win.play();
 			game.enterState(Win.ID, new FadeOutTransition(Color.black),
 					new FadeInTransition(Color.black));
 		}
 
 		if (PacKnight.vie == 0) {
-			Accueil.Music_Dead.play();
+			//Accueil.Music_Dead.play();
 			game.enterState(Dead.ID, new FadeOutTransition(Color.black),
 					new FadeInTransition(Color.black));
 		}
