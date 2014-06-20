@@ -17,9 +17,8 @@ import structure_terrain.Terrain;
 import controleur.automate.Automate;
 
 public class EquipageMalek extends Equipage{
+	
 
-
-	Automate aleatoire,berserk, knight, princess, lord,suiveur;
 	PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(1, 1), true);
 	PacKnight PACMAN_2 = new PacKnight("J2",5,15,Direction.droite,new CoordonneesFloat(5, 15), false);
 //	PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), false);
@@ -33,43 +32,25 @@ public class EquipageMalek extends Equipage{
 	public EquipageMalek() {
 		super();
 		this.joueurFleche =  PACMAN_1;
-		this.joueurLettre = PACMAN_1;
+		this.joueurLettre = GHOST_1;
+		this.g.resolution_x = 1366;
+		this.g.resolution_y = 750;
 	}
 	
 	public void init() throws SlickException{
+		Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1);
+		Joueur PM_2 = new Joueur(this.g.SPRITE_PACMAN_2,this.g, PACMAN_2, "packnight.xml");
+//		Joueur PM_3 = new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_2, "packnight.xml");
+		Joueur PM_4 = new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4, "princesse.xml");
+		
 
-		liste.add(new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1));
-		liste.add(new Joueur(this.g.SPRITE_PACMAN_2,this.g, PACMAN_2));
-//		liste.add(new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_3));
-		liste.add(new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4));
+		Joueur FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1);
+//		Joueur FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2);
+//		Joueur FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3);
+//		Joueur FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4);
 
-		liste.add(new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1));
-//		liste.add(new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2));
-//		liste.add(new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3));
-//		liste.add(new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4));
-
-    	try{
-//    		aleatoire = new Automate("Automate/fm_aleatoire_aveugle.xml",GHOST_1);
-//    		suiveur=new Automate("Automate/fm_suiveur.xml",GHOST_3);
-//    		berserk = new Automate("Automate/fm_berserk.xml",GHOST_2);
-//    		lord=new Automate("Automate/rama.xml",GHOST_4);
-    		princess = new Automate("Automate/princesse.xml",PACMAN_4);
-    		knight = new Automate("Automate/packnight.xml",PACMAN_2);
-
-    		
-    	}catch(Exception e)  
-    		{System.out.println(e);};
 	}
-
-	public void suivant() throws Exception{
-
-//		aleatoire.suivant();
-//	    berserk.suivant();
-//	    suiveur.suivant();
-//	    lord.suivant();
-	    princess.suivant();
-	    knight.suivant();
-	}
+	
 	
    public static void main(String[] argv) {
 	      try {

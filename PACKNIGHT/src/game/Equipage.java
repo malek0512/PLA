@@ -18,19 +18,19 @@ import controleur.automate.Automate;
 
 public abstract class Equipage {
 
+	
 	WindowGame g;
-	List<Joueur> liste;
 	Personnage joueurFleche;
 	Personnage joueurLettre;
 	
 	public Equipage() {
 		this.g = new WindowGame(this);
-		this.liste = new LinkedList<Joueur>();
-
 	}
 
-
 	public abstract void init() throws SlickException;
-	public abstract void suivant() throws Exception;
 	
+	public void suivant() throws Exception{
+		for(Joueur j:Joueur.liste)
+			j.suivant();
+	}
 }
