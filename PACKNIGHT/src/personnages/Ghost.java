@@ -122,6 +122,7 @@ public class Ghost extends Personnage {
 	{
 		Iterator<Ghost> i= Ghost.liste.iterator();
 		int timer = 0;
+		int cpt=1;
 		int x = 12*32;
 		int y = 14*32;
 		while (i.hasNext()) {
@@ -131,9 +132,14 @@ public class Ghost extends Personnage {
 			g.pointDeRespawn = new CoordonneesFloat(12*32,14*32);
 			g.coord.x = x;
 			g.coord.y = y;
-			timer++;
-			x+= 32;
 			g.direction=Direction.droite;
+			timer++;
+			if(cpt==4)
+				x=12*32;
+			else
+				x+= 32;
+			cpt++;
+			
 		}
 	}
 	
