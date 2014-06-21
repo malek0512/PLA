@@ -344,6 +344,17 @@ public class Primitives {
 	}
 
 	/**
+	 * Renseigne sur le nombre de pacman dans le périmètre*/
+	public int nombreGarde(PacPrincess bitch){
+		int n=0;
+		for(PacKnight knight : PacKnight.liste){
+			if(personnageEstDansRayon(bitch.perimetreSecurite,bitch,knight))
+				n++;
+		}
+		return n;
+		}
+	
+	/**
 	 * fonction misterieuse qui renvoie la direction a prendre pour aller de la
 	 * case src vers la case dest
 	 * 

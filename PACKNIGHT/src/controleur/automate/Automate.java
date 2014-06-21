@@ -32,7 +32,7 @@ public class Automate extends Controleur {
 	public static enum Entree{
 		CASE_LIBRE, CASE_OCCUPEE, SORTIE_TERRAIN, PM_DANS_RAYON_X, NON_PM_DANS_RAYON_X, PM_DANS_CROIX, 
 		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_ATTEINTE, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE,
-		EN_DETRESSE, NON_EN_DETRESSE, FM_DANS_RAYON, NON_FM_DANS_RAYON, VUE, PAS_VUE;
+		EN_DETRESSE, NON_EN_DETRESSE, FM_DANS_RAYON, NON_FM_DANS_RAYON, VUE, PAS_VUE, POSSEDE_UN_GARDE, NE_POSSEDE_PAS_UN_GARDE, EST_APPELER, NON_APPELER;
 		
 		public static boolean contains (String s){
 			try{
@@ -46,7 +46,7 @@ public class Automate extends Controleur {
 
 	public static enum Sortie{
 		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, CHEMIN_PLUS_COURT, OBEIR, SPAWN, STUN, PROTEGER_PRINCESSE, AU_SECOURS, SUIVRE, RAMASSER_PACGUM
-		,FUIR;
+		,FUIR, APPEL_PATROUILLEUR,PATROUILLER;
 		public static boolean contains (String s){
 			try{
 				Sortie.valueOf(s);
@@ -151,6 +151,8 @@ public class Automate extends Controleur {
 				case RAMASSER_PACGUM:primitivesAction.fetch();break;
 				case OBEIR:primitivesAction.obeir(); break;
 				case FUIR:primitivesAction.fuir();break;
+				case PATROUILLER:primitivesAction.patrouiller();break;
+				case APPEL_PATROUILLEUR:primitivesAction.appelPatrouilleur();
 				}
 			}
 			while(this.personnage.parametrable() && !(isEtatBloquant()));
@@ -209,7 +211,11 @@ public class Automate extends Controleur {
 				case NON_FM_DANS_RAYON: if(!primitivesTest.fmDansRayon()) return Entree.NON_FM_DANS_RAYON; break;
 				case VUE:if(primitivesTest.vu())return Entree.VUE; break;
 				case PAS_VUE:if(!primitivesTest.vu())return Entree.PAS_VUE; break;
-			//	}
+				case POSSEDE_UN_GARDE:if(primitivesTest.nombreGardeSuffisant()) return Entree.POSSEDE_UN_GARDE; break;
+				case NE_POSSEDE_PAS_UN_GARDE:if(!primitivesTest.nombreGardeSuffisant()) return Entree.NE_POSSEDE_PAS_UN_GARDE; break;
+				case EST_APPELER:if(primitivesTest.appelAuDevoir())return Entree.EST_APPELER; break;
+				case NON_APPELER:if(!primitivesTest.appelAuDevoir())return Entree.NON_APPELER; break;
+				//	}
 			}
 		}
 		

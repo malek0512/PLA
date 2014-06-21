@@ -116,14 +116,21 @@ public class PrimitivesTest extends Primitives {
 			((PacKnight) auto.getPersonnage()).ghostEnChasse=null;
 		return e;
 	}
-
 	/**
-	 * Indique si les fantômes ont suivi  les ordres*/
-	public boolean finOrdre(){
+	 *PacPrincess
+	 *Vérifie le que le nombre de garde autour d'elle est >0*/
+	public boolean nombreGardeSuffisant(){
 		
-		return false;
+		return (nombreGarde((PacPrincess)auto.getPersonnage())>0);
 	}
-
+	
+	/**
+	 * Packnight 
+	 * Vérifie que la princess ne l'a pas appelé pour l'escorter*/
+	public boolean appelAuDevoir(){
+		return ((PacKnight)auto.getPersonnage()).princesseEnDetresse!=null;
+	}
+	
 }
 
 

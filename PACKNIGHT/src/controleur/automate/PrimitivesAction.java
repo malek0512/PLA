@@ -173,8 +173,36 @@ public class PrimitivesAction extends Primitives {
 		}
 
 	}
+	/**
+	 * Primitive pour un packnight
+	 * Patrouille autour de la princesse*/
+	public void patrouiller(){
+		
+		if(((PacKnight)auto.getPersonnage()).princesseEnDetresse!=null && ((PacKnight)auto.getPersonnage()).hitting()){
+			PacPrincess bitch =((PacKnight)auto.getPersonnage()).princesseEnDetresse;
+			if(!personnageEstDansRayon(bitch.perimetreSecurite,bitch,((PacKnight)auto.getPersonnage())))
+				suivre2(bitch.getCoord());
+			else
+				fetch();
+		}
+		else{
+			((PacKnight)auto.getPersonnage()).princesseEnDetresse=null;
+		}
+	}
 	
-
+	/**
+	 * Primitive pour une PacPrincess*/
+	public void appelPatrouilleur(){
+		PacPrincess bitch = (PacPrincess) auto.getPersonnage();
+		PacKnight p = this.whichHero(bitch);
+		if(p.hitting() && p!=null) 
+		{
+//			System.out.println("trouver");
+			p.princesseEnDetresse = bitch;//on parametre le packnight
+		}
+		
+	} 
+	
 	/**
 	 * Donne des ordre au fantomes pour coincé un pacman donné
 	 */
@@ -255,7 +283,7 @@ public class PrimitivesAction extends Primitives {
 					min = next;
 			}
 
-			suivre(new CoordonneesFloat(min.getCoord()));
+			suivre2(new CoordonneesFloat(min.getCoord()));
 		}
 	}
 	
