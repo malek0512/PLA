@@ -50,9 +50,11 @@ public class Primitives {
 					Ghost.central.get(pac).majAvisDeRecherche(
 							pac.getCoord().CasCentre());
 				} else
-					Ghost.central.put(pac,
-							((Ghost) auto.getPersonnage()).new AvisDeRecherche(
-									pac.getCoord().CasCentre()));
+				{
+					
+					
+					Ghost.central.put(pac,((Ghost) auto.getPersonnage()).new AvisDeRecherche(pac.getCoord().CasCentre()));
+				}
 			}
 
 		}

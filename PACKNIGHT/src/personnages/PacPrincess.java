@@ -8,6 +8,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.newdawn.slick.Music;
+import org.newdawn.slick.SlickException;
+
 public class PacPrincess extends Pacman{
 	
 	/**
@@ -19,6 +22,17 @@ public class PacPrincess extends Pacman{
 	public List<Ghost> violeurs; //Les fantomes qui ose toucher a la princesse. Pour l'instant un violeur a la fois ^^. Par la suite pk pas une liste :D
 	static public CoordonneesFloat cordDeFuite = new CoordonneesFloat(1, 1);
 	public PacKnight protecteur=null;
+	static private Music dead;
+	
+	static public void initMusic()
+	{
+		try {
+			dead = new Music("src/graphisme/main/ressources/music/AllBeat.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public PacPrincess(String name, int x, int y, Direction d, CoordonneesFloat respawn) {
 		super(name,x,y,d,respawn);
@@ -74,7 +88,10 @@ public class PacPrincess extends Pacman{
 	public void meurtDansDatroceSouffrance() {
 		vie--;
 		if(vie != 0)
+		{
+			dead.play();
 			respawn();
+		}
 	}
 
 	public void gererCollision() {
@@ -104,6 +121,7 @@ public class PacPrincess extends Pacman{
 			}
 			else
 			{
+				dead.stop();
 				this.timerAnimation=0;
 				this.agonise=false;
 				this.respawnWOA();

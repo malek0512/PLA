@@ -21,8 +21,6 @@ public class Ghost extends Personnage {
 	 */
 	public static List<Ghost> liste = new LinkedList<Ghost>();
 
-
-	
 		//info divers
 	private final int vision = 5;
 	private CoordonneesFloat pointDeRespawn;
