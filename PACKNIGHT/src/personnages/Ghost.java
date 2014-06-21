@@ -122,6 +122,7 @@ public class Ghost extends Personnage {
 	{
 		Iterator<Ghost> i= Ghost.liste.iterator();
 		int timer = 0;
+		int cpt=1;
 		int x = 12*32;
 		int y = 14*32;
 		while (i.hasNext()) {
@@ -131,9 +132,14 @@ public class Ghost extends Personnage {
 			g.pointDeRespawn = new CoordonneesFloat(12*32,14*32);
 			g.coord.x = x;
 			g.coord.y = y;
-			timer++;
-			x+= 32;
 			g.direction=Direction.droite;
+			timer++;
+			if(cpt==4)
+				x=12*32;
+			else
+				x+= 32;
+			cpt++;
+			
 		}
 	}
 	
@@ -204,6 +210,7 @@ public class Ghost extends Personnage {
 	/**
 	 * Supprime le Pacman de la centrale si le timer est à 0*/
 	public static void disparitionPacman(){
+		boolean etaitVide = Ghost.central.isEmpty();
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();){
 			Pacman pac = i.next();
 			if(central.containsKey(pac)){
@@ -215,11 +222,10 @@ public class Ghost extends Personnage {
 			}
 	
 		}
-		if(Ghost.central.isEmpty())
+		if(!etaitVide && Ghost.central.isEmpty())
 		{
-			MusicManager.reperer.stop();
-			Accueil.Music_WindowGame.resume();
-			System.out.println("changement de music 2 -> 1");
+			MusicManager.stopReperer();
+			Accueil.Music_WindowGame.play();
 		}
 	}
 	/**
