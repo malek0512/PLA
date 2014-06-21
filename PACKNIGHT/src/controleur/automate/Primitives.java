@@ -344,6 +344,17 @@ public class Primitives {
 	}
 
 	/**
+	 * Renseigne sur le nombre de pacman dans le périmètre*/
+	public int nombreGarde(PacPrincess bitch){
+		int n=0;
+		for(PacKnight knight : PacKnight.liste){
+			if(personnageEstDansRayon(bitch.perimetreSecurite,bitch,knight))
+				n++;
+		}
+		return n;
+		}
+	
+	/**
 	 * fonction misterieuse qui renvoie la direction a prendre pour aller de la
 	 * case src vers la case dest
 	 * 
@@ -566,15 +577,26 @@ public class Primitives {
 	public CoordonneesFloat prochaineInterCas(CoordonneesFloat cord, Direction dir)
 	{
 		CoordonneesFloat c=  new CoordonneesFloat(cord);
+		int debug = 0;
 		while(!estIntersectionCas(c))
 		{
+			Direction dirEx =dir.opposer();
+			boolean buf = true;
 			for(Direction d : Direction.values())
-				if(Personnage.getTerrain().caseAcessible(c.x, c.y, d))
+				if(d != dirEx && Personnage.getTerrain().caseAcessible(c.x, c.y, d))
 					{
+					dirEx = d.opposer();
 					c.avancerDansDir(d);
+					buf = false;
 					break;
 					}
+			debug++;
+			if(buf || debug >50)
+			{
+				return cord;
+			}
 		}
+		
 		return c;
 	}
 }

@@ -31,12 +31,12 @@ public class Equipage_ARENE extends Equipage{
 
 	public Equipage_ARENE() {
 		super();
-		this.joueurFleche =  PACMAN_1;
+		this.joueurFleche =  null;
 		this.joueurLettre = null;
 	}
 	
 	public void init() throws SlickException{
-		Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1);
+		Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1,"packknight.xml");
 		Joueur PM_2 = new Joueur(this.g.SPRITE_PACMAN_2,this.g, PACMAN_2, "packnight.xml");
 		Joueur PM_3 = new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_3, "packnight.xml");
 		Joueur PM_4 = new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4, "princesse.xml");
