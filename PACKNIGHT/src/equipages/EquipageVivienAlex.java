@@ -27,10 +27,10 @@ public class EquipageVivienAlex extends Equipage {
 //	PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), false);
 //	PacPrincess PACMAN_4 = new PacPrincess("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 
-	Ghost GHOST_1 = new Ghost("1", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_3 = new Ghost("3", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_4 = new Ghost("4", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
+	Ghost GHOST_1 = new Ghost("1");
+	Ghost GHOST_2 = new Ghost("2");
+	Ghost GHOST_3 = new Ghost("3");
+	Ghost GHOST_4 = new Ghost("4");
 
 	public EquipageVivienAlex() {
 		super();

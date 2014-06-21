@@ -4,33 +4,22 @@ import game.Joueur;
 import game.Menu;
 import game.WindowGame;
 
-import java.awt.Window;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
-
-import personnages.CoordonneesFloat;
-import personnages.Direction;
-import personnages.Ghost;
-import personnages.PacKnight;
-import personnages.PacPrincess;
-import personnages.Personnage;
-import structure_terrain.Terrain;
-import controleur.automate.Automate;
+import personnages.*;
 
 public class EquipageAlex extends Equipage {
 
-	PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(17, 17), true);
+	PacKnight PACMAN_1= new PacKnight("J1",14,17,Direction.droite,new CoordonneesFloat(14, 17), true);
 //	PacKnight PACMAN_2 = new PacKnight("J2",5,15,Direction.droite,new CoordonneesFloat(5, 15), false);
 //	PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), false);
 //	PacPrincess PACMAN_4 = new PacPrincess("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 
-	Ghost GHOST_1 = new Ghost("1", 25, 1, Direction.droite,new CoordonneesFloat(25, 1));
-	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_3 = new Ghost("3", 12, 5, Direction.droite,new CoordonneesFloat(12, 5));
-	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(12, 1));
+	Ghost GHOST_1 = new Ghost("1");
+	Ghost GHOST_2 = new Ghost("2");
+	Ghost GHOST_3 = new Ghost("3");
+	Ghost GHOST_4 = new Ghost("4");
+		
 
 	public EquipageAlex() {
 		super();

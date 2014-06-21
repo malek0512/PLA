@@ -83,6 +83,16 @@ public class Terrain {
 	 * renvoie vrai si la case dans la direction est accessible
 	 * @param x : cord.x de la case
 	 * @param y : cord.y de la case
+	 */
+	public boolean caseAcessible(int x, int y)
+	{
+		return terrain[x][y].isAccessable();
+	}
+	
+	/**
+	 * renvoie vrai si la case dans la direction est accessible
+	 * @param x : cord.x de la case
+	 * @param y : cord.y de la case
 	 * @param direction : direction ou doit etre tester la case
 	 * @return vraie si la case dans la direction de la case (x,y) est accessible
 	 */

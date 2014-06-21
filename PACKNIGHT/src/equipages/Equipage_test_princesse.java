@@ -27,20 +27,21 @@ public class Equipage_test_princesse extends Equipage {
 	PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), false);
 	PacPrincess PACMAN_4 = new PacPrincess("J4",17,17,Direction.droite,new CoordonneesFloat(1, 1));
 
-	Ghost GHOST_1 = new Ghost("1", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_3 = new Ghost("3", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	//Ghost GHOST_4 = new Ghost("4", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
+	Ghost GHOST_1 = new Ghost("1");
+	Ghost GHOST_2 = new Ghost("2");
+	Ghost GHOST_3 = new Ghost("3");
+	Ghost GHOST_4 = new Ghost("4");
 
 	public Equipage_test_princesse() {
 		super();
 		this.joueurCamera =  null;
 		this.joueurZQSD = PACMAN_1;
+
 	}
 
 	public void init() throws SlickException {
 		Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1);
-//		Joueur PM_2 = new Joueur(this.g.SPRITE_PACMAN_2,this.g, PACMAN_2, "rama.xml");
+		Joueur PM_2 = new Joueur(this.g.SPRITE_PACMAN_2,this.g, PACMAN_2, "packnight.xml");
 		Joueur PM_3 = new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_3, "packnight.xml");
 		Joueur PM_4 = new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4, "princesse.xml");
 
@@ -48,7 +49,7 @@ public class Equipage_test_princesse extends Equipage {
 		Joueur FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_suiveur.xml");
 		Joueur FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_intercepteur.xml");
 		Joueur FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_berserk.xml");
-//		Joueur FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"rama.xml");
+		Joueur FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"rama.xml");
 
 	}
 
