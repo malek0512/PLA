@@ -223,11 +223,9 @@ public class WindowGame extends BasicGameState {
 	public void keyReleased(int key, char c) {
 		if (!pause)
 		{
-			System.out.println("KeY " + key);
 				
 				if(equip.joueurFleche!=null)
 				{
-					System.out.println("FLECHE");
 				switch (key) 
 					{
 					case Input.KEY_UP:
@@ -304,7 +302,6 @@ public class WindowGame extends BasicGameState {
 				}
 			}
 	
-			System.out.println(equip.joueurZQSD.getOrientation());
 			switch (key) {
 			case Input.KEY_M:
 				if (Accueil.Music_WindowGame.playing())
