@@ -68,6 +68,7 @@ public class WindowGame extends BasicGameState {
 	boolean pause = false;
 	
 	
+	
 	public static int Choix_Map = 0;
 
 	public int getID() {
@@ -180,10 +181,10 @@ public class WindowGame extends BasicGameState {
 			if (!(time < 3000)) {
 				if(equip.joueurCamera!=null)
 				{
-				if (equip.joueurCamera.parametrable())
-					equip.joueurCamera.avancer();
-				else
-					equip.joueurCamera.avancerAnimation();
+//				if (equip.joueurCamera.parametrable())
+//					equip.joueurCamera.avancer();
+//				else
+//					equip.joueurCamera.avancerAnimation();
 	
 				float w = container.getWidth() / 4;
 				if (!(equip.joueurCamera.getCoord().x - xCamera > resolution_x / 2 || equip.joueurCamera.getCoord().x - xCamera < -resolution_x / 2)) {
@@ -222,9 +223,11 @@ public class WindowGame extends BasicGameState {
 	public void keyReleased(int key, char c) {
 		if (!pause)
 		{
+			System.out.println("KeY " + key);
 				
 				if(equip.joueurFleche!=null)
 				{
+					System.out.println("FLECHE");
 				switch (key) 
 					{
 					case Input.KEY_UP:
@@ -251,12 +254,16 @@ public class WindowGame extends BasicGameState {
 					break;
 				case Input.KEY_Q:
 					equip.joueurZQSD.setNextDirection(Direction.gauche);
+					System.out.println(equip.joueurZQSD.getOrientation());
+					
 					break;
 				case Input.KEY_S:
 					equip.joueurZQSD.setNextDirection(Direction.bas);
+					System.out.println(equip.joueurZQSD.getOrientation());
 					break;
 				case Input.KEY_D:
 					equip.joueurZQSD.setNextDirection(Direction.droite);
+					System.out.println(equip.joueurZQSD.getOrientation());
 					break;
 				}
 			}
@@ -297,6 +304,7 @@ public class WindowGame extends BasicGameState {
 				}
 			}
 	
+			System.out.println(equip.joueurZQSD.getOrientation());
 			switch (key) {
 			case Input.KEY_M:
 				if (Accueil.Music_WindowGame.playing())

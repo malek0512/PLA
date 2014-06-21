@@ -69,7 +69,11 @@ public class Joueur {
 	public void suivant () throws Exception{
 		if(this.auto != null){
 			auto.suivant();
-			
+		} else {
+			if (p.parametrable())
+			p.avancer();
+		else
+			p.avancerAnimation();
 		}
 		this.direction =  p.getOrientation().ordinal();
 	}

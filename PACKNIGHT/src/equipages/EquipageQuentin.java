@@ -179,8 +179,8 @@ public class EquipageQuentin extends equipages.Equipage {
 	
 	public EquipageQuentin() {
 		super();
-		this.joueurCamera =  PACMAN_1;
-		this.joueurFleche =  PACMAN_1;
+//		this.joueurCamera =  PACMAN_1;
+//		this.joueurFleche =  PACMAN_1;
 	}
 
 	   public static void main(String[] argv) {
