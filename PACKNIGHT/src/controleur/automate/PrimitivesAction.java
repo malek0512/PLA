@@ -423,24 +423,20 @@ public class PrimitivesAction extends Primitives {
 		// 3 : avenir pac-gom
 		// 4 : avenir distance
 		// 5 : avenir personnage
-		System.out.println("FETCH DEBUT");
-		CoordonneesFloat caseDuPerso = new CoordonneesFloat(
-				auto.getPersonnage().coord);
-		if (caseDuPerso.CasBG().equals(caseDuPerso.CasHD())
-				&& estIntersection(caseDuPerso)) {// si le perso est bien sur
-													// une case, et donc si il
-													// est sur une intersection
-													// :
+		CoordonneesFloat caseDuPerso = new CoordonneesFloat(auto.getPersonnage().coord);
+		if (caseDuPerso.CasBG().equals(caseDuPerso.CasHD())&& estIntersection(caseDuPerso)) 
+		{
 			int tab[][] = laFonctionQuiFaitTout(caseDuPerso.CasCentre(),1);
 
 			int meilleurCandidat = Integer.MIN_VALUE;
 			Direction meilleurCandidatDirection = null;
 			int cpt = 0;
-			for (Direction d : Direction.values()) {// pour chaque direction
-				if (tab[cpt][1] != 0) {// sinon la direction est un mur ou il y
-										// a aucun pac-gomm
-					if (tab[cpt][0] + tab[cpt][3] > 0) {// sinon il n'y a pas de
-														// pac-gomm
+			for (Direction d : Direction.values()) 
+			{// pour chaque direction
+				if (tab[cpt][1] != 0) 
+				{
+					if (tab[cpt][0] + tab[cpt][3] > 0) 
+					{
 						int candidat = 0;
 						for (int k = 0; k < 3; k++)
 							candidat += ImportanceRacine * tab[cpt][k];
@@ -454,37 +450,33 @@ public class PrimitivesAction extends Primitives {
 				}
 				cpt++;
 			}
-			if (meilleurCandidatDirection != null) {
+			if (meilleurCandidatDirection != null) 
+			{
 				this.auto.getPersonnage().setDirection(
 						meilleurCandidatDirection);
 				this.auto.getPersonnage().avancer();
 			} 
-			else {
-				// aucun candidat n'a aboutie vers des pac-gomm
-				// Actuellement on fait un set alea
-				// faudrai faire en sorte qu'il se dirige vers un pac-gomm
-				// setDirectionAleatoire(this.auto.getPersonnage());
-				// this.auto.getPersonnage().avancer();
+			else 
+			{
 				Terrain t = Personnage.getTerrain();
 				CoordonneesFloat dest = null;
 				for (int i = 0; i < t.largeur; i++) 
 					for (int j = 0; j < t.hauteur; j++) 
 						if (t.ValueCase(i, j) == 2) 
 						{
-							dest = new CoordonneesFloat(i*32, j*32);
+							dest = new CoordonneesFloat(i, j);
 							i=t.largeur;
 							j=t.hauteur;
 						}
 				if (dest != null)
-					suivre2(dest);
-				else
-					System.out.println("wtf "+dest);
+					this.fuir(Ghost.listCoord(),dest);
 			}
-		} else {
+		} 
+		else 
+		{
 			setDirectionAleatoire(this.auto.getPersonnage());
 			this.auto.getPersonnage().avancer();
 		}
-		System.out.println("FETCH FIN");
 	}
 	
 }
