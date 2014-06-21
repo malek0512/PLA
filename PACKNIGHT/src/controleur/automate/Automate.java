@@ -8,10 +8,7 @@ import controleur.Controleur;
 import controleur.automate.TableTransitionSortie.Triplet;
 import src.parser.Parser;
 import src.parser.Quad;
-import personnages.CoordonneesFloat;
-import personnages.Direction;
-import personnages.Ghost;
-import personnages.Personnage;
+import personnages.*;
 
 
 /**

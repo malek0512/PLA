@@ -1,12 +1,7 @@
 Etat 1
 Transition
     ETATSUIVANT = 2
-    ENTREE = VUE
-    SORTIE = AVANCER
-    
-Transition
-    ETATSUIVANT = 2
-    ENTREE = PAS_VUE
+    ENTREE = ETOILE
     SORTIE = AVANCER
     
 Etat 2
@@ -17,5 +12,5 @@ Transition
         
 ETAT_INITIAL = 1
 ETAT_FINAL = 
-ETAT_BLOQUANT = 1 2
+ETAT_BLOQUANT = 1
 AUTOMATE = fm_aleatoire_aveugle
