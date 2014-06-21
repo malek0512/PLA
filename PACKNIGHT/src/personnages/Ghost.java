@@ -187,11 +187,11 @@ public class Ghost extends Personnage {
 
 		public AvisDeRecherche(CoordonneesFloat c) {
 			coord = new CoordonneesFloat(c);
-			timer=200;
+			timer=150;
 		}
 		
 		public void majAvisDeRecherche(CoordonneesFloat c){
-			timer=200;
+			timer=150;
 			coord=c;
 		}
 	}
@@ -210,7 +210,6 @@ public class Ghost extends Personnage {
 				if(central.get(pac).timer==0)
 					central.remove(pac);
 				else{ 
-					System.out.println(central.get(pac).timer);
 					central.get(pac).timer--;
 				}
 			}
