@@ -96,10 +96,10 @@ public class PacPrincess extends Pacman{
 
 	public void gererCollision() {
 		Iterator<Ghost> i = Ghost.liste.iterator();
-		while(i.hasNext())
+		while(this.hitting() && i.hasNext())
 		{
 			Ghost g = i.next();
-			if(g.hitting() && hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
+			if(g.hitting()&& hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
 			{
 				this.meurtDansDatroceSouffrance();
 				break;
