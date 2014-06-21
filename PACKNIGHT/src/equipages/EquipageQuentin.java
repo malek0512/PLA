@@ -45,24 +45,24 @@ public class EquipageQuentin extends equipages.Equipage {
 			switch (Difficulte.choix_difficulte)
 			{
 			case 1 : 
-				FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_suiveur.xml");
-				FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_aleatoire_aveugle.xml");
-				FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_aleatoire.xml");
-				FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_aleatoire.xml");
+				FM_1 = new Joueur(this.g.SPRITE_SUIVEUR,this.g, GHOST_1,"fm_suiveur.xml");
+				FM_2 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_2,"fm_aleatoire_aveugle.xml");
+				FM_3 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_3,"fm_aleatoire.xml");
+				FM_4 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_4,"fm_aleatoire.xml");
 				break;
 			
 			case 2 :
-				FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_aleatoire.xml");
-				FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_berserk.xml");
-				FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_suiveur.xml");
-				FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_aleatoire.xml");
+				FM_1 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_1,"fm_aleatoire.xml");
+				FM_2 = new Joueur(this.g.SPRITE_BERSERK,this.g, GHOST_2,"fm_berserk.xml");
+				FM_3 = new Joueur(this.g.SPRITE_SUIVEUR,this.g, GHOST_3,"fm_suiveur.xml");
+				FM_4 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_4,"fm_aleatoire.xml");
 				break;
 				
 			case 3 :
-				FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_berserk.xml");
-				FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_berserk.xml");
-				FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_suiveur.xml");
-				FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_intercepteur.xml");
+				FM_1 = new Joueur(this.g.SPRITE_BERSERK,this.g, GHOST_1,"fm_berserk.xml");
+				FM_2 = new Joueur(this.g.SPRITE_BERSERK,this.g, GHOST_2,"fm_berserk.xml");
+				FM_3 = new Joueur(this.g.SPRITE_SUIVEUR,this.g, GHOST_3,"fm_suiveur.xml");
+				FM_4 = new Joueur(this.g.SPRITE_INTERCEPTEUR,this.g, GHOST_4,"fm_intercepteur.xml");
 				
 				break;
 				
@@ -70,45 +70,45 @@ public class EquipageQuentin extends equipages.Equipage {
 			case 4 :
 		         switch (Free.Ghost_1)
 		         {
-		         	case 1 :FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_aleatoire.xml");break;
-		         	case 2 :FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_aleatoire_aveugle.xml");break;
-		         	case 3 :FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_suiveur.xml");break;
-		         	case 4 :FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_berserk.xml");break;
-		         	case 5 :FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_intercepteur.xml");;break;
-		         	case 6 :FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_lord.xml");;break;
+		         	case 1 :FM_1 = new Joueur(this.g.SPRITE_ALEATOIRE   ,this.g, GHOST_1,"fm_aleatoire.xml");break;
+		         	case 2 :FM_1 = new Joueur(this.g.SPRITE_ALEATOIRE   ,this.g, GHOST_1,"fm_aleatoire_aveugle.xml");break;
+		         	case 3 :FM_1 = new Joueur(this.g.SPRITE_SUIVEUR     ,this.g, GHOST_1,"fm_suiveur.xml");break;
+		         	case 4 :FM_1 = new Joueur(this.g.SPRITE_BERSERK     ,this.g, GHOST_1,"fm_berserk.xml");break;
+		         	case 5 :FM_1 = new Joueur(this.g.SPRITE_INTERCEPTEUR,this.g, GHOST_1,"fm_intercepteur.xml");;break;
+		         	case 6 :FM_1 = new Joueur(this.g.SPRITE_LORD        ,this.g, GHOST_1,"fm_lord.xml");;break;
 		         		
 		         }
 		         
 		         switch (Free.Ghost_2)
 		         {
-		         	case 1 :FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_aleatoire.xml");break;
-		         	case 2 :FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_aleatoire_aveugle.xml");break;
-		         	case 3 :FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_suiveur.xml");break;
-		         	case 4 :FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_berserk.xml");break;
-		         	case 5 :FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_intercepteur.xml");;break;
-		         	case 6 :FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_lord.xml");;break;
+		         	case 1 :FM_2 = new Joueur(this.g.SPRITE_ALEATOIRE   ,this.g, GHOST_2,"fm_aleatoire.xml");break;
+		         	case 2 :FM_2 = new Joueur(this.g.SPRITE_ALEATOIRE   ,this.g, GHOST_2,"fm_aleatoire_aveugle.xml");break;
+		         	case 3 :FM_2 = new Joueur(this.g.SPRITE_SUIVEUR     ,this.g, GHOST_2,"fm_suiveur.xml");break;
+		         	case 4 :FM_2 = new Joueur(this.g.SPRITE_BERSERK     ,this.g, GHOST_2,"fm_berserk.xml");break;
+		         	case 5 :FM_2 = new Joueur(this.g.SPRITE_INTERCEPTEUR,this.g, GHOST_2,"fm_intercepteur.xml");;break;
+		         	case 6 :FM_2 = new Joueur(this.g.SPRITE_LORD        ,this.g, GHOST_2,"fm_lord.xml");;break;
 		         		
 		         }
 		         
 		         switch (Free.Ghost_3)
 		         {
-		         	case 1 :FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_aleatoire.xml");break;
-		         	case 2 :FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_aleatoire_aveugle.xml");break;
-		         	case 3 :FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_suiveur.xml");break;
-		         	case 4 :FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_berserk.xml");break;
-		         	case 5 :FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_intercepteur.xml");;break;
-		         	case 6 :FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_lord.xml");;break;
+		         	case 1 :FM_3 = new Joueur(this.g.SPRITE_ALEATOIRE   ,this.g, GHOST_3,"fm_aleatoire.xml");break;
+		         	case 2 :FM_3 = new Joueur(this.g.SPRITE_ALEATOIRE   ,this.g, GHOST_3,"fm_aleatoire_aveugle.xml");break;
+		         	case 3 :FM_3 = new Joueur(this.g.SPRITE_SUIVEUR     ,this.g, GHOST_3,"fm_suiveur.xml");break;
+		         	case 4 :FM_3 = new Joueur(this.g.SPRITE_BERSERK     ,this.g, GHOST_3,"fm_berserk.xml");break;
+		         	case 5 :FM_3 = new Joueur(this.g.SPRITE_INTERCEPTEUR,this.g, GHOST_3,"fm_intercepteur.xml");;break;
+		         	case 6 :FM_3 = new Joueur(this.g.SPRITE_LORD        ,this.g, GHOST_3,"fm_lord.xml");;break;
 		         		
 		         }
 		         
 		         switch (Free.Ghost_4)
 		         {
-		         	case 1 :FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_aleatoire.xml");break;
-		         	case 2 :FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_aleatoire_aveugle.xml");break;
-		         	case 3 :FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_suiveur.xml");break;
-		         	case 4 :FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_berserk.xml");break;
-		         	case 5 :FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_intercepteur.xml");;break;
-		         	case 6 :FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_lord.xml");;break;
+		         	case 1 :FM_4 = new Joueur(this.g.SPRITE_ALEATOIRE   ,this.g, GHOST_4,"fm_aleatoire.xml");break;
+		         	case 2 :FM_4 = new Joueur(this.g.SPRITE_ALEATOIRE   ,this.g, GHOST_4,"fm_aleatoire_aveugle.xml");break;
+		         	case 3 :FM_4 = new Joueur(this.g.SPRITE_SUIVEUR     ,this.g, GHOST_4,"fm_suiveur.xml");break;
+		         	case 4 :FM_4 = new Joueur(this.g.SPRITE_BERSERK     ,this.g, GHOST_4,"fm_berserk.xml");break;
+		         	case 5 :FM_4 = new Joueur(this.g.SPRITE_INTERCEPTEUR,this.g, GHOST_4,"fm_intercepteur.xml");;break;
+		         	case 6 :FM_4 = new Joueur(this.g.SPRITE_LORD        ,this.g, GHOST_4,"fm_lord.xml");;break;
 		         		                                                         
 		         }
 				
@@ -166,10 +166,10 @@ public class EquipageQuentin extends equipages.Equipage {
 			this.joueurCamera =  PACMAN_4;
 			
 	
-			Joueur FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_berserk.xml");
-			Joueur FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_suiveur.xml");
-			Joueur FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_intercepteur.xml");
-			Joueur FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_lord.xml");
+			Joueur FM_1 = new Joueur(this.g.SPRITE_BERSERK,this.g, GHOST_1,"fm_berserk.xml");
+			Joueur FM_2 = new Joueur(this.g.SPRITE_SUIVEUR,this.g, GHOST_2,"fm_suiveur.xml");
+			Joueur FM_3 = new Joueur(this.g.SPRITE_INTERCEPTEUR,this.g, GHOST_3,"fm_intercepteur.xml");
+			Joueur FM_4 = new Joueur(this.g.SPRITE_LORD,this.g, GHOST_4,"fm_lord.xml");
 			
 
 		}

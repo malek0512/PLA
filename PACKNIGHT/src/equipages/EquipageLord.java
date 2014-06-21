@@ -27,15 +27,15 @@ public class EquipageLord extends Equipage {
 //	PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), false);
 //	PacPrincess PACMAN_4 = new PacPrincess("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 
-	Ghost GHOST_1 = new Ghost("1", 25, 1, Direction.droite,new CoordonneesFloat(25, 1));
-	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));
-	Ghost GHOST_3 = new Ghost("3", 12, 5, Direction.droite,new CoordonneesFloat(12, 5));
-	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(12, 1));
+	Ghost GHOST_1 = new Ghost("1");
+	Ghost GHOST_2 = new Ghost("2");
+	Ghost GHOST_3 = new Ghost("3");
+	Ghost GHOST_4 = new Ghost("4");
 
 	public EquipageLord() {
 		super();
 		this.joueurFleche =  PACMAN_1;
-		this.joueurLettre = PACMAN_1;
+		this.joueurCamera = PACMAN_1;
 	}
 
 	public void init() throws SlickException {
@@ -45,10 +45,10 @@ public class EquipageLord extends Equipage {
 //		Joueur PM_4 = new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4, "princesse.xml");
 
 
-		Joueur FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_suiveur.xml");
-		Joueur FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_intercepteur.xml");
-		Joueur FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_aleatoire.xml");
-		Joueur FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_berserk.xml");
+		Joueur FM_1 = new Joueur(this.g.SPRITE_SUIVEUR,this.g, GHOST_1,"fm_suiveur.xml");
+		Joueur FM_2 = new Joueur(this.g.SPRITE_INTERCEPTEUR,this.g, GHOST_2,"fm_intercepteur.xml");
+		Joueur FM_3 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_3,"fm_aleatoire.xml");
+		Joueur FM_4 = new Joueur(this.g.SPRITE_BERSERK,this.g, GHOST_4,"fm_berserk.xml");
 
 	}
 
