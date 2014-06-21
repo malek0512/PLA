@@ -10,6 +10,6 @@ public class MusicManager {
 	{
 		try {
 			reperer = new Music("src/graphisme/main/ressources/music/Batman.ogg");
-		} catch (SlickException e) {}
+		} catch (SlickException e) {System.out.println("pas marcher");}
 	}
 }
