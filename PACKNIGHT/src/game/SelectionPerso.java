@@ -8,9 +8,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.gui.AbstractComponent;
-import org.newdawn.slick.gui.ComponentListener;
-import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -81,6 +78,7 @@ public class SelectionPerso extends BasicGameState
 		      			if (quit)Menu.container.exit(); 
 		      			else  
 		      			{
+		      				Accueil.Music_WindowGame.loop();
 		      				game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 		      			}
 		      				
@@ -121,6 +119,7 @@ public class SelectionPerso extends BasicGameState
 	      				case 4 :if (Perso_4==0) Perso_4 = 1; else Perso_4 =0 ;break;
 	      				}
 	      				break;
+	      				
 		      }
 	   }
 }

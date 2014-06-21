@@ -165,13 +165,13 @@ public class WindowGame extends BasicGameState {
 			throws SlickException {
 
 		if (Terrain.nb_pacgum == 0) {
-			//Accueil.Music_Win.play();
+			Accueil.Music_Win.play();
 			game.enterState(Win.ID, new FadeOutTransition(Color.black),
 					new FadeInTransition(Color.black));
 		}
 
 		if (PacKnight.vie == 0) {
-			//Accueil.Music_Dead.play();
+			Accueil.Music_Dead.play();
 			game.enterState(Dead.ID, new FadeOutTransition(Color.black),
 					new FadeInTransition(Color.black));
 		}
