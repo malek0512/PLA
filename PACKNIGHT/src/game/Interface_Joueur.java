@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import personnages.PacKnight;
+import personnages.PacPrincess;
 import structure_terrain.Terrain;
 import game.WindowGame;
 
@@ -41,6 +42,7 @@ public class Interface_Joueur {
 	private static void drawHeart(float x, float y,  Image HEART)
 	{
         int i = 0;
+        int j = 0;
         while(i<PacKnight.vie ) 
         {	
         	if(i < 5)
@@ -48,13 +50,31 @@ public class Interface_Joueur {
 				HEART.draw(x,y+i*WindowGame.tuile_size);
 				i++;
         	}
-        	else
+        	else if (i < 10)
         	{
 	        	HEART.draw(x+WindowGame.tuile_size,y+(i-5)*WindowGame.tuile_size);
 	        	i++;
         	}
+        	else if (i <15)
+        	{
+	        	HEART.draw(x+2*WindowGame.tuile_size,y+(i-10)*WindowGame.tuile_size);
+	        	i++;
+        	}
+        	else
+        	{
+	        	HEART.draw(x+3*WindowGame.tuile_size,y+(i-15)*WindowGame.tuile_size);
+	        	i++;
+        	}
         }
-
+        if (WindowGame.Choix_Map == 1)
+        {
+        	while(j<PacPrincess.vie)
+        	{
+				HEART.draw(x,y+260+j*WindowGame.tuile_size);
+				j++;
+        	}
+        }
+        
 	}
 
 }
