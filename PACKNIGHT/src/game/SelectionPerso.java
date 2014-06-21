@@ -50,7 +50,7 @@ public class SelectionPerso extends BasicGameState
     {
          FOND_SELECTION.draw();
          if ( Perso_1 ==1)
-         PRINCESS.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);
+         PACKNIGHT.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);
          else AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);
         	 
          if ( Perso_2 ==1)
@@ -62,7 +62,7 @@ public class SelectionPerso extends BasicGameState
          else AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);
          
          if ( Perso_4 ==1)
-         PACKNIGHT.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);
+         PRINCESS.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);
          else AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);
          
          MOUSE.draw(PG_X,PG_Y);
