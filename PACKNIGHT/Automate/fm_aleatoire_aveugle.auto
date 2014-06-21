@@ -12,5 +12,9 @@ Transition
         
 ETAT_INITIAL = 1
 ETAT_FINAL = 
+<<<<<<< HEAD
 ETAT_BLOQUANT = 1 
+=======
+ETAT_BLOQUANT = 1
+>>>>>>> 1e14ff07da470ceccf4f8f7cb2ee944338c0f28d
 AUTOMATE = fm_aleatoire_aveugle

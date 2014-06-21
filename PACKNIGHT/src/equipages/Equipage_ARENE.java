@@ -1,4 +1,8 @@
-package game;
+package equipages;
+
+import game.Joueur;
+import game.Menu;
+import game.WindowGame;
 
 import java.awt.Window;
 import java.util.LinkedList;
@@ -24,10 +28,10 @@ public class Equipage_ARENE extends Equipage{
 	PacKnight PACMAN_3 = new PacKnight("J3",32,18,Direction.droite,new CoordonneesFloat(6, 18), false);
 	PacPrincess PACMAN_4 = new PacPrincess("J4",5,15,Direction.droite,new CoordonneesFloat(17, 17));
 
-	Ghost GHOST_1 = new Ghost("1", 2, 1, Direction.droite,new CoordonneesFloat(2, 1));
-	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(20, 1));
-	Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite,new CoordonneesFloat(26, 1));
-	Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(18, 1));
+	Ghost GHOST_1 = new Ghost("1");
+	Ghost GHOST_2 = new Ghost("2");
+	Ghost GHOST_3 = new Ghost("3");
+	Ghost GHOST_4 = new Ghost("4");
 
 	public Equipage_ARENE() {
 		super();

@@ -1,4 +1,8 @@
-package game;
+package equipages;
+
+import game.Joueur;
+import game.Menu;
+import game.WindowGame;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;

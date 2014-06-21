@@ -1,5 +1,8 @@
-package game;
+package equipages;
 
+
+import game.Joueur;
+import game.WindowGame;
 
 import org.newdawn.slick.SlickException;
 
@@ -9,8 +12,8 @@ public abstract class Equipage {
 
 	
 	WindowGame g;
-	Personnage joueurFleche;
-	Personnage joueurLettre;
+	public Personnage joueurFleche;
+	public Personnage joueurLettre;
 	
 	public Equipage() {
 		this.g = new WindowGame(this);

@@ -1,21 +1,12 @@
 package controleur.automate;
 
 import graph.Aetoile;
-import graph.Graph;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Random;
 
-import personnages.CoordonneesFloat;
-import personnages.Direction;
-import personnages.Ghost;
-import personnages.Ghost.AvisDeRecherche;
-import personnages.PacKnight;
-import personnages.PacPrincess;
-import personnages.Pacman;
-import personnages.Personnage;
+import personnages.*;
 import structure_terrain.Terrain;
 
 /**

@@ -1,5 +1,6 @@
 package game;
 
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,6 +13,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
 
+import equipages.*;
 import game.Menu;
 import personnages.*;
 import structure_terrain.*;
@@ -66,7 +68,7 @@ public class WindowGame extends BasicGameState {
 	boolean pause = false;
 	
 	
-	static int Choix_Map = 0;
+	public static int Choix_Map = 0;
 
 	public int getID() {
 		return ID;
@@ -84,7 +86,6 @@ public class WindowGame extends BasicGameState {
 		case 1 : MAP = "FATMAP.tmx"; break;
 		}
 		
-		System.out.println("MAP : "+Choix_Map);
 		time = 0;
 		PacKnight.vie = 50;
 		
