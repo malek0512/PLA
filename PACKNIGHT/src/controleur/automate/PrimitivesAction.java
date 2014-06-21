@@ -185,22 +185,24 @@ public class PrimitivesAction extends Primitives {
 	 * Primitive pour une PacPrincess*/
 	public void appelPatrouilleur(){
 		PacPrincess bitch = (PacPrincess) auto.getPersonnage();
-		((PacPrincess) auto.getPersonnage()).protecteur=PacKnight.liste.get(0);
-		PacKnight p = this.whichHero(bitch);
-		if(p.hitting() && p!=null) 
+		if(!PacKnight.liste.isEmpty())
 		{
-//			System.out.println("trouver");
-			if(p!=((PacPrincess) auto.getPersonnage()).protecteur){
-			p.princesseEnDetresse = bitch;//on parametre le packnight
-			((PacPrincess) auto.getPersonnage()).protecteur.princesseEnDetresse=null;
+			((PacPrincess) auto.getPersonnage()).protecteur=PacKnight.liste.get(0);
+			PacKnight p = this.whichHero(bitch);
+			if( p!=null && p.hitting()) 
+			{
+	//			System.out.println("trouver");
+				if(p!=((PacPrincess) auto.getPersonnage()).protecteur){
+				p.princesseEnDetresse = bitch;//on parametre le packnight
+				((PacPrincess) auto.getPersonnage()).protecteur.princesseEnDetresse=null;
+				}
+				
+				else
+					((PacPrincess) auto.getPersonnage()).protecteur.princesseEnDetresse=bitch;
+				
+				
 			}
-			
-			else
-				((PacPrincess) auto.getPersonnage()).protecteur.princesseEnDetresse=bitch;
-			
-			
 		}
-		
 	} 
 	
 

@@ -75,6 +75,21 @@ public class Graph {
     			table[i][j].reset();
     	}
     }
+    
+    private void removeMG(List<CoordonneesFloat> res, CoordonneesFloat c)
+    {
+    	Iterator<CoordonneesFloat> i = res.iterator();
+    	while(i.hasNext())
+    	{
+    		int cpt = 0;
+    		if(i.next().equals(c))
+    		{
+    			res.remove(cpt);
+    			break;
+    		}
+    		cpt++;
+    	}
+    }
 
     /**
      * @param noeud : coordonnée de la case a gank
@@ -119,7 +134,7 @@ public class Graph {
 					else if (adj.couleur==1) //gris
 					{
 						//remove le adj gris trouver
-						res.remove(res.indexOf(v));
+						removeMG(res,v);
 						//mis a jour du nombre d'inter trouver
 						nbInterFind--;
 						adj.couleur=2; //noir

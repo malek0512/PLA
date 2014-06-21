@@ -104,8 +104,7 @@ public class PrimitivesTest extends Primitives {
 		//casting des perso
 		Personnage gosthEnChasse = ((PacKnight) auto.getPersonnage()).ghostEnChasse;
 		PacPrincess princess = ((PacKnight) auto.getPersonnage()).princesseEnDetresse;
-		System.out.println("COUCOU chasse");
-		if (gosthEnChasse==null)
+		if (gosthEnChasse==null || princess==null)
 		{
 			//rien a chasse
 			return false;

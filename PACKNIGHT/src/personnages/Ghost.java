@@ -422,15 +422,17 @@ public class Ghost extends Personnage {
 	 */
 	private void executerOrdre()
 	{
-		
 		if(this.coord.CasBG().equals(this.coord.CasHD()))
 		{
-			ordre.remove(0);
 			if(!ordre.isEmpty())
 			{
-				caseDOrdre = ordre.get(0);
-				direction = mysteriousFunction(coord.CasCentre(), caseDOrdre);
-				avancer();
+				ordre.remove(0);
+				if(!ordre.isEmpty())
+				{
+					caseDOrdre = ordre.get(0);
+					direction = mysteriousFunction(coord.CasCentre(), caseDOrdre);
+					avancer();
+				}
 			}
 			else
 			{
