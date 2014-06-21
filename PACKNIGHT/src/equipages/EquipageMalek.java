@@ -35,8 +35,9 @@ public class EquipageMalek extends Equipage{
 
 	public EquipageMalek() {
 		super();
+		this.joueurCamera =  GHOST_1;
 		this.joueurFleche =  GHOST_1;
-		this.joueurLettre = PACMAN_1;
+		this.joueurZQSD = PACMAN_1;
 	}
 	
 	public void init() throws SlickException{

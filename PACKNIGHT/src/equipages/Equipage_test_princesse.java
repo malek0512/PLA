@@ -34,8 +34,8 @@ public class Equipage_test_princesse extends Equipage {
 
 	public Equipage_test_princesse() {
 		super();
-		this.joueurFleche =  null;
-		this.joueurLettre = PACMAN_1;
+		this.joueurCamera =  null;
+		this.joueurZQSD = PACMAN_1;
 	}
 
 	public void init() throws SlickException {

@@ -27,8 +27,8 @@ public class Equipage_Facile extends Equipage{
 
 		public Equipage_Facile() {
 			super();
-			this.joueurFleche =  PACMAN_1;
-			this.joueurLettre = null;
+			this.joueurCamera =  PACMAN_1;
+			this.joueurZQSD = null;
 		}
 		
 		public void init() throws SlickException{

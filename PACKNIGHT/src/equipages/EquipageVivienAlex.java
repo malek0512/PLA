@@ -34,8 +34,8 @@ public class EquipageVivienAlex extends Equipage {
 
 	public EquipageVivienAlex() {
 		super();
-		this.joueurFleche =  PACMAN_1;
-		this.joueurLettre = PACMAN_1;
+		this.joueurCamera =  PACMAN_1;
+		this.joueurZQSD = PACMAN_1;
 	}
 
 	public void init() throws SlickException {

@@ -35,8 +35,8 @@ public class Equipage_ARENE extends Equipage{
 
 	public Equipage_ARENE() {
 		super();
-		this.joueurFleche =  null;
-		this.joueurLettre = null;
+		this.joueurCamera =  null;
+		this.joueurZQSD = null;
 	}
 	
 	public void init() throws SlickException{

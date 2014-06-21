@@ -22,10 +22,10 @@ public class EquipageQuentin extends equipages.Equipage {
 	PacKnight PACMAN_3;
 	PacPrincess PACMAN_4 ;
 
-	Ghost GHOST_1 = new Ghost("1", 14, 14, Direction.droite,new CoordonneesFloat(14, 14));
-	Ghost GHOST_2 = new Ghost("2", 14, 14, Direction.droite,new CoordonneesFloat(14, 14));
-	Ghost GHOST_3 = new Ghost("3", 14, 14, Direction.droite,new CoordonneesFloat(14, 14));
-	Ghost GHOST_4 = new Ghost("4", 14, 14, Direction.droite,new CoordonneesFloat(14, 14));
+	Ghost GHOST_1; 
+	Ghost GHOST_2; 
+	Ghost GHOST_3; 
+	Ghost GHOST_4; 
 	
 	public void init() throws SlickException {
 		
@@ -37,6 +37,10 @@ public class EquipageQuentin extends equipages.Equipage {
 			Joueur FM_2;
 			Joueur FM_3;
 			Joueur FM_4;
+			GHOST_1 = new Ghost("1", 6, 2, Direction.droite,new CoordonneesFloat(6, 2));
+			GHOST_2 = new Ghost("2", 6, 3, Direction.droite,new CoordonneesFloat(6, 3));
+			GHOST_3 = new Ghost("3", 6, 4, Direction.droite,new CoordonneesFloat(6, 4));
+			GHOST_4 = new Ghost("4", 6, 5, Direction.droite,new CoordonneesFloat(6, 5));
 			switch (Difficulte.choix_difficulte)
 			{
 			case 1 : 
@@ -115,11 +119,17 @@ public class EquipageQuentin extends equipages.Equipage {
 			Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1);
 			
 			
-			this.joueurFleche =  PACMAN_1;
-			this.joueurLettre = PACMAN_1;
+			this.joueurCamera =  PACMAN_1;
+			this.joueur8456 =  PACMAN_1;
 		}
 		
-		else if (WindowGame.Choix_Map == 1){
+		else if (WindowGame.Choix_Map == 1)
+		{
+			GHOST_1 = new Ghost("1", 14, 14, Direction.droite,new CoordonneesFloat(14, 14));
+			GHOST_2 = new Ghost("2", 14, 14, Direction.droite,new CoordonneesFloat(14, 14));
+			GHOST_3 = new Ghost("3", 14, 14, Direction.droite,new CoordonneesFloat(14, 14));
+			GHOST_4 = new Ghost("4", 14, 14, Direction.droite,new CoordonneesFloat(14, 14));
+			
 			if (SelectionPerso.Perso_1 == 1 ) PACMAN_1= new PacKnight("J1",1,20,Direction.droite,new CoordonneesFloat(1, 1), true);
 			else PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(1, 1), false);
 			
@@ -153,6 +163,8 @@ public class EquipageQuentin extends equipages.Equipage {
 			Joueur FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_suiveur.xml");
 			Joueur FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_intercepteur.xml");
 			Joueur FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_lord.xml");
+			
+
 		}
 	}
 	
@@ -160,8 +172,8 @@ public class EquipageQuentin extends equipages.Equipage {
 	
 	public EquipageQuentin() {
 		super();
+		this.joueurCamera =  PACMAN_1;
 		this.joueurFleche =  PACMAN_1;
-		this.joueurLettre = PACMAN_1;
 	}
 
 	   public static void main(String[] argv) {

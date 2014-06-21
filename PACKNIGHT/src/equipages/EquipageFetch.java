@@ -34,8 +34,8 @@ public class EquipageFetch extends Equipage {
 
 	public EquipageFetch() {
 		super();
-		this.joueurFleche =  null;
-		this.joueurLettre = null;
+		this.joueurCamera =  null;
+		this.joueurZQSD = null;
 	}
 
 	public void init() throws SlickException {
