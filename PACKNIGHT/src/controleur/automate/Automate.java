@@ -29,7 +29,7 @@ public class Automate extends Controleur {
 	public static enum Entree{
 		CASE_LIBRE, CASE_OCCUPEE, SORTIE_TERRAIN, PM_DANS_RAYON_X, NON_PM_DANS_RAYON_X, PM_DANS_CROIX, 
 		NON_PM_DANS_CROIX, INTERSECTION, NON_INTERSECTION, CASE_ATTEINTE, CASE_NON_ATTEINTE, FREE, NON_FREE, ETOILE,
-		EN_DETRESSE, NON_EN_DETRESSE, FM_DANS_RAYON, NON_FM_DANS_RAYON, VU, PAS_VU, POSSEDE_UN_GARDE, NE_POSSEDE_PAS_UN_GARDE, EST_APPELER, NON_APPELER;
+		EN_DETRESSE, NON_EN_DETRESSE, FM_DANS_RAYON, NON_FM_DANS_RAYON, VU, PAS_VU, POSSEDE_UN_GARDE, NE_POSSEDE_PAS_UN_GARDE, EST_APPELER, NON_APPELER, EN_SECURITE, EN_DANGER;
 		
 		public static boolean contains (String s){
 			try{
@@ -209,6 +209,8 @@ public class Automate extends Controleur {
 				case NE_POSSEDE_PAS_UN_GARDE:if(!primitivesTest.nombreGardeSuffisant()) return Entree.NE_POSSEDE_PAS_UN_GARDE; break;
 				case EST_APPELER:if(primitivesTest.appelAuDevoir())return Entree.EST_APPELER; break;
 				case NON_APPELER:if(!primitivesTest.appelAuDevoir())return Entree.NON_APPELER; break;
+				case EN_SECURITE:if(primitivesTest.safe())return Entree.EN_SECURITE; break;
+				case EN_DANGER:if(!primitivesTest.safe()) return Entree.EN_DANGER; break;
 				//	}
 			}
 		}

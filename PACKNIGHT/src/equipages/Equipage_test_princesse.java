@@ -34,8 +34,8 @@ public class Equipage_test_princesse extends Equipage {
 
 	public Equipage_test_princesse() {
 		super();
-		this.joueurCamera =  null;
-		this.joueurZQSD = PACMAN_1;
+		this.joueurCamera =  PACMAN_4;
+		this.joueurFleche = PACMAN_4;
 
 	}
 
@@ -46,10 +46,10 @@ public class Equipage_test_princesse extends Equipage {
 		Joueur PM_4 = new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4, "princesse.xml");
 
 
-		Joueur FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_suiveur.xml");
-		Joueur FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_intercepteur.xml");
-		Joueur FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_berserk.xml");
-		Joueur FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"rama.xml");
+		Joueur FM_1 = new Joueur(this.g.SPRITE_SUIVEUR,this.g, GHOST_1,"fm_suiveur.xml");
+		Joueur FM_2 = new Joueur(this.g.SPRITE_INTERCEPTEUR,this.g, GHOST_2,"fm_intercepteur.xml");
+		Joueur FM_3 = new Joueur(this.g.SPRITE_BERSERK,this.g, GHOST_3,"fm_berserk.xml");
+		Joueur FM_4 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_4,"rama.xml");
 
 	}
 

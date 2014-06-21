@@ -47,10 +47,10 @@ public class EquipageMalek extends Equipage{
 		Joueur PM_4 = new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4, "princesse.xml");
 		
 
-		Joueur FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1);
-//		Joueur FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2);
-//		Joueur FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3);
-//		Joueur FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4);
+		Joueur FM_1 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_1);
+//		Joueur FM_2 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_2);
+//		Joueur FM_3 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_3);
+//		Joueur FM_4 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_4);
 
 	}
 	

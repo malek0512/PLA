@@ -1,6 +1,8 @@
 package game;
 
 
+import music.MusicManager;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -42,10 +44,11 @@ public class WindowGame extends BasicGameState {
 	public String SPRITE_PACMAN_3 = "Pacman.png";
 	public String SPRITE_PACMAN_4 = "Princess.png";
 
-	public String SPRITE_GHOST_1 = "Leona.png";
-	public String SPRITE_GHOST_2 = "Lulu.png";
-	public String SPRITE_GHOST_3 = "Janna.png";
-	public String SPRITE_GHOST_4 = "Spectrum.png";
+	public String SPRITE_SUIVEUR = "Suiveur.png";
+	public String SPRITE_ALEATOIRE = "Aleatoire.png";
+	public String SPRITE_BERSERK = "Berserk.png";
+	public String SPRITE_INTERCEPTEUR = "Intercepteur.png";
+	public String SPRITE_LORD = "Spectrum.png";
 
 	protected static float xCamera = resolution_x / 2;
 	protected static float yCamera = resolution_y / 2;
@@ -66,6 +69,7 @@ public class WindowGame extends BasicGameState {
 	public int taillePersonnage = 32;
 	
 	boolean pause = false;
+	
 	
 	
 	public static int Choix_Map = 0;
@@ -120,7 +124,9 @@ public class WindowGame extends BasicGameState {
 		case 1 : Ghost.modeMulti=true;break;
 		}
 		Ghost.init();
-		  
+		PacKnight.initMusic(); 
+		MusicManager.init();
+		
 		}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
@@ -180,10 +186,10 @@ public class WindowGame extends BasicGameState {
 			if (!(time < 3000)) {
 				if(equip.joueurCamera!=null)
 				{
-				if (equip.joueurCamera.parametrable())
-					equip.joueurCamera.avancer();
-				else
-					equip.joueurCamera.avancerAnimation();
+//				if (equip.joueurCamera.parametrable())
+//					equip.joueurCamera.avancer();
+//				else
+//					equip.joueurCamera.avancerAnimation();
 	
 				float w = container.getWidth() / 4;
 				if (!(equip.joueurCamera.getCoord().x - xCamera > resolution_x / 2 || equip.joueurCamera.getCoord().x - xCamera < -resolution_x / 2)) {
@@ -251,12 +257,16 @@ public class WindowGame extends BasicGameState {
 					break;
 				case Input.KEY_Q:
 					equip.joueurZQSD.setNextDirection(Direction.gauche);
+					System.out.println(equip.joueurZQSD.getOrientation());
+					
 					break;
 				case Input.KEY_S:
 					equip.joueurZQSD.setNextDirection(Direction.bas);
+					System.out.println(equip.joueurZQSD.getOrientation());
 					break;
 				case Input.KEY_D:
 					equip.joueurZQSD.setNextDirection(Direction.droite);
+					System.out.println(equip.joueurZQSD.getOrientation());
 					break;
 				}
 			}

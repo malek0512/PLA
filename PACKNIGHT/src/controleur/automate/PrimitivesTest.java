@@ -104,8 +104,7 @@ public class PrimitivesTest extends Primitives {
 		//casting des perso
 		Personnage gosthEnChasse = ((PacKnight) auto.getPersonnage()).ghostEnChasse;
 		PacPrincess princess = ((PacKnight) auto.getPersonnage()).princesseEnDetresse;
-		System.out.println("COUCOU chasse");
-		if (gosthEnChasse==null)
+		if (gosthEnChasse==null || princess==null)
 		{
 			//rien a chasse
 			return false;
@@ -129,6 +128,16 @@ public class PrimitivesTest extends Primitives {
 	 * Vérifie que la princess ne l'a pas appelé pour l'escorter*/
 	public boolean appelAuDevoir(){
 		return ((PacKnight)auto.getPersonnage()).princesseEnDetresse!=null;
+	}
+	/**
+	 * PacPrincess
+	 * Vérifie que le nombre de pacman est supérieur ou égal au nombre de fantôme
+	 * */
+	public boolean safe(){
+		int perimetre = ((PacPrincess) auto.getPersonnage()).perimetreSecurite ;
+		List<Ghost> agresseurs = fantomeEstDansRayon(perimetre);
+		int nb=nombreGarde(((PacPrincess)auto.getPersonnage()));
+		return (nb>=agresseurs.size());
 	}
 	
 }

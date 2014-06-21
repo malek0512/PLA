@@ -45,10 +45,10 @@ public class EquipageVivienAlex extends Equipage {
 //		Joueur PM_4 = new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4, "princesse.xml");
 
 
-		Joueur FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_berserk.xml");
-		Joueur FM_2 = new Joueur(this.g.SPRITE_GHOST_2,this.g, GHOST_2,"fm_berserk.xml");
-		Joueur FM_3 = new Joueur(this.g.SPRITE_GHOST_3,this.g, GHOST_3,"fm_berserk.xml");
-		Joueur FM_4 = new Joueur(this.g.SPRITE_GHOST_4,this.g, GHOST_4,"fm_lord.xml");
+		Joueur FM_1 = new Joueur(this.g.SPRITE_BERSERK,this.g, GHOST_1,"fm_berserk.xml");
+		Joueur FM_2 = new Joueur(this.g.SPRITE_BERSERK,this.g, GHOST_2,"fm_berserk.xml");
+		Joueur FM_3 = new Joueur(this.g.SPRITE_BERSERK,this.g, GHOST_3,"fm_berserk.xml");
+		Joueur FM_4 = new Joueur(this.g.SPRITE_LORD,this.g, GHOST_4,"fm_lord.xml");
 
 	}
 
