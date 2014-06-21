@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+
 import structure_terrain.Terrain;
 
 public class PacKnight extends Pacman{
@@ -17,6 +20,7 @@ public class PacKnight extends Pacman{
 	static public List<PacKnight> liste = new LinkedList<PacKnight>();
 	public static int vie = 10;
 	private boolean user;
+	private static Sound Dead;
 	/**
 	 * @return the controlable
 	 */
@@ -60,6 +64,16 @@ public class PacKnight extends Pacman{
 		return false;
 	}
 	
+	static public void initMusic()
+	{
+		try {
+			Dead = new Sound("src/graphisme/main/ressources/music/AllBeat.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * @param position a tester
 	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null
@@ -83,7 +97,10 @@ public class PacKnight extends Pacman{
 	public void meurtDansDatroceSouffrance() {
 		vie--;
 		if(vie > 0)
+		{
 			respawn();
+			Dead.play();
+		}
 	}
 
 	public void gererCollision() {
@@ -133,6 +150,7 @@ public class PacKnight extends Pacman{
 			{
 				this.timerAnimation=0;
 				this.agonise=false;
+				PacKnight.Dead.stop();
 				this.respawnWOA();
 			}
 		}

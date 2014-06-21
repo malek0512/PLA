@@ -1,6 +1,8 @@
 package game;
 
 
+import music.Music;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -122,7 +124,9 @@ public class WindowGame extends BasicGameState {
 		case 1 : Ghost.modeMulti=true;break;
 		}
 		Ghost.init();
-		  
+		PacKnight.initMusic(); 
+		Music.init();
+		
 		}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
