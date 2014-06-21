@@ -36,7 +36,7 @@ public class Ghost extends Personnage {
 	private List<CoordonneesFloat> ordre = null; //liste des case de l'ordre en cours
 	
 		//boolean des animations
-	private boolean prisonner = true; //le fantome est dans la prison
+	private boolean prisonner = false; //le fantome est dans la prison
 	private boolean stun = false;
 	private boolean entendEtObei = false;
 	private boolean sortiePrison = false;
@@ -115,6 +115,7 @@ public class Ghost extends Personnage {
 		while (i.hasNext()) {
 			i.next().respawnWOA();
 		}
+		Ghost.tempsPasserEnPrison=0;
 	}
 	
 	static public void initMap0()
@@ -125,6 +126,7 @@ public class Ghost extends Personnage {
 		int y = 14*32;
 		while (i.hasNext()) {
 			Ghost g = i.next();
+			g.prisonner=true;
 			g.timerAnimation -= timer*55;
 			g.pointDeRespawn = new CoordonneesFloat(12*32,14*32);
 			g.coord.x = x;
