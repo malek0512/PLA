@@ -17,6 +17,15 @@ public abstract class Personnage {
 	protected static Terrain terrain;
 	public static List<Personnage> liste = new LinkedList<Personnage>();
 
+	public static void init_personnage()
+	{
+		Personnage.liste.clear();
+		Ghost.liste.clear();
+		Pacman.liste.clear();
+		PacKnight.liste.clear();
+		PacPrincess.liste.clear();
+	}
+	
 	// coordonne du personnage en pixel
 	// La coordonne corespond au pixel Haut-Gauche !!!
 	public CoordonneesFloat coord;
