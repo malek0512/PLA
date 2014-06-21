@@ -120,7 +120,7 @@ public class EquipageQuentin extends equipages.Equipage {
 			
 			
 			this.joueurCamera =  PACMAN_1;
-			this.joueur8456 =  PACMAN_1;
+			this.joueurZQSD =  PACMAN_1;
 		}
 		
 		else if (WindowGame.Choix_Map == 1)
