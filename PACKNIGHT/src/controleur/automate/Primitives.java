@@ -52,12 +52,14 @@ public class Primitives {
 				if (Ghost.central.containsKey(pac)) {
 					Ghost.central.get(pac).majAvisDeRecherche(
 							pac.getCoord().CasCentre());
-				} else
+				} 
+				else
 				{
 					if(Ghost.central.isEmpty())
 					{
 						MusicManager.reperer.play();
 						Accueil.Music_WindowGame.pause();
+						System.out.println("changement de music 1->2");
 					}
 					Ghost.central.put(pac,((Ghost) auto.getPersonnage()).new AvisDeRecherche(pac.getCoord().CasCentre()));
 				}

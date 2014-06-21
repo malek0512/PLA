@@ -220,6 +220,7 @@ public class Ghost extends Personnage {
 		{
 			MusicManager.reperer.stop();
 			Accueil.Music_WindowGame.resume();
+			System.out.println("changement de music 2 -> 1");
 		}
 	}
 	/**
