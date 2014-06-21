@@ -410,7 +410,7 @@ public class Primitives {
 	 *            : direction vers la source
 	 * @return un tableau de int contenant les valeurs pour chaque inter
 	 */
-	public int[][] laFonctionQuiFaitPresqueTout(CoordonneesFloat coordonne,
+	public int[][] laFonctionQuiFaitPresqueTout(CoordonneesFloat coordo,
 			Direction src, int mode) {
 		// 0 : pac-gom
 		// 1 : distance
@@ -424,10 +424,10 @@ public class Primitives {
 
 		for (Direction d : Direction.values()) {
 			nbInter++;
-			if (d != src
-					&& Personnage.getTerrain().caseAcessible(coordonne.x,
-							coordonne.y, d)) {// si case accessible
-			// faire avancer le c dans la direction d
+			if (d != src && Personnage.getTerrain().caseAcessible(coordo.x,coordo.y, d)) 
+			{
+				CoordonneesFloat coordonne = new CoordonneesFloat(coordo);
+				// faire avancer le c dans la direction d
 				Direction directionCord = d;
 				coordonne.avancerDansDir(d);
 				tab[nbInter][1] += Value_distance;
@@ -541,9 +541,8 @@ public class Primitives {
 					}
 					// faire avancer cordCaseAcutel
 					for (Direction d2 : Direction.values()) {
-						if (directionCord != d2.opposer()
-								&& Personnage.getTerrain().caseAcessible(
-										cordCaseAcutel.x, cordCaseAcutel.y, d2)) {
+						if (directionCord != d2.opposer()&& Personnage.getTerrain().caseAcessible(cordCaseAcutel.x, cordCaseAcutel.y, d2))
+						{
 							cordCaseAcutel.avancerDansDir(d2);
 							directionCord = d2;
 							break;
@@ -561,4 +560,21 @@ public class Primitives {
 		return tab;
 	}
 
+	/**
+	 * renvoie les coordonée de la prochaine intersection dans la direction donnée
+	 */
+	public CoordonneesFloat prochaineInterCas(CoordonneesFloat cord, Direction dir)
+	{
+		CoordonneesFloat c=  new CoordonneesFloat(cord);
+		while(!estIntersectionCas(c))
+		{
+			for(Direction d : Direction.values())
+				if(Personnage.getTerrain().caseAcessible(c.x, c.y, d))
+					{
+					c.avancerDansDir(d);
+					break;
+					}
+		}
+		return c;
+	}
 }

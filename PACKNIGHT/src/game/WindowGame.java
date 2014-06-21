@@ -109,7 +109,7 @@ public class WindowGame extends BasicGameState {
 		{
 		switch (Choix_Map)
 		{
-		case 0 : MAP = "PACMAN.tmx";break;
+		case 0 : MAP = "FATMAP.tmx";break;
 		case 1 : MAP = "FATMAP.tmx";break;
 		}
 		System.out.println("MAP : "+Choix_Map);
