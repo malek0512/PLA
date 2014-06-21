@@ -292,6 +292,7 @@ public class PrimitivesAction extends Primitives {
 	{
 		if(auto.sneaky == null)
 		{
+			System.out.println("dans auto.sneaky==null");
 			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
 			Aetoile graph = new Aetoile(src);
 			graph.blackCoord(blackCord);
@@ -315,6 +316,7 @@ public class PrimitivesAction extends Primitives {
 				CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
 				Aetoile graph = new Aetoile(src);
 				graph.blackCoord(blackCord);
+				System.out.println("avant algo a étoile");
 				List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
 				l.remove(0);
 				if(l.size()==0)
@@ -339,7 +341,8 @@ public class PrimitivesAction extends Primitives {
 					min = next;
 			}
 			CoordonneesFloat minCord = new CoordonneesFloat(min.getCoord());
-			CoordonneesFloat inter = new CoordonneesFloat(prochaineInterCas(minCord, min.getOrientation().opposer()));
+			System.out.println("avant prochaineIntercas");
+			CoordonneesFloat inter = new CoordonneesFloat(prochaineInterCas(minCord.CasCentre(), min.getOrientation().opposer()));
 			intercepter(minCord,inter);
 		}
 	}
@@ -347,11 +350,47 @@ public class PrimitivesAction extends Primitives {
 	/**
 	 * Seul pac princesse peut fuir
 	 */
+	public void fuir(List<CoordonneesFloat> blist, CoordonneesFloat ref)
+	{
+		if(auto.sneaky == null)
+		{
+			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
+			Aetoile graph = new Aetoile(src);
+			graph.blackList(blist);
+			List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref));
+			l.remove(0);
+			if(l.size()==0)
+				setDirectionAleatoire(auto.getPersonnage());
+			else
+				auto.sneaky = mysteriousFunction(src, l.get(0));
+			
+		}
+		else
+		{
+			if(auto.getPersonnage().caseDisponible(auto.sneaky))
+			{
+				auto.getPersonnage().setDirection(auto.sneaky);
+				auto.sneaky = null;
+			}
+			else
+			{
+				CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
+				Aetoile graph = new Aetoile(src);
+				graph.blackList(blist);
+				List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref));
+				l.remove(0);
+				if(l.size()==0)
+					setDirectionAleatoire(auto.getPersonnage());
+				else
+					auto.sneaky = mysteriousFunction(src, l.get(0));
+			}
+		}
+		this.auto.getPersonnage().avancer();
+	}
+	
 	public void fuir()
 	{
-		Aetoile g = new Aetoile(this.auto.getPersonnage().coord);
-		g.blackList(Ghost.listCoord());
-		if(PacPrincess.cordDeFuite != null && this.auto.getPersonnage().coord.distance(PacPrincess.cordDeFuite) < 5)
+		if(PacPrincess.cordDeFuite != null && this.auto.getPersonnage().coord.CasCentre().distance(PacPrincess.cordDeFuite) < 5)
 		{
 			//calcule d'une nouvelle cord de fuite
 			Random rnd = new Random();
@@ -370,7 +409,7 @@ public class PrimitivesAction extends Primitives {
 				PacPrincess.cordDeFuite = new CoordonneesFloat(Personnage.getTerrain().largeur-2,Personnage.getTerrain().hauteur-2); break;
 			}
 		}
-		suivre2(PacPrincess.cordDeFuite);
+		fuir(Ghost.listCoord(),PacPrincess.cordDeFuite);
 	}
 	
 	/**

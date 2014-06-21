@@ -577,15 +577,26 @@ public class Primitives {
 	public CoordonneesFloat prochaineInterCas(CoordonneesFloat cord, Direction dir)
 	{
 		CoordonneesFloat c=  new CoordonneesFloat(cord);
+		int debug = 0;
 		while(!estIntersectionCas(c))
 		{
+			Direction dirEx =dir.opposer();
+			boolean buf = true;
 			for(Direction d : Direction.values())
-				if(Personnage.getTerrain().caseAcessible(c.x, c.y, d))
+				if(d != dirEx && Personnage.getTerrain().caseAcessible(c.x, c.y, d))
 					{
+					dirEx = d.opposer();
 					c.avancerDansDir(d);
+					buf = false;
 					break;
 					}
+			debug++;
+			if(buf || debug >50)
+			{
+				return cord;
+			}
 		}
+		
 		return c;
 	}
 }

@@ -74,7 +74,7 @@ public class Ghost extends Personnage {
 		List<CoordonneesFloat> listRes = new LinkedList<CoordonneesFloat>();
 		Iterator<Ghost> i= Ghost.liste.iterator();
 		while (i.hasNext()) {
-				listRes.add(i.next().coord);
+				listRes.add(i.next().coord.CasCentre());
 		}
 		return listRes;
 	}
