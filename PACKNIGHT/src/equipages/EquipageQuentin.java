@@ -116,7 +116,7 @@ public class EquipageQuentin extends equipages.Equipage {
 				break;
 			
 			}
-			PACMAN_1= new PacKnight("J1",1,1,Direction.droite,new CoordonneesFloat(1, 1), true);
+			PACMAN_1= new PacKnight("J1",13,17,Direction.droite,new CoordonneesFloat(13, 17), true);
 			Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1);
 			
 			
