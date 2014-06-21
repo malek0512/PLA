@@ -67,7 +67,10 @@ public class Joueur {
 	}
 	
 	public void suivant () throws Exception{
-		if(this.auto != null)
+		if(this.auto != null){
 			auto.suivant();
+			
+		}
+		this.direction =  p.getOrientation().ordinal();
 	}
 }

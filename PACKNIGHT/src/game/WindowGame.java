@@ -35,15 +35,15 @@ public class WindowGame extends BasicGameState {
 
 	private String MAP = "FATMAP.tmx";
 
-	public String SPRITE_PACMAN_1 = "Spectrum.png";
+	public String SPRITE_PACMAN_1 = "Pacman.png";
 	public String SPRITE_PACMAN_2 = "Pacman.png";
 	public String SPRITE_PACMAN_3 = "Pacman.png";
-	public String SPRITE_PACMAN_4 = "Pacman.png";
+	public String SPRITE_PACMAN_4 = "Soraka.png";
 
 	public String SPRITE_GHOST_1 = "Leona.png";
-	public String SPRITE_GHOST_2 = "Soraka.png";
+	public String SPRITE_GHOST_2 = "Lulu.png";
 	public String SPRITE_GHOST_3 = "Janna.png";
-	public String SPRITE_GHOST_4 = "Lulu.png";
+	public String SPRITE_GHOST_4 = "Spectrum.png";
 
 	protected static float xCamera = resolution_x / 2;
 	protected static float yCamera = resolution_y / 2;
@@ -56,7 +56,7 @@ public class WindowGame extends BasicGameState {
 	private Image PACGUM, HEART, FOND_INTERFACE;
 	public boolean moving = true;
 
-	public static int direction = 0;
+	public int direction = 0;
 	public static int taille_minimap = 4;
 
 	public static int tuile_size = 32;
@@ -179,7 +179,8 @@ public class WindowGame extends BasicGameState {
 		time += delta;
 
 		if (!(time < 3000)) {
-
+			if(equip.joueurFleche!=null)
+			{
 			if (equip.joueurFleche.parametrable())
 				equip.joueurFleche.avancer();
 			else
@@ -217,9 +218,10 @@ public class WindowGame extends BasicGameState {
 				yCamera = hauteur_map * tuile_size - resolution_y / 2;
 			else if ((equip.joueurFleche.getCoord().y - yCamera < -resolution_y / 2))
 				yCamera = resolution_y / 2;
-
+			}
 			try {
 				equip.suivant();
+				
 
 			} catch (Exception e) {
 				System.out.println(e);
@@ -229,6 +231,7 @@ public class WindowGame extends BasicGameState {
 	}
 
 	public void keyReleased(int key, char c) {
+		if(equip.joueurFleche!=null || equip.joueurLettre!=null){
 		switch (key) {
 		case Input.KEY_UP:
 			equip.joueurFleche.setNextDirection(Direction.haut);
@@ -272,6 +275,7 @@ public class WindowGame extends BasicGameState {
 			this.moving = true;
 			break;
 
+		}
 		}
 		switch (key) {
 		case Input.KEY_M:
