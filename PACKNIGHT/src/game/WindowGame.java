@@ -74,37 +74,6 @@ public class WindowGame extends BasicGameState {
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		
-		/*switch (Choix_Map)
-		{
-		case 0 : MAP = "PACMAN.tmx";break;
-		case 1 : MAP = "FATMAP.tmx";break;
-		}
-		System.out.println("MAP : "+Choix_Map);
-		
-		this.game = game;
-		container.setShowFPS(false);
-		this.map = new TiledMap(CHEMIN_MAP.concat(MAP));
-		largueur_map = map.getWidth();
-		hauteur_map = map.getHeight();
-
-		Terrain terrain = new Terrain(largueur_map, hauteur_map, 0);
-		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
-		PACGUM = new Image(
-				"src/graphisme/main/ressources/map/tuiles/pacgomme.png");
-		FOND_INTERFACE = new Image(
-				"src/graphisme/main/ressources/map/image/Interface.jpg");
-
-		Personnage.initTerrain(terrain);
-		equip.init();
-
-		Map.mapToTerrain(terrain, largueur_map, hauteur_map, map);
-		playground = terrain;
-
-		for (Joueur j : Joueur.liste) {
-			j.sprite();
-		}*/
-
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException 
@@ -116,7 +85,7 @@ public class WindowGame extends BasicGameState {
 		}
 		
 		System.out.println("MAP : "+Choix_Map);
-		time += 0;
+		time = 0;
 		PacKnight.vie = 10;
 		
 		this.game = game;
@@ -171,7 +140,7 @@ public class WindowGame extends BasicGameState {
 		Interface_Joueur.render(g, HEART, FOND_INTERFACE);
 		Minimap(playground, g, -resolution_x / 2 + xCamera, -resolution_y / 2
 				+ yCamera);
-		if (time < 3000)
+		if (time < 3893)
 			g.drawString("GET READY ", resolution_x / 2, resolution_y / 2);
 		}
 
