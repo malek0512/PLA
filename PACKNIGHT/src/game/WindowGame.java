@@ -82,12 +82,12 @@ public class WindowGame extends BasicGameState {
 		{
 		switch (Choix_Map)
 		{
-		case 0 : MAP = "PACMAN.tmx"; break;
-		case 1 : MAP = "FATMAP.tmx"; break;
+		case 0 : MAP = "PACMAN.tmx";PacKnight.vie = 10; break;
+		case 1 : MAP = "FATMAP.tmx";PacKnight.vie = 20;PacPrincess.vie = 3; break;
 		}
 		
 		time = 0;
-		PacKnight.vie = 50;
+		
 		
 		this.game = game;
 		container.setShowFPS(false);
@@ -169,7 +169,7 @@ public class WindowGame extends BasicGameState {
 						new FadeInTransition(Color.black));
 			}
 	
-			if (PacKnight.vie == 0) {
+			if (PacKnight.vie == 0 || PacPrincess.vie == 0) {
 				Accueil.Music_Dead.play();
 				game.enterState(Dead.ID, new FadeOutTransition(Color.black),
 						new FadeInTransition(Color.black));

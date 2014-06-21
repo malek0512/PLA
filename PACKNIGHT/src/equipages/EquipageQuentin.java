@@ -131,14 +131,14 @@ public class EquipageQuentin extends equipages.Equipage {
 			GHOST_3 = new Ghost("3");
 			GHOST_4 = new Ghost("4");
 			
-			if (SelectionPerso.Perso_1 == 1 ) PACMAN_1= new PacKnight("J1",1,20,Direction.droite,new CoordonneesFloat(1, 1), true);
-			else PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(1, 1), false);
+			if (SelectionPerso.Perso_1 == 1 ) PACMAN_1= new PacKnight("J1",48,1,Direction.droite,new CoordonneesFloat(48, 1), true);
+			else PACMAN_1= new PacKnight("J1",48,1,Direction.droite,new CoordonneesFloat(48, 1), false);
 			
-			if (SelectionPerso.Perso_2 == 1 )PACMAN_2 = new PacKnight("J2",5,15,Direction.droite,new CoordonneesFloat(5, 15), true);
-			else PACMAN_2 = new PacKnight("J2",5,15,Direction.droite,new CoordonneesFloat(5, 15), false);	
+			if (SelectionPerso.Perso_2 == 1 )PACMAN_2 = new PacKnight("J2",1,26,Direction.droite,new CoordonneesFloat(1, 26), true);
+			else PACMAN_2 = new PacKnight("J2",1,26,Direction.droite,new CoordonneesFloat(1, 26), false);	
 				
-			if (SelectionPerso.Perso_3 == 1 )PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), true);	
-			else PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), false);	
+			if (SelectionPerso.Perso_3 == 1 )PACMAN_3 = new PacKnight("J3",48,26,Direction.droite,new CoordonneesFloat(48, 26), true);	
+			else PACMAN_3 = new PacKnight("J3",48,26,Direction.droite,new CoordonneesFloat(48, 26), false);	
 			
 			PACMAN_4 = new PacPrincess("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
 				
