@@ -93,19 +93,24 @@ public class PrimitivesAction extends Primitives {
 	 * qu'il ne l'a pas atteinte
 	 * */
 	public void obeir() {
-		Iterator<Pacman> i = Ghost.central.keySet().iterator();
-		if (i.hasNext()) {
-			Pacman max = i.next();
-			while (i.hasNext()) {
-				Pacman next = i.next();
-				if (Ghost.central.get(next).timer > Ghost.central.get(max).timer)
-					max = next;
+		if(Ghost.powerUp())
+		{
+			Iterator<Pacman> i = Ghost.central.keySet().iterator();
+			if (i.hasNext()) {
+				Pacman max = i.next();
+				while (i.hasNext()) {
+					Pacman next = i.next();
+					if (Ghost.central.get(next).timer > Ghost.central.get(max).timer)
+						max = next;
+				}
+				((Ghost) auto.getPersonnage()).donnerDesOrdres(max);
 			}
-			System.out.println("Je donne des ordres aux fantomes");
-			((Ghost) auto.getPersonnage()).donnerDesOrdres(max);
-			System.out.println("J'ai fini de donner des ordres aux fantomes");
 		}
-
+		else
+		{
+			setDirectionAleatoire(auto.getPersonnage());
+			auto.getPersonnage().avancer();
+		}
 	}
 
 	/**
@@ -164,7 +169,7 @@ public class PrimitivesAction extends Primitives {
 		
 		if(knight.ghostEnChasse != null)
 		{
-			suivre(knight.ghostEnChasse.getCoord());
+			suivre2(knight.ghostEnChasse.getCoord());
 		}
 
 	}
@@ -180,35 +185,63 @@ public class PrimitivesAction extends Primitives {
 			
 			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
 			Aetoile graph = new Aetoile(src);
-			List<CoordonneesFloat> l = graph.algo(ref.CasCentre());
-			System.out.println(l.size());
-				l.remove(0);
-			auto.sneaky = mysteriousFunction(src, l.get(0));
-			}
-		
+			List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
+			l.remove(0);
+			if(l.size()==0)
+				setDirectionAleatoire(auto.getPersonnage());
+			else
+				auto.sneaky = mysteriousFunction(src, l.get(0));
+			
+		}
 		else
 		{
 			
 			if(auto.getPersonnage().caseDisponible(auto.sneaky))
 			{
-				System.out.println("COUCOU Suivre");
 				
 				auto.getPersonnage().setDirection(auto.sneaky);
 				auto.sneaky = null;
-			}
-			else {
-				CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
-				Aetoile graph = new Aetoile(src);
-				List<CoordonneesFloat> l = graph.algo(ref.CasCentre());
-				System.out.println(l.size());
-				if(l.size()!=0){
-					l.remove(0);}
-				auto.sneaky = mysteriousFunction(src, l.get(0));
 			}
 		}
 		this.auto.getPersonnage().avancer();
 	}
 
+	
+	public void suivre2(CoordonneesFloat ref) {
+		if(auto.sneaky == null)
+		{
+			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
+			Aetoile graph = new Aetoile(src);
+			List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
+			l.remove(0);
+			if(l.size()==0)
+				setDirectionAleatoire(auto.getPersonnage());
+			else
+				auto.sneaky = mysteriousFunction(src, l.get(0));
+			
+		}
+		else
+		{
+			if(auto.getPersonnage().caseDisponible(auto.sneaky))
+			{
+				auto.getPersonnage().setDirection(auto.sneaky);
+				auto.sneaky = null;
+			}
+			else
+			{
+				CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
+				Aetoile graph = new Aetoile(src);
+				List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
+				l.remove(0);
+				if(l.size()==0)
+					setDirectionAleatoire(auto.getPersonnage());
+				else
+					auto.sneaky = mysteriousFunction(src, l.get(0));
+			}
+		}
+		this.auto.getPersonnage().avancer();
+	}
+	
 	public void suivre() {
 		Iterator<Pacman> i = Ghost.central.keySet().iterator();
 		if (i.hasNext()) {
@@ -225,7 +258,55 @@ public class PrimitivesAction extends Primitives {
 			suivre(new CoordonneesFloat(min.getCoord()));
 		}
 	}
-
+	
+	public void fuir()
+	{
+		CoordonneesFloat caseDuPerso = new CoordonneesFloat(
+				auto.getPersonnage().coord);
+		if (caseDuPerso.CasBG().equals(caseDuPerso.CasHD())
+				&& estIntersection(caseDuPerso)) 
+		{// si le perso est bien sur une case, et donc si il est sur une intersection :
+			int tab[][] = laFonctionQuiFaitTout(caseDuPerso.CasCentre(),2);
+			
+			for(int ka = 0; ka<4;ka++)
+				if(tab[ka][2] + tab[ka][5]<0)
+					System.out.println("here we go");
+			int meilleurCandidat = Integer.MIN_VALUE;
+			Direction meilleurCandidatDirection = null;
+			int cpt = 0;
+			for (Direction d : Direction.values()) {// pour chaque direction
+				if (tab[cpt][1] != 0) {// sinon la direction est un mur ou il y
+										// a aucun pac-gomm
+						int candidat = 0;
+						for (int k = 0; k < 3; k++)
+							candidat += ImportanceRacine * tab[cpt][k];
+						for (int k = 3; k < 6; k++)
+							candidat += ImportanceBranche * tab[cpt][k];
+						if (meilleurCandidat < candidat) {
+							meilleurCandidat = candidat;
+							meilleurCandidatDirection = d;
+						}
+				}
+				cpt++;
+			}
+			if (meilleurCandidatDirection != null)
+			{
+				this.auto.getPersonnage().setDirection(meilleurCandidatDirection);
+				this.auto.getPersonnage().avancer();
+			} 
+			else 
+			{
+			setDirectionAleatoire(this.auto.getPersonnage());
+			this.auto.getPersonnage().avancer();
+			}
+		}
+		else
+		{
+			setDirectionAleatoire(this.auto.getPersonnage());
+			this.auto.getPersonnage().avancer();
+		}
+	}
+	
 	/**
 	 * envoie le personnage manger des pac-gomm
 	 */
@@ -245,7 +326,7 @@ public class PrimitivesAction extends Primitives {
 													// une case, et donc si il
 													// est sur une intersection
 													// :
-			int tab[][] = laFonctionQuiFaitTout(caseDuPerso.CasCentre());
+			int tab[][] = laFonctionQuiFaitTout(caseDuPerso.CasCentre(),1);
 
 			int meilleurCandidat = Integer.MIN_VALUE;
 			Direction meilleurCandidatDirection = null;
@@ -272,7 +353,8 @@ public class PrimitivesAction extends Primitives {
 				this.auto.getPersonnage().setDirection(
 						meilleurCandidatDirection);
 				this.auto.getPersonnage().avancer();
-			} else {
+			} 
+			else {
 				// aucun candidat n'a aboutie vers des pac-gomm
 				// Actuellement on fait un set alea
 				// faudrai faire en sorte qu'il se dirige vers un pac-gomm
@@ -280,17 +362,18 @@ public class PrimitivesAction extends Primitives {
 				// this.auto.getPersonnage().avancer();
 				Terrain t = Personnage.getTerrain();
 				CoordonneesFloat dest = null;
-				for (int i = 0; i < t.largeur; i++) {
-					for (int j = 0; j < t.hauteur; j++) {
-						if (t.ValueCase(i, j) == 2) {
-							dest = new CoordonneesFloat(i, j);
-							break;
+				for (int i = 0; i < t.largeur; i++) 
+					for (int j = 0; j < t.hauteur; j++) 
+						if (t.ValueCase(i, j) == 2) 
+						{
+							dest = new CoordonneesFloat(i*32, j*32);
+							i=t.largeur;
+							j=t.hauteur;
 						}
-					}
-					if (dest != null)
-						break;
-				}
-				suivre(dest);
+				if (dest != null)
+					suivre2(dest);
+				else
+					System.out.println("wtf "+dest);
 			}
 		} else {
 			setDirectionAleatoire(this.auto.getPersonnage());

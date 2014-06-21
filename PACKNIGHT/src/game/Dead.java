@@ -43,8 +43,8 @@ public class Dead extends BasicGameState {
 	   
 	   public void keyReleased(int key, char c) {
 	      switch (key) {
-	      		case Input.KEY_SPACE: game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-	      		//Accueil.Music_Choix.loop();break;
+	      		//Accueil.Music_Choix.loop();
+	      		case Input.KEY_SPACE: game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	      		case Input.KEY_M: if(Accueil.Music_Dead.playing()) Accueil.Music_Dead.pause() ;else Accueil.Music_Dead.resume(); break;
 	      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
 

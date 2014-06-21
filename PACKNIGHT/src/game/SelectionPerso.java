@@ -21,8 +21,11 @@ import game.Menu;
 public class SelectionPerso extends BasicGameState 
 { 
     private StateBasedGame game;
-    private Image Un_P,Deux_P,Trois_P,Quatre_P,Mouse;
+    private Image AI,PACKNIGHT,PRINCESS,FOND_SELECTION,MOUSE;
     private int PG_X,PG_Y;
+    public static int Perso_1=1,Perso_2=1,Perso_3=1,Perso_4=1;
+    private int choix = 1;
+    
      
 	   public static final int ID = 7;
 	   boolean quit = false;
@@ -35,23 +38,37 @@ public class SelectionPerso extends BasicGameState
 	   
     public void init(GameContainer container, StateBasedGame game) throws SlickException { 
     	this.game = game;
-    	Un_P = new Image("src/graphisme/main/ressources/map/image/1P.png");
-    	Deux_P = new Image("src/graphisme/main/ressources/map/image/2P.png");
-    	Trois_P = new Image("src/graphisme/main/ressources/map/image/3P.png");
-    	Quatre_P  = new Image("src/graphisme/main/ressources/map/image/4P.png");
-    	Mouse  = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
-    	PG_X = WindowGame.resolution_x/2-190;
-    	PG_Y = WindowGame.resolution_y/2-100 ;
+    	
+    	FOND_SELECTION  = new Image("src/graphisme/main/ressources/map/image/SelectionPerso.jpeg");
+    	AI = new Image("src/graphisme/main/ressources/map/image/AI.png");
+    	PACKNIGHT = new Image("src/graphisme/main/ressources/map/image/Packnight.png");
+    	PRINCESS = new Image("src/graphisme/main/ressources/map/image/Princess.png");
+    	MOUSE  = new Image("src/graphisme/main/ressources/map/image/Mouse.png");
+    	PG_X = WindowGame.resolution_x/2-50-39;
+    	PG_Y = WindowGame.resolution_y/2-200+9 ;
     	
     } 
  
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
     {
-         Un_P.draw(WindowGame.resolution_x/2-150, WindowGame.resolution_y/2-100);
-         Deux_P.draw(WindowGame.resolution_x/2+50, WindowGame.resolution_y/2-100);
-         Trois_P.draw(WindowGame.resolution_x/2-150, WindowGame.resolution_y/2);
-         Quatre_P.draw(WindowGame.resolution_x/2+50, WindowGame.resolution_y/2);
-         Mouse.draw(PG_X,PG_Y);
+         FOND_SELECTION.draw();
+         if ( Perso_1 ==1)
+         PRINCESS.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);
+         else AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);
+        	 
+         if ( Perso_2 ==1)
+         PACKNIGHT.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-100);
+         else AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-100);
+         
+         if ( Perso_3 ==1)
+         PACKNIGHT.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);
+         else AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);
+         
+         if ( Perso_4 ==1)
+         PACKNIGHT.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);
+         else AI.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);
+         
+         MOUSE.draw(PG_X,PG_Y);
          
     } 
  
@@ -71,30 +88,39 @@ public class SelectionPerso extends BasicGameState
 		      		case Input.KEY_M: if(Accueil.Music_Choix.playing()) Accueil.Music_Choix.pause() ;else Accueil.Music_Choix.resume(); break;
 
 		      		case Input.KEY_DOWN:
-		      			if(PG_Y < WindowGame.resolution_y/2)
+		      			if(PG_Y < WindowGame.resolution_y/2+100)
 		      			{
 		      				PG_Y = PG_Y+100;
-		      	         // quit = false;
+		      				choix++;
 		      			}
-		      			//else 
-		      		//{
-		      		//		PG_Y = WindowGame.resolution_y/2+100;
-		      		//		quit = true;
-		      		//	}
 		      			
 	      				break;
 	      			case Input.KEY_UP:
 		      			if(PG_Y > WindowGame.resolution_y/2-100)
 		      			{
 		      				PG_Y = PG_Y-100;
-		      	         // quit = false;
+		      				choix--;
 		      			}
-		      	       // else 
-		      	       // {
-		      	       // 	PG_Y = WindowGame.resolution_y/2+100;
-		      	       // 	quit = true;
-		      	      //  }
 		      			break;
+		      			
+	      			case Input.KEY_LEFT:	
+	      				switch(choix)
+	      				{
+	      				case 1 :if (Perso_1==0) Perso_1 = 1; else Perso_1 =0 ;break;
+	      				case 2 :if (Perso_2==0) Perso_2 = 1; else Perso_2 =0 ;break;
+	      				case 3 :if (Perso_3==0) Perso_3 = 1; else Perso_3 =0 ;break;
+	      				case 4 :if (Perso_4==0) Perso_4 = 1; else Perso_4 =0 ;break;
+	      				}
+	      				break;
+	      			case Input.KEY_RIGHT:	
+	      				switch(choix)
+	      				{
+	      				case 1 :if (Perso_1==0) Perso_1 = 1; else Perso_1 =0 ;break;
+	      				case 2 :if (Perso_2==0) Perso_2 = 1; else Perso_2 =0 ;break;
+	      				case 3 :if (Perso_3==0) Perso_3 = 1; else Perso_3 =0 ;break;
+	      				case 4 :if (Perso_4==0) Perso_4 = 1; else Perso_4 =0 ;break;
+	      				}
+	      				break;
 		      }
 	   }
 }
