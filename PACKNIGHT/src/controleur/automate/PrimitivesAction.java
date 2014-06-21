@@ -173,7 +173,6 @@ public class PrimitivesAction extends Primitives {
 		}
 
 	}
-	
 
 	/**
 	 * Donne des ordre au fantomes pour coincé un pacman donné
@@ -205,7 +204,6 @@ public class PrimitivesAction extends Primitives {
 		}
 		this.auto.getPersonnage().avancer();
 	}
-
 	
 	public void suivre2(CoordonneesFloat ref) {
 		if(auto.sneaky == null)
@@ -259,52 +257,89 @@ public class PrimitivesAction extends Primitives {
 		}
 	}
 	
-	public void fuir()
+	public void intercepter(CoordonneesFloat ref, CoordonneesFloat blackCord)
 	{
-		CoordonneesFloat caseDuPerso = new CoordonneesFloat(
-				auto.getPersonnage().coord);
-		if (caseDuPerso.CasBG().equals(caseDuPerso.CasHD())
-				&& estIntersection(caseDuPerso)) 
-		{// si le perso est bien sur une case, et donc si il est sur une intersection :
-			int tab[][] = laFonctionQuiFaitTout(caseDuPerso.CasCentre(),2);
+		if(auto.sneaky == null)
+		{
+			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
+			Aetoile graph = new Aetoile(src);
+			graph.blackCoord(blackCord);
+			List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
+			l.remove(0);
+			if(l.size()==0)
+				setDirectionAleatoire(auto.getPersonnage());
+			else
+				auto.sneaky = mysteriousFunction(src, l.get(0));
 			
-			for(int ka = 0; ka<4;ka++)
-				if(tab[ka][2] + tab[ka][5]<0)
-					System.out.println("here we go");
-			int meilleurCandidat = Integer.MIN_VALUE;
-			Direction meilleurCandidatDirection = null;
-			int cpt = 0;
-			for (Direction d : Direction.values()) {// pour chaque direction
-				if (tab[cpt][1] != 0) {// sinon la direction est un mur ou il y
-										// a aucun pac-gomm
-						int candidat = 0;
-						for (int k = 0; k < 3; k++)
-							candidat += ImportanceRacine * tab[cpt][k];
-						for (int k = 3; k < 6; k++)
-							candidat += ImportanceBranche * tab[cpt][k];
-						if (meilleurCandidat < candidat) {
-							meilleurCandidat = candidat;
-							meilleurCandidatDirection = d;
-						}
-				}
-				cpt++;
-			}
-			if (meilleurCandidatDirection != null)
-			{
-				this.auto.getPersonnage().setDirection(meilleurCandidatDirection);
-				this.auto.getPersonnage().avancer();
-			} 
-			else 
-			{
-			setDirectionAleatoire(this.auto.getPersonnage());
-			this.auto.getPersonnage().avancer();
-			}
 		}
 		else
 		{
-			setDirectionAleatoire(this.auto.getPersonnage());
-			this.auto.getPersonnage().avancer();
+			if(auto.getPersonnage().caseDisponible(auto.sneaky))
+			{
+				auto.getPersonnage().setDirection(auto.sneaky);
+				auto.sneaky = null;
+			}
+			else
+			{
+				CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
+				Aetoile graph = new Aetoile(src);
+				graph.blackCoord(blackCord);
+				List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
+				l.remove(0);
+				if(l.size()==0)
+					setDirectionAleatoire(auto.getPersonnage());
+				else
+					auto.sneaky = mysteriousFunction(src, l.get(0));
+			}
 		}
+		this.auto.getPersonnage().avancer();
+	}
+	
+	public void intercepter() {
+		Iterator<Pacman> i = Ghost.central.keySet().iterator();
+		if (i.hasNext()) {
+			Pacman min = i.next();
+			while (i.hasNext()) {
+				Pacman next = i.next();
+				if (next.getCoord().CasCentre()
+						.distance(auto.getPersonnage().getCoord().CasCentre()) < next
+						.getCoord().CasCentre()
+						.distance(min.getCoord().CasCentre()))
+					min = next;
+			}
+			CoordonneesFloat minCord = new CoordonneesFloat(min.getCoord());
+			CoordonneesFloat inter = new CoordonneesFloat(prochaineInterCas(minCord, min.getOrientation().opposer()));
+			intercepter(minCord,inter);
+		}
+	}
+	
+	/**
+	 * Seul pac princesse peut fuir
+	 */
+	public void fuir()
+	{
+		Aetoile g = new Aetoile(this.auto.getPersonnage().coord);
+		g.blackList(Ghost.listCoord());
+		if(PacPrincess.cordDeFuite != null && this.auto.getPersonnage().coord.distance(PacPrincess.cordDeFuite) < 5)
+		{
+			//calcule d'une nouvelle cord de fuite
+			Random rnd = new Random();
+			int i = 3;
+			int alea;
+			alea = rnd.nextInt(i);
+			switch(alea)
+			{
+			case 0 :
+				PacPrincess.cordDeFuite = new CoordonneesFloat(1,1); break;
+			case 1 :
+				PacPrincess.cordDeFuite = new CoordonneesFloat(1,Personnage.getTerrain().hauteur-2); break;
+			case 2 :
+				PacPrincess.cordDeFuite = new CoordonneesFloat(Personnage.getTerrain().largeur-2,1); break;
+			case 3 :
+				PacPrincess.cordDeFuite = new CoordonneesFloat(Personnage.getTerrain().largeur-2,Personnage.getTerrain().hauteur-2); break;
+			}
+		}
+		suivre2(PacPrincess.cordDeFuite);
 	}
 	
 	/**

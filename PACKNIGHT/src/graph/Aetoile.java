@@ -56,6 +56,28 @@ public class Aetoile {
 	}
 	
 	/**
+	 * interdit l'accès a une liste de coordonné
+	 */
+	public void blackList(List<CoordonneesFloat> l)
+	{
+		Iterator<CoordonneesFloat> i = l.iterator();
+		while(i.hasNext())
+		{
+			NoeudEtoile blackStar = new NoeudEtoile(Integer.MAX_VALUE, null, i.next());
+			fermer.add(blackStar);
+		}
+	}
+	
+	/**
+	 * interdit l'accès a une coordonné
+	 * @param c
+	 */
+	public void blackCoord(CoordonneesFloat c)
+	{
+		fermer.add(new NoeudEtoile(Integer.MAX_VALUE, null,c));
+	}
+
+	/**
 	 * extrait le plus petit element
 	 * @param list
 	 * @return
@@ -141,13 +163,17 @@ public class Aetoile {
 	    	CoordonneesFloat start = new CoordonneesFloat(1,1);
 	    	CoordonneesFloat finish = new CoordonneesFloat(4,6);
 	    	
+	    	List<CoordonneesFloat> blackList = new LinkedList<>();
+	    	blackList.add(new CoordonneesFloat(1,2));
+	    	blackList.add(new CoordonneesFloat(4,1));
+	    	
 	    	Aetoile a = new Aetoile(start);
+	    	a.blackList(blackList);
 	    	List<CoordonneesFloat> l = a.algo(finish);
 	    	
 	    	Iterator<CoordonneesFloat> i = l.iterator();
 	    	while(i.hasNext())
 	    	{
-	    		
 	    		CoordonneesFloat x = i.next();
 	    		Personnage.getTerrain().setCase(x.x, x.y, 2);
 	    	}
