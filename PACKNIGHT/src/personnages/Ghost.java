@@ -1,4 +1,5 @@
 package personnages;
+import game.Accueil;
 import graph.Aetoile;
 import graph.Graph;
 
@@ -9,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import music.Music;
+import music.MusicManager;
 import structure_terrain.Terrain;
 
 public class Ghost extends Personnage {
@@ -211,6 +214,11 @@ public class Ghost extends Personnage {
 					central.get(pac).timer--;
 			}
 	
+		}
+		if(Ghost.central.isEmpty())
+		{
+			MusicManager.reperer.stop();
+			Accueil.Music_WindowGame.resume();
 		}
 	}
 	/**
