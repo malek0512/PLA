@@ -1,7 +1,6 @@
 package game;
 
 
-import music.Music;
 import music.MusicManager;
 
 import org.newdawn.slick.Color;
