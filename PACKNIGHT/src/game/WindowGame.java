@@ -38,7 +38,7 @@ public class WindowGame extends BasicGameState {
 	public String SPRITE_PACMAN_1 = "Pacman.png";
 	public String SPRITE_PACMAN_2 = "Pacman.png";
 	public String SPRITE_PACMAN_3 = "Pacman.png";
-	public String SPRITE_PACMAN_4 = "Soraka.png";
+	public String SPRITE_PACMAN_4 = "Pacman.png";
 
 	public String SPRITE_GHOST_1 = "Leona.png";
 	public String SPRITE_GHOST_2 = "Lulu.png";
