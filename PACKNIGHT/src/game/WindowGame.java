@@ -177,32 +177,21 @@ public class WindowGame extends BasicGameState {
 					equip.joueurCamera.avancerAnimation();
 	
 				float w = container.getWidth() / 4;
-				if (!(equip.joueurCamera.getCoord().x - xCamera > resolution_x / 2 || equip.joueurCamera
-						.getCoord().x - xCamera < -resolution_x / 2)) {
-					if (equip.joueurCamera.getCoord().x + largueur_map
-							* taille_minimap > (xCamera + w)
-							&& (equip.joueurCamera.getCoord().x + w < largueur_map
-									* tuile_size))
-						xCamera = equip.joueurCamera.getCoord().x - w
-								+ largueur_map * taille_minimap;
-					if (equip.joueurCamera.getCoord().x < (xCamera - w)
-							&& (equip.joueurCamera.getCoord().x > w))
+				if (!(equip.joueurCamera.getCoord().x - xCamera > resolution_x / 2 || equip.joueurCamera.getCoord().x - xCamera < -resolution_x / 2)) {
+					if (equip.joueurCamera.getCoord().x + largueur_map* taille_minimap > (xCamera + w)&& (equip.joueurCamera.getCoord().x + w < largueur_map* tuile_size))
+						xCamera = equip.joueurCamera.getCoord().x - w+ largueur_map * taille_minimap;
+					if (equip.joueurCamera.getCoord().x < (xCamera - w)&& (equip.joueurCamera.getCoord().x > w))
 						xCamera = equip.joueurCamera.getCoord().x + w;
 				} else if ((equip.joueurCamera.getCoord().x - xCamera > resolution_x / 2))
-					xCamera = largueur_map * tuile_size - resolution_x / 2
-							+ largueur_map * taille_minimap;
+					xCamera = largueur_map * tuile_size - resolution_x / 2+ largueur_map * taille_minimap;
 				else if ((equip.joueurCamera.getCoord().x - xCamera < -resolution_x / 2))
 					xCamera = resolution_x / 2;
 	
 				float h = container.getHeight() / 4;
-				if (!(equip.joueurCamera.getCoord().y - yCamera > resolution_y / 2 || equip.joueurCamera
-						.getCoord().y - yCamera < -resolution_y / 2)) {
-					if (equip.joueurCamera.getCoord().y > (yCamera + h)
-							&& (equip.joueurCamera.getCoord().y + h < hauteur_map
-									* tuile_size))
+				if (!(equip.joueurCamera.getCoord().y - yCamera > resolution_y / 2 || equip.joueurCamera.getCoord().y - yCamera < -resolution_y / 2)) {
+					if (equip.joueurCamera.getCoord().y > (yCamera + h)&& (equip.joueurCamera.getCoord().y + h < hauteur_map* tuile_size))
 						yCamera = equip.joueurCamera.getCoord().y - h;
-					if (equip.joueurCamera.getCoord().y < (yCamera - h)
-							&& (equip.joueurCamera.getCoord().y > h))
+					if (equip.joueurCamera.getCoord().y < (yCamera - h)&& (equip.joueurCamera.getCoord().y > h))
 						yCamera = equip.joueurCamera.getCoord().y + h;
 				} else if ((equip.joueurCamera.getCoord().y - yCamera > resolution_y / 2))
 					yCamera = hauteur_map * tuile_size - resolution_y / 2;

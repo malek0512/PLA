@@ -143,20 +143,29 @@ public class EquipageQuentin extends equipages.Equipage {
 				
 				
 			if (SelectionPerso.Perso_1 == 1 ){	
-			Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1);}
+			Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1);
+			this.joueurCamera =  PACMAN_1;
+			this.joueurIJKL =  PACMAN_1;}
 			else {Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1, "packnight.xml");}
 				
 			if (SelectionPerso.Perso_2 == 1 ){
-			Joueur PM_2 = new Joueur(this.g.SPRITE_PACMAN_2,this.g, PACMAN_2);}
+			Joueur PM_2 = new Joueur(this.g.SPRITE_PACMAN_2,this.g, PACMAN_2);
+			this.joueurCamera =  PACMAN_2;
+			this.joueurFleche =  PACMAN_2;}
 			else {Joueur PM_2 = new Joueur(this.g.SPRITE_PACMAN_2,this.g, PACMAN_2, "packnight.xml");}	
 			
 			if (SelectionPerso.Perso_3 == 1 ){
-			Joueur PM_3 = new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_3);}
+			Joueur PM_3 = new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_3);
+			this.joueurCamera =  PACMAN_3;
+			this.joueur8456 =  PACMAN_3;}
 			else {Joueur PM_3 = new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_3, "packnight.xml");}
 			
 			if (SelectionPerso.Perso_4 == 1 ){
-			Joueur PM_4 = new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4);}
+			Joueur PM_4 = new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4);
+			this.joueurCamera =  PACMAN_4;
+			this.joueurZQSD =  PACMAN_4;}
 			else {Joueur PM_4 = new Joueur(this.g.SPRITE_PACMAN_4,this.g, PACMAN_4, "princesse.xml");}
+			
 			
 	
 			Joueur FM_1 = new Joueur(this.g.SPRITE_GHOST_1,this.g, GHOST_1,"fm_berserk.xml");
