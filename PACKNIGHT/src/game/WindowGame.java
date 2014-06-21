@@ -2,6 +2,7 @@ package game;
 
 
 import music.Music;
+import music.MusicManager;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -125,7 +126,7 @@ public class WindowGame extends BasicGameState {
 		}
 		Ghost.init();
 		PacKnight.initMusic(); 
-		Music.init();
+		MusicManager.init();
 		
 		}
 

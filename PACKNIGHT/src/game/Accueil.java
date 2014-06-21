@@ -25,7 +25,7 @@ public class Accueil extends BasicGameState {
 	   private static String MUSIC_DEAD = "Game_Over.ogg";
 	   
 	   protected static Music Music_Accueil;
-	   protected static Music Music_WindowGame;
+	   public static Music Music_WindowGame;
 	   protected static Music Music_Choix;
 	   protected static Music Music_Win;
 	   protected static Music Music_Dead;

@@ -1,11 +1,15 @@
 package controleur.automate;
 
+import game.Accueil;
+import game.WindowGame;
 import graph.Aetoile;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import music.Music;
+import music.MusicManager;
 import personnages.*;
 
 /**
@@ -51,8 +55,11 @@ public class Primitives {
 							pac.getCoord().CasCentre());
 				} else
 				{
-					
-					
+					if(Ghost.central.isEmpty())
+					{
+						MusicManager.reperer.play();
+						Accueil.Music_WindowGame.pause();
+					}
 					Ghost.central.put(pac,((Ghost) auto.getPersonnage()).new AvisDeRecherche(pac.getCoord().CasCentre()));
 				}
 			}
