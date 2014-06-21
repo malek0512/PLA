@@ -56,7 +56,7 @@ public class WindowGame extends BasicGameState {
 	private Image PACGUM, HEART, FOND_INTERFACE;
 	public boolean moving = true;
 
-	public static int direction = 0;
+	public int direction = 0;
 	public static int taille_minimap = 4;
 
 	public static int tuile_size = 32;
@@ -221,6 +221,7 @@ public class WindowGame extends BasicGameState {
 			}
 			try {
 				equip.suivant();
+				
 
 			} catch (Exception e) {
 				System.out.println(e);
