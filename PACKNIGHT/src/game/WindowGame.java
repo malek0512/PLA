@@ -84,7 +84,6 @@ public class WindowGame extends BasicGameState {
 		case 1 : MAP = "FATMAP.tmx";break;
 		}
 		
-		System.out.println("MAP : "+Choix_Map);
 		time = 0;
 		PacKnight.vie = 50;
 		

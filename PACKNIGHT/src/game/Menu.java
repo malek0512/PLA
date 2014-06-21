@@ -25,6 +25,8 @@ public class Menu extends StateBasedGame {
       addState(new WindowGame(equip));
       addState(new Win ());
       addState(new Dead());
+      addState(new Difficulte());
+      addState(new Free());
 
    }
    
