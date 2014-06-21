@@ -1,4 +1,8 @@
-package game;
+package equipages;
+
+import game.Joueur;
+import game.Menu;
+import game.WindowGame;
 
 import java.awt.Window;
 import java.util.LinkedList;

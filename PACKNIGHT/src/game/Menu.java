@@ -5,11 +5,13 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import equipages.Equipage;
+import equipages.EquipageVivienAlex;
 import personnages.RunExternal;
 
 public class Menu extends StateBasedGame {
 
-	static AppGameContainer container;
+	public static AppGameContainer container;
 	
 	Equipage equip;
    public Menu(Equipage e) {
