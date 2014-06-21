@@ -14,7 +14,7 @@ public class PacPrincess extends Pacman{
 	 * liste des PacPrincess sur le terrain
 	 */
 	static public List<PacPrincess> liste = new LinkedList<PacPrincess>();
-	private int vie = 2;
+	public static int vie = 2;
 	public int perimetreSecurite = 10;
 	public List<Ghost> violeurs; //Les fantomes qui ose toucher a la princesse. Pour l'instant un violeur a la fois ^^. Par la suite pk pas une liste :D
 	static public CoordonneesFloat cordDeFuite = new CoordonneesFloat(1, 1);
