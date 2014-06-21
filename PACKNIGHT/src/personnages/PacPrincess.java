@@ -18,6 +18,7 @@ public class PacPrincess extends Pacman{
 	public int perimetreSecurite = 10;
 	public List<Ghost> violeurs; //Les fantomes qui ose toucher a la princesse. Pour l'instant un violeur a la fois ^^. Par la suite pk pas une liste :D
 	static public CoordonneesFloat cordDeFuite = new CoordonneesFloat(1, 1);
+	public PacKnight protecteur=null;
 	
 	public PacPrincess(String name, int x, int y, Direction d, CoordonneesFloat respawn) {
 		super(name,x,y,d,respawn);

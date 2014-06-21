@@ -80,8 +80,8 @@ public class WindowGame extends BasicGameState {
 		{
 		switch (Choix_Map)
 		{
-		case 0 : MAP = "PACMAN.tmx";break;
-		case 1 : MAP = "FATMAP.tmx";break;
+		case 0 : MAP = "PACMAN.tmx"; break;
+		case 1 : MAP = "FATMAP.tmx"; break;
 		}
 		
 		System.out.println("MAP : "+Choix_Map);
@@ -110,6 +110,15 @@ public class WindowGame extends BasicGameState {
 			j.sprite();
 		}
 		
+		/*
+		 * modification des personnages en fonction de la carte
+		 */
+		switch(Choix_Map)
+		{
+		case 0 : Ghost.modeMulti=false; break;
+		case 1 : Ghost.modeMulti=true;break;
+		}
+		Ghost.init();
 		  
 		}
 

@@ -50,6 +50,19 @@ public abstract class Pacman extends Personnage {
 		return false;
 	}
 	
+	static public int distance(CoordonneesFloat c)
+	{
+		int min = Integer.MAX_VALUE;
+		Iterator<Pacman> i = Pacman.liste.iterator();
+		while(i.hasNext())
+		{
+			int aux = i.next().coord.CasCentre().distance(c);
+			if( aux < min)
+				min = aux;
+		}
+		return min;
+	}
+	
 	/**
 	 * @param position a tester
 	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null

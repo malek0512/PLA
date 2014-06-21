@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
+import structure_terrain.Terrain;
 
 public class Ghost extends Personnage {
 	
@@ -33,15 +36,16 @@ public class Ghost extends Personnage {
 	private List<CoordonneesFloat> ordre = null; //liste des case de l'ordre en cours
 	
 		//boolean des animations
-	private boolean prisonner = false; //le fantome est dans la prison
+	private boolean prisonner = true; //le fantome est dans la prison
 	private boolean stun = false;
 	private boolean entendEtObei = false;
+	private boolean sortiePrison = false;
 	
 		//timeur des animation
-	final static private int tempsPasserEnPrison = 1; 
+	static private int tempsPasserEnPrison = 230; //pair
 	final static private int tempsStun = 15;
-	final static private int tempsPrisonner = 10;
 	
+	static public boolean modeMulti;
 
 	
 	/**
@@ -79,20 +83,82 @@ public class Ghost extends Personnage {
 		return listRes;
 	}
 
+	static public int distance(CoordonneesFloat c)
+	{
+		int min = Integer.MAX_VALUE;
+		Iterator<Ghost> i = Ghost.liste.iterator();
+		while(i.hasNext())
+		{
+			int aux = i.next().coord.CasCentre().distance(c);
+			if( aux < min)
+				min = aux;
+		}
+		return min;
+	}
+	
 	static public boolean powerUp()
 	{
 		return fantomeUp>=nbInterChercher;
 	}
 	
-	public Ghost(String nom, int x, int y, Direction d,CoordonneesFloat spawn) {
-		super(nom, x, y, d);
-		this.agonise = false;
-		this.pointDeRespawn = new CoordonneesFloat(spawn.x * 32, spawn.y * 32);
+	static public void init()
+	{
+		if(modeMulti)
+			Ghost.initAlea();
+		else
+			Ghost.initMap0();
+	}
+	
+	static public void initAlea()
+	{
+		Iterator<Ghost> i= Ghost.liste.iterator();
+		while (i.hasNext()) {
+			i.next().respawnWOA();
+		}
+	}
+	
+	static public void initMap0()
+	{
+		Iterator<Ghost> i= Ghost.liste.iterator();
+		int timer = 0;
+		int x = 12*32;
+		int y = 14*32;
+		while (i.hasNext()) {
+			Ghost g = i.next();
+			g.timerAnimation -= timer*55;
+			g.pointDeRespawn = new CoordonneesFloat(12*32,14*32);
+			g.coord.x = x;
+			g.coord.y = y;
+			timer++;
+			x+= 32;
+			g.direction=Direction.droite;
+		}
+	}
+	
+	public Ghost(String nom) {
+		super(nom, 1, 1, Direction.bas);
+		this.agonise=false;
 		Ghost.liste.add(this);
 		Ghost.fantomeUp++;
-		
-		
 	}
+	
+	public Ghost(String nom, int x, int y, Direction d) {
+		super(nom, x, y, d);
+		this.agonise = false;
+		this.pointDeRespawn = new CoordonneesFloat(x * 32,y * 32);
+		Ghost.liste.add(this);
+		Ghost.fantomeUp++;
+		tempsPasserEnPrison = 0;
+	}
+	
+	public Ghost(String nom, int x, int y, Direction d, int timer) {
+		super(nom, x, y, d);
+		this.agonise = false;
+		this.pointDeRespawn = new CoordonneesFloat(x * 32, y * 32);
+		Ghost.liste.add(this);
+		Ghost.fantomeUp++;
+	}
+	
 	//getter de base
 	public boolean getisAlive(){
 		return !(agonise);
@@ -198,8 +264,25 @@ public class Ghost extends Personnage {
 	 * effectuer une fois que l'animation est fini
 	 */
 	protected void respawnWOA() {
-		this.coord = new CoordonneesFloat(this.pointDeRespawn);
-		this.prisonner = true;
+		if(!Ghost.modeMulti)
+		{
+			this.coord = new CoordonneesFloat(this.pointDeRespawn);
+			this.direction = Direction.droite;
+			this.prisonner = true;
+		}
+		else
+		{
+			Random r = new Random();
+			Terrain t = Personnage.getTerrain();
+			int x;
+			int y;
+			do
+			{
+			x = r.nextInt(t.largeur);
+			y = r.nextInt(t.hauteur);
+			}while(!(t.caseAcessible(x, y) && Pacman.distance(new CoordonneesFloat(x, y))>(vision+2)));
+			this.coord = new CoordonneesFloat(x*32, y*32);
+		}
 	}
 	
 	/**
@@ -213,7 +296,7 @@ public class Ghost extends Personnage {
 	 * renvoie vraie si le ghost est parametrable par un automate a un l'instant courant
 	 */
 	public boolean parametrable() {
-		return !(agonise || prisonner || stun || entendEtObei);
+		return !(agonise || prisonner || stun || entendEtObei || sortiePrison);
 	}
 
 	/**
@@ -239,11 +322,30 @@ public class Ghost extends Personnage {
 			if(this.timerAnimation < Ghost.tempsPasserEnPrison)
 			{
 				this.timerAnimation++;
+				if(!this.caseDevantDisponible())
+					this.direction = this.direction.opposer();
+				this.avancer();
 			}
 			else
 			{
 				this.timerAnimation = 0;
 				this.prisonner = false;
+				this.sortiePrison = true;
+				this.direction = Direction.haut;
+			}
+		}
+		if(sortiePrison)
+		{
+			if(this.timerAnimation < 24)
+			{
+				this.timerAnimation++;
+				this.avancerAux();
+			}
+			else
+			{
+				this.timerAnimation = 0;
+				this.sortiePrison = false;
+				this.direction = Direction.droite;
 			}
 		}
 		if(stun)
@@ -352,7 +454,7 @@ public class Ghost extends Personnage {
 
 
 	public boolean hitting() {
-		return !(agonise) && !(prisonner);
+		return !(agonise) && !(prisonner) && !(sortiePrison);
 	}
 	
 	
