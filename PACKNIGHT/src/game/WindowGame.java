@@ -68,7 +68,7 @@ public class WindowGame extends BasicGameState {
 	boolean pause = false;
 	
 	
-	static int Choix_Map = 0;
+	public static int Choix_Map = 0;
 
 	public int getID() {
 		return ID;
