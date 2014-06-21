@@ -42,10 +42,11 @@ public class WindowGame extends BasicGameState {
 	public String SPRITE_PACMAN_3 = "Pacman.png";
 	public String SPRITE_PACMAN_4 = "Princess.png";
 
-	public String SPRITE_GHOST_1 = "Leona.png";
-	public String SPRITE_GHOST_2 = "Lulu.png";
-	public String SPRITE_GHOST_3 = "Janna.png";
-	public String SPRITE_GHOST_4 = "Spectrum.png";
+	public String SPRITE_SUIVEUR = "Suiveur.png";
+	public String SPRITE_ALEATOIRE = "Aleatoire.png";
+	public String SPRITE_BERSERK = "Berserk.png";
+	public String SPRITE_INTERCEPTEUR = "Intercepteur.png";
+	public String SPRITE_LORD = "Spectrum.png";
 
 	protected static float xCamera = resolution_x / 2;
 	protected static float yCamera = resolution_y / 2;
