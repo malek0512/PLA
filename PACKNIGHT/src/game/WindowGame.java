@@ -53,7 +53,7 @@ public class WindowGame extends BasicGameState {
 	protected static GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
-	private Image PACGUM, HEART, FOND_INTERFACE;
+	private Image PACGUM, HEART, FOND_INTERFACE,PAUSE;
 	public boolean moving = true;
 
 	public int direction = 0;
@@ -62,6 +62,8 @@ public class WindowGame extends BasicGameState {
 	public static int tuile_size = 32;
 	protected static int largueur_map, hauteur_map;
 	public int taillePersonnage = 32;
+	
+	boolean pause = false;
 	
 	
 	static int Choix_Map = 0;
@@ -112,7 +114,10 @@ public class WindowGame extends BasicGameState {
 		case 0 : MAP = "PACMAN.tmx";break;
 		case 1 : MAP = "FATMAP.tmx";break;
 		}
+		
 		System.out.println("MAP : "+Choix_Map);
+		time += 0;
+		PacKnight.vie = 10;
 		
 		this.game = game;
 		container.setShowFPS(false);
@@ -122,10 +127,9 @@ public class WindowGame extends BasicGameState {
 
 		Terrain terrain = new Terrain(largueur_map, hauteur_map, 0);
 		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
-		PACGUM = new Image(
-				"src/graphisme/main/ressources/map/tuiles/pacgomme.png");
-		FOND_INTERFACE = new Image(
-				"src/graphisme/main/ressources/map/image/Interface.jpg");
+		PACGUM = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
+		FOND_INTERFACE = new Image("src/graphisme/main/ressources/map/image/Interface.jpg");
+		PAUSE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
 
 		Personnage.initTerrain(terrain);
 		equip.init();
@@ -142,6 +146,17 @@ public class WindowGame extends BasicGameState {
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
+		
+		if(pause)
+		{
+		      PAUSE.draw(0,0);
+		      g.setColor(Color.white);
+		      g.drawString("Resume (P)", 250, 100);
+		      g.drawString("Main Menu (SPACE)", 250, 150);
+		      g.drawString("Quit Game (ESCAPE)", 250, 200);	
+		}
+		else
+		{
 
 		g.translate(container.getWidth() / 2 - xCamera, container.getHeight()
 				/ 2 - (yCamera));
@@ -158,6 +173,7 @@ public class WindowGame extends BasicGameState {
 				+ yCamera);
 		if (time < 3000)
 			g.drawString("GET READY ", resolution_x / 2, resolution_y / 2);
+		}
 
 	}
 
