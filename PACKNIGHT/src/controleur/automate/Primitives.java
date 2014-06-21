@@ -57,9 +57,8 @@ public class Primitives {
 				{
 					if(Ghost.central.isEmpty())
 					{
-						MusicManager.reperer.play();
 						Accueil.Music_WindowGame.pause();
-						System.out.println("changement de music 1->2");
+						MusicManager.playReperer();
 					}
 					Ghost.central.put(pac,((Ghost) auto.getPersonnage()).new AvisDeRecherche(pac.getCoord().CasCentre()));
 				}
