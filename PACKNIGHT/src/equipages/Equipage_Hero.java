@@ -20,15 +20,15 @@ public class Equipage_Hero extends Equipage{
 
 		PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(17, 17), true);
 
-		Ghost GHOST_1 = new Ghost("1", 2, 1, Direction.droite,new CoordonneesFloat(2, 1));
-		Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(20, 1));
-		Ghost GHOST_3 = new Ghost("3", 1, 5, Direction.droite,new CoordonneesFloat(26, 1));
-		Ghost GHOST_4 = new Ghost("4", 12, 1, Direction.droite,new CoordonneesFloat(18, 1));
+		Ghost GHOST_1 = new Ghost("1");
+		Ghost GHOST_2 = new Ghost("2");
+		Ghost GHOST_3 = new Ghost("3");
+		Ghost GHOST_4 = new Ghost("4");
 
 		public Equipage_Hero() {
 			super();
-			this.joueurFleche =  PACMAN_1;
-			this.joueurLettre = null;
+			this.joueurCamera =  PACMAN_1;
+			this.joueurZQSD = null;
 		}
 		
 		public void init() throws SlickException{

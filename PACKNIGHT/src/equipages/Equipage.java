@@ -12,8 +12,11 @@ public abstract class Equipage {
 
 	
 	WindowGame g;
+	public Personnage joueurCamera;
 	public Personnage joueurFleche;
-	public Personnage joueurLettre;
+	public Personnage joueurZQSD;
+	public Personnage joueurIJKL;
+	public Personnage joueur8456;
 	
 	public Equipage() {
 		this.g = new WindowGame(this);

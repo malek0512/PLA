@@ -62,7 +62,7 @@ public class Choix extends BasicGameState
 		      			{
 		      				if(WindowGame.Choix_Map == 0)
 		      				{
-		      				game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
+		      				game.enterState(Difficulte.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 		      				}
 		      				else game.enterState(SelectionPerso.ID);break;
 		      			}
