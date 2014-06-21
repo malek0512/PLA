@@ -38,7 +38,7 @@ public class WindowGame extends BasicGameState {
 	public String SPRITE_PACMAN_1 = "Pacman.png";
 	public String SPRITE_PACMAN_2 = "Pacman.png";
 	public String SPRITE_PACMAN_3 = "Pacman.png";
-	public String SPRITE_PACMAN_4 = "Soraka.png";
+	public String SPRITE_PACMAN_4 = "Princess.png";
 
 	public String SPRITE_GHOST_1 = "Leona.png";
 	public String SPRITE_GHOST_2 = "Lulu.png";
@@ -53,7 +53,7 @@ public class WindowGame extends BasicGameState {
 	protected static GameContainer container;
 	private TiledMap map;
 	private Terrain playground;
-	private Image PACGUM, HEART, FOND_INTERFACE;
+	private Image PACGUM, HEART, FOND_INTERFACE,PAUSE;
 	public boolean moving = true;
 
 	public int direction = 0;
@@ -62,6 +62,8 @@ public class WindowGame extends BasicGameState {
 	public static int tuile_size = 32;
 	protected static int largueur_map, hauteur_map;
 	public int taillePersonnage = 32;
+	
+	boolean pause = false;
 	
 	
 	static int Choix_Map = 0;
@@ -72,37 +74,6 @@ public class WindowGame extends BasicGameState {
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		
-		/*switch (Choix_Map)
-		{
-		case 0 : MAP = "PACMAN.tmx";break;
-		case 1 : MAP = "FATMAP.tmx";break;
-		}
-		System.out.println("MAP : "+Choix_Map);
-		
-		this.game = game;
-		container.setShowFPS(false);
-		this.map = new TiledMap(CHEMIN_MAP.concat(MAP));
-		largueur_map = map.getWidth();
-		hauteur_map = map.getHeight();
-
-		Terrain terrain = new Terrain(largueur_map, hauteur_map, 0);
-		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
-		PACGUM = new Image(
-				"src/graphisme/main/ressources/map/tuiles/pacgomme.png");
-		FOND_INTERFACE = new Image(
-				"src/graphisme/main/ressources/map/image/Interface.jpg");
-
-		Personnage.initTerrain(terrain);
-		equip.init();
-
-		Map.mapToTerrain(terrain, largueur_map, hauteur_map, map);
-		playground = terrain;
-
-		for (Joueur j : Joueur.liste) {
-			j.sprite();
-		}*/
-
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException 
@@ -112,7 +83,10 @@ public class WindowGame extends BasicGameState {
 		case 0 : MAP = "PACMAN.tmx";break;
 		case 1 : MAP = "FATMAP.tmx";break;
 		}
+		
 		System.out.println("MAP : "+Choix_Map);
+		time = 0;
+		PacKnight.vie = 50;
 		
 		this.game = game;
 		container.setShowFPS(false);
@@ -122,10 +96,9 @@ public class WindowGame extends BasicGameState {
 
 		Terrain terrain = new Terrain(largueur_map, hauteur_map, 0);
 		HEART = new Image("src/graphisme/main/ressources/map/image/Heart.png");
-		PACGUM = new Image(
-				"src/graphisme/main/ressources/map/tuiles/pacgomme.png");
-		FOND_INTERFACE = new Image(
-				"src/graphisme/main/ressources/map/image/Interface.jpg");
+		PACGUM = new Image("src/graphisme/main/ressources/map/tuiles/pacgomme.png");
+		FOND_INTERFACE = new Image("src/graphisme/main/ressources/map/image/Interface.jpg");
+		PAUSE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
 
 		Personnage.initTerrain(terrain);
 		equip.init();
@@ -142,6 +115,17 @@ public class WindowGame extends BasicGameState {
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
+		
+		if(pause)
+		{
+		      PAUSE.draw(0,0);
+		      g.setColor(Color.white);
+		      g.drawString("Resume (P)", 250, 100);
+		      g.drawString("Main Menu (SPACE)", 250, 150);
+		      g.drawString("Quit Game (ESCAPE)", 250, 200);	
+		}
+		else
+		{
 
 		g.translate(container.getWidth() / 2 - xCamera, container.getHeight()
 				/ 2 - (yCamera));
@@ -156,141 +140,161 @@ public class WindowGame extends BasicGameState {
 		Interface_Joueur.render(g, HEART, FOND_INTERFACE);
 		Minimap(playground, g, -resolution_x / 2 + xCamera, -resolution_y / 2
 				+ yCamera);
-		if (time < 3000)
+		if (time < 3893)
 			g.drawString("GET READY ", resolution_x / 2, resolution_y / 2);
+		}
 
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 
-		if (Terrain.nb_pacgum == 0) {
-			//Accueil.Music_Win.play();
-			game.enterState(Win.ID, new FadeOutTransition(Color.black),
-					new FadeInTransition(Color.black));
-		}
-
-		if (PacKnight.vie == 0) {
-			//Accueil.Music_Dead.play();
-			game.enterState(Dead.ID, new FadeOutTransition(Color.black),
-					new FadeInTransition(Color.black));
-		}
-
-		time += delta;
-
-		if (!(time < 3000)) {
-			if(equip.joueurFleche!=null)
-			{
-			if (equip.joueurFleche.parametrable())
-				equip.joueurFleche.avancer();
-			else
-				equip.joueurFleche.avancerAnimation();
-
-			float w = container.getWidth() / 4;
-			if (!(equip.joueurFleche.getCoord().x - xCamera > resolution_x / 2 || equip.joueurFleche
-					.getCoord().x - xCamera < -resolution_x / 2)) {
-				if (equip.joueurFleche.getCoord().x + largueur_map
-						* taille_minimap > (xCamera + w)
-						&& (equip.joueurFleche.getCoord().x + w < largueur_map
-								* tuile_size))
-					xCamera = equip.joueurFleche.getCoord().x - w
+		
+		if(!pause)
+		{
+			
+			if (Terrain.nb_pacgum == 0) {
+				Accueil.Music_Win.play();
+				game.enterState(Win.ID, new FadeOutTransition(Color.black),
+						new FadeInTransition(Color.black));
+			}
+	
+			if (PacKnight.vie == 0) {
+				Accueil.Music_Dead.play();
+				game.enterState(Dead.ID, new FadeOutTransition(Color.black),
+						new FadeInTransition(Color.black));
+			}
+	
+			time += delta;
+	
+			if (!(time < 3000)) {
+				if(equip.joueurFleche!=null)
+				{
+				if (equip.joueurFleche.parametrable())
+					equip.joueurFleche.avancer();
+				else
+					equip.joueurFleche.avancerAnimation();
+	
+				float w = container.getWidth() / 4;
+				if (!(equip.joueurFleche.getCoord().x - xCamera > resolution_x / 2 || equip.joueurFleche
+						.getCoord().x - xCamera < -resolution_x / 2)) {
+					if (equip.joueurFleche.getCoord().x + largueur_map
+							* taille_minimap > (xCamera + w)
+							&& (equip.joueurFleche.getCoord().x + w < largueur_map
+									* tuile_size))
+						xCamera = equip.joueurFleche.getCoord().x - w
+								+ largueur_map * taille_minimap;
+					if (equip.joueurFleche.getCoord().x < (xCamera - w)
+							&& (equip.joueurFleche.getCoord().x > w))
+						xCamera = equip.joueurFleche.getCoord().x + w;
+				} else if ((equip.joueurFleche.getCoord().x - xCamera > resolution_x / 2))
+					xCamera = largueur_map * tuile_size - resolution_x / 2
 							+ largueur_map * taille_minimap;
-				if (equip.joueurFleche.getCoord().x < (xCamera - w)
-						&& (equip.joueurFleche.getCoord().x > w))
-					xCamera = equip.joueurFleche.getCoord().x + w;
-			} else if ((equip.joueurFleche.getCoord().x - xCamera > resolution_x / 2))
-				xCamera = largueur_map * tuile_size - resolution_x / 2
-						+ largueur_map * taille_minimap;
-			else if ((equip.joueurFleche.getCoord().x - xCamera < -resolution_x / 2))
-				xCamera = resolution_x / 2;
-
-			float h = container.getHeight() / 4;
-			if (!(equip.joueurFleche.getCoord().y - yCamera > resolution_y / 2 || equip.joueurFleche
-					.getCoord().y - yCamera < -resolution_y / 2)) {
-				if (equip.joueurFleche.getCoord().y > (yCamera + h)
-						&& (equip.joueurFleche.getCoord().y + h < hauteur_map
-								* tuile_size))
-					yCamera = equip.joueurFleche.getCoord().y - h;
-				if (equip.joueurFleche.getCoord().y < (yCamera - h)
-						&& (equip.joueurFleche.getCoord().y > h))
-					yCamera = equip.joueurFleche.getCoord().y + h;
-			} else if ((equip.joueurFleche.getCoord().y - yCamera > resolution_y / 2))
-				yCamera = hauteur_map * tuile_size - resolution_y / 2;
-			else if ((equip.joueurFleche.getCoord().y - yCamera < -resolution_y / 2))
-				yCamera = resolution_y / 2;
+				else if ((equip.joueurFleche.getCoord().x - xCamera < -resolution_x / 2))
+					xCamera = resolution_x / 2;
+	
+				float h = container.getHeight() / 4;
+				if (!(equip.joueurFleche.getCoord().y - yCamera > resolution_y / 2 || equip.joueurFleche
+						.getCoord().y - yCamera < -resolution_y / 2)) {
+					if (equip.joueurFleche.getCoord().y > (yCamera + h)
+							&& (equip.joueurFleche.getCoord().y + h < hauteur_map
+									* tuile_size))
+						yCamera = equip.joueurFleche.getCoord().y - h;
+					if (equip.joueurFleche.getCoord().y < (yCamera - h)
+							&& (equip.joueurFleche.getCoord().y > h))
+						yCamera = equip.joueurFleche.getCoord().y + h;
+				} else if ((equip.joueurFleche.getCoord().y - yCamera > resolution_y / 2))
+					yCamera = hauteur_map * tuile_size - resolution_y / 2;
+				else if ((equip.joueurFleche.getCoord().y - yCamera < -resolution_y / 2))
+					yCamera = resolution_y / 2;
+				}
+				try {
+					equip.suivant();
+					
+	
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+				Ghost.disparitionPacman();
 			}
-			try {
-				equip.suivant();
-				
-
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-			Ghost.disparitionPacman();
 		}
 	}
 
 	public void keyReleased(int key, char c) {
-		if(equip.joueurFleche!=null || equip.joueurLettre!=null){
-		switch (key) {
-		case Input.KEY_UP:
-			equip.joueurFleche.setNextDirection(Direction.haut);
-			this.direction = 0;
-			this.moving = true;
-			break;
-		case Input.KEY_LEFT:
-			equip.joueurFleche.setNextDirection(Direction.gauche);
-			this.direction = 1;
-			this.moving = true;
-			break;
-		case Input.KEY_DOWN:
-			equip.joueurFleche.setNextDirection(Direction.bas);
-			this.direction = 2;
-			this.moving = true;
-			break;
-		case Input.KEY_RIGHT:
-			equip.joueurFleche.setNextDirection(Direction.droite);
-			this.direction = 3;
-			this.moving = true;
-			break;
-
-		case Input.KEY_Z:
-			equip.joueurLettre.setNextDirection(Direction.haut);
-			this.direction = 0;
-			this.moving = true;
-			break;
-		case Input.KEY_Q:
-			equip.joueurLettre.setNextDirection(Direction.gauche);
-			this.direction = 1;
-			this.moving = true;
-			break;
-		case Input.KEY_S:
-			equip.joueurLettre.setNextDirection(Direction.bas);
-			this.direction = 2;
-			this.moving = true;
-			break;
-		case Input.KEY_D:
-			equip.joueurLettre.setNextDirection(Direction.droite);
-			this.direction = 3;
-			this.moving = true;
-			break;
-
+		if (!pause)
+		{
+				
+			if(equip.joueurFleche!=null || equip.joueurLettre!=null){
+			switch (key) {
+			case Input.KEY_UP:
+				equip.joueurFleche.setNextDirection(Direction.haut);
+				this.direction = 0;
+				this.moving = true;
+				break;
+			case Input.KEY_LEFT:
+				equip.joueurFleche.setNextDirection(Direction.gauche);
+				this.direction = 1;
+				this.moving = true;
+				break;
+			case Input.KEY_DOWN:
+				equip.joueurFleche.setNextDirection(Direction.bas);
+				this.direction = 2;
+				this.moving = true;
+				break;
+			case Input.KEY_RIGHT:
+				equip.joueurFleche.setNextDirection(Direction.droite);
+				this.direction = 3;
+				this.moving = true;
+				break;
+	
+			case Input.KEY_Z:
+				equip.joueurLettre.setNextDirection(Direction.haut);
+				this.direction = 0;
+				this.moving = true;
+				break;
+			case Input.KEY_Q:
+				equip.joueurLettre.setNextDirection(Direction.gauche);
+				this.direction = 1;
+				this.moving = true;
+				break;
+			case Input.KEY_S:
+				equip.joueurLettre.setNextDirection(Direction.bas);
+				this.direction = 2;
+				this.moving = true;
+				break;
+			case Input.KEY_D:
+				equip.joueurLettre.setNextDirection(Direction.droite);
+				this.direction = 3;
+				this.moving = true;
+				break;
+	
+			}
+			}
+			switch (key) {
+			case Input.KEY_M:
+				if (Accueil.Music_WindowGame.playing())
+					Accueil.Music_WindowGame.pause();
+				else
+					Accueil.Music_WindowGame.resume();
+				break;
+			case Input.KEY_ESCAPE: /* RunExternal.launch("make clean"); */
+				Menu.container.exit();
+				break;
+			case Input.KEY_P:
+				if (pause) pause = false;else pause =true;
+				break;
+			}
 		}
-		}
-		switch (key) {
-		case Input.KEY_M:
-			if (Accueil.Music_WindowGame.playing())
-				Accueil.Music_WindowGame.pause();
-			else
-				Accueil.Music_WindowGame.resume();
-			break;
-		case Input.KEY_ESCAPE: /* RunExternal.launch("make clean"); */
-			Menu.container.exit();
-			break;
-		case Input.KEY_P:
-			game.enterState(Pause.ID, new FadeOutTransition(Color.black),
-					new FadeInTransition(Color.black));
-			break;
+		else 
+		{
+		      switch (key) {
+	      		case Input.KEY_SPACE: Accueil.Music_Choix.loop();
+	      		if (pause) pause = false;else pause =true;
+	      		game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
+	      		case Input.KEY_P: if (pause) pause = false;else pause =true;break;
+	      		case Input.KEY_M: if(Accueil.Music_WindowGame.playing()) Accueil.Music_WindowGame.pause() ;else Accueil.Music_WindowGame.resume(); break;
+	      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
+		      }
 		}
 	}
 

@@ -19,8 +19,8 @@ public class Accueil extends BasicGameState {
 	   
 	   private static String CHEMIN_MUSIC = "src/graphisme/main/ressources/music/";
 	   private static String MUSIC_ACCUEIL = "Batman.ogg";
-	   private static String MUSIC_WINDOWGAME = "AllBeat.ogg";
-	   private static String MUSIC_CHOIX = "Frozen.ogg";
+	   private static String MUSIC_WINDOWGAME = "Game.ogg";
+	   private static String MUSIC_CHOIX = "Selection.ogg";
 	   private static String MUSIC_WIN = "Win.ogg";
 	   private static String MUSIC_DEAD = "Game_Over.ogg";
 	   
@@ -40,20 +40,20 @@ public class Accueil extends BasicGameState {
 	   public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		   	this.game = game;
 		   	
-		   //	Music_Accueil = new Music(CHEMIN_MUSIC.concat(MUSIC_ACCUEIL));
-		   //	Music_WindowGame = new Music(CHEMIN_MUSIC.concat(MUSIC_WINDOWGAME));
-		   	//Music_Choix = new Music(CHEMIN_MUSIC.concat(MUSIC_CHOIX));
-		   //	Music_Win = new Music(CHEMIN_MUSIC.concat(MUSIC_WIN));
-		   	//Music_Dead = new Music(CHEMIN_MUSIC.concat(MUSIC_DEAD));
+		   	Music_Accueil = new Music(CHEMIN_MUSIC.concat(MUSIC_ACCUEIL));
+		   	Music_WindowGame = new Music(CHEMIN_MUSIC.concat(MUSIC_WINDOWGAME));
+		   	Music_Choix = new Music(CHEMIN_MUSIC.concat(MUSIC_CHOIX));
+		   	Music_Win = new Music(CHEMIN_MUSIC.concat(MUSIC_WIN));
+		   	Music_Dead = new Music(CHEMIN_MUSIC.concat(MUSIC_DEAD));
 		   	
-		   //	Music_Accueil.loop();
+		   	Music_Accueil.loop();
 
 	   }
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 	      ACCUEIL = new Image("src/graphisme/main/ressources/map/image/Accueil.jpeg");
 	      ACCUEIL.draw();
-	      g.drawString("Press 'ENTER' to continue", WindowGame.resolution_x/2-100, WindowGame.resolution_y/2);
+	      g.drawString("Press 'ENTER'", WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);
 	      
 	   }
 
@@ -64,7 +64,7 @@ public class Accueil extends BasicGameState {
 	      switch (key) {
 	    	  case Input.KEY_ENTER: 
 	    	  {
-	    	      //Music_Choix.loop();
+	    	      Music_Choix.loop();
 	    		  game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	    	  }
 	    	  case Input.KEY_M: if(Music_Accueil.playing()) Music_Accueil.pause() ;else Music_Accueil.resume(); break;

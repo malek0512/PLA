@@ -23,7 +23,6 @@ public class Menu extends StateBasedGame {
       addState(new Choix());
       addState(new SelectionPerso());
       addState(new WindowGame(equip));
-      addState(new Pause());
       addState(new Win ());
       addState(new Dead());
 
