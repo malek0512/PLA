@@ -68,6 +68,16 @@ public class Ghost extends Personnage {
 		}
 		return false;
 	}
+	
+	static public List<CoordonneesFloat> listCoord()
+	{
+		List<CoordonneesFloat> listRes = new LinkedList<CoordonneesFloat>();
+		Iterator<Ghost> i= Ghost.liste.iterator();
+		while (i.hasNext()) {
+				listRes.add(i.next().coord);
+		}
+		return listRes;
+	}
 
 	static public boolean powerUp()
 	{

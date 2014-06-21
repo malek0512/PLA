@@ -8,10 +8,9 @@ public class Terrain1 extends Terrain {
 		{
 			for(int j=0;j<largeur;j++)
 			{
-				terrain[i][j] = new Case(1);
+				terrain[i][j] = new Case(0);
 			}
 		}
-		/*
 		terrain[1][1] = new Case(1);
 		terrain[1][2] = new Case(1);
 		terrain[1][3] = new Case(1);
@@ -37,10 +36,20 @@ public class Terrain1 extends Terrain {
 		terrain[7][3] = new Case(1);
 		terrain[7][4] = new Case(1);
 		terrain[8][3] = new Case(1);
-		terrain[2][3] = new Case(0);
-		terrain[4][2] = new Case(0);
+		terrain[2][3] = new Case(1);
+		terrain[4][2] = new Case(1);
 		terrain[5][3] = new Case(1);
-		*/
+		
+		terrain[1][5] = new Case(1);
+		terrain[1][6] = new Case(1);
+		terrain[1][7] = new Case(1);
+		terrain[2][7] = new Case(1);
+		terrain[3][7] = new Case(1);
+		terrain[4][7] = new Case(1);
+		terrain[5][7] = new Case(1);
+		terrain[5][6] = new Case(1);
+		terrain[5][5] = new Case(1);
+		
 	}
 
 }
