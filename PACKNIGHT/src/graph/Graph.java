@@ -48,12 +48,21 @@ public class Graph {
 	{
 		switch(d)
 		{
-		case bas : return table[u.x][u.y+1].couleur;
-		case haut : return table[u.x][u.y-1].couleur;
-		case droite : return table[u.x+1][u.y].couleur;
-		case gauche : return table[u.x-1][u.y].couleur;
-		default : return 0;
+		case bas : 
+			if(Personnage.getTerrain().caseAcessible(u.x, u.y+1))
+				return table[u.x][u.y+1].couleur;
+			break;
+		case haut :
+			if(Personnage.getTerrain().caseAcessible(u.x, u.y-1))
+				return table[u.x][u.y-1].couleur;
+		case droite :
+			if(Personnage.getTerrain().caseAcessible(u.x+1, u.y))
+				return table[u.x+1][u.y].couleur;
+		case gauche :
+			if(Personnage.getTerrain().caseAcessible(u.x-1, u.y))
+				return table[u.x-1][u.y].couleur;
 		}
+		return 2;
 	}
 	
 	private int nbAdjacent(CoordonneesFloat u)
@@ -124,6 +133,8 @@ public class Graph {
 				if(Personnage.getTerrain().caseAcessible(u.x, u.y, d))
 				{
 					CoordonneesFloat v = this.getCaseDirection(u, d); 
+					if(Personnage.getTerrain().caseAcessible(v.x, v.y))
+					{
 					Noeud adj = table[v.x][v.y];
 					if (adj.couleur==0) //blanc
 					{
@@ -139,6 +150,7 @@ public class Graph {
 						nbInterFind--;
 						adj.couleur=2; //noir
 						file.add(v);
+					}
 					}
 				}
 			}

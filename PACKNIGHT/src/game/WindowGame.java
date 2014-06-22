@@ -232,7 +232,17 @@ public class WindowGame extends BasicGameState {
 	public void keyReleased(int key, char c) {
 		if (!pause)
 		{
-				
+			if(PacKnight.godMode)
+			{
+				switch(key)
+				{
+				case Input.KEY_SPACE : Ghost.donnerDesOrdresGodMod();
+				System.out.println("ok2");
+				break;
+				}
+				System.out.println("ok");
+			}
+			
 			if(equip.joueurFleche!=null)
 			{
 			switch (key) 
