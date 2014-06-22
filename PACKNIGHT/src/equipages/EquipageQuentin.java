@@ -32,7 +32,7 @@ public class EquipageQuentin extends equipages.Equipage {
 		
 
 		
-		if(WindowGame.Choix_Map == 0 )
+		if(WindowGame.Choix_Map == 0 || WindowGame.Choix_Map == 1 || WindowGame.Choix_Map == 2 || WindowGame.Choix_Map == 3)
 		{
 			Joueur FM_1;
 			Joueur FM_2;
@@ -128,7 +128,7 @@ public class EquipageQuentin extends equipages.Equipage {
 			this.joueurFleche =  PACMAN_1;
 		}
 		
-		else if (WindowGame.Choix_Map == 1)
+		else if (WindowGame.Choix_Map == 4)
 		{
 			GHOST_1 = new Ghost("1");
 			GHOST_2 = new Ghost("2");

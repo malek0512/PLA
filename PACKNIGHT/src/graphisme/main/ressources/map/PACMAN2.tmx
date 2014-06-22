@@ -14,17 +14,17 @@
  </tileset>
  <layer name="logic" width="28" height="31">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA91SSRLAMAjyM/n/F3vvuEClJi0zuUQRMFlmtoYPCwXP8xB5Y3pQ3t/0JtDJ39nXDr0qf+f+XkffvPNfmP1M66FQ6qn7T9VDdpjpoUD8deagft/aJ+Ndoffl/8lCwcv8sjmqeTv0vMwdZLMr716vgjulFyGqs/devfL/NPcpvAmg3pTnAucFB/uQDQAA
+   H4sIAAAAAAAAA9VSWwrAMAjzMrv/Fcf+9tHMGGPpAkIpJvF1RcSVRJhy3rkZnBro3e2P8UA8VOfqn/H44jEazIzVXf+RtwOVPSj32dm722/Vd9cv02V5CM46XbzpOlfamV4E1jj9PlHPk/M87T5P2IPqx8yHRUWz04eSv8tPgYOr1I7e3XD6Kehy2domZjTtV5mDYy/VWXRynrgBpfcqgZANAAA=
   </data>
  </layer>
  <layer name="GUM" width="28" height="31">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+WVwQ0AIAgDncz9x/JvNHIWMGoTPgi2EoRS8lGheeSNNMy0kRhr3mt8GUb0rKDeF81H+p76+/OVXoqd3J/4PPrlFz46G6LuOV1PdT5SPu/4TD5lr0TsI/oOdR9F8Km1stTcql3pl50/7s1H+5D6lXlwa16GnUADH0sUyZANAAA=
+   H4sIAAAAAAAAA9VVQQ7AIAzyZfv/sxZvHtQCxRqbmCyRCqLD1uL6TJgRGw3nGqtvRnvUx/KtdO482HGg3kXaUJ1ovdpXMRSdat3mY/5thiNa183nwGT4kKzM5NlsbSZTVAybSy6+G34qfSd1ruZfOHc0X9k8Rj1X9qHgnf3RPjLvmNqL6q14x5x8N/w85ctYFecw43Pdq1P3M4Pp9QMxZ7HukA0AAA==
   </data>
  </layer>
  <layer name="Background" width="28" height="31">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+WWaQvDMAiG05XdR9ttsPve//+Ns5CCiCaatmywDw+UN7ESNZrMOTcwkgNZot0YmBiZdmA3BFaeEaNhXbKTbDm7+rv0cBrVNXtCdnMU5wWjUV2zh2qpeUhFkz8pl1LOtPmLnR+v0/sQ26+Np7Ru1fH6MhAfuh67D4Wg4/WSAdcvFzepPnMn35MQ3H2x1l9bfwdgCzyBi+fhtWMP/ipgD7yAq+cN7ICZwR/Xx7k8Vf6/a0KF/IX6ToM2N/V/zz5+mBPyp0HbL27ARuDO7Jf60a/Wp6Z/avxx7wLNvbb0gX98TzTnzxktZb7j3huaR13NfOnfzbyRYpU637mYF8yZcazaznca81h99jHfY/PYOt9j7wWpFrVzw2L3jfcnd/6+qOP9AXl7TxOQDQAA
+   H4sIAAAAAAAAA72X627CMAyF003dKOWydkhs7Ars/Z8RI6XCis6JbSb48UlR6iTWiXOSNimlhwoLYSZ0wgvhOcf0xlyPKtbCs55njim2FZ5Ue5WZ+nTu5zwboAEap+fV6/VEO5R7V+lHGi8C45Yg51KX6fs6kCcbh/apK9ootsxzBHrWakvvU1+0PePK9e4B01ODajYaw+pT1zvaM+v86Rh0XqJ1HfEgNi+r96h3sHFl3XvzfBc2wkH4yuxz3y6gizfPQXgTjsJ35k/YCvOALqi2kE8Mal7NQNZD+9QmfG5RfZ7n/cz6aT7Ieqg++4CeP8Ir4TegJzuXt6jPlfrOzi3y3bZo1/a99Anmx+xeHdPFr8fE72Hm515/jfoxw+uvHr/2xF9zz7H3i+de9Gr1H50tPdndxnTz3JE1PS1t2bvO87a4t54RLfS5XgbiLb9mb3/2nmiMsZZfW9547f9DpD4963n25ATOAT8pkA0AAA==
   </data>
  </layer>
 </map>

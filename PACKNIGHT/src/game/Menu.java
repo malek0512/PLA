@@ -29,16 +29,9 @@ public class Menu extends StateBasedGame {
       addState(new Dead());
       addState(new Difficulte());
       addState(new Free());
+      addState(new SelectionMapSolo());
 
    }
    
-   public static void main(String[] argv) {
-      try {
-         container = new AppGameContainer(new Menu(new EquipageVivienAlex()));
-         container.setDisplayMode(WindowGame.resolution_x,WindowGame.resolution_y,false);
-         container.start();
-      } catch (SlickException e) {
-         e.printStackTrace();
-      }
-   }
+  
 }
