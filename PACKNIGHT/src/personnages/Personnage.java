@@ -24,6 +24,7 @@ public abstract class Personnage {
 		Pacman.liste.clear();
 		PacKnight.liste.clear();
 		PacPrincess.liste.clear();
+		System.out.println("DONEEEEEEEE");
 	}
 	
 	// coordonne du personnage en pixel

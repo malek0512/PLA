@@ -70,7 +70,7 @@ public class WindowGame extends BasicGameState {
 	
 	boolean pause = false;
 	
-	
+	int k = 0;
 	
 	public static int Choix_Map = 0;
 
@@ -89,9 +89,10 @@ public class WindowGame extends BasicGameState {
 		case 0 : MAP = "PACMAN.tmx";PacKnight.vie = 10; break;
 		case 1 : MAP = "FATMAP.tmx";PacKnight.vie = 20;PacPrincess.vie = 3; break;
 		}
-		
+
 		time = 0;
-		
+ 
+		Personnage.init_personnage();
 		
 		this.game = game;
 		container.setShowFPS(false);
@@ -105,6 +106,7 @@ public class WindowGame extends BasicGameState {
 		FOND_INTERFACE = new Image("src/graphisme/main/ressources/map/image/Interface.jpg");
 		PAUSE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
 
+		
 		Personnage.initTerrain(terrain);
 		equip.init();
 
@@ -186,10 +188,6 @@ public class WindowGame extends BasicGameState {
 			if (!(time < 3000)) {
 				if(equip.joueurCamera!=null)
 				{
-//				if (equip.joueurCamera.parametrable())
-//					equip.joueurCamera.avancer();
-//				else
-//					equip.joueurCamera.avancerAnimation();
 	
 				float w = container.getWidth() / 4;
 				if (!(equip.joueurCamera.getCoord().x - xCamera > resolution_x / 2 || equip.joueurCamera.getCoord().x - xCamera < -resolution_x / 2)) {
