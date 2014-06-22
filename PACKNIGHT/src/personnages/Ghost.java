@@ -375,7 +375,7 @@ public class Ghost extends Personnage {
 				this.stun = false;
 			}
 		}
-		if(entendEtObei)
+		if(entendEtObei && !prisonner && !stun && !agonise && !sortiePrison  )
 		{
 				this.executerOrdre();
 		}
@@ -464,8 +464,21 @@ public class Ghost extends Personnage {
 				}
 			}
 		}
-		else
-			this.avancer();
+		else{
+			if(!this.caseDevantDisponible())
+			{
+				for(Direction d : Direction.values())
+				{
+					if(this.caseDisponible(d))
+					{
+						this.direction = d;
+						break;
+					}
+				}
+			}
+		this.avancer();
+		}
+			
 		
 	}
 
