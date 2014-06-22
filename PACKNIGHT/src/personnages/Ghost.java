@@ -210,7 +210,6 @@ public class Ghost extends Personnage {
 	/**
 	 * Supprime le Pacman de la centrale si le timer est à 0*/
 	public static void disparitionPacman(){
-		boolean etaitVide = Ghost.central.isEmpty();
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();){
 			Pacman pac = i.next();
 			if(central.containsKey(pac)){
@@ -221,11 +220,6 @@ public class Ghost extends Personnage {
 				}
 			}
 	
-		}
-		if(!etaitVide && Ghost.central.isEmpty())
-		{
-			MusicManager.stopReperer();
-			Accueil.Music_WindowGame.play();
 		}
 	}
 	/**
@@ -542,7 +536,8 @@ public class Ghost extends Personnage {
 					List<CoordonneesFloat> ordre = ga.algo(interEnTraitement);
 					meilleurCandidat.recoitOrdre(ordre);
 				}
-			}	
+			}
+			MusicManager.play_GhostPower_Obey();
 		}
 	}
 }
