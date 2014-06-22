@@ -70,7 +70,7 @@ public class Joueur {
 		if(this.auto != null){
 			auto.suivant();
 		} else {
-			if (p.parametrable())
+		if (p.parametrable())
 			p.avancer();
 		else
 			p.avancerAnimation();
