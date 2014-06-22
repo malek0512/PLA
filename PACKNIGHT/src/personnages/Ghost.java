@@ -210,7 +210,7 @@ public class Ghost extends Personnage {
 	/**
 	 * Supprime le Pacman de la centrale si le timer est à 0*/
 	public static void disparitionPacman(){
-		boolean etaitVide = Ghost.central.isEmpty();
+		boolean etaitvide = central.isEmpty();
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();){
 			Pacman pac = i.next();
 			if(central.containsKey(pac)){
@@ -220,13 +220,10 @@ public class Ghost extends Personnage {
 					central.get(pac).timer--;
 				}
 			}
-	
+		
 		}
-		if(!etaitVide && Ghost.central.isEmpty())
-		{
-			MusicManager.stopReperer();
-			Accueil.Music_WindowGame.play();
-		}
+		if(!etaitvide && central.isEmpty())
+			MusicManager.play_PerduDeVue();
 	}
 	/**
 	 * Gère la collision avec les pacmans*/
@@ -375,7 +372,7 @@ public class Ghost extends Personnage {
 				this.stun = false;
 			}
 		}
-		if(entendEtObei)
+		if(entendEtObei && !prisonner && !stun && !agonise && !sortiePrison  )
 		{
 				this.executerOrdre();
 		}
@@ -464,8 +461,21 @@ public class Ghost extends Personnage {
 				}
 			}
 		}
-		else
-			this.avancer();
+		else{
+			if(!this.caseDevantDisponible())
+			{
+				for(Direction d : Direction.values())
+				{
+					if(this.caseDisponible(d))
+					{
+						this.direction = d;
+						break;
+					}
+				}
+			}
+		this.avancer();
+		}
+			
 		
 	}
 
@@ -542,7 +552,8 @@ public class Ghost extends Personnage {
 					List<CoordonneesFloat> ordre = ga.algo(interEnTraitement);
 					meilleurCandidat.recoitOrdre(ordre);
 				}
-			}	
+			}
+			MusicManager.play_GhostPower_Obey();
 		}
 	}
 }

@@ -168,7 +168,6 @@ public class WindowGame extends BasicGameState {
 		if (time < 3000)
 			g.drawString("GET READY ", resolution_x / 2, resolution_y / 2);
 		}
-
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta)
@@ -225,6 +224,7 @@ public class WindowGame extends BasicGameState {
 				}
 				Ghost.disparitionPacman();
 			}
+			MusicManager.UpDate();
 		}
 	}
 

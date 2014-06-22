@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import music.MusicManager;
+
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 
@@ -87,10 +89,10 @@ public class PacPrincess extends Pacman{
 
 	public void meurtDansDatroceSouffrance() {
 		vie--;
+		this.coord = new CoordonneesFloat(this.pointDeRespawn);
 		if(vie != 0)
 		{
-			dead.play();
-			respawn();
+			MusicManager.play_Dead_Princess();
 		}
 	}
 

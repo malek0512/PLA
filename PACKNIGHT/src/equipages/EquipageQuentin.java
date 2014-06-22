@@ -4,16 +4,12 @@ package equipages;
 import game.*;
 
 import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.StateBasedGame;
-
 import personnages.CoordonneesFloat;
 import personnages.Direction;
 import personnages.Ghost;
 import personnages.PacKnight;
 import personnages.PacPrincess;
-import personnages.Personnage;
 
 public class EquipageQuentin extends equipages.Equipage {
 
@@ -29,10 +25,10 @@ public class EquipageQuentin extends equipages.Equipage {
 	Ghost GHOST_4; 
 	
 	public void init() throws SlickException {
-		
 
 		
 		if(WindowGame.Choix_Map == 0 || WindowGame.Choix_Map == 1 || WindowGame.Choix_Map == 2 || WindowGame.Choix_Map == 3)
+
 		{
 			Joueur FM_1;
 			Joueur FM_2;
