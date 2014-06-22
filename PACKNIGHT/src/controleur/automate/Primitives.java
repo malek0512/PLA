@@ -586,14 +586,14 @@ public class Primitives {
 	{
 		CoordonneesFloat c=  new CoordonneesFloat(cord);
 		int debug = 0;
+		Direction dirEx =dir;
 		while(!estIntersectionCas(c))
 		{
-			Direction dirEx =dir.opposer();
 			boolean buf = true;
 			for(Direction d : Direction.values())
-				if(d != dirEx && Personnage.getTerrain().caseAcessible(c.x, c.y, d))
+				if(d != dirEx.opposer() && Personnage.getTerrain().caseAcessible(c.x, c.y, d))
 					{
-					dirEx = d.opposer();
+					dirEx = d;
 					c.avancerDansDir(d);
 					buf = false;
 					break;
@@ -606,5 +606,33 @@ public class Primitives {
 		}
 		
 		return c;
+	}
+	
+	public CoordonneesFloat prochaineInterCasPRE(CoordonneesFloat cord, Direction dir)
+	{
+		CoordonneesFloat c=  new CoordonneesFloat(cord);
+		CoordonneesFloat res = new CoordonneesFloat(cord);
+		int debug = 0;
+		Direction dirEx =dir;
+		while(!estIntersectionCas(c))
+		{
+			res = new CoordonneesFloat(c);
+			boolean buf = true;
+			for(Direction d : Direction.values())
+				if(d != dirEx.opposer() && Personnage.getTerrain().caseAcessible(c.x, c.y, d))
+					{
+					dirEx = d;
+					c.avancerDansDir(d);
+					buf = false;
+					break;
+					}
+			debug++;
+			if(buf || debug >50)
+			{
+				return cord;
+			}
+		}
+		
+		return res;
 	}
 }

@@ -341,7 +341,7 @@ public class PrimitivesAction extends Primitives {
 					min = next;
 			}
 			CoordonneesFloat minCord = new CoordonneesFloat(min.getCoord());
-			CoordonneesFloat inter = new CoordonneesFloat(prochaineInterCas(minCord.CasCentre(), min.getOrientation().opposer()));
+			CoordonneesFloat inter = new CoordonneesFloat(prochaineInterCasPRE(minCord.CasCentre(), min.getOrientation().opposer()));
 			intercepter(minCord,inter);
 		}
 	}
