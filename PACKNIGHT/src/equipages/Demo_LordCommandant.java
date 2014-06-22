@@ -9,11 +9,11 @@ import org.newdawn.slick.SlickException;
 
 import personnages.*;
 
-public class Demo_LordComandant extends Equipage {
+public class Demo_LordCommandant extends Equipage {
 
 
 
-	public Demo_LordComandant() {
+	public Demo_LordCommandant() {
 		super();
 
 	}
@@ -43,7 +43,7 @@ public class Demo_LordComandant extends Equipage {
 
 	   public static void main(String[] argv) {
 		      try {
-		         Menu.container = new AppGameContainer(new Menu(new Demo_LordComandant()));
+		         Menu.container = new AppGameContainer(new Menu(new Demo_LordCommandant()));
 		         Menu.container.setDisplayMode(WindowGame.resolution_x,WindowGame.resolution_y,false);
 		         Menu.container.start();
 		      } catch (SlickException e) {

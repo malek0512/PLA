@@ -396,7 +396,7 @@ public class PrimitivesAction extends Primitives {
 			int i,j;
 			Terrain t = Personnage.getTerrain();
 			CoordonneesFloat dest = null;
-			if(t.nb_pacgum<=40){
+			if(Terrain.nb_pacgum<=40){
 				int alea;
 				alea = rnd.nextInt(4);
 				switch(alea)
