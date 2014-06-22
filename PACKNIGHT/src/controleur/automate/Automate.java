@@ -43,7 +43,7 @@ public class Automate extends Controleur {
 
 	public static enum Sortie{
 		AVANCER, GAUCHE, DROIT, HAUT, BAS, RIEN, DIRECTION_ALEATOIRE, CHEMIN_PLUS_COURT, OBEIR, SPAWN, STUN, PROTEGER_PRINCESSE, AU_SECOURS, SUIVRE, RAMASSER_PACGUM
-		,FUIR, APPEL_PATROUILLEUR,PATROUILLER, INTERCEPTER;
+		,FUIR, APPEL_PATROUILLEUR,PATROUILLER, INTERCEPTER, AVANCER_VERS_PACGUM;
 		public static boolean contains (String s){
 			try{
 				Sortie.valueOf(s);
@@ -149,6 +149,7 @@ public class Automate extends Controleur {
 				case PATROUILLER:primitivesAction.patrouiller();break;
 				case APPEL_PATROUILLEUR:primitivesAction.appelPatrouilleur();
 				case INTERCEPTER:primitivesAction.intercepter(); break;
+				case AVANCER_VERS_PACGUM: primitivesAction.fetch(); break;
 				}
 			}
 			while(this.personnage.parametrable() && !(isEtatBloquant()));

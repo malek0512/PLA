@@ -393,20 +393,38 @@ public class PrimitivesAction extends Primitives {
 		{
 			//calcule d'une nouvelle cord de fuite
 			Random rnd = new Random();
-			int i = 4;
-			int alea;
-			alea = rnd.nextInt(i);
-			switch(alea)
-			{
-			case 0 :
-				PacPrincess.cordDeFuite = new CoordonneesFloat(1,1); break;
-			case 1 :
-				PacPrincess.cordDeFuite = new CoordonneesFloat(1,Personnage.getTerrain().hauteur-2); break;
-			case 2 :
-				PacPrincess.cordDeFuite = new CoordonneesFloat(Personnage.getTerrain().largeur-2,1); break;
-			case 3 :
-				PacPrincess.cordDeFuite = new CoordonneesFloat(Personnage.getTerrain().largeur-2,Personnage.getTerrain().hauteur-2); break;
+			int i,j;
+			Terrain t = Personnage.getTerrain();
+			CoordonneesFloat dest = null;
+			if(t.nb_pacgum<=40){
+				int alea;
+				alea = rnd.nextInt(4);
+				switch(alea)
+				{
+				case 0 :
+					PacPrincess.cordDeFuite = new CoordonneesFloat(1,1); break;
+				case 1 :
+					PacPrincess.cordDeFuite = new CoordonneesFloat(1,Personnage.getTerrain().hauteur-2); break;
+				case 2 :
+					PacPrincess.cordDeFuite = new CoordonneesFloat(Personnage.getTerrain().largeur-2,1); break;
+				case 3 :
+					PacPrincess.cordDeFuite = new CoordonneesFloat(Personnage.getTerrain().largeur-2,Personnage.getTerrain().hauteur-2); break;
+				}
 			}
+				
+			else{ 
+				int x=t.largeur; 
+				int y=t.hauteur; 
+				i = rnd.nextInt(x);
+				j = rnd.nextInt(y);
+					while (t.ValueCase(i, j) != 2 || ((dest=new CoordonneesFloat(i, j))==PacPrincess.cordDeFuite) ) 
+					{
+						i = rnd.nextInt(x);
+						j = rnd.nextInt(y);
+						
+					}
+					PacPrincess.cordDeFuite=dest;
+				}
 		}
 		fuir(Ghost.listCoord(),PacPrincess.cordDeFuite);
 	}
