@@ -12,6 +12,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import personnages.Personnage;
+
 public class Dead extends BasicGameState {
 	   public static final int ID = 6;
 	   private Image DEAD;
@@ -33,6 +35,9 @@ public class Dead extends BasicGameState {
 		      g.setColor(Color.white);
 		      g.drawString("You're dead", 250, 100);
 		      g.drawString("Main Menu (SPACE)", 250, 150);
+		      Joueur.liste.clear();
+		      Personnage.init_personnage();
+
 
 
 	   }
@@ -59,5 +64,6 @@ public class Dead extends BasicGameState {
 
 
 	}
+
 
 }

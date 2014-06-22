@@ -482,7 +482,6 @@ public class Ghost extends Personnage {
 	{
 		if(Ghost.powerUp())
 		{
-			System.out.println("Fantomes dispos");
 			CoordonneesFloat refCasCentre = ref.coord.CasCentre();
 			
 			//reboot du graph
@@ -544,7 +543,6 @@ public class Ghost extends Personnage {
 					meilleurCandidat.recoitOrdre(ordre);
 				}
 			}	
-			System.out.println("sortie");
 		}
 	}
 }

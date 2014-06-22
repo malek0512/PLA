@@ -1,7 +1,6 @@
 package controleur.automate;
 
 import game.Accueil;
-import game.WindowGame;
 import graph.Aetoile;
 
 import java.util.Iterator;
