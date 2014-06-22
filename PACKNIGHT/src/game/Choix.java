@@ -63,7 +63,7 @@ public class Choix extends BasicGameState
 		      			{
 		      				if(WindowGame.Choix_Map == 0)
 		      				{
-		      				game.enterState(Difficulte.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
+		      				game.enterState(SelectionMapSolo.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 		      				}
 		      				else game.enterState(SelectionPerso.ID);break;
 		      			}
@@ -76,7 +76,7 @@ public class Choix extends BasicGameState
 		      			if(PG_X < 250)
 		      			{
 		      				PG_X = 259;
-		      	            WindowGame.Choix_Map = 1;
+		      	            WindowGame.Choix_Map = 4;
 		      	          quit = false;
 		      			}
 		      			else 
@@ -90,7 +90,7 @@ public class Choix extends BasicGameState
 		      			if(PG_X > 300)
 		      			{
 		      				PG_X = 259;
-		      	            WindowGame.Choix_Map = 1;
+		      	            WindowGame.Choix_Map = 4;
 		      	          quit = false;
 		      			}
 		      	        else 
