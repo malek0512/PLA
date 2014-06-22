@@ -313,6 +313,7 @@ public abstract class Personnage {
 		this.coord.x = x;
 		this.coord.y = y;
 	}
+	
 	/**
 	 * @return String contenant le terrain et le personnage
 	 * @author malek

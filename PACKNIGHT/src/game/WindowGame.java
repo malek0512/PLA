@@ -28,14 +28,12 @@ public class WindowGame extends BasicGameState {
 	public static int resolution_x = 800;
 	public static int resolution_y = 600;
 
-	// EquipageMalek equip = new EquipageMalek(this);
-	// EquipageVivienAlex equip = new EquipageVivienAlex(this);
-	// Equipage equip = new Equipage(this);
+	Equipage equip;
 	public WindowGame(Equipage equip) {
 		this.equip = equip;
 	}
 
-	Equipage equip;
+	
 
 	private String MAP = "PACMAN.tmx";
 

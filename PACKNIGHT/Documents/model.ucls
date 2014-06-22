@@ -18,7 +18,7 @@
   </package>  
   <class id="4" language="java" name="personnages.PacPrincess" project="PACKNIGHT" 
     file="/PACKNIGHT/src/personnages/PacPrincess.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="201" y="327"/>    
+    <position height="-1" width="-1" x="163" y="275"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -27,7 +27,7 @@
   </class>  
   <class id="5" language="java" name="personnages.Pacman" project="PACKNIGHT" 
     file="/PACKNIGHT/src/personnages/Pacman.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="138" y="254"/>    
+    <position height="-1" width="-1" x="100" y="202"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -36,7 +36,7 @@
   </class>  
   <class id="6" language="java" name="personnages.PacKnight" project="PACKNIGHT" 
     file="/PACKNIGHT/src/personnages/PacKnight.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="95" y="327"/>    
+    <position height="-1" width="-1" x="57" y="275"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -45,7 +45,7 @@
   </class>  
   <class id="7" language="java" name="personnages.Ghost" project="PACKNIGHT" 
     file="/PACKNIGHT/src/personnages/Ghost.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="239" y="253"/>    
+    <position height="-1" width="-1" x="201" y="201"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -54,7 +54,7 @@
   </class>  
   <class id="8" language="java" name="personnages.Personnage" project="PACKNIGHT" 
     file="/PACKNIGHT/src/personnages/Personnage.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="186" y="206"/>    
+    <position height="-1" width="-1" x="148" y="154"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -90,7 +90,7 @@
   </class>  
   <class id="12" language="java" name="controleur.automate.TableTransitionSortie" project="PACKNIGHT" 
     file="/PACKNIGHT/src/controleur/automate/TableTransitionSortie.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="608" y="156"/>    
+    <position height="-1" width="-1" x="608" y="154"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="true" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -99,7 +99,7 @@
   </class>  
   <class id="13" language="java" name="controleur.automate.Automate" project="PACKNIGHT" 
     file="/PACKNIGHT/src/controleur/automate/Automate.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="408" y="151"/>    
+    <position height="-1" width="-1" x="408" y="154"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -108,7 +108,7 @@
   </class>  
   <class id="14" language="java" name="equipages.EquipageFetch" project="PACKNIGHT" 
     file="/PACKNIGHT/src/equipages/EquipageFetch.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="845" y="155"/>    
+    <position height="-1" width="-1" x="845" y="154"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
