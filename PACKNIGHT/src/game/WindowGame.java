@@ -174,7 +174,7 @@ public class WindowGame extends BasicGameState {
 			throws SlickException {
 
 		
-	//	if(!pause)
+		if(!pause)
 		{
 			
 			if (Terrain.nb_pacgum == 0) {
