@@ -86,10 +86,10 @@ public class WindowGame extends BasicGameState {
 		{
 		switch (Choix_Map)
 		{
-		case 0 : MAP = "PACMAN.tmx";PacKnight.vie = 10; break;
-		case 1 : MAP = "PACMAN2.tmx";PacKnight.vie = 10; break;
-		case 2 : MAP = "PACMAN3.tmx";PacKnight.vie = 10; break;
-		case 3 : MAP = "PACMAN4.tmx";PacKnight.vie = 10; break;
+		case 0 : MAP = "PACMAN.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+		case 1 : MAP = "PACMAN2.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+		case 2 : MAP = "PACMAN3.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+		case 3 : MAP = "PACMAN4.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
 		
 		case 4 : MAP = "FATMAP.tmx";PacKnight.vie = 20;PacPrincess.vie = 3; break;
 		}
