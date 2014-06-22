@@ -166,7 +166,7 @@ public class WindowGame extends BasicGameState {
 		Minimap(playground, g, -resolution_x / 2 + xCamera, -resolution_y / 2
 				+ yCamera);
 		if (time < 3000)
-			g.drawString("GET READY ", resolution_x / 2, resolution_y / 2);
+			g.drawString("GET READY ", xCamera ,yCamera );
 		}
 	}
 
@@ -174,7 +174,7 @@ public class WindowGame extends BasicGameState {
 			throws SlickException {
 
 		
-		if(!pause)
+	//	if(!pause)
 		{
 			
 			if (Terrain.nb_pacgum == 0) {
@@ -191,7 +191,6 @@ public class WindowGame extends BasicGameState {
 	
 			time += delta;
 	
-			if (!(time < 3000)) {
 				if(equip.joueurCamera!=null)
 				{
 	
@@ -217,6 +216,8 @@ public class WindowGame extends BasicGameState {
 				else if ((equip.joueurCamera.getCoord().y - yCamera < -resolution_y / 2))
 					yCamera = resolution_y / 2;
 				}
+			if (!(time < 3000)) 
+			{
 				try {
 					equip.suivant();
 				} catch (Exception e) {
