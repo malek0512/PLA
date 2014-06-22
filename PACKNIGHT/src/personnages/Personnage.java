@@ -220,7 +220,6 @@ public abstract class Personnage {
 	 */
 	static public void initTerrain(Terrain terrain) {
 		Personnage.terrain = terrain;
-		Ghost.g = new Graph(terrain);
 	}
 
 	// get terrain
@@ -313,6 +312,7 @@ public abstract class Personnage {
 		this.coord.x = x;
 		this.coord.y = y;
 	}
+	
 	/**
 	 * @return String contenant le terrain et le personnage
 	 * @author malek

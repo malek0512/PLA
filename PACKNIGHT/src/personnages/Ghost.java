@@ -23,14 +23,16 @@ public class Ghost extends Personnage {
 	 */
 	public static List<Ghost> liste = new LinkedList<Ghost>();
 
+	public static int powerRange = 5;
+	public static int constante1 = 55;
+	
 		//info divers
-	private final int vision = 5;
+	public static int vision = 5;
 	private CoordonneesFloat pointDeRespawn;
 	
 		//info pour le pouvoir de controle
 	static private int nbInterChercher = 4; //nombre d'inter calculer par fantome lord pour les ganks
 	static private int fantomeUp=0; //fantome up pour le pouvoir
-	static public Graph g; //graph pour le pouvoir
 	//attribut pour les fantomes qui recoivent des ordres
 	private CoordonneesFloat caseDOrdre = null; //case en cours
 	private List<CoordonneesFloat> ordre = null; //liste des case de l'ordre en cours
@@ -42,7 +44,7 @@ public class Ghost extends Personnage {
 	private boolean sortiePrison = false;
 	
 		//timeur des animation
-	static private int tempsPasserEnPrison = 230; //pair
+	static public int tempsPasserEnPrison = 230; //pair
 	final static private int tempsStun = 15;
 	
 	static public boolean modeMulti;
@@ -128,7 +130,7 @@ public class Ghost extends Personnage {
 		while (i.hasNext()) {
 			Ghost g = i.next();
 			g.prisonner=true;
-			g.timerAnimation -= timer*55;
+			g.timerAnimation -= timer*constante1;
 			g.pointDeRespawn = new CoordonneesFloat(12*32,14*32);
 			g.coord.x = x;
 			g.coord.y = y;
@@ -329,7 +331,7 @@ public class Ghost extends Personnage {
 				this.respawnWOA();
 			}
 		}
-		if(prisonner)
+		else if(prisonner)
 		{
 			if(this.timerAnimation < Ghost.tempsPasserEnPrison)
 			{
@@ -346,7 +348,7 @@ public class Ghost extends Personnage {
 				this.direction = Direction.haut;
 			}
 		}
-		if(sortiePrison)
+		else if(sortiePrison)
 		{
 			if(this.timerAnimation < 24)
 			{
@@ -360,7 +362,7 @@ public class Ghost extends Personnage {
 				this.direction = Direction.droite;
 			}
 		}
-		if(stun)
+		else if(stun)
 		{
 			if(this.timerAnimation < Ghost.tempsStun)
 			{
@@ -372,7 +374,7 @@ public class Ghost extends Personnage {
 				this.stun = false;
 			}
 		}
-		if(entendEtObei && !prisonner && !stun && !agonise && !sortiePrison  )
+		else if(entendEtObei && !prisonner && !stun && !agonise && !sortiePrison  )
 		{
 				this.executerOrdre();
 		}
@@ -419,9 +421,12 @@ public class Ghost extends Personnage {
 			this.caseDOrdre = l.get(0);
 			this.coord = new CoordonneesFloat(this.caseDOrdre.x*32,this.caseDOrdre.y*32);
 			ordre.remove(0);
-			this.caseDOrdre = l.get(0);
-			this.direction = mysteriousFunction(coord.CasCentre(), caseDOrdre);
-			this.avancer();
+			if(!ordre.isEmpty())
+			{
+				this.caseDOrdre = l.get(0);
+				this.direction = mysteriousFunction(coord.CasCentre(), caseDOrdre);
+				this.avancer();
+			}
 		}
 	}
 	
@@ -495,10 +500,10 @@ public class Ghost extends Personnage {
 			CoordonneesFloat refCasCentre = ref.coord.CasCentre();
 			
 			//reboot du graph
-			Ghost.g.reset();
+			Graph g = new Graph(Personnage.terrain);
 			
 			// calcule des intersection a occuper
-			List<CoordonneesFloat> listeDesInter = Ghost.g.visiterLargeur(ref.coord.CasCentre(),nbInterChercher);
+			List<CoordonneesFloat> listeDesInter = g.visiterLargeur(ref.coord.CasCentre(),nbInterChercher);
 			
 			//copie de la liste des fantomes
 			List<Ghost> listeDesGhost = new LinkedList<Ghost>(Ghost.liste);
@@ -515,7 +520,77 @@ public class Ghost extends Personnage {
 				// calcul de la distance max entre le fantome et l'inter
 				int dmax = interEnTraitement.distance(refCasCentre);
 				
-				dmax += 25; //parceque je suis sadic :3
+				dmax += Ghost.powerRange; //parceque je suis sadic :3
+				//des fantomes se deplaceront meme si ils ne sont pas sur de le coincé, ca fiche le stress
+				
+				// calcul du fantome qui doit y aller
+				Iterator<Ghost> ig = listeDesGhost.iterator();
+				
+				int indice = 0; //index de la liste fantome
+				int cpt = 0; //cpt pour savoir l'index en cours de test
+				while(ig.hasNext())
+				{
+					//creation du candidat
+					Ghost actuelCandidat = ig.next();
+					//test si le candidat peut obtenir des ordres
+					if(actuelCandidat.parametrable())
+					{
+						int dactuelCandidat = interEnTraitement.distance(actuelCandidat.coord.CasCentre());
+						
+						if(dactuelCandidat < dmax && dactuelCandidat < distanceMeilleurCandidat)
+						{
+							//maj du candidat
+							meilleurCandidat = actuelCandidat;
+							distanceMeilleurCandidat = dactuelCandidat;
+							indice = cpt;
+						}
+					}
+					//on incremente notre compteur dans tout les cas !
+					cpt++;
+				}
+				if(meilleurCandidat != null)
+				{
+					//supprime le fantome de la liste
+					listeDesGhost.remove(indice);
+					//calcul de l'itinéraire
+					Aetoile ga = new Aetoile(meilleurCandidat.coord.CasCentre());
+					List<CoordonneesFloat> ordre = ga.algo(interEnTraitement);
+					meilleurCandidat.recoitOrdre(ordre);
+				}
+			}
+			MusicManager.play_GhostPower_Obey();
+		}
+	}
+	
+	static public void donnerDesOrdresGodMod()
+	{
+		if(Ghost.powerUp())
+		{
+			PacKnight ref = PacKnight.liste.get(0);
+			CoordonneesFloat refCasCentre = ref.coord.CasCentre();
+			
+			//reboot du graph
+			Graph g = new Graph(Personnage.terrain);
+			
+			// calcule des intersection a occuper
+			List<CoordonneesFloat> listeDesInter = g.visiterLargeur(ref.coord.CasCentre(),nbInterChercher);
+			
+			//copie de la liste des fantomes
+			List<Ghost> listeDesGhost = new LinkedList<Ghost>(Ghost.liste);
+	
+			// pour chaque inter
+			Iterator<CoordonneesFloat> i = listeDesInter.iterator();
+			while(i.hasNext())
+			{
+				CoordonneesFloat interEnTraitement = i.next();
+				// variable temporaire
+				Ghost meilleurCandidat = null;
+				int distanceMeilleurCandidat = Integer.MAX_VALUE;
+				
+				// calcul de la distance max entre le fantome et l'inter
+				int dmax = interEnTraitement.distance(refCasCentre);
+				
+				dmax += Ghost.powerRange; //parceque je suis sadic :3
 				//des fantomes se deplaceront meme si ils ne sont pas sur de le coincé, ca fiche le stress
 				
 				// calcul du fantome qui doit y aller

@@ -241,9 +241,9 @@ public class Automate extends Controleur {
 			Automate.Entree Entree = key.next();
 			//if ( entries.get(Entree).ok ){ 
 				switch ( Entree ){ 
-				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==Entree.CASE_LIBRE) nb++; break;
-				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==Entree.CASE_OCCUPEE) nb++; break;
-				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==Entree.SORTIE_TERRAIN) nb++; break;
+//				case CASE_LIBRE: if (primitivesTest.configCaseDevant()==Entree.CASE_LIBRE) nb++; break;
+//				case CASE_OCCUPEE: if (primitivesTest.configCaseDevant()==Entree.CASE_OCCUPEE) nb++; break;
+//				case SORTIE_TERRAIN: if (primitivesTest.configCaseDevant()==Entree.SORTIE_TERRAIN) nb++; break;
 				case PM_DANS_RAYON_X : if (primitivesTest.dansRayon(3)) nb++; break;
 				}
 			//}

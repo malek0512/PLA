@@ -21,6 +21,9 @@ public class PacKnight extends Pacman{
 	 */
 	static public List<PacKnight> liste = new LinkedList<PacKnight>();
 	public static int vie = 10;
+	
+	public static boolean godMode=false;
+	
 	private boolean user;
 	private static Sound Dead;
 	/**
@@ -160,7 +163,7 @@ public class PacKnight extends Pacman{
 
 	//Renvoie vrai s'il est vivant
 	public boolean hitting() {
-		return !(agonise);
+		return !(agonise) && !(godMode);
 	}
 	
 	public boolean peutProteger(){

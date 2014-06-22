@@ -28,14 +28,12 @@ public class WindowGame extends BasicGameState {
 	public static int resolution_x = 800;
 	public static int resolution_y = 600;
 
-	// EquipageMalek equip = new EquipageMalek(this);
-	// EquipageVivienAlex equip = new EquipageVivienAlex(this);
-	// Equipage equip = new Equipage(this);
+	Equipage equip;
 	public WindowGame(Equipage equip) {
 		this.equip = equip;
 	}
 
-	Equipage equip;
+	
 
 	private String MAP = "PACMAN.tmx";
 
@@ -86,10 +84,10 @@ public class WindowGame extends BasicGameState {
 		{
 		switch (Choix_Map)
 		{
-		case 0 : MAP = "PACMAN.tmx";PacKnight.vie = 10; break;
-		case 1 : MAP = "PACMAN2.tmx";PacKnight.vie = 10; break;
-		case 2 : MAP = "PACMAN3.tmx";PacKnight.vie = 10; break;
-		case 3 : MAP = "PACMAN4.tmx";PacKnight.vie = 10; break;
+		case 0 : MAP = "PACMAN.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+		case 1 : MAP = "PACMAN2.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+		case 2 : MAP = "PACMAN3.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+		case 3 : MAP = "PACMAN4.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
 		
 		case 4 : MAP = "FATMAP.tmx";PacKnight.vie = 20;PacPrincess.vie = 3; break;
 		}
@@ -232,7 +230,17 @@ public class WindowGame extends BasicGameState {
 	public void keyReleased(int key, char c) {
 		if (!pause)
 		{
-				
+			if(PacKnight.godMode)
+			{
+				switch(key)
+				{
+				case Input.KEY_SPACE : Ghost.donnerDesOrdresGodMod();
+				System.out.println("ok2");
+				break;
+				}
+				System.out.println("ok");
+			}
+			
 			if(equip.joueurFleche!=null)
 			{
 			switch (key) 
