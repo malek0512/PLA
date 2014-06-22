@@ -1,5 +1,6 @@
 package game;
 
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -29,13 +30,14 @@ public class Win extends BasicGameState {
 	   }
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		      WIN = new Image("src/graphisme/main/ressources/map/image/Win.jpeg");
+		   		WIN = new Image("src/graphisme/main/ressources/map/image/Win.jpeg");
 		      WIN.draw(0,0);
 		      g.setColor(Color.white);
 		      g.drawString("You Win", 250, 100);
 		      g.drawString("Main Menu (SPACE)", 250, 150);
 		      Joueur.liste.clear();
 		      Personnage.init_personnage();
+		     
 
 	   }
 
