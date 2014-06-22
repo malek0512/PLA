@@ -25,6 +25,7 @@ public class PacPrincess extends Pacman{
 	static public CoordonneesFloat cordDeFuite = new CoordonneesFloat(1, 1);
 	public PacKnight protecteur=null;
 	static private Music dead;
+	static public int perimetreSecurite2 = 10;
 	
 	static public void initMusic()
 	{

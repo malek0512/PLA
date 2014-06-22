@@ -396,22 +396,22 @@ public class Primitives {
 	 */
 	final int Value_pacgom = 15;
 	final int Value_distance = -1;
-	final int Value_ghost = -10000;
+	final int Value_ghost = Integer.MIN_VALUE;
 	final int Value_pacKnight = -100;
 
 	final int Value_futur_pacgom = 2;
 	final int Value_futur_distance = -1;
-	final int Value_futur_ghost = -500;
+	final int Value_futur_ghost = Integer.MIN_VALUE;;
 	final int Value_futur_pacKnight = -10;
 
 	final int Value_pacgom2 = 0;
 	final int Value_distance2 = -1;
-	final int Value_ghost2 = -10000;
+	final int Value_ghost2 = -Integer.MIN_VALUE;;
 	final int Value_pacKnight2 = 0;
 
 	final int Value_futur_pacgom2 = 0;
 	final int Value_futur_distance2 = -1;
-	final int Value_futur_ghost2 = -500;
+	final int Value_futur_ghost2 = Integer.MIN_VALUE;;
 	final int Value_futur_pacKnight2 = 0;
 
 	
