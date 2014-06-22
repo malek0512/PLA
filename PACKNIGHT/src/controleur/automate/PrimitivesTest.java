@@ -87,9 +87,10 @@ public class PrimitivesTest extends Primitives {
 	 * @author malek
 	 */
 	protected boolean fmDansRayon() {
-		int perimetre = ((PacPrincess) auto.getPersonnage()).perimetreSecurite ;
+		int perimetre = PacPrincess.perimetreSecurite2 ;
 		List<Ghost> agresseurs = fantomeEstDansRayon(perimetre);
-		((PacPrincess) auto.getPersonnage()).violeurs = agresseurs;
+		if(this.auto.getPersonnage() instanceof PacPrincess)
+			((PacPrincess) auto.getPersonnage()).violeurs = agresseurs;
 		return agresseurs.size()!=0;
 	}
 
@@ -134,7 +135,7 @@ public class PrimitivesTest extends Primitives {
 	 * Vérifie que le nombre de pacman est supérieur ou égal au nombre de fantôme
 	 * */
 	public boolean safe(){
-		int perimetre = ((PacPrincess) auto.getPersonnage()).perimetreSecurite ;
+		int perimetre = PacPrincess.perimetreSecurite2 ;
 		List<Ghost> agresseurs = fantomeEstDansRayon(perimetre);
 		int nb=nombreGarde(((PacPrincess)auto.getPersonnage()));
 		return (nb>=agresseurs.size());
