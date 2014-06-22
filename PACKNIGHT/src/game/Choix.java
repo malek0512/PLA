@@ -12,6 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import personnages.Personnage;
 import game.Menu;
 
 public class Choix extends BasicGameState 
@@ -44,11 +45,11 @@ public class Choix extends BasicGameState
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
     {
     	FOND_CHOIX.draw();
-         Quit.draw(550, 350);
-         Solo.draw(50, 350);
-         Multi.draw(300, 350);
-         Mouse.draw(PG_X,PG_Y);
-         
+        Quit.draw(550, 350);
+        Solo.draw(50, 350);
+        Multi.draw(300, 350);
+        Mouse.draw(PG_X,PG_Y);
+		Personnage.init_personnage();         
     } 
  
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {}

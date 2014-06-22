@@ -15,7 +15,7 @@ import personnages.Personnage;
 
 public class Win extends BasicGameState {
 	   public static final int ID = 5;
-	   private Image PAUSE;
+	   private Image WIN;
 	   private StateBasedGame game;
 
 	   
@@ -29,8 +29,8 @@ public class Win extends BasicGameState {
 	   }
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		      PAUSE = new Image("src/graphisme/main/ressources/map/image/Win.jpeg");
-		      PAUSE.draw(0,0);
+		      WIN = new Image("src/graphisme/main/ressources/map/image/Win.jpeg");
+		      WIN.draw(0,0);
 		      g.setColor(Color.white);
 		      g.drawString("You Win", 250, 100);
 		      g.drawString("Main Menu (SPACE)", 250, 150);

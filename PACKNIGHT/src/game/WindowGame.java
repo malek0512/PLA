@@ -37,7 +37,7 @@ public class WindowGame extends BasicGameState {
 
 	Equipage equip;
 
-	private String MAP = "FATMAP.tmx";
+	private String MAP = "PACMAN.tmx";
 
 	public String SPRITE_PACMAN_1 = "Pacman.png";
 	public String SPRITE_PACMAN_2 = "Pacman.png";
@@ -70,7 +70,7 @@ public class WindowGame extends BasicGameState {
 	
 	boolean pause = false;
 	
-	
+	int k = 0;
 	
 	public static int Choix_Map = 0;
 
@@ -89,9 +89,10 @@ public class WindowGame extends BasicGameState {
 		case 0 : MAP = "PACMAN.tmx";PacKnight.vie = 10; break;
 		case 1 : MAP = "FATMAP.tmx";PacKnight.vie = 20;PacPrincess.vie = 3; break;
 		}
-		
+
 		time = 0;
-		
+ 
+		Personnage.init_personnage();
 		
 		this.game = game;
 		container.setShowFPS(false);
@@ -105,6 +106,7 @@ public class WindowGame extends BasicGameState {
 		FOND_INTERFACE = new Image("src/graphisme/main/ressources/map/image/Interface.jpg");
 		PAUSE = new Image("src/graphisme/main/ressources/map/image/Pause.jpeg");
 
+		
 		Personnage.initTerrain(terrain);
 		equip.init();
 
@@ -156,7 +158,7 @@ public class WindowGame extends BasicGameState {
 		Interface_Joueur.render(g, HEART, FOND_INTERFACE);
 		Minimap(playground, g, -resolution_x / 2 + xCamera, -resolution_y / 2
 				+ yCamera);
-		if (time < 3893)
+		if (time < 3000)
 			g.drawString("GET READY ", resolution_x / 2, resolution_y / 2);
 		}
 
@@ -186,10 +188,6 @@ public class WindowGame extends BasicGameState {
 			if (!(time < 3000)) {
 				if(equip.joueurCamera!=null)
 				{
-//				if (equip.joueurCamera.parametrable())
-//					equip.joueurCamera.avancer();
-//				else
-//					equip.joueurCamera.avancerAnimation();
 	
 				float w = container.getWidth() / 4;
 				if (!(equip.joueurCamera.getCoord().x - xCamera > resolution_x / 2 || equip.joueurCamera.getCoord().x - xCamera < -resolution_x / 2)) {
@@ -227,24 +225,24 @@ public class WindowGame extends BasicGameState {
 		if (!pause)
 		{
 				
-				if(equip.joueurFleche!=null)
+			if(equip.joueurFleche!=null)
+			{
+			switch (key) 
 				{
-				switch (key) 
-					{
-					case Input.KEY_UP:
-						equip.joueurFleche.setNextDirection(Direction.haut);
-						break;
-					case Input.KEY_LEFT:
-						equip.joueurFleche.setNextDirection(Direction.gauche);
-						break;
-					case Input.KEY_DOWN:
-						equip.joueurFleche.setNextDirection(Direction.bas);
-						break;
-					case Input.KEY_RIGHT:
-						equip.joueurFleche.setNextDirection(Direction.droite);
-						break;
-					}			
-				}
+				case Input.KEY_UP:
+					equip.joueurFleche.setNextDirection(Direction.haut);
+					break;
+				case Input.KEY_LEFT:
+					equip.joueurFleche.setNextDirection(Direction.gauche);
+					break;
+				case Input.KEY_DOWN:
+					equip.joueurFleche.setNextDirection(Direction.bas);
+					break;
+				case Input.KEY_RIGHT:
+					equip.joueurFleche.setNextDirection(Direction.droite);
+					break;
+				}			
+			}
 			
 			if(equip.joueurZQSD!=null)
 			{
@@ -255,16 +253,12 @@ public class WindowGame extends BasicGameState {
 					break;
 				case Input.KEY_Q:
 					equip.joueurZQSD.setNextDirection(Direction.gauche);
-					System.out.println(equip.joueurZQSD.getOrientation());
-					
 					break;
 				case Input.KEY_S:
 					equip.joueurZQSD.setNextDirection(Direction.bas);
-					System.out.println(equip.joueurZQSD.getOrientation());
 					break;
 				case Input.KEY_D:
 					equip.joueurZQSD.setNextDirection(Direction.droite);
-					System.out.println(equip.joueurZQSD.getOrientation());
 					break;
 				}
 			}
@@ -318,14 +312,15 @@ public class WindowGame extends BasicGameState {
 			case Input.KEY_P:
 				if (pause) pause = false;else pause =true;
 				break;
+			case Input.KEY_1 : PacKnight.vie = 0; break;
 			}
 		}
 		else 
 		{
 		      switch (key) {
-	      		case Input.KEY_SPACE: Accueil.Music_Choix.loop();
+	      		case Input.KEY_SPACE: Accueil.Music_Dead.loop();
 	      		if (pause) pause = false;else pause =true;
-	      		game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
+	      		game.enterState(Dead.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	      		case Input.KEY_P: if (pause) pause = false;else pause =true;break;
 	      		case Input.KEY_M: if(Accueil.Music_WindowGame.playing()) Accueil.Music_WindowGame.pause() ;else Accueil.Music_WindowGame.resume(); break;
 	      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
