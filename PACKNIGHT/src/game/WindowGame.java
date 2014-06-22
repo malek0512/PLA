@@ -253,16 +253,12 @@ public class WindowGame extends BasicGameState {
 					break;
 				case Input.KEY_Q:
 					equip.joueurZQSD.setNextDirection(Direction.gauche);
-					System.out.println(equip.joueurZQSD.getOrientation());
-					
 					break;
 				case Input.KEY_S:
 					equip.joueurZQSD.setNextDirection(Direction.bas);
-					System.out.println(equip.joueurZQSD.getOrientation());
 					break;
 				case Input.KEY_D:
 					equip.joueurZQSD.setNextDirection(Direction.droite);
-					System.out.println(equip.joueurZQSD.getOrientation());
 					break;
 				}
 			}
