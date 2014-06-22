@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import music.MusicManager;
+
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -99,7 +101,7 @@ public class PacKnight extends Pacman{
 		if(vie > 0)
 		{
 			respawn();
-			Dead.play();
+			MusicManager.play_Dead_Knight();
 		}
 	}
 
