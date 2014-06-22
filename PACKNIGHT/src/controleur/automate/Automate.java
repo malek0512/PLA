@@ -12,12 +12,12 @@ import personnages.*;
 
 
 /**
- * Toute primitive de test doit etre ajoutée dans PrimitivesTest, et se voit attribuée, une constante en public, ci dessous.
- * Une fois ajoutée en fin de fichier: 
- * 		* Ajouter un "case CONSTANTE : le_nom_de_votre_fct();" (dans la fonction getEntree())
- * 		* Ajouter un "case CONSTANTE : le_nom_de_votre_fct_action();" (dans la fonction suivant())
- * Toute primitive de sortie (d'action) est ajoutée dans PrimitivesAction , se voit aussi attribué une constante en public, comme ci-dessous.
- * Un automate dispose de toute les fonctions (primitive) de test, renseigné ci dessous. 
+ * Toute primitive de test doit etre ajoutée dans PrimitivesTest, et se voit attribuée, type enuméré, ci dessous.
+	Une fonction à modifier selon si c'est une primitive de test ou d'action :
+	Primitive de test, dans la fonction getEntree() : 
+		Ajouter : case <le_nom_primitive_Test> : appel de la primitiveTest
+	Primitive d'action, dans la fonction suivant() : 
+	Ajouter : case <le_nom_primitive_Action> : appel de la primitiveAction
  * @author malek
  */
 public class Automate extends Controleur {
