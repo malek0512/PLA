@@ -33,7 +33,7 @@ public class Dead extends BasicGameState {
 		      DEAD = new Image("src/graphisme/main/ressources/map/image/Dead.jpg");
 		      DEAD.draw(0,0);
 		      g.setColor(Color.white);
-		      g.drawString("You're dead", 250, 100);
+		      g.drawString("You Lost", 250, 100);
 		      g.drawString("Main Menu (SPACE)", 250, 150);
 		      Joueur.liste.clear();
 		      Personnage.init_personnage();
