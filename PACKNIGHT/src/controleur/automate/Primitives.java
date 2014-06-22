@@ -434,6 +434,7 @@ public class Primitives {
 		// 0 : pac-gom
 		// 1 : distance
 		// 2 : personnage
+		int cpt=0;
 		int tab[][] = new int[4][3];
 		for (int i = 0; i < 4; i++)
 			for (int j = 0; j < 3; j++)
@@ -450,7 +451,7 @@ public class Primitives {
 				Direction directionCord = d;
 				coordonne.avancerDansDir(d);
 				tab[nbInter][1] += Value_distance;
-				while (!estIntersectionCas(coordonne)) {
+				while (!estIntersectionCas(coordonne) && cpt < 50) {
 					if(mode == 1)
 					{
 						// tester si pac-gom
@@ -489,7 +490,7 @@ public class Primitives {
 							break;
 						}
 					}
-				}
+				cpt++;}
 			}
 		}
 		return tab;
@@ -512,7 +513,7 @@ public class Primitives {
 		// 5 : avenir personnage
 
 		int[][] tab = new int[4][6];
-
+		int cpt=0;
 		// init du tableau
 		for (int i = 0; i < 4; i++)
 			for (int j = 0; j < 6; j++)
@@ -529,7 +530,7 @@ public class Primitives {
 				Direction directionCord = d;
 				cordCaseAcutel.avancerDansDir(d);
 				tab[nbInter][1] += Value_distance;
-				while (!estIntersectionCas(cordCaseAcutel)) {
+				while (!estIntersectionCas(cordCaseAcutel)&& cpt<50) {
 					if(mode == 1)
 					{
 					// tester si pac-gom
@@ -567,7 +568,7 @@ public class Primitives {
 							break;
 						}
 					}
-				}
+				cpt++;}
 				int[][] tabaux = laFonctionQuiFaitPresqueTout(
 						new CoordonneesFloat(cordCaseAcutel),
 						directionCord.opposer(),mode);
