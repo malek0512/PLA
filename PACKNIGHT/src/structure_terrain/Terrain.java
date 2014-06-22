@@ -86,7 +86,10 @@ public class Terrain {
 	 */
 	public boolean caseAcessible(int x, int y)
 	{
-		return terrain[x][y].isAccessable();
+		if(estDansLeTerrain(x, y))
+			return terrain[x][y].isAccessable();
+		else
+			return false;
 	}
 	
 	/**

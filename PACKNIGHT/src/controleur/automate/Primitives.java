@@ -450,7 +450,7 @@ public class Primitives {
 				Direction directionCord = d;
 				coordonne.avancerDansDir(d);
 				tab[nbInter][1] += Value_distance;
-				while (!estIntersectionCas(coordonne) && cpt < 50) {
+				while (!estIntersectionCas(coordonne) && cpt < 100) {
 					if(mode == 1)
 					{
 						// tester si pac-gom
@@ -529,7 +529,7 @@ public class Primitives {
 				Direction directionCord = d;
 				cordCaseAcutel.avancerDansDir(d);
 				tab[nbInter][1] += Value_distance;
-				while (!estIntersectionCas(cordCaseAcutel)&& cpt<50) {
+				while (!estIntersectionCas(cordCaseAcutel)&& cpt<100) {
 					if(mode == 1)
 					{
 					// tester si pac-gom

@@ -220,7 +220,6 @@ public abstract class Personnage {
 	 */
 	static public void initTerrain(Terrain terrain) {
 		Personnage.terrain = terrain;
-		Ghost.g = new Graph(terrain);
 	}
 
 	// get terrain

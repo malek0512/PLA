@@ -393,7 +393,7 @@ public class PrimitivesAction extends Primitives {
 		{
 			//calcule d'une nouvelle cord de fuite
 			Random rnd = new Random();
-			int i = 3;
+			int i = 4;
 			int alea;
 			alea = rnd.nextInt(i);
 			switch(alea)

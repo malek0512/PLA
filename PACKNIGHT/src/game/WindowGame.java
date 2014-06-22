@@ -84,10 +84,10 @@ public class WindowGame extends BasicGameState {
 		{
 		switch (Choix_Map)
 		{
-		case 0 : MAP = "PACMAN.tmx";PacKnight.vie = 10; break;
-		case 1 : MAP = "PACMAN2.tmx";PacKnight.vie = 10; break;
-		case 2 : MAP = "PACMAN3.tmx";PacKnight.vie = 10; break;
-		case 3 : MAP = "PACMAN4.tmx";PacKnight.vie = 10; break;
+		case 0 : MAP = "PACMAN.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+		case 1 : MAP = "PACMAN2.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+		case 2 : MAP = "PACMAN3.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+		case 3 : MAP = "PACMAN4.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
 		
 		case 4 : MAP = "FATMAP.tmx";PacKnight.vie = 20;PacPrincess.vie = 3; break;
 		}
@@ -164,7 +164,7 @@ public class WindowGame extends BasicGameState {
 		Minimap(playground, g, -resolution_x / 2 + xCamera, -resolution_y / 2
 				+ yCamera);
 		if (time < 3000)
-			g.drawString("GET READY ", resolution_x / 2, resolution_y / 2);
+			g.drawString("GET READY ", xCamera ,yCamera );
 		}
 	}
 
@@ -189,7 +189,6 @@ public class WindowGame extends BasicGameState {
 	
 			time += delta;
 	
-			if (!(time < 3000)) {
 				if(equip.joueurCamera!=null)
 				{
 	
@@ -215,6 +214,8 @@ public class WindowGame extends BasicGameState {
 				else if ((equip.joueurCamera.getCoord().y - yCamera < -resolution_y / 2))
 					yCamera = resolution_y / 2;
 				}
+			if (!(time < 3000)) 
+			{
 				try {
 					equip.suivant();
 				} catch (Exception e) {
@@ -229,7 +230,17 @@ public class WindowGame extends BasicGameState {
 	public void keyReleased(int key, char c) {
 		if (!pause)
 		{
-				
+			if(PacKnight.godMode)
+			{
+				switch(key)
+				{
+				case Input.KEY_SPACE : Ghost.donnerDesOrdresGodMod();
+				System.out.println("ok2");
+				break;
+				}
+				System.out.println("ok");
+			}
+			
 			if(equip.joueurFleche!=null)
 			{
 			switch (key) 

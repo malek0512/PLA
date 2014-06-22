@@ -34,10 +34,13 @@ public class EquipageFetch extends Equipage {
 
 	public EquipageFetch() {
 		super();
-		this.joueurCamera =  PACMAN_1;
 	}
 
 	public void init() throws SlickException {
+		PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(17, 17), false);
+		GHOST_1 = new Ghost("1");
+		this.joueurCamera =  PACMAN_1;
+	
 		Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1,"fm_ramasseur_pacgum.xml");
 	//	Joueur PM_2 = new Joueur(this.g.SPRITE_PACMAN_2,this.g, PACMAN_2,"fm_ramasseur_pacgum.xml");
 		//Joueur PM_3 = new Joueur(this.g.SPRITE_PACMAN_3,this.g, PACMAN_3, "fm_ramasseur_pacgum.xml");
