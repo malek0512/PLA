@@ -215,8 +215,6 @@ public class WindowGame extends BasicGameState {
 				}
 				try {
 					equip.suivant();
-					
-	
 				} catch (Exception e) {
 					System.out.println(e);
 				}

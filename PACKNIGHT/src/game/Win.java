@@ -11,6 +11,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import personnages.Personnage;
+
 public class Win extends BasicGameState {
 	   public static final int ID = 5;
 	   private Image PAUSE;
@@ -32,7 +34,8 @@ public class Win extends BasicGameState {
 		      g.setColor(Color.white);
 		      g.drawString("You Win", 250, 100);
 		      g.drawString("Main Menu (SPACE)", 250, 150);
-
+		      Joueur.liste.clear();
+		      Personnage.init_personnage();
 
 	   }
 

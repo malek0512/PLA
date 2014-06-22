@@ -193,11 +193,11 @@ public class Ghost extends Personnage {
 
 		public AvisDeRecherche(CoordonneesFloat c) {
 			coord = new CoordonneesFloat(c);
-			timer=300;
+			timer=150;
 		}
 		
 		public void majAvisDeRecherche(CoordonneesFloat c){
-			timer=300;
+			timer=150;
 			coord=c;
 		}
 	}
@@ -216,8 +216,9 @@ public class Ghost extends Personnage {
 			if(central.containsKey(pac)){
 				if(central.get(pac).timer==0)
 					central.remove(pac);
-				else 
+				else{ 
 					central.get(pac).timer--;
+				}
 			}
 	
 		}
@@ -481,7 +482,6 @@ public class Ghost extends Personnage {
 	{
 		if(Ghost.powerUp())
 		{
-			System.out.println("Fantomes dispos");
 			CoordonneesFloat refCasCentre = ref.coord.CasCentre();
 			
 			//reboot du graph
@@ -543,7 +543,6 @@ public class Ghost extends Personnage {
 					meilleurCandidat.recoitOrdre(ordre);
 				}
 			}	
-			System.out.println("sortie");
 		}
 	}
 }
