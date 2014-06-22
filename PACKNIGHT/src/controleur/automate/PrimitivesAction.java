@@ -294,7 +294,6 @@ public class PrimitivesAction extends Primitives {
 	{
 		if(auto.sneaky == null)
 		{
-			System.out.println("dans auto.sneaky==null");
 			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
 			Aetoile graph = new Aetoile(src);
 			graph.blackCoord(blackCord);
@@ -318,7 +317,6 @@ public class PrimitivesAction extends Primitives {
 				CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
 				Aetoile graph = new Aetoile(src);
 				graph.blackCoord(blackCord);
-				System.out.println("avant algo a étoile");
 				List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
 				l.remove(0);
 				if(l.size()==0)
@@ -343,8 +341,7 @@ public class PrimitivesAction extends Primitives {
 					min = next;
 			}
 			CoordonneesFloat minCord = new CoordonneesFloat(min.getCoord());
-			System.out.println("avant prochaineIntercas");
-			CoordonneesFloat inter = new CoordonneesFloat(prochaineInterCas(minCord.CasCentre(), min.getOrientation().opposer()));
+			CoordonneesFloat inter = new CoordonneesFloat(prochaineInterCasPRE(minCord.CasCentre(), min.getOrientation().opposer()));
 			intercepter(minCord,inter);
 		}
 	}
