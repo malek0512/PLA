@@ -210,6 +210,7 @@ public class Ghost extends Personnage {
 	/**
 	 * Supprime le Pacman de la centrale si le timer est à 0*/
 	public static void disparitionPacman(){
+		boolean etaitvide = central.isEmpty();
 		for(Iterator<Pacman> i = Pacman.liste.iterator();i.hasNext();){
 			Pacman pac = i.next();
 			if(central.containsKey(pac)){
@@ -219,8 +220,10 @@ public class Ghost extends Personnage {
 					central.get(pac).timer--;
 				}
 			}
-	
+		
 		}
+		if(!etaitvide && central.isEmpty())
+			MusicManager.play_PerduDeVue();
 	}
 	/**
 	 * Gère la collision avec les pacmans*/

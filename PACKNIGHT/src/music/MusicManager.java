@@ -13,11 +13,14 @@ public class MusicManager {
 	private static String CHEMIN_MUSIC = "src/graphisme/main/ressources/music/";
 	
 	private static String Bruitage_Reperer = "Bruitage_Reperer.ogg";
+	private static String Bruitage_PerduDeVue = "Bruitage_PerduDeVue.ogg";
 	private static String Bruitage_Dead_Knigth = "Bruitage_Dead_Knigth.ogg"; 
 	private static String Bruitage_Dead_Princess = "Bruitage_Dead_Princess.ogg";
 	private static String Bruitage_GhostPower_Obey = "Bruitage_GhostPower_Obey.ogg";
 	
+	
 	static private Music Reperer;
+	static private Music PerduDeVue;
 	static private Music Dead_Knigth;
 	static private Music Dead_Princess;
 	static private Music GhostPower_Obey;
@@ -31,6 +34,7 @@ public class MusicManager {
 			MusicManager.Dead_Knigth = new Music(CHEMIN_MUSIC.concat(Bruitage_Dead_Knigth));
 			MusicManager.Dead_Princess = new Music(CHEMIN_MUSIC.concat(Bruitage_Dead_Princess));
 			MusicManager.GhostPower_Obey = new Music(CHEMIN_MUSIC.concat(Bruitage_GhostPower_Obey));
+			MusicManager.PerduDeVue = new Music(CHEMIN_MUSIC.concat(Bruitage_PerduDeVue));
 		} catch (SlickException e) {System.out.println(e);}
 	}
 	
@@ -51,7 +55,7 @@ public class MusicManager {
 	
 	static public void UpDate()
 	{
-		if(!(Reperer.playing() || Dead_Knigth.playing() || Dead_Princess.playing() || GhostPower_Obey.playing()))
+		if(!(PerduDeVue.playing() || Reperer.playing() || Dead_Knigth.playing() || Dead_Princess.playing() || GhostPower_Obey.playing()))
 			MusicManager.startActuel();
 	}
 	
@@ -81,5 +85,12 @@ public class MusicManager {
 		if(!mute)
 		{MusicManager.pauseActuel();
 		MusicManager.GhostPower_Obey.play();}
+	}
+
+	static public void play_PerduDeVue()
+	{
+		if(!mute)
+		{MusicManager.pauseActuel();
+		MusicManager.PerduDeVue.play();}
 	}
 }
