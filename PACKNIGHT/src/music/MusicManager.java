@@ -46,7 +46,7 @@ public class MusicManager {
 	
 	static private void startActuel()
 	{
-		if(!Accueil.Music_WindowGame.playing())
+		if(!Accueil.Music_WindowGame.playing() && ! Accueil.Music_Dead.playing())
 		{
 			Accueil.Music_WindowGame.play();
 			Accueil.Music_WindowGame.setPosition(positionMain);

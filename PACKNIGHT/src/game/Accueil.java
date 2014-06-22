@@ -28,7 +28,7 @@ public class Accueil extends BasicGameState {
 	   public static Music Music_WindowGame;
 	   protected static Music Music_Choix;
 	   protected static Music Music_Win;
-	   protected static Music Music_Dead;
+	   public static Music Music_Dead;
 
 		
 	  
