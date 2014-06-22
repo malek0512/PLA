@@ -66,7 +66,7 @@ public class Interface_Joueur {
 	        	i++;
         	}
         }
-        if (WindowGame.Choix_Map == 1)
+        if (WindowGame.Choix_Map != 0)
         {
         	while(j<PacPrincess.vie)
         	{

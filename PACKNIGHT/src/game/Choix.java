@@ -55,8 +55,8 @@ public class Choix extends BasicGameState
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {}
  
     
-	   public void keyReleased(int key, char c) {
-		      switch (key) {
+	   public void keyReleased(int key, char c) {  
+		   switch (key) {
 		      		case Input.KEY_ENTER :
 		      			if (quit)Menu.container.exit(); 
 		      			else  

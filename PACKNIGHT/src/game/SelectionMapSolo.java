@@ -71,7 +71,7 @@ public class SelectionMapSolo extends BasicGameState
 		      			if(PG_Y < 350)
 		      			{
 		      				PG_Y += 300;
-		      				WindowGame.Choix_Map += 2;
+		      				WindowGame.Choix_Map_Solo+= 2;
 		      			}
 		      			
 	      				break;
@@ -79,7 +79,7 @@ public class SelectionMapSolo extends BasicGameState
 		      			if(PG_Y > 50)
 		      			{
 		      				PG_Y -= 300;
-		      				WindowGame.Choix_Map -= 2;
+		      				WindowGame.Choix_Map_Solo -= 2;
 		      			}
 		      			break;
 		      			
@@ -87,7 +87,7 @@ public class SelectionMapSolo extends BasicGameState
 		      			if(PG_X < 500)
 		      			{
 		      				PG_X += 400;
-		      				WindowGame.Choix_Map++;
+		      				WindowGame.Choix_Map_Solo++;
 		      			}
 		      			break;
 		      			
@@ -95,7 +95,7 @@ public class SelectionMapSolo extends BasicGameState
 		      			if(PG_X > 100)
 		      			{
 		      				PG_X -= 400;
-		      				WindowGame.Choix_Map--;;
+		      				WindowGame.Choix_Map_Solo--;;
 		      			}
 		      			break;
 		      }
