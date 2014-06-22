@@ -33,7 +33,7 @@ public class Demo_LordComandant extends Equipage {
 		this.joueurFleche =  PACMAN_1;
 		this.joueurCamera = PACMAN_1;
 		Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1);
-		Joueur FM_1 = new Joueur(this.g.SPRITE_LORD,this.g, GHOST_1,"fm_immobile.xml");
+		Joueur FM_1 = new Joueur(this.g.SPRITE_LORD,this.g, GHOST_1,"fm_lord.xml");
 		Joueur FM_2 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_2,"fm_immobile.xml");
 		Joueur FM_3 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_3,"fm_immobile.xml");
 		Joueur FM_4 = new Joueur(this.g.SPRITE_ALEATOIRE,this.g, GHOST_4,"fm_immobile.xml");

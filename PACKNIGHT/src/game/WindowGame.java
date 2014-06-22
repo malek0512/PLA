@@ -176,13 +176,13 @@ public class WindowGame extends BasicGameState {
 		{
 			
 			if (Terrain.nb_pacgum == 0) {
-				Accueil.Music_Win.play();
+				MusicManager.play_Win();
 				game.enterState(Win.ID, new FadeOutTransition(Color.black),
 						new FadeInTransition(Color.black));
 			}
 	
 			if (PacKnight.vie == 0 || PacPrincess.vie == 0) {
-				Accueil.Music_Dead.play();
+				MusicManager.play_Game_over();
 				game.enterState(Dead.ID, new FadeOutTransition(Color.black),
 						new FadeInTransition(Color.black));
 			}

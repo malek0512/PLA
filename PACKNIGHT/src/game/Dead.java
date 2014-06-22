@@ -1,6 +1,7 @@
 package game;
 
 
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -26,17 +27,20 @@ public class Dead extends BasicGameState {
 
 	   public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		   	this.game = game;
+		   	
 
 	   }
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		      DEAD = new Image("src/graphisme/main/ressources/map/image/Dead.jpg");
+		   
+		   	DEAD = new Image("src/graphisme/main/ressources/map/image/Dead.jpg");
 		      DEAD.draw(0,0);
 		      g.setColor(Color.white);
 		      g.drawString("You Lost", 250, 100);
 		      g.drawString("Main Menu (SPACE)", 250, 150);
 		      Joueur.liste.clear();
 		      Personnage.init_personnage();
+		      
 
 
 

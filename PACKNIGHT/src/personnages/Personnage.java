@@ -6,7 +6,6 @@ import java.util.List;
 
 import structure_terrain.*;
 import game.WindowGame;
-import graph.Graph;
 import hitBoxManager.*;
 
 public abstract class Personnage {
@@ -24,6 +23,7 @@ public abstract class Personnage {
 		Pacman.liste.clear();
 		PacKnight.liste.clear();
 		PacPrincess.liste.clear();
+		Ghost.central.clear();
 	}
 	
 	// coordonne du personnage en pixel
