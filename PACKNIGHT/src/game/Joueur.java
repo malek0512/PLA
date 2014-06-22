@@ -70,10 +70,10 @@ public class Joueur {
 		if(this.auto != null){
 			auto.suivant();
 		} else {
-		if (p.parametrable())
-			p.avancer();
-		else
-			p.avancerAnimation();
+			if (p.parametrable())
+				p.avancer();
+			else
+				p.avancerAnimation();
 		}
 		this.direction =  p.getOrientation().ordinal();
 	}
