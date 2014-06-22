@@ -13,7 +13,7 @@ public class MusicManager {
 	private static String CHEMIN_MUSIC = "src/graphisme/main/ressources/music/";
 	
 	private static String Bruitage_Reperer = "Bruitage_Reperer.ogg";
-	private static String Bruitage_PerduDeVue = "Bruitage_PerduDeVue.ogg";
+	private static String Bruitage_PerduDeVue = "Bruitage_Reperer.ogg";
 	private static String Bruitage_Dead_Knigth = "Bruitage_Dead_Knigth.ogg"; 
 	private static String Bruitage_Dead_Princess = "Bruitage_Dead_Princess.ogg";
 	private static String Bruitage_GhostPower_Obey = "Bruitage_GhostPower_Obey.ogg";

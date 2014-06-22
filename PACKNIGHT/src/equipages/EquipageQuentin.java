@@ -25,9 +25,6 @@ public class EquipageQuentin extends equipages.Equipage {
 	Ghost GHOST_4; 
 	
 	public void init() throws SlickException {
-		
-
-		
 		if(WindowGame.Choix_Map == 0 )
 		{
 			Joueur FM_1;
