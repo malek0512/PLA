@@ -37,7 +37,7 @@ public class WindowGame extends BasicGameState {
 
 	Equipage equip;
 
-	private String MAP = "FATMAP.tmx";
+	private String MAP = "PACMAN.tmx";
 
 	public String SPRITE_PACMAN_1 = "Pacman.png";
 	public String SPRITE_PACMAN_2 = "Pacman.png";

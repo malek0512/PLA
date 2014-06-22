@@ -18,7 +18,7 @@ import game.Menu;
 public class Free extends BasicGameState 
 { 
     private StateBasedGame game;
-    private Image BERSERK,RANDOM_G,RANDOM_BLIND,HUNTER,LORD,INTERCEPTOR,FOND_SELECTION,MOUSE;
+    private Image BERSERK,RANDOM_G,RANDOM_BLIND,HUNTER,LORD,INTERCEPTOR,FOND_SELECTION,MOUSE,NONE;
     private int PG_X,PG_Y;
     public static int Ghost_1=1,Ghost_2=1,Ghost_3=1,Ghost_4=1;
     private int choix = 1;
@@ -44,6 +44,7 @@ public class Free extends BasicGameState
     	LORD = new Image("src/graphisme/main/ressources/map/image/Lord.png");
     	INTERCEPTOR = new Image("src/graphisme/main/ressources/map/image/Interceptor.png");
     	MOUSE  = new Image("src/graphisme/main/ressources/map/image/Mouse.png");
+    	NONE = new Image("src/graphisme/main/ressources/map/image/None.png");
     	PG_X = WindowGame.resolution_x/2-50-39;
     	PG_Y = WindowGame.resolution_y/2-200+9 ;
     	
@@ -60,6 +61,7 @@ public class Free extends BasicGameState
          	case 4 :BERSERK.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);break;
          	case 5 :INTERCEPTOR.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);break;
          	case 6 :LORD.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);break;
+         	case 7 :NONE.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-200);break;
          		
          }
          
@@ -71,7 +73,7 @@ public class Free extends BasicGameState
          	case 4 :BERSERK.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-100);break;
          	case 5 :INTERCEPTOR.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-100);break;
          	case 6 :LORD.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-100);break;
-         		
+         	case 7 :NONE.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2-100);break;	
          }
          
          switch (Ghost_3)
@@ -82,7 +84,7 @@ public class Free extends BasicGameState
          	case 4 :BERSERK.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);break;
          	case 5 :INTERCEPTOR.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);break;
          	case 6 :LORD.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);break;
-         		
+         	case 7 :NONE.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2);break;	
          }
          
          switch (Ghost_4)
@@ -93,6 +95,7 @@ public class Free extends BasicGameState
          	case 4 :BERSERK.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);break;
          	case 5 :INTERCEPTOR.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);break;
          	case 6 :LORD.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);break;
+         	case 7 :NONE.draw(WindowGame.resolution_x/2-50, WindowGame.resolution_y/2+100);break;	
          		
          }
          
@@ -145,10 +148,10 @@ public class Free extends BasicGameState
 	      			case Input.KEY_RIGHT:	
 	      				switch(choix)
 	      				{
-	      				case 1 :if (Ghost_1<6) Ghost_1 += 1;break; 
-	      				case 2 :if (Ghost_2<6) Ghost_2 += 1;break; 
-	      				case 3 :if (Ghost_3<6) Ghost_3 += 1;break; 
-	      				case 4 :if (Ghost_4<6) Ghost_4 += 1;break; 
+	      				case 1 :if (Ghost_1<7) Ghost_1 += 1;break; 
+	      				case 2 :if (Ghost_2<7) Ghost_2 += 1;break; 
+	      				case 3 :if (Ghost_3<7) Ghost_3 += 1;break; 
+	      				case 4 :if (Ghost_4<7) Ghost_4 += 1;break; 
 	      				}
 	      				break;
 	      				
