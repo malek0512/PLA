@@ -93,9 +93,9 @@ public class WindowGame extends BasicGameState {
 			case 3 : MAP = "PACMAN4.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
 			}
 		}
-		else
+		else{
 			MAP = "FATMAP.tmx";PacKnight.vie = 20;PacPrincess.vie = 3;
-		
+		}
 
 		time = 0;
  
