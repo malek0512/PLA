@@ -1,7 +1,6 @@
 package music;
 
 import game.Accueil;
-import game.WindowGame;
 
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;;
@@ -25,8 +24,8 @@ public class MusicManager {
 	static private Music Dead_Knigth;
 	static private Music Dead_Princess;
 	static private Music GhostPower_Obey;
-	public static Music Game_over;
-	public static Music Win; 
+	static private Music Game_over;
+	static private Music Win; 
 	static private float positionMain;
 	
 	static public void init()

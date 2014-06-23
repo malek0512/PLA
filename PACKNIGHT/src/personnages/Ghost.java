@@ -1,5 +1,5 @@
 package personnages;
-import game.Accueil;
+
 import graph.Aetoile;
 import graph.Graph;
 

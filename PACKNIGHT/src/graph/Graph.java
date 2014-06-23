@@ -183,7 +183,7 @@ public class Graph {
     	Iterator<CoordonneesFloat> i = l.iterator();
     	while(i.hasNext())
     	{
-    		CoordonneesFloat x = i.next();
+    	//	CoordonneesFloat x = i.next();
     	}
     	terrain.afficher();
     			

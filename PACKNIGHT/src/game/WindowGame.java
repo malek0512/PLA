@@ -75,6 +75,8 @@ public class WindowGame extends BasicGameState {
 	
 	public static int Choix_Map = 0;
 
+	public static int Choix_Map_Solo = 0;
+
 	public int getID() {
 		return ID;
 	}
@@ -85,14 +87,17 @@ public class WindowGame extends BasicGameState {
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException 
 		{
-		switch (Choix_Map)
-		{
-		case 0 : MAP = "PACMAN.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
-		case 1 : MAP = "PACMAN2.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
-		case 2 : MAP = "PACMAN3.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
-		case 3 : MAP = "PACMAN4.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
-		
-		case 4 : MAP = "FATMAP.tmx";PacKnight.vie = 20;PacPrincess.vie = 3; break;
+		if(WindowGame.Choix_Map==0){
+			switch (Choix_Map_Solo)
+			{
+			case 0 : MAP = "PACMAN.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+			case 1 : MAP = "PACMAN2.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+			case 2 : MAP = "PACMAN3.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+			case 3 : MAP = "PACMAN4.tmx";PacKnight.vie = 10;PacPrincess.vie = 3; break;
+			}
+		}
+		else{
+			MAP = "FATMAP.tmx";PacKnight.vie = 20;PacPrincess.vie = 3;
 		}
 
 		time = 0;
@@ -125,14 +130,17 @@ public class WindowGame extends BasicGameState {
 		/*
 		 * modification des personnages en fonction de la carte
 		 */
-		switch(Choix_Map)
-		{
-		case 0 : Ghost.modeMulti=false; break;
-		case 1 : Ghost.modeMulti=false; break;
-		case 2 : Ghost.modeMulti=false; break;
-		case 3 : Ghost.modeMulti=false; break;
-		case 4 : Ghost.modeMulti=true;break;
+		if(WindowGame.Choix_Map==0){
+			switch(Choix_Map_Solo)
+			{
+			case 0 : Ghost.modeMulti=false; break;
+			case 1 : Ghost.modeMulti=false; break;
+			case 2 : Ghost.modeMulti=false; break;
+			case 3 : Ghost.modeMulti=false; break;
+			}
 		}
+		else Ghost.modeMulti=true;
+		
 		Ghost.init();
 		PacKnight.initMusic(); 
 		MusicManager.init();
@@ -244,10 +252,8 @@ public class WindowGame extends BasicGameState {
 				switch(key)
 				{
 				case Input.KEY_SPACE : Ghost.donnerDesOrdresGodMod();
-				System.out.println("ok2");
 				break;
 				}
-				System.out.println("ok");
 			}
 			
 			if(equip.joueurFleche!=null)

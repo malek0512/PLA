@@ -33,7 +33,7 @@ public class Dead extends BasicGameState {
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		   
-		   	DEAD = new Image("src/graphisme/main/ressources/map/image/Dead.jpg");
+		   	  DEAD = new Image("src/graphisme/main/ressources/map/image/Dead.jpg");
 		      DEAD.draw(0,0);
 		      g.setColor(Color.white);
 		      g.drawString("You Lost", 250, 100);

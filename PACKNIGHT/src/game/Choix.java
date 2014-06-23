@@ -55,13 +55,13 @@ public class Choix extends BasicGameState
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {}
  
     
-	   public void keyReleased(int key, char c) {
-		      switch (key) {
+	   public void keyReleased(int key, char c) {  
+		   switch (key) {
 		      		case Input.KEY_ENTER :
 		      			if (quit)Menu.container.exit(); 
 		      			else  
 		      			{
-		      				if(WindowGame.Choix_Map == 0)
+		      				if(WindowGame.Choix_Map == 0 || WindowGame.Choix_Map == 1 || WindowGame.Choix_Map == 2 || WindowGame.Choix_Map == 3)
 		      				{
 		      				game.enterState(SelectionMapSolo.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 		      				}

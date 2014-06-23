@@ -3,7 +3,6 @@ package equipages;
 import game.Joueur;
 import game.Menu;
 import game.WindowGame;
-import music.MusicManager;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
