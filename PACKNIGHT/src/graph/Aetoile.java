@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import personnages.Personnage;
+import structure_terrain.CoordCas;
 import structure_terrain.CoordonneesFloat;
 import structure_terrain.Direction;
 import structure_terrain.Terrain;
@@ -16,14 +17,14 @@ public class Aetoile {
 	
 	private List<NoeudEtoile> fermer;
 	
-	static private CoordonneesFloat teteDeliste;
+	static private CoordCas teteDeliste;
 	
-	private int distance(CoordonneesFloat c1, CoordonneesFloat c2)
+	private int distance(CoordCas c1, CoordCas c2)
 	{
 		return Math.abs(c1.x - c2.x) + Math.abs(c1.y - c2.y);
 	}
 	
-	private int distance(CoordonneesFloat c1)
+	private int distance(CoordCas c1)
 	{
 		return distance(c1,Aetoile.teteDeliste);
 	}
@@ -39,7 +40,7 @@ public class Aetoile {
 		return false;
 	}
 	
-	public Aetoile(CoordonneesFloat teteDeliste)
+	public Aetoile(CoordCas teteDeliste)
 	{
 		ouvert = new LinkedList<NoeudEtoile>();
 		fermer = new LinkedList<NoeudEtoile>();
@@ -58,9 +59,9 @@ public class Aetoile {
 	/**
 	 * interdit l'accès a une liste de coordonné
 	 */
-	public void blackList(List<CoordonneesFloat> l)
+	public void blackList(List<CoordCas> l)
 	{
-		Iterator<CoordonneesFloat> i = l.iterator();
+		Iterator<CoordCas> i = l.iterator();
 		while(i.hasNext())
 		{
 			NoeudEtoile blackStar = new NoeudEtoile(Integer.MAX_VALUE, null, i.next());
@@ -72,7 +73,7 @@ public class Aetoile {
 	 * interdit l'accès a une coordonné
 	 * @param c
 	 */
-	public void blackCoord(CoordonneesFloat c)
+	public void blackCoord(CoordCas c)
 	{
 		fermer.add(new NoeudEtoile(Integer.MAX_VALUE, null,c));
 	}
@@ -109,12 +110,12 @@ public class Aetoile {
 	 * @param queueDeListe
 	 * @return
 	 */
-	public List<CoordonneesFloat> algo(CoordonneesFloat queueDeListe)
+	public List<CoordCas> algo(CoordCas queueDeListe)
 	{
 		boolean continu = true;
 		if(queueDeListe.equals(teteDeliste))
 		{
-			List<CoordonneesFloat>resultat = new LinkedList<CoordonneesFloat>();
+			List<CoordCas>resultat = new LinkedList<CoordCas>();
 			resultat.add(queueDeListe);
 			return resultat;
 		}

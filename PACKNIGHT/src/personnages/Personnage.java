@@ -55,9 +55,9 @@ public abstract class Personnage {
 	 * 
 	 * @author malek
 	 */
-	public Personnage(String nom, int x, int y, Direction d) {
+	public Personnage(String nom, CoordCas c, Direction d) {
 		this.nom = new String(nom);
-		this.coord = new CoordPix(x*32-1,y*32-1,position.hg);
+		this.coord = new CoordPix(c,position.hg);
 		this.direction = d;
 		this.nextDirectionSet = false;
 		Personnage.liste.add(this);

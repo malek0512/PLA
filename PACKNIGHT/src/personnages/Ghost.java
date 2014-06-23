@@ -28,8 +28,14 @@ public class Ghost extends Personnage {
 	 */
 	public static List<Ghost> liste = new LinkedList<Ghost>();
 
+	/**
+	 * Le central repertorie l'ensemble des information des PM en fuite
+	 */
+	public static Map<Pacman, AvisDeRecherche> central=new HashMap<Pacman, AvisDeRecherche>();
+	
+	private static int rangeMinRespawnMultiMode = 20;
 	public static int powerRange = 5;
-	public static int constante1 = 55;
+	public static int timerSepareSortiePrison = 55;
 	
 		//info divers
 	public static int vision = 5;
@@ -139,7 +145,7 @@ public class Ghost extends Personnage {
 		while (i.hasNext()) {
 			Ghost g = i.next();
 			g.prisonner=true;
-			g.timerAnimation -= timer*constante1;
+			g.timerAnimation -= timer*timerSepareSortiePrison;
 			g.pointDeRespawn = new CoordPix(12*32,14*32,position.hg);
 			g.coord.x = x;
 			g.coord.y = y;
@@ -155,25 +161,8 @@ public class Ghost extends Personnage {
 	}
 	
 	public Ghost(String nom) {
-		super(nom, 1, 1, Direction.bas);
+		super(nom, null, null);
 		this.agonise=false;
-		Ghost.liste.add(this);
-		Ghost.fantomeUp++;
-	}
-	
-	public Ghost(String nom, int x, int y, Direction d) {
-		super(nom, x, y, d);
-		this.agonise = false;
-		this.pointDeRespawn = new CoordPix(x * 32,y * 32,position.hg);
-		Ghost.liste.add(this);
-		Ghost.fantomeUp++;
-		tempsPasserEnPrison = 0;
-	}
-	
-	public Ghost(String nom, int x, int y, Direction d, int timer) {
-		super(nom, x, y, d);
-		this.agonise = false;
-		this.pointDeRespawn = new CoordPix(x * 32, y * 32,position.hg);
 		Ghost.liste.add(this);
 		Ghost.fantomeUp++;
 	}
@@ -194,30 +183,6 @@ public class Ghost extends Personnage {
 		
 		return entendEtObei;
 	}
-	
-	/**
-	 * Structure qui repertorie l'ensemble des information d'un PM en fuite
-	 * */
-	public class AvisDeRecherche {
-		boolean Mort;
-		public CoordonneesFloat coord;
-		public int timer;
-
-		public AvisDeRecherche(CoordonneesFloat c) {
-			coord = new CoordonneesFloat(c);
-			timer=150;
-		}
-		
-		public void majAvisDeRecherche(CoordonneesFloat c){
-			timer=150;
-			coord=c;
-		}
-	}
-
-	/**
-	 * Le central repertorie l'ensemble des information des PM en fuite
-	 */
-	public static Map<Pacman, AvisDeRecherche> central=new HashMap<Pacman, AvisDeRecherche>();
 	
 	/**
 	 * Supprime le Pacman de la centrale si le timer est à 0*/
@@ -290,22 +255,21 @@ public class Ghost extends Personnage {
 	protected void respawnWOA() {
 		if(!Ghost.modeMulti)
 		{
-			this.coord = new CoordonneesFloat(this.pointDeRespawn);
+			this.coord = new CoordPix(this.pointDeRespawn);
 			this.direction = Direction.droite;
 			this.prisonner = true;
 		}
 		else
 		{
 			Random r = new Random();
-			Terrain t = Personnage.getTerrain();
-			int x;
-			int y;
+			Terrain t = Personnage.terrain;
+			CoordCas c = new CoordCas(0, 0);
 			do
 			{
-			x = r.nextInt(t.largeur);
-			y = r.nextInt(t.hauteur);
-			}while(!(t.caseAcessible(x, y) && Pacman.distance(new CoordonneesFloat(x, y))>(vision+2)));
-			this.coord = new CoordonneesFloat(x*32, y*32);
+			c.x = r.nextInt(t.largeur);
+			c.y = r.nextInt(t.hauteur);
+			}while(!(t.caseAcessible(c) && (Pacman.distance(c))>(vision+rangeMinRespawnMultiMode)));
+			this.coord = new CoordPix(c.x*32, c.y*32,position.hg);
 		}
 	}
 	
@@ -389,39 +353,12 @@ public class Ghost extends Personnage {
 				this.executerOrdre();
 		}
 	}
-
-	/**
-	 * fonction misterieuse qui renvoie la direction a prendre pour aller
-	 * de la case src vers la case dest
-	 * @param src : case source
-	 * @param dest : case destination
-	 * @return la direction a suivre pour aller a dest
-	 */
-	public Direction mysteriousFunction(CoordonneesFloat src, CoordonneesFloat dest)
-	{
-		int x = src.x - dest.x;
-		int y = src.y - dest.y;
-
-		if (y == 0) {
-			if (x == -1)
-				return Direction.droite;
-			else
-				return Direction.gauche;
-		} else// y != 0
-		{
-			if (y == -1)
-				return Direction.bas;
-			else
-				return Direction.haut;
-		}
-	}
 	
 	/**
 	 * fait recevoir au fantome un ordre
 	 * @param l : la liste des case a parcourir
 	 */
-
-	public void recoitOrdre(List<CoordonneesFloat> l)
+	public void recoitOrdre(List<CoordCas> l)
 	{
 		if(!l.isEmpty())
 		{
@@ -429,12 +366,12 @@ public class Ghost extends Personnage {
 			this.entendEtObei = true;
 			fantomeUp--;
 			this.caseDOrdre = l.get(0);
-			this.coord = new CoordonneesFloat(this.caseDOrdre.x*32,this.caseDOrdre.y*32);
+			this.coord = new CoordPix(caseDOrdre,position.hg);
 			ordre.remove(0);
 			if(!ordre.isEmpty())
 			{
 				this.caseDOrdre = l.get(0);
-				this.direction = mysteriousFunction(coord.CasCentre(), caseDOrdre);
+				this.direction = coord.CasCentre().directionPourAllerVers(caseDOrdre);
 				this.avancer();
 			}
 		}
@@ -447,59 +384,35 @@ public class Ghost extends Personnage {
 	 */
 	private void executerOrdre()
 	{
-		if(this.coord.CasBG().equals(this.coord.CasHD()))
+		if(!ordre.isEmpty())
 		{
-			if(!ordre.isEmpty())
+			if(coord.estSurUneCase())
 			{
+				caseDOrdre = ordre.get(0);
 				ordre.remove(0);
-				if(!ordre.isEmpty())
-				{
-					caseDOrdre = ordre.get(0);
-					direction = mysteriousFunction(coord.CasCentre(), caseDOrdre);
-					avancer();
-				}
+				direction = coord.CasCentre().directionPourAllerVers(caseDOrdre);
+				avancer();
 			}
 			else
 			{
+				this.avancer();
+			}
+		}
+		else
+		{
+			this.avancer();
+			if(coord.estSurUneCase())
+			{
 				entendEtObei = false;
 				fantomeUp++;
-				if(!this.caseDevantDisponible())
-				{
-					for(Direction d : Direction.values())
-					{
-						if(this.caseDisponible(d))
-						{
-							this.direction = d;
-							break;
-						}
-					}
-				}
 			}
 		}
-		else{
-			if(!this.caseDevantDisponible())
-			{
-				for(Direction d : Direction.values())
-				{
-					if(this.caseDisponible(d))
-					{
-						this.direction = d;
-						break;
-					}
-				}
-			}
-		this.avancer();
-		}
-			
-		
 	}
-
 
 	public boolean hitting() {
 		return !(agonise) && !(prisonner) && !(sortiePrison);
 	}
-	
-	
+
 	/**
 	 * donne des ordre au fantomes pour coincé un pacman donné
 	 */
@@ -507,31 +420,29 @@ public class Ghost extends Personnage {
 	{
 		if(Ghost.powerUp())
 		{
-			CoordonneesFloat refCasCentre = ref.coord.CasCentre();
+			CoordCas caseDeLaCible = ref.coord.CasCentre();
 			
 			//reboot du graph
 			Graph g = new Graph(Personnage.terrain);
 			
 			// calcule des intersection a occuper
-			List<CoordonneesFloat> listeDesInter = g.visiterLargeur(ref.coord.CasCentre(),nbInterChercher);
+			List<CoordCas> listeDesInter = g.visiterLargeur(caseDeLaCible,nbInterChercher);
 			
 			//copie de la liste des fantomes
 			List<Ghost> listeDesGhost = new LinkedList<Ghost>(Ghost.liste);
 	
 			// pour chaque inter
-			Iterator<CoordonneesFloat> i = listeDesInter.iterator();
+			Iterator<CoordCas> i = listeDesInter.iterator();
 			while(i.hasNext())
 			{
-				CoordonneesFloat interEnTraitement = i.next();
+				CoordCas interEnTraitement = i.next();
 				// variable temporaire
 				Ghost meilleurCandidat = null;
 				int distanceMeilleurCandidat = Integer.MAX_VALUE;
 				
 				// calcul de la distance max entre le fantome et l'inter
-				int dmax = interEnTraitement.distance(refCasCentre);
-				
+				int dmax = interEnTraitement.distance(caseDeLaCible);
 				dmax += Ghost.powerRange; //parceque je suis sadic :3
-				//des fantomes se deplaceront meme si ils ne sont pas sur de le coincé, ca fiche le stress
 				
 				// calcul du fantome qui doit y aller
 				Iterator<Ghost> ig = listeDesGhost.iterator();
@@ -564,7 +475,7 @@ public class Ghost extends Personnage {
 					listeDesGhost.remove(indice);
 					//calcul de l'itinéraire
 					Aetoile ga = new Aetoile(meilleurCandidat.coord.CasCentre());
-					List<CoordonneesFloat> ordre = ga.algo(interEnTraitement);
+					List<CoordCas> ordre = ga.algo(interEnTraitement);
 					meilleurCandidat.recoitOrdre(ordre);
 				}
 			}
@@ -577,22 +488,22 @@ public class Ghost extends Personnage {
 		if(Ghost.powerUp())
 		{
 			PacKnight ref = PacKnight.liste.get(0);
-			CoordonneesFloat refCasCentre = ref.coord.CasCentre();
+			CoordCas refCasCentre = ref.coord.CasCentre();
 			
 			//reboot du graph
 			Graph g = new Graph(Personnage.terrain);
 			
 			// calcule des intersection a occuper
-			List<CoordonneesFloat> listeDesInter = g.visiterLargeur(ref.coord.CasCentre(),nbInterChercher);
+			List<CoordCas> listeDesInter = g.visiterLargeur(ref.coord.CasCentre(),nbInterChercher);
 			
 			//copie de la liste des fantomes
 			List<Ghost> listeDesGhost = new LinkedList<Ghost>(Ghost.liste);
 	
 			// pour chaque inter
-			Iterator<CoordonneesFloat> i = listeDesInter.iterator();
+			Iterator<CoordCas> i = listeDesInter.iterator();
 			while(i.hasNext())
 			{
-				CoordonneesFloat interEnTraitement = i.next();
+				CoordCas interEnTraitement = i.next();
 				// variable temporaire
 				Ghost meilleurCandidat = null;
 				int distanceMeilleurCandidat = Integer.MAX_VALUE;
@@ -634,7 +545,7 @@ public class Ghost extends Personnage {
 					listeDesGhost.remove(indice);
 					//calcul de l'itinéraire
 					Aetoile ga = new Aetoile(meilleurCandidat.coord.CasCentre());
-					List<CoordonneesFloat> ordre = ga.algo(interEnTraitement);
+					List<CoordCas> ordre = ga.algo(interEnTraitement);
 					meilleurCandidat.recoitOrdre(ordre);
 				}
 			}

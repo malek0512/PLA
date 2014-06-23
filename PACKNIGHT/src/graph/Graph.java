@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import personnages.Personnage;
+import structure_terrain.CoordCas;
 import structure_terrain.CoordonneesFloat;
 import structure_terrain.Direction;
 import structure_terrain.Terrain;
@@ -104,7 +105,7 @@ public class Graph {
      * @param noeud : coordonnée de la case a gank
      * @return : liste des points statégique pour le gank
      */
-    public List<CoordonneesFloat> visiterLargeur(CoordonneesFloat noeud, int nbInter){
+    public List<CoordCas> visiterLargeur(CoordCas noeud, int nbInter){
     
     int nbInterFind=0;
     int nbInterSearch = 0;

@@ -3,6 +3,8 @@
  */
 package personnages;
 
+import hitBoxManager.HitBoxManager;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +14,8 @@ import music.MusicManager;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-import structure_terrain.CoordonneesFloat;
+import structure_terrain.CoordCas;
+import structure_terrain.CoordPix;
 import structure_terrain.Direction;
 import structure_terrain.Terrain;
 
@@ -40,8 +43,8 @@ public class PacKnight extends Pacman{
 	//Contient le fantome apres lequel le knight est a la recherche
 	public Ghost ghostEnChasse = null;
 	
-	public PacKnight(String name, int x, int y, Direction d, CoordonneesFloat respawn, boolean userPlaing) {
-		super(name,x,y,d,respawn);
+	public PacKnight(String name, CoordCas starter, Direction d, CoordCas respawn, boolean userPlaing) {
+		super(name,starter,d,respawn);
 		PacKnight.liste.add(this);
 		this.user = userPlaing;
 	}
@@ -50,51 +53,25 @@ public class PacKnight extends Pacman{
 	 * @param position ou on veut savoir si un personnage si trouve
 	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
 	 */
-	static public boolean personnagePresent(CoordonneesFloat position)
+	static public boolean personnagePresent(CoordCas position)
 	{
 		Iterator<PacKnight> i= PacKnight.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coord))
+			if(position.equals(i.next().coord.CasCentre()))
 				return true;
 		}
 		return false;
 	}
-	
-	static public boolean personnagePresentCas(CoordonneesFloat position)
+
+	static public boolean hittingPerso(CoordPix position)
 	{
 		Iterator<PacKnight> i= PacKnight.liste.iterator();
 		while (i.hasNext()) {
-			if (i.next().coord.CasCentre().equals(position))
+			if (HitBoxManager.personnageHittingPersonnage(i.next().coord,position))
 				return true;
 		}
 		return false;
-	}
-	
-	static public void initMusic()
-	{
-		try {
-			Dead = new Sound("src/graphisme/main/ressources/music/AllBeat.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * @param position a tester
-	 * @return null si pas de personnage, la reference du perso si il n'y a pas de perso renvoie null
-	 */
-	static public PacKnight personnageReference(CoordonneesFloat position)
-	{
-		Iterator<PacKnight> i=PacKnight.liste.iterator();
-		while(i.hasNext())
-		{
-			PacKnight p = i.next();
-			if(position.equals(p.coord))
-				return p;
-		}
-		return null;
 	}
 	
 	public boolean canRespawn() {
