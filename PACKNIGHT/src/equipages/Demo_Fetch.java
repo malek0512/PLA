@@ -22,6 +22,7 @@ public class Demo_Fetch extends Equipage {
 	public void init() throws SlickException {
 		Ghost.vision = 100;
 		MusicManager.mute=true;
+		PacPrincess.perimetreSecurite2 = 30;
 		PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(17, 17),false);
 		Ghost GHOST_1 = new Ghost("1");
 		this.joueurFleche =  PACMAN_1;
