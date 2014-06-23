@@ -1,9 +1,5 @@
 package graph;
 
-import java.util.List;
-
-import personnages.Coordonnees;
-
 public class Noeud {
 
     public int couleur; // 0 blanc // 1 gris // 2 noir
@@ -20,10 +16,4 @@ public class Noeud {
 		couleur = 0;
 		pere = null;
 	}
-	
-	public List<Coordonnees> listAdj()
-	{
-		return null;
-	}
-	
 }

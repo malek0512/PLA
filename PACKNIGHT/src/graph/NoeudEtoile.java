@@ -1,14 +1,14 @@
 package graph;
 
-import structure_terrain.CoordonneesFloat;
+import structure_terrain.CoordCas;
 
 public class NoeudEtoile {
 
     public int distance; // 0 blanc // 1 gris // 2 noir
     public NoeudEtoile pere;
-    public CoordonneesFloat cord;
+    public CoordCas cord;
     
-	public NoeudEtoile(int d, NoeudEtoile p, CoordonneesFloat c)
+	public NoeudEtoile(int d, NoeudEtoile p, CoordCas c)
 	{
 		distance =d;
 		pere = p;

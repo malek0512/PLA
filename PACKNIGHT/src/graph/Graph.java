@@ -6,10 +6,8 @@ import java.util.List;
 
 import personnages.Personnage;
 import structure_terrain.CoordCas;
-import structure_terrain.CoordonneesFloat;
 import structure_terrain.Direction;
 import structure_terrain.Terrain;
-import structure_terrain.Terrain1;
 
 
 public class Graph {
@@ -21,8 +19,8 @@ public class Graph {
 	
 	public Graph(Terrain terrain)
 	{
-		largeur =terrain.getLargeur();
-		hauteur =terrain.getHauteur();
+		largeur =terrain.largeur;
+		hauteur =terrain.hauteur;
 		table = new Noeud[largeur][hauteur];
 		for(int i = 0;i<largeur;i++)
 		{
@@ -33,45 +31,22 @@ public class Graph {
 		}
 	}
 	
-	private CoordonneesFloat getCaseDirection(CoordonneesFloat u, Direction d)
+	private int couleur(CoordCas u, Direction d)
 	{
-		switch(d)
-		{
-		case bas : return new CoordonneesFloat(u.x,u.y+1);
-		case haut : return new CoordonneesFloat(u.x, u.y-1);
-		case droite : return new CoordonneesFloat(u.x+1, u.y);
-		case gauche : return new CoordonneesFloat(u.x-1, u.y);
-		default : return null;
-		}
-	}
-	
-	private int couleur(CoordonneesFloat u, Direction d)
-	{
-		switch(d)
-		{
-		case bas : 
-			if(Personnage.getTerrain().caseAcessible(u.x, u.y+1))
+		CoordCas tmp = new CoordCas(u);
+		tmp.avancerDansDir(d);
+		if(Personnage.terrain.caseAcessible(tmp))
 				return table[u.x][u.y+1].couleur;
-			break;
-		case haut :
-			if(Personnage.getTerrain().caseAcessible(u.x, u.y-1))
-				return table[u.x][u.y-1].couleur;
-		case droite :
-			if(Personnage.getTerrain().caseAcessible(u.x+1, u.y))
-				return table[u.x+1][u.y].couleur;
-		case gauche :
-			if(Personnage.getTerrain().caseAcessible(u.x-1, u.y))
-				return table[u.x-1][u.y].couleur;
-		}
+		System.out.println("Error 104");
 		return 2;
 	}
 	
-	private int nbAdjacent(CoordonneesFloat u)
+	private int nbAdjacent(CoordCas u)
 	{
 		int adj = 0;
 		for(Direction d : Direction.values())
 		{
-			if(Personnage.getTerrain().caseAcessible(u.x, u.y, d) && couleur(u,d) == 0 )
+			if(Personnage.terrain.caseAcessible(u, d) && couleur(u,d) == 0 )
 				adj++;
 		}
 		return adj;
@@ -86,9 +61,9 @@ public class Graph {
     	}
     }
     
-    private void removeMG(List<CoordonneesFloat> res, CoordonneesFloat c)
+    private void removeMG(List<CoordCas> res, CoordCas c)
     {
-    	Iterator<CoordonneesFloat> i = res.iterator();
+    	Iterator<CoordCas> i = res.iterator();
     	while(i.hasNext())
     	{
     		int cpt = 0;
@@ -113,13 +88,13 @@ public class Graph {
     Noeud init = table[noeud.x][noeud.y]; 
 	init.couleur = 2; // noir
 	
-	List<CoordonneesFloat> res =  new LinkedList<CoordonneesFloat>();
-	List<CoordonneesFloat> file = new LinkedList<CoordonneesFloat>();
+	List<CoordCas> res =  new LinkedList<CoordCas>();
+	List<CoordCas> file = new LinkedList<CoordCas>();
 
 	file.add(noeud);
 	//algo de parcours
 	while (!file.isEmpty()){
-	    CoordonneesFloat u = file.remove(0);
+		CoordCas u = file.remove(0);
 	    Noeud ncourant = table[u.x][u.y];
 	    //calcule du nombre d'adjacent
 		int cptAdj = this.nbAdjacent(u);
@@ -131,10 +106,11 @@ public class Graph {
 			//on ajoute tout les adjacent a la liste
 			for(Direction d : Direction.values())
 			{
-				if(Personnage.getTerrain().caseAcessible(u.x, u.y, d))
+				if(Personnage.terrain.caseAcessible(u, d))
 				{
-					CoordonneesFloat v = this.getCaseDirection(u, d); 
-					if(Personnage.getTerrain().caseAcessible(v.x, v.y))
+					CoordCas v = new CoordCas(u);
+					v.avancerDansDir(d);
+					if(Personnage.terrain.caseAcessible(v))
 					{
 					Noeud adj = table[v.x][v.y];
 					if (adj.couleur==0) //blanc
@@ -172,24 +148,4 @@ public class Graph {
 	}
     return res;
     }
-  
-
-    public static void main(String[] args) {
-    	Terrain terrain = new Terrain1(10, 10);
-    	Personnage.initTerrain(terrain); 
-    	CoordonneesFloat start = new CoordonneesFloat(1,1);
-    	Graph g = new Graph(terrain);
-    	List<CoordonneesFloat> l = g.visiterLargeur(start,2);
-    	
-    	Iterator<CoordonneesFloat> i = l.iterator();
-    	while(i.hasNext())
-    	{
-    	//	CoordonneesFloat x = i.next();
-    	}
-    	terrain.afficher();
-    			
-    }
-    
-    
-	
 }

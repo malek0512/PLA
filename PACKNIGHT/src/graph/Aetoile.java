@@ -6,10 +6,8 @@ import java.util.List;
 
 import personnages.Personnage;
 import structure_terrain.CoordCas;
-import structure_terrain.CoordonneesFloat;
 import structure_terrain.Direction;
 import structure_terrain.Terrain;
-import structure_terrain.Terrain1;
 
 public class Aetoile {
 
@@ -128,9 +126,11 @@ public class Aetoile {
 			
 			for(Direction d : Direction.values())
 			{
-				if(Personnage.getTerrain().caseAcessible(m.cord.x, m.cord.y, d))
+				if(Personnage.terrain.caseAcessible(m.cord, d))
 				{	
-					CoordonneesFloat cordFi = new CoordonneesFloat(m.cord,d);
+					CoordCas cordFi = new CoordCas(m.cord);
+					cordFi.avancerDansDir(d);
+					
 					NoeudEtoile fi = new NoeudEtoile(distance(cordFi), m, cordFi);
 					fi.pere = m;
 					if (fi.cord.equals(Aetoile.teteDeliste))
@@ -145,7 +145,7 @@ public class Aetoile {
 			}
 		}
 		
-		List<CoordonneesFloat> res = new LinkedList<CoordonneesFloat>();
+		List<CoordCas> res = new LinkedList<CoordCas>();
 		//on crée la liste de resultat et on la retourne
 		while(init.pere != null)
 		{
@@ -155,31 +155,6 @@ public class Aetoile {
 		res.add(queueDeListe);
 		return res;
 	}
-	
-	   public static void main(String[] args) {
-		   	
-		   	Terrain terrain = new Terrain1(10, 10);
-	    	Personnage.initTerrain(terrain); 
-	    	
-	    	CoordonneesFloat start = new CoordonneesFloat(1,1);
-	    	CoordonneesFloat finish = new CoordonneesFloat(4,6);
-	    	
-	    	List<CoordonneesFloat> blackList = new LinkedList<>();
-	    	blackList.add(new CoordonneesFloat(1,2));
-	    	blackList.add(new CoordonneesFloat(4,1));
-	    	
-	    	Aetoile a = new Aetoile(start);
-	    	a.blackList(blackList);
-	    	List<CoordonneesFloat> l = a.algo(finish);
-	    	
-	    	Iterator<CoordonneesFloat> i = l.iterator();
-	    	while(i.hasNext())
-	    	{
-	    		CoordonneesFloat x = i.next();
-	    		Personnage.getTerrain().setCase(x.x, x.y, 2);
-	    	}
-	    	terrain.afficher();
-	    }
 }
 
 
