@@ -9,6 +9,8 @@ import java.util.List;
 
 import music.MusicManager;
 import personnages.*;
+import structure_terrain.CoordonneesFloat;
+import structure_terrain.Direction;
 
 /**
  * Classe contenant l'ensemble de fonction intermedaire permettant l'elaboration

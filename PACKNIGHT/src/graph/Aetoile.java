@@ -4,9 +4,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import personnages.CoordonneesFloat;
-import personnages.Direction;
 import personnages.Personnage;
+import structure_terrain.CoordonneesFloat;
+import structure_terrain.Direction;
 import structure_terrain.Terrain;
 import structure_terrain.Terrain1;
 

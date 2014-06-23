@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import structure_terrain.CoordonneesFloat;
+import structure_terrain.Direction;
+
 public abstract class Pacman extends Personnage {
 
 	protected CoordonneesFloat pointDeRespawn;

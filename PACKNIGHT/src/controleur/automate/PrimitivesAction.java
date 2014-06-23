@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 
 import personnages.*;
+import structure_terrain.CoordonneesFloat;
+import structure_terrain.Direction;
 import structure_terrain.Terrain;
 
 /**

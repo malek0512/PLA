@@ -2,6 +2,7 @@ package personnages;
 
 import graph.Aetoile;
 import graph.Graph;
+import hitBoxManager.HitBoxManager;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,7 +12,11 @@ import java.util.Map;
 import java.util.Random;
 
 import music.MusicManager;
+import structure_terrain.CoordCas;
+import structure_terrain.CoordPix;
+import structure_terrain.Direction;
 import structure_terrain.Terrain;
+import structure_terrain.CoordPix.position;
 
 public class Ghost extends Personnage {
 	
@@ -28,14 +33,14 @@ public class Ghost extends Personnage {
 	
 		//info divers
 	public static int vision = 5;
-	private CoordonneesFloat pointDeRespawn;
+	private CoordPix pointDeRespawn;
 	
 		//info pour le pouvoir de controle
 	static private int nbInterChercher = 4; //nombre d'inter calculer par fantome lord pour les ganks
 	static private int fantomeUp=0; //fantome up pour le pouvoir
 	//attribut pour les fantomes qui recoivent des ordres
-	private CoordonneesFloat caseDOrdre = null; //case en cours
-	private List<CoordonneesFloat> ordre = null; //liste des case de l'ordre en cours
+	private CoordCas caseDOrdre = null; //case en cours
+	private List<CoordCas> ordre = null; //liste des case de l'ordre en cours
 	
 		//boolean des animations
 	private boolean prisonner = false; //le fantome est dans la prison
@@ -54,17 +59,16 @@ public class Ghost extends Personnage {
 	 * @param position ou on veut savoir si un personnage si trouve
 	 * @return renvoie vrai si un objet Personnage se trouve sur la position indiquer
 	 */
-	static public boolean personnagePresent(CoordonneesFloat position)
-	{
-		Iterator<Ghost> i= Ghost.liste.iterator();
+	static public boolean hittingPerso(CoordPix position) {
+		Iterator<Ghost> i = Ghost.liste.iterator();
 		while (i.hasNext()) {
-			if (i.next().coord.CasCentre().equals(position))
+			if (HitBoxManager.personnageHittingPersonnage(i.next().coord,position))
 				return true;
 		}
 		return false;
 	}
 	
-	static public boolean personnagePresentCas(CoordonneesFloat position)
+	static public boolean personnagePresent(CoordCas position)
 	{
 		Iterator<Ghost> i= Ghost.liste.iterator();
 		while(i.hasNext())
@@ -75,9 +79,9 @@ public class Ghost extends Personnage {
 		return false;
 	}
 	
-	static public List<CoordonneesFloat> listCoord()
+	static public List<CoordCas> listCoord()
 	{
-		List<CoordonneesFloat> listRes = new LinkedList<CoordonneesFloat>();
+		List<CoordCas> listRes = new LinkedList<CoordCas>();
 		Iterator<Ghost> i= Ghost.liste.iterator();
 		while (i.hasNext()) {
 				listRes.add(i.next().coord.CasCentre());
@@ -85,7 +89,12 @@ public class Ghost extends Personnage {
 		return listRes;
 	}
 
-	static public int distance(CoordonneesFloat c)
+	/**
+	 * renvoie la distance du fantome le plus proche de la case
+	 * @param c
+	 * @return
+	 */
+	static public int distance(CoordCas c)
 	{
 		int min = Integer.MAX_VALUE;
 		Iterator<Ghost> i = Ghost.liste.iterator();
@@ -131,7 +140,7 @@ public class Ghost extends Personnage {
 			Ghost g = i.next();
 			g.prisonner=true;
 			g.timerAnimation -= timer*constante1;
-			g.pointDeRespawn = new CoordonneesFloat(12*32,14*32);
+			g.pointDeRespawn = new CoordPix(12*32,14*32,position.hg);
 			g.coord.x = x;
 			g.coord.y = y;
 			g.direction=Direction.droite;
@@ -155,7 +164,7 @@ public class Ghost extends Personnage {
 	public Ghost(String nom, int x, int y, Direction d) {
 		super(nom, x, y, d);
 		this.agonise = false;
-		this.pointDeRespawn = new CoordonneesFloat(x * 32,y * 32);
+		this.pointDeRespawn = new CoordPix(x * 32,y * 32,position.hg);
 		Ghost.liste.add(this);
 		Ghost.fantomeUp++;
 		tempsPasserEnPrison = 0;
@@ -164,7 +173,7 @@ public class Ghost extends Personnage {
 	public Ghost(String nom, int x, int y, Direction d, int timer) {
 		super(nom, x, y, d);
 		this.agonise = false;
-		this.pointDeRespawn = new CoordonneesFloat(x * 32, y * 32);
+		this.pointDeRespawn = new CoordPix(x * 32, y * 32,position.hg);
 		Ghost.liste.add(this);
 		Ghost.fantomeUp++;
 	}
@@ -173,6 +182,7 @@ public class Ghost extends Personnage {
 	public boolean getisAlive(){
 		return !(agonise);
 	}
+
 	/**
 	 * Met à jour l'état vivant ou mort du fantome*/
 	public void setIsAlive(boolean a){

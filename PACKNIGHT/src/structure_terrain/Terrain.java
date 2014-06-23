@@ -1,15 +1,6 @@
-/**
- * author alex
- * Classe abstract, on ne peut instancier que des terrains dont on connais tout
- */
 package structure_terrain;
 
 import game.WindowGame;
-import structure_terrain.Case;
-import personnages.Coordonnees;
-import personnages.CoordonneesFloat;
-import personnages.Direction;
-import personnages.Personnage;
 
 
 public class Terrain {
@@ -32,25 +23,6 @@ public class Terrain {
 		this.largeur = largeur;
 		Terrain.nb_pacgum = nb_pacgum;
 	}
-
-	/**
-	 * @return la hauteur du terrain
-	 */
-	public int getHauteur(){
-		return hauteur;
-	}
-
-	/**
-	 * @return la largeur du terrain
-	 */
-	public int getLargeur(){
-		return largeur;
-	}
-
-	
-	public Case getCase(int ligne, int colonne){
-		return terrain[ligne][colonne];
-	}
 	
 	/**
 	 * ajoute l'objet au coordonée donnée
@@ -59,8 +31,9 @@ public class Terrain {
 	 * @param elt l'objet a mettre
 	 * @require : les coordonée sont juste et l'objet est initialiser
 	 */
-	public void setCase(int ligne, int colonne, int elt){
-		terrain[ligne][colonne]=new Case(elt);
+	public void setCase(CoordCas c, int elt){
+		if(estDansLeTerrain(c))
+			terrain[c.x][c.y]=new Case(elt);
 	}
 
 	/**
@@ -70,24 +43,27 @@ public class Terrain {
 	public void afficher(){
 		int i,j;
 
+		System.out.print("  ");
+		for(i=0; i< this.largeur;i++)
+			System.out.print(i);
+		System.out.println();
 		for(i=0; i < this.hauteur;i++){
 			System.out.print(i + " ");
-			for(j=0; j < this.largeur;j++){
+			for(j=0; j < this.largeur;j++)
 				System.out.print(terrain[j][i].toString());
-			}
-			System.out.print("\n");
+			System.out.println();
 		}
 	}
 	
 	/**
-	 * renvoie vrai si la case dans la direction est accessible
+	 * renvoie vrai si la case est accessible
 	 * @param x : cord.x de la case
 	 * @param y : cord.y de la case
 	 */
-	public boolean caseAcessible(int x, int y)
+	public boolean caseAcessible(CoordCas c)
 	{
-		if(estDansLeTerrain(x, y))
-			return terrain[x][y].isAccessable();
+		if(estDansLeTerrain(c))
+			return terrain[c.x][c.y].isAccessable();
 		else
 			return false;
 	}
@@ -99,9 +75,9 @@ public class Terrain {
 	 * @param direction : direction ou doit etre tester la case
 	 * @return vraie si la case dans la direction de la case (x,y) est accessible
 	 */
-	public boolean caseAcessible(int x, int y,Direction direction)
+	public boolean caseAcessible(CoordCas c,Direction direction)
 	{
-		return caseAcessible(x,y,1,direction);
+		return caseAcessible(c,direction);
 	}
 	
 	/**
@@ -113,22 +89,22 @@ public class Terrain {
 	 * @param direction : direction vers ou on veut connaitre la case
 	 * @return vraie si la case de distance distance et dans la direction donné est accessible
 	 */
-	public boolean caseAcessible(int x, int y, int distance, Direction direction)
+	public boolean caseAcessible(CoordCas c, int distance, Direction direction)
 	{
 			switch(direction)
 			{
 			case haut :
-				if(estDansLeTerrain(x,y-distance))
-					return terrain[x][y-distance].isAccessable();
+				if(estDansLeTerrain(new CoordCas(c.x, c.y-distance)))
+					return terrain[c.x][c.y-distance].isAccessable();
 			case bas :
-				if(estDansLeTerrain(x,y+distance))
-					return terrain[x][y+distance].isAccessable();
+				if(estDansLeTerrain(new CoordCas(c.x, c.y+distance)))
+					return terrain[c.x][c.y+distance].isAccessable();
 			case droite :
-				if(estDansLeTerrain(x+distance,y))
-					return terrain[(x+distance)][y].isAccessable();
+				if(estDansLeTerrain(new CoordCas(c.x+distance, c.y)))
+					return terrain[(c.x+distance)][c.y].isAccessable();
 			case gauche : 
-				if(estDansLeTerrain(x-distance,y))
-					return terrain[(x-distance)][y].isAccessable();
+				if(estDansLeTerrain(new CoordCas(c.x-distance, c.y)))
+					return terrain[(c.x-distance)][c.y].isAccessable();
 			default:
 				break; 
 			}
@@ -136,17 +112,14 @@ public class Terrain {
 	}
 	
 	/**
-	 * TODO : a faire plus tard...
+	 * vraie si les coordonnée sont dans le terrain
 	 * @author malek
 	 * @param coord
-	 * @return vraie si les coordonnée sont hors du terrain, faux sinon
+	 * @return vraie si les coordonnée sont dans le terrain
 	 *
 	 */
-	protected boolean estDansLeTerrain(int x, int y){
-		return (!(x < 0
-		|| x > Personnage.getTerrain().getLargeur() - 1
-		|| y < 0
-		|| y > Personnage.getTerrain().getHauteur() - 1));
+	protected boolean estDansLeTerrain(CoordCas c){
+		return c.x>0 && c.x <largeur && c.y>0 && c.y<hauteur;
 	}
 	
 	/**
@@ -156,10 +129,11 @@ public class Terrain {
 	 * @param d
 	 * @return
 	 */
-	public boolean estCore(int x,int y, Direction d)
+	public boolean estCore(CoordCas c, Direction d)
 	{
-		int tmpX = x;
-		int tmpY = y;
+		
+		int tmpX = c.x;
+		int tmpY = c.y;
 		switch (d)
 		{
 		case haut : tmpY-= 1; break;
@@ -168,7 +142,7 @@ public class Terrain {
 		case gauche : tmpX-=1; break;
 		default : break;
 		}
-		return !(estDansLeTerrain(tmpX, tmpY));
+		return !estDansLeTerrain(new CoordCas(tmpX, tmpY)) && estDansLeTerrain(c);
 	}
 	
 	/**
@@ -189,54 +163,27 @@ public class Terrain {
 		return WindowGame.tuile_size * this.hauteur;
 	}
 	
-	
-	/**
-	 * @require : les coordonnes sont dans le terrain
-	 * @param coord : coordonée de la case a regarder 
-	 * @param direction : direction de la case que l'on veut retourner
-	 * @return coordonné si avancer dans direction
-	 * @author alex
-	 */
-	public Coordonnees getCoordonnees(Coordonnees coord,Direction direction)
+	public int ValueCase(CoordCas c)
 	{
-		switch(direction)
-		{
-		case haut : return new Coordonnees(coord.x, coord.y-1);
-		case bas : return new Coordonnees(coord.x, coord.y+1);
-		case droite : return new Coordonnees(coord.x+1, coord.y);
-		case gauche : return new Coordonnees(coord.x-1, coord.y);
-		default:
-			break; 
-		}
-		return null;
+		if(estDansLeTerrain(c))
+			return terrain[c.x][c.y].caseValeur();
+		return 0;
 	}
 	
-	public int ValueCase(CoordonneesFloat cord)
+	public void SetCase(CoordCas c, int v)
 	{
-		return terrain[cord.x][cord.y].caseValeur(); 
-	}
-	
-	public int ValueCase(int x, int y)
-	{
-		return terrain[x][y].caseValeur(); 
-	}
-	
-	
-	public void SetCase(CoordonneesFloat c, int v)
-	{
-		terrain[c.x][c.y].setAcessCase(v);
+		if(estDansLeTerrain(c))
+			terrain[c.x][c.y].setAcessCase(v);
 	}
 
-	/**Pas merci ! :)
+	/**
 	 * @return Vrai si la case est une intersection
 	 */
-	public boolean estIntersection(int x, int y){
+	public boolean estIntersection(CoordCas c){
 		int n=0;
-
 		for(Direction d : Direction.values())
-			if(this.caseAcessible(x,y,d))
+			if(caseAcessible(c,d))
 				n++;
-		
 		return n>2;
 	}
 }

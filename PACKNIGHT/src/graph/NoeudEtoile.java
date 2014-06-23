@@ -1,6 +1,6 @@
 package graph;
 
-import personnages.CoordonneesFloat;
+import structure_terrain.CoordonneesFloat;
 
 public class NoeudEtoile {
 

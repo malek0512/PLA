@@ -1,4 +1,4 @@
-package personnages;
+package structure_terrain;
 
 public enum Direction {
 	haut,

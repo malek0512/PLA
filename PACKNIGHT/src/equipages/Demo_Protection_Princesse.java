@@ -9,6 +9,8 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 import personnages.*;
+import structure_terrain.CoordonneesFloat;
+import structure_terrain.Direction;
 
 public class Demo_Protection_Princesse extends Equipage {
 

@@ -12,6 +12,8 @@ import music.MusicManager;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
+import structure_terrain.CoordonneesFloat;
+import structure_terrain.Direction;
 import structure_terrain.Terrain;
 
 public class PacKnight extends Pacman{

@@ -13,6 +13,9 @@ import music.MusicManager;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 
+import structure_terrain.CoordonneesFloat;
+import structure_terrain.Direction;
+
 public class PacPrincess extends Pacman{
 	
 	/**

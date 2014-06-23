@@ -8,6 +8,7 @@ import controleur.Controleur;
 import controleur.automate.TableTransitionSortie.Triplet;
 import src.parser.Parser;
 import src.parser.Quad;
+import structure_terrain.Direction;
 import personnages.*;
 
 

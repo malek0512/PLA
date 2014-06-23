@@ -5,17 +5,27 @@ import java.util.LinkedList;
 import java.util.List;
 
 import structure_terrain.*;
+import structure_terrain.CoordPix.position;
 import game.WindowGame;
 import hitBoxManager.*;
 
 public abstract class Personnage {
 
-	protected static int tauxDeDeplacement = 4; // la taille du deplacement du
-												// personnage en pixel
+	protected static int tauxDeDeplacement = 4; // taille deplacement en pixel
 
-	protected static Terrain terrain;
+
+	/**
+	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE
+	 * SEULE FOIS
+	 * 
+	 * @author malek
+	 */
+	static public void initTerrain(Terrain terrain) {
+		Personnage.terrain = terrain;
+	}
+
+	public static Terrain terrain;
 	public static List<Personnage> liste = new LinkedList<Personnage>();
-
 	public static void init_personnage()
 	{
 		Personnage.liste.clear();
@@ -28,15 +38,15 @@ public abstract class Personnage {
 	
 	// coordonne du personnage en pixel
 	// La coordonne corespond au pixel Haut-Gauche !!!
-	public CoordonneesFloat coord;
+	public CoordPix coord;
 	public String nom; // nom du personnage
+	public Direction direction; // direction actuelle du personnage
+	
 	protected boolean nextDirectionSet;
 	protected Direction nextDirection; // prochaine direction que prendra personnage
-	protected Direction direction; // direction actuelle du personnage
-	
-	public boolean agonise = false; //boolean vrai si le personnage est en animation de mort
+	protected boolean agonise = false; //boolean vrai si le personnage est en animation de mort
 	protected int timerAnimation = 0; //timer pour les animations
-	public List<CoordonneesFloat> ordre;
+	protected List<CoordCas> ordre;
 
 	
 	/**
@@ -47,20 +57,10 @@ public abstract class Personnage {
 	 */
 	public Personnage(String nom, int x, int y, Direction d) {
 		this.nom = new String(nom);
-		this.coord = new CoordonneesFloat(32 * x, 32 * y);
+		this.coord = new CoordPix(x*32-1,y*32-1,position.hg);
 		this.direction = d;
 		this.nextDirectionSet = false;
 		Personnage.liste.add(this);
-	}
-
-	// getter de base
-	public CoordonneesFloat getCoord() {
-		return coord;
-	}
-
-	// getter de base
-	public Direction getOrientation() {
-		return this.direction;
 	}
 
 	/************************************************
@@ -72,7 +72,7 @@ public abstract class Personnage {
 	 * Ne fait pas de test, et avance Utiliser par les automates et c'est tout
 	 */
 	public void avancerAux() {
-		if(!Personnage.terrain.estCore(coord.CasCentre().x,coord.CasCentre().y, direction))
+		if(!Personnage.terrain.estCore(coord.CasCentre(), direction))
 		switch (this.direction) {
 		case droite:
 			this.coord.x += tauxDeDeplacement;
@@ -127,16 +127,24 @@ public abstract class Personnage {
 	 * 
 	 * author : alex
 	 */
-	public void avancer() {
-		if (this.nextDirectionSet && caseDisponible(this.nextDirection)) {
-			this.direction = nextDirection;
-			this.nextDirectionSet = false;
-			this.avancerAux();
-		} else {
-			if (this.caseDevantDisponible()){
+	public void avancer() 
+	{
+		if (this.nextDirectionSet) 
+		{
+			if(caseDisponible(this.nextDirection))
+			{
+				this.direction = nextDirection;
+				this.nextDirectionSet = false;
 				this.avancerAux();
 			}
-		}
+			else if(caseDevantDisponible())
+			{
+				this.avancerAux();
+			}
+		} 
+		else 
+			if (caseDevantDisponible())
+				this.avancerAux();
 	}
 
 	/**
@@ -165,36 +173,19 @@ public abstract class Personnage {
 	 */
 	public boolean caseDisponible(Direction direction) {
 
-		boolean res = true;
 		switch (direction) {
 		case haut:
-			res = Personnage.terrain.caseAcessible(coord.casDX(),
-					coord.casBY(), direction);
-			res = res
-					&& (Personnage.terrain.caseAcessible(coord.casGX(),
-							coord.casBY(), direction));
-			return res;
+			return Personnage.terrain.caseAcessible(coord.CasBD(), direction) &&
+					Personnage.terrain.caseAcessible(coord.CasBG(), direction);
 		case bas:
-			res = (Personnage.terrain.caseAcessible(coord.casGX(),
-					coord.casHY(), direction));
-			res = res
-					&& (Personnage.terrain.caseAcessible(coord.casDX(),
-							coord.casHY(), direction));
-			return res;
+			return (Personnage.terrain.caseAcessible(coord.CasHG(), direction))
+					&& (Personnage.terrain.caseAcessible(coord.CasHD(), direction));
 		case droite:
-			res = (Personnage.terrain.caseAcessible(coord.casGX(),
-					coord.casBY(), direction));
-			res = res
-					&& (Personnage.terrain.caseAcessible(coord.casGX(),
-							coord.casHY(), direction));
-			return res;
+			return (Personnage.terrain.caseAcessible(coord.CasBG(), direction))
+					&& (Personnage.terrain.caseAcessible(coord.CasHG(), direction));
 		case gauche:
-			res = (Personnage.terrain.caseAcessible(coord.casDX(),
-					coord.casBY(), direction));
-			res = res
-					&& (Personnage.terrain.caseAcessible(coord.casDX(),
-							coord.casHY(), direction));
-			return res;
+			return (Personnage.terrain.caseAcessible(coord.CasBD(), direction))
+					&& (Personnage.terrain.caseAcessible(coord.CasHD(), direction));
 		default:
 			return false;
 		}
@@ -213,28 +204,12 @@ public abstract class Personnage {
 	public abstract void respawn();
 
 	/**
-	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE
-	 * SEULE FOIS
-	 * 
-	 * @author malek
-	 */
-	static public void initTerrain(Terrain terrain) {
-		Personnage.terrain = terrain;
-	}
-
-	// get terrain
-	public static Terrain getTerrain() {
-		return terrain;
-
-	}
-
-	/**
 	 * Test si un objet est en contact d'un pacman author : alex
 	 * 
 	 * @param cord: coordonée de l'objet a tester
 	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquer
 	 */
-	static public boolean personnagePresent(CoordonneesFloat position) {
+	static public boolean hittingPerso(CoordPix position) {
 		Iterator<Personnage> i = Personnage.liste.iterator();
 		while (i.hasNext()) {
 			if (HitBoxManager.personnageHittingPersonnage(i.next().coord,position))
@@ -242,31 +217,23 @@ public abstract class Personnage {
 		}
 		return false;
 	}
-	
-	static public boolean personnagePresentCas(CoordonneesFloat position) {
-		Iterator<Personnage> i = Personnage.liste.iterator();
-		while (i.hasNext()) {
-			if (i.next().coord.CasCentre().equals(position))
+
+	/**
+	 * test si un perso est sur la case donné
+	 * @param position
+	 * @return
+	 */
+	static public boolean personnagePresent(CoordCas position)
+	{
+		Iterator<Ghost> i= Ghost.liste.iterator();
+		while(i.hasNext())
+		{
+			if(position.equals(i.next().coord.CasCentre()))
 				return true;
 		}
 		return false;
 	}
-
-	/**
-	 * @param position a tester
-	 * @return null si pas de personnage, la reference du perso si il n'y a pas
-	 *         de perso renvoie null
-	 */
-	static public Personnage personnageReference(CoordonneesFloat position) {
-		Iterator<Personnage> i = Personnage.liste.iterator();
-		while (i.hasNext()) {
-			Personnage p = i.next();
-			if (position.equals(p.coord))
-				return p;
-		}
-		return null;
-	}
-
+	
 	/**
 	 * le pacman meurt dans d'atroces souffrances author : alex
 	 */
@@ -290,40 +257,18 @@ public abstract class Personnage {
 	 */
 	public abstract boolean hitting();
 
-	/***********************************************
-	 * fonction dont l'utiliter reste a prouver *
-	 ***********************************************/
-
-	// setter de base
-	public void setCoord(CoordonneesFloat coord) {
-		this.coord = coord;
-	}
-
-	/**
-	 * Plus simple de changer la position du Personnage, plutot que d'acceder au coordonnée, et puis changer
-	 * @param coord
-	 */
-	public void setCoord(Coordonnees coord) {
-		this.coord = coord.toCoordonneesFloat(); //Creer eventuellement un setteur de coordonnées
-	}
-	
-	// setter de base
-	public void setCoord(int x, int y) {
-		this.coord.x = x;
-		this.coord.y = y;
-	}
 	
 	/**
 	 * @return String contenant le terrain et le personnage
 	 * @author malek
-	 */
+	 * 
 	public String toString() {
 		String res = " Personnage \n"; // + ((c instanceof Automate)?
 										// "automatisé \n" :
 										// "non automatisé \n");
-		for (int i = 0; i < terrain.getHauteur(); i++) {
-			for (int j = 0; j < terrain.getLargeur(); j++) {
-				if (i == this.getCoord().y && j == this.getCoord().x) {
+		for (int i = 0; i < terrain.hauteur; i++) {
+			for (int j = 0; j < terrain.largeur; j++) {
+				if (i == this.coord.y && j == this.coord.x) {
 					switch (this.direction) {
 					case haut:
 						res += "^";
@@ -351,5 +296,5 @@ public abstract class Personnage {
 		res += "\n";
 		return res;
 	}
-
+	*/
 }

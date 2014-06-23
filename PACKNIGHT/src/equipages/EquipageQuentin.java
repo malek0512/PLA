@@ -5,11 +5,12 @@ import game.*;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
-import personnages.CoordonneesFloat;
-import personnages.Direction;
+
 import personnages.Ghost;
 import personnages.PacKnight;
 import personnages.PacPrincess;
+import structure_terrain.CoordonneesFloat;
+import structure_terrain.Direction;
 
 public class EquipageQuentin extends equipages.Equipage {
 
