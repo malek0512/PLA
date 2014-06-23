@@ -3,8 +3,10 @@ package equipages;
 import game.Joueur;
 import game.Menu;
 import game.WindowGame;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
+
 import personnages.*;
 
 public class Demo_suiveur extends Equipage {
@@ -20,6 +22,7 @@ public class Demo_suiveur extends Equipage {
 	public void init() throws SlickException {
 		PACMAN_1 = new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(17, 17), true);
 		GHOST_1 = new Ghost("1");
+		Ghost.tempsPasserEnPrison = 0;
 		this.joueurFleche =  PACMAN_1;
 		this.joueurCamera = PACMAN_1;
 		Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1);

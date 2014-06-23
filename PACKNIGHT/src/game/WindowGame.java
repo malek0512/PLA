@@ -243,10 +243,8 @@ public class WindowGame extends BasicGameState {
 				switch(key)
 				{
 				case Input.KEY_SPACE : Ghost.donnerDesOrdresGodMod();
-				System.out.println("ok2");
 				break;
 				}
-				System.out.println("ok");
 			}
 			
 			if(equip.joueurFleche!=null)
