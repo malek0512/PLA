@@ -1,6 +1,9 @@
 package game;
 
 
+import java.sql.Time;
+import java.util.Timer;
+
 import music.MusicManager;
 
 import org.newdawn.slick.Color;
@@ -170,7 +173,9 @@ public class WindowGame extends BasicGameState {
 
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-
+		
+		long start =  System.currentTimeMillis();
+		System.out.println("start : " + start);
 		
 		if(!pause)
 		{
@@ -225,6 +230,10 @@ public class WindowGame extends BasicGameState {
 			}
 			MusicManager.UpDate();
 		}
+		System.out.println("stop : " + System.currentTimeMillis());
+		long fin = System.currentTimeMillis();
+		long total = fin - start;
+		System.out.println("temps mit : " + total);
 	}
 
 	public void keyReleased(int key, char c) {
