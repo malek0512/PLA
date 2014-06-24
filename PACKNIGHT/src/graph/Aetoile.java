@@ -118,6 +118,7 @@ public class Aetoile {
 		{
 			List<CoordCas>resultat = new LinkedList<CoordCas>();
 			resultat.add(queueDeListe);
+			resultat.add(queueDeListe);
 			return resultat;
 		}
 		NoeudEtoile init = new NoeudEtoile(distance(queueDeListe), null, queueDeListe);

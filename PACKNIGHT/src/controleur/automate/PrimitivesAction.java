@@ -217,8 +217,11 @@ public class PrimitivesAction extends Primitives {
 					min = next;
 			}
 			CoordCas minCord = min.coord.CasCentre();
-			CoordCas inter = new CoordCas(prochaineInterCas(minCord, min.direction.opposer()));
-			avancerVers(minCord, inter);
+			CoordCas inter = prochaineCasAvantInter(minCord, min.direction.opposer());
+			if(inter == null)
+				avancerVers(minCord);
+			else
+				avancerVers(minCord,inter);
 		}
 	}
 	

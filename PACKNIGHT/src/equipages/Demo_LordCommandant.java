@@ -25,7 +25,6 @@ public class Demo_LordCommandant extends Equipage {
 		PacKnight.godMode=true;
 		Ghost.powerRange = 100;
 		Ghost.tempsPasserEnPrison = 0;
-		Ghost.constante1 = 10;
 		
 		PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(17, 17), true);
 		Ghost GHOST_1 = new Ghost("1");

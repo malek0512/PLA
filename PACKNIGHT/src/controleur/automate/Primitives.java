@@ -305,18 +305,23 @@ public class Primitives {
 
 	public void avancerVers(CoordCas dest)
 	{
-		CoordCas src = this.auto.getPersonnage().coord.CasCentre();
-		Aetoile graph = new Aetoile(src);
-		List<CoordCas> l = graph.algo(new CoordCas(dest));
-		l.remove(0);
-		if(l.isEmpty())
+		if(this.auto.getPersonnage().coord.estSurUneCase())
 		{
-			System.out.println("Un personnage n'a trouvé aucun chemin");
+			CoordCas src = this.auto.getPersonnage().coord.CasCentre();
+			Aetoile graph = new Aetoile(src);
+			List<CoordCas> l = graph.algo(new CoordCas(dest));
+			l.remove(0);
+			if(l.isEmpty())
+			{
+				System.out.println("Un personnage n'a trouvé aucun chemin 2");
+			}
+			else
+			{
+				follow(l);
+			}
 		}
 		else
-		{
-			follow(l);
-		}
+			this.auto.getPersonnage().avancer();
 	}
 	
 	/**
@@ -333,7 +338,7 @@ public class Primitives {
 		l.remove(0);
 		if(l.isEmpty())
 		{
-			System.out.println("Un personnage n'a trouvé aucun chemin");
+			System.out.println("Un personnage n'a trouvé aucun chemin 1");
 		}
 		else
 		{
@@ -350,7 +355,7 @@ public class Primitives {
 		l.remove(0);
 		if(l.isEmpty())
 		{
-			System.out.println("Un personnage n'a trouvé aucun chemin");
+			System.out.println("Un personnage n'a trouvé aucun chemin 3");
 		}
 		else
 		{
@@ -393,6 +398,40 @@ public class Primitives {
 		}
 		return c;
 	}
+	
+	/**
+	 * renvoie la case avant la prochain intersection
+	 * si on est sur une intersection, renvoi null
+	 * @param cord : coordoner ou commencer a chercher
+	 * @param dir : direction vers ou chercher
+	 * @return la case qui est avant la prochaine intersection dans la direction donné
+	 */
+	public CoordCas prochaineCasAvantInter(CoordCas cord, Direction dir)
+	{
+		CoordCas c=  new CoordCas(cord);
+		CoordCas res = c;
+		Direction dirEx =dir;
+		if(estIntersection(c))
+			return null;
+		while(!estIntersection(c))
+		{
+			res = new CoordCas(c);
+			if(Personnage.terrain.caseAcessible(c, dirEx))
+			{
+			}
+			else if(Personnage.terrain.caseAcessible(c, dirEx.aDroite()))
+			{
+				dirEx = dirEx.aDroite();
+			}
+			else
+			{
+				dirEx = dirEx.aGauche();
+			}
+			c.avancerDansDir(dirEx);
+		}
+		return res;
+	}
+	
 	
 	
 	/**
