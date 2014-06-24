@@ -56,9 +56,9 @@ public class Joueur {
 	public void render(Graphics g){
 		if ((p instanceof Ghost)){
 			if(((Ghost) p).getisAlive()) 
-				g.drawAnimation(animations[direction + (moving ? 4 : 0)], p.getCoord().x+WindowGame.largueur_map*WindowGame.taille_minimap, p.getCoord().y);
+				g.drawAnimation(animations[direction + (moving ? 4 : 0)], p.coord.x+WindowGame.largueur_map*WindowGame.taille_minimap, p.coord.y);
 		} else
-			g.drawAnimation(animations[direction + (moving ? 4 : 0)], p.getCoord().x+WindowGame.largueur_map*WindowGame.taille_minimap, p.getCoord().y);
+			g.drawAnimation(animations[direction + (moving ? 4 : 0)], p.coord.x+WindowGame.largueur_map*WindowGame.taille_minimap, p.coord.y);
 	}
 	
 	public void sprite(){
@@ -75,6 +75,6 @@ public class Joueur {
 			else
 				p.avancerAnimation();
 		}
-		this.direction =  p.getOrientation().ordinal();
+		this.direction =  p.direction.ordinal();
 	}
 }

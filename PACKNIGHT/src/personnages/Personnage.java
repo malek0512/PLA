@@ -44,7 +44,7 @@ public abstract class Personnage {
 	
 	protected boolean nextDirectionSet;
 	protected Direction nextDirection; // prochaine direction que prendra personnage
-	protected boolean agonise = false; //boolean vrai si le personnage est en animation de mort
+	public boolean agonise = false; //boolean vrai si le personnage est en animation de mort
 	protected int timerAnimation = 0; //timer pour les animations
 	protected List<CoordCas> ordre;
 

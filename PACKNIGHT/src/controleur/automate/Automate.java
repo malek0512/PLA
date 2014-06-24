@@ -144,13 +144,13 @@ public class Automate extends Controleur {
 				case STUN:primitivesAction.stun(); break;
 				case PROTEGER_PRINCESSE:primitivesAction.protegerPrincesse(); break;
 				case AU_SECOURS:primitivesAction.auSecours(); break;
-				case RAMASSER_PACGUM:primitivesAction.fetch();break;
+				//case RAMASSER_PACGUM:primitivesAction.fetch();break;
 				case OBEIR:primitivesAction.obeir(); break;
-				case FUIR:primitivesAction.fuir();break;
+				//case FUIR:primitivesAction.fuir();break;
 				case PATROUILLER:primitivesAction.patrouiller();break;
 				case APPEL_PATROUILLEUR:primitivesAction.appelPatrouilleur();
 				case INTERCEPTER:primitivesAction.intercepter(); break;
-				case AVANCER_VERS_PACGUM: primitivesAction.fetch(); break;
+				//case AVANCER_VERS_PACGUM: primitivesAction.fetch(); break;
 				}
 			}
 			while(this.personnage.parametrable() && !(isEtatBloquant()));

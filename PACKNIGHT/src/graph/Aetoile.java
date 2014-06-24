@@ -59,11 +59,14 @@ public class Aetoile {
 	 */
 	public void blackList(List<CoordCas> l)
 	{
-		Iterator<CoordCas> i = l.iterator();
-		while(i.hasNext())
+		if(l != null)
 		{
-			NoeudEtoile blackStar = new NoeudEtoile(Integer.MAX_VALUE, null, i.next());
-			fermer.add(blackStar);
+			Iterator<CoordCas> i = l.iterator();
+			while(i.hasNext())
+			{
+				NoeudEtoile blackStar = new NoeudEtoile(Integer.MAX_VALUE, null, i.next());
+				fermer.add(blackStar);
+			}
 		}
 	}
 	

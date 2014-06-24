@@ -77,7 +77,7 @@ public class Terrain {
 	 */
 	public boolean caseAcessible(CoordCas c,Direction direction)
 	{
-		return caseAcessible(c,direction);
+		return caseAcessible(c,1,direction);
 	}
 	
 	/**
@@ -119,7 +119,7 @@ public class Terrain {
 	 *
 	 */
 	protected boolean estDansLeTerrain(CoordCas c){
-		return c.x>0 && c.x <largeur && c.y>0 && c.y<hauteur;
+		return c.x>-1 && c.x <largeur && c.y>-1 && c.y<hauteur;
 	}
 	
 	/**

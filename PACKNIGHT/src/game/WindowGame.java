@@ -142,7 +142,6 @@ public class WindowGame extends BasicGameState {
 		else Ghost.modeMulti=true;
 		
 		Ghost.init();
-		PacKnight.initMusic(); 
 		MusicManager.init();
 		
 		}
@@ -182,9 +181,6 @@ public class WindowGame extends BasicGameState {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		
-		long start =  System.currentTimeMillis();
-		System.out.println("start : " + start);
-		
 		if(!pause)
 		{
 			
@@ -206,25 +202,25 @@ public class WindowGame extends BasicGameState {
 				{
 	
 				float w = container.getWidth() / 4;
-				if (!(equip.joueurCamera.getCoord().x - xCamera > resolution_x / 2 || equip.joueurCamera.getCoord().x - xCamera < -resolution_x / 2)) {
-					if (equip.joueurCamera.getCoord().x + largueur_map* taille_minimap > (xCamera + w)&& (equip.joueurCamera.getCoord().x + w < largueur_map* tuile_size))
-						xCamera = equip.joueurCamera.getCoord().x - w+ largueur_map * taille_minimap;
-					if (equip.joueurCamera.getCoord().x < (xCamera - w)&& (equip.joueurCamera.getCoord().x > w))
-						xCamera = equip.joueurCamera.getCoord().x + w;
-				} else if ((equip.joueurCamera.getCoord().x - xCamera > resolution_x / 2))
+				if (!(equip.joueurCamera.coord.x - xCamera > resolution_x / 2 || equip.joueurCamera.coord.x - xCamera < -resolution_x / 2)) {
+					if (equip.joueurCamera.coord.x + largueur_map* taille_minimap > (xCamera + w)&& (equip.joueurCamera.coord.x + w < largueur_map* tuile_size))
+						xCamera = equip.joueurCamera.coord.x - w+ largueur_map * taille_minimap;
+					if (equip.joueurCamera.coord.x < (xCamera - w)&& (equip.joueurCamera.coord.x > w))
+						xCamera = equip.joueurCamera.coord.x + w;
+				} else if ((equip.joueurCamera.coord.x - xCamera > resolution_x / 2))
 					xCamera = largueur_map * tuile_size - resolution_x / 2+ largueur_map * taille_minimap;
-				else if ((equip.joueurCamera.getCoord().x - xCamera < -resolution_x / 2))
+				else if ((equip.joueurCamera.coord.x - xCamera < -resolution_x / 2))
 					xCamera = resolution_x / 2;
 	
 				float h = container.getHeight() / 4;
-				if (!(equip.joueurCamera.getCoord().y - yCamera > resolution_y / 2 || equip.joueurCamera.getCoord().y - yCamera < -resolution_y / 2)) {
-					if (equip.joueurCamera.getCoord().y > (yCamera + h)&& (equip.joueurCamera.getCoord().y + h < hauteur_map* tuile_size))
-						yCamera = equip.joueurCamera.getCoord().y - h;
-					if (equip.joueurCamera.getCoord().y < (yCamera - h)&& (equip.joueurCamera.getCoord().y > h))
-						yCamera = equip.joueurCamera.getCoord().y + h;
-				} else if ((equip.joueurCamera.getCoord().y - yCamera > resolution_y / 2))
+				if (!(equip.joueurCamera.coord.y - yCamera > resolution_y / 2 || equip.joueurCamera.coord.y - yCamera < -resolution_y / 2)) {
+					if (equip.joueurCamera.coord.y > (yCamera + h)&& (equip.joueurCamera.coord.y + h < hauteur_map* tuile_size))
+						yCamera = equip.joueurCamera.coord.y - h;
+					if (equip.joueurCamera.coord.y < (yCamera - h)&& (equip.joueurCamera.coord.y > h))
+						yCamera = equip.joueurCamera.coord.y + h;
+				} else if ((equip.joueurCamera.coord.y - yCamera > resolution_y / 2))
 					yCamera = hauteur_map * tuile_size - resolution_y / 2;
-				else if ((equip.joueurCamera.getCoord().y - yCamera < -resolution_y / 2))
+				else if ((equip.joueurCamera.coord.y - yCamera < -resolution_y / 2))
 					yCamera = resolution_y / 2;
 				}
 			if (!(time < 3000)) 
@@ -238,10 +234,6 @@ public class WindowGame extends BasicGameState {
 			}
 			MusicManager.UpDate();
 		}
-		System.out.println("stop : " + System.currentTimeMillis());
-		long fin = System.currentTimeMillis();
-		long total = fin - start;
-		System.out.println("temps mit : " + total);
 	}
 
 	public void keyReleased(int key, char c) {
@@ -389,8 +381,8 @@ public class WindowGame extends BasicGameState {
 			} else {
 				g.setColor(Color.green);
 			}
-			g.fillRect(j.p.getCoord().CasCentre().x * taille_minimap
-					+ decalage_x, j.p.getCoord().CasCentre().y * taille_minimap
+			g.fillRect(j.p.coord.CasCentre().x * taille_minimap
+					+ decalage_x, j.p.coord.CasCentre().y * taille_minimap
 					+ decalage_y, taille_minimap, taille_minimap);
 
 		}

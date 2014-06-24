@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import personnages.*;
-import structure_terrain.CoordonneesFloat;
+import structure_terrain.CoordCas;
 import structure_terrain.Direction;
 import structure_terrain.Terrain;
 
@@ -22,7 +22,12 @@ public class PrimitivesAction extends Primitives {
 		super();
 		this.auto = a;
 	}
-
+	
+	//l'action ne rien faire
+	public void pass()
+	{
+	}
+	
 	/**
 	 * Rend une direction aléatoire parmis celle disponible lors de l'arrivée
 	 * d'une intersection
@@ -38,47 +43,13 @@ public class PrimitivesAction extends Primitives {
 
 		for (Direction d : Direction.values()) {
 			if (perso.caseDisponible(d)
-					&& perso.getOrientation() != d.opposer()) {
+					&& perso.direction != d.opposer()) {
 				direct[i] = d;
 				i++;
 			}
 		}
 		alea = rnd.nextInt(i);
 		perso.setDirection(direct[alea]);
-	}
-
-	/**
-	 * Donne la direction du chemin le plus court vers un pacman dans le rayon
-	 * de vision
-	 * 
-	 * */
-	public void directionCheminPlusCourt(Personnage perso) {
-
-		List<Pacman> res = pacmanEstDansRayon(auto.getPersonnage().getCoord(),
-				((Ghost) auto.getPersonnage()).getVision());
-		Pacman min = res.get(0);
-		Iterator<Pacman> i = res.iterator();
-		Pacman pac;
-		// Recherche du pacman le plus proche
-		while (i.hasNext()) {
-			pac = i.next();
-			if (perso.getCoord().CasCentre()
-					.distance(pac.getCoord().CasCentre()) < perso.getCoord()
-					.CasCentre().distance(min.getCoord().CasCentre()))
-				min = pac;
-		}
-		Direction mind = Direction.haut;
-		// calcul de la direction permettant de se rapprocher le plus de pacman
-		for (Direction d : Direction.values()) {
-
-			if (perso.caseDisponible(d)
-					&& positionAdjacente(d).CasCentre().distance(
-							min.getCoord().CasCentre()) < positionAdjacente(
-							mind).CasCentre().distance(
-							min.getCoord().CasCentre()))
-				mind = d;
-		}
-		perso.setDirection(mind);
 	}
 
 	/**
@@ -162,10 +133,11 @@ public class PrimitivesAction extends Primitives {
 		
 		if(knight.ghostEnChasse != null)
 		{
-			suivre2(knight.ghostEnChasse.getCoord());
+			avancerVers((knight.ghostEnChasse.coord.CasCentre()));;
 		}
 
 	}
+
 	/**
 	 * Primitive pour un packnight
 	 * Patrouille autour de la princesse*/
@@ -174,9 +146,9 @@ public class PrimitivesAction extends Primitives {
 		if(((PacKnight)auto.getPersonnage()).princesseEnDetresse!=null && ((PacKnight)auto.getPersonnage()).hitting()){
 			PacPrincess bitch =((PacKnight)auto.getPersonnage()).princesseEnDetresse;
 			if(!personnageEstDansRayon(bitch.perimetreSecurite,bitch,((PacKnight)auto.getPersonnage())))
-				suivre2(bitch.getCoord());
-			else
-				fetch();
+				avancerVers(bitch.coord.CasCentre());
+			//else
+				//fetch();
 		}
 		else{
 			((PacKnight)auto.getPersonnage()).princesseEnDetresse=null;
@@ -206,128 +178,30 @@ public class PrimitivesAction extends Primitives {
 			}
 		}
 	} 
-	
-
-
-	/**
-	 * Donne des ordre au fantomes pour coincé un pacman donné
-	 */
-	public void suivre(CoordonneesFloat ref) {
 		
-		if(auto.sneaky == null)
-		{
-			
-			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
-			Aetoile graph = new Aetoile(src);
-			List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
-			l.remove(0);
-			if(l.size()==0)
-				setDirectionAleatoire(auto.getPersonnage());
-			else
-				auto.sneaky = mysteriousFunction(src, l.get(0));
-			
-		}
-		else
-		{
-			
-			if(auto.getPersonnage().caseDisponible(auto.sneaky))
-			{
-				
-				auto.getPersonnage().setDirection(auto.sneaky);
-				auto.sneaky = null;
-			}
-		}
-		this.auto.getPersonnage().avancer();
-	}
-	
-	public void suivre2(CoordonneesFloat ref) {
-		if(auto.sneaky == null)
-		{
-			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
-			Aetoile graph = new Aetoile(src);
-			List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
-			l.remove(0);
-			if(l.size()==0)
-				setDirectionAleatoire(auto.getPersonnage());
-			else
-				auto.sneaky = mysteriousFunction(src, l.get(0));
-			
-		}
-		else
-		{
-			if(auto.getPersonnage().caseDisponible(auto.sneaky))
-			{
-				auto.getPersonnage().setDirection(auto.sneaky);
-				auto.sneaky = null;
-			}
-			else
-			{
-				CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
-				Aetoile graph = new Aetoile(src);
-				List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
-				l.remove(0);
-				if(l.size()==0)
-					setDirectionAleatoire(auto.getPersonnage());
-				else
-					auto.sneaky = mysteriousFunction(src, l.get(0));
-			}
-		}
-		this.auto.getPersonnage().avancer();
-	}
-	
 	public void suivre() {
 		Iterator<Pacman> i = Ghost.central.keySet().iterator();
-		if (i.hasNext()) {
-			Pacman min = i.next();
-			while (i.hasNext()) {
-				Pacman next = i.next();
-				if (next.getCoord().CasCentre()
-						.distance(auto.getPersonnage().getCoord().CasCentre()) < next
-						.getCoord().CasCentre()
-						.distance(min.getCoord().CasCentre()))
-					min = next;
+		CoordCas bestChallenger = null;
+		while (i.hasNext()) {
+			CoordCas next= i.next().coord.CasCentre();
+			if(bestChallenger == null)
+			{
+				bestChallenger = next;
 			}
-
-			suivre2(new CoordonneesFloat(min.getCoord()));
+			else if (next.distance(auto.getPersonnage().coord.CasCentre()) 
+					< next.distance(bestChallenger))
+			{
+				bestChallenger = next;
+			}
 		}
-	}
-	
-	public void intercepter(CoordonneesFloat ref, CoordonneesFloat blackCord)
-	{
-		if(auto.sneaky == null)
+		if(bestChallenger == null)
 		{
-			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
-			Aetoile graph = new Aetoile(src);
-			graph.blackCoord(blackCord);
-			List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
-			l.remove(0);
-			if(l.size()==0)
-				setDirectionAleatoire(auto.getPersonnage());
-			else
-				auto.sneaky = mysteriousFunction(src, l.get(0));
-			
+			System.out.println("pas trouver de pacman a suivre");
 		}
 		else
 		{
-			if(auto.getPersonnage().caseDisponible(auto.sneaky))
-			{
-				auto.getPersonnage().setDirection(auto.sneaky);
-				auto.sneaky = null;
-			}
-			else
-			{
-				CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
-				Aetoile graph = new Aetoile(src);
-				graph.blackCoord(blackCord);
-				List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref.CasCentre()));
-				l.remove(0);
-				if(l.size()==0)
-					setDirectionAleatoire(auto.getPersonnage());
-				else
-					auto.sneaky = mysteriousFunction(src, l.get(0));
-			}
+			avancerVers(bestChallenger);
 		}
-		this.auto.getPersonnage().avancer();
 	}
 	
 	public void intercepter() {
@@ -336,26 +210,28 @@ public class PrimitivesAction extends Primitives {
 			Pacman min = i.next();
 			while (i.hasNext()) {
 				Pacman next = i.next();
-				if (next.getCoord().CasCentre()
-						.distance(auto.getPersonnage().getCoord().CasCentre()) < next
-						.getCoord().CasCentre()
-						.distance(min.getCoord().CasCentre()))
+				if (next.coord.CasCentre()
+						.distance(auto.getPersonnage().coord.CasCentre()) < next
+						.coord.CasCentre()
+						.distance(min.coord.CasCentre()))
 					min = next;
 			}
-			CoordonneesFloat minCord = new CoordonneesFloat(min.getCoord());
-			CoordonneesFloat inter = new CoordonneesFloat(prochaineInterCasPRE(minCord.CasCentre(), min.getOrientation().opposer()));
-			intercepter(minCord,inter);
+			CoordCas minCord = min.coord.CasCentre();
+			CoordCas inter = new CoordCas(prochaineInterCas(minCord, min.direction.opposer()));
+			avancerVers(minCord, inter);
 		}
 	}
+	
 	
 	/**
 	 * Seul pac princesse peut fuir
 	 */
-	public void fuir(List<CoordonneesFloat> blist, CoordonneesFloat ref)
+/*	
+public void fuir(CoordonneesFloat ref)
 	{
 		if(auto.sneaky == null)
 		{
-			CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
+			CoordonneesFloat src = this.auto.getPersonnage().coord.CasCentre();
 			Aetoile graph = new Aetoile(src);
 			graph.blackList(blist);
 			List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref));
@@ -375,7 +251,7 @@ public class PrimitivesAction extends Primitives {
 			}
 			else
 			{
-				CoordonneesFloat src = this.auto.getPersonnage().getCoord().CasCentre();
+				CoordonneesFloat src = this.auto.getPersonnage().coord.CasCentre();
 				Aetoile graph = new Aetoile(src);
 				graph.blackList(blist);
 				List<CoordonneesFloat> l = graph.algo(new CoordonneesFloat(ref));
@@ -430,10 +306,11 @@ public class PrimitivesAction extends Primitives {
 		}
 		fuir(Ghost.listCoord(),PacPrincess.cordDeFuite);
 	}
-	
+	*/
 	/**
 	 * envoie le personnage manger des pac-gomm
 	 */
+	/*
 	public void fetch() {
 		// 0 : pac-gom
 		// 1 : distance
@@ -497,5 +374,5 @@ public class PrimitivesAction extends Primitives {
 			this.auto.getPersonnage().avancer();
 		}
 	}
-	
+	*/
 }

@@ -9,8 +9,7 @@ import java.util.List;
 
 import music.MusicManager;
 import personnages.*;
-import structure_terrain.CoordonneesFloat;
-import structure_terrain.Direction;
+import structure_terrain.*;
 
 /**
  * Classe contenant l'ensemble de fonction intermedaire permettant l'elaboration
@@ -20,7 +19,7 @@ import structure_terrain.Direction;
  */
 public class Primitives {
 	Automate auto;
-	List<CoordonneesFloat> chemin; // Utilisé par prochaineCase.
+	List<CoordCas> chemin; // Utilisé par prochaineCase.
 	int nbCout = 0; // Utilisé par prochaineCase.
 
 	/**
@@ -31,7 +30,7 @@ public class Primitives {
 	 *            : coordonée de l'objet a tester
 	 * @return vrai si un pacman ou plus se trouve sur les coordonnée indiquée
 	 */
-	protected boolean caseEstPM(CoordonneesFloat cord) {
+	protected boolean caseEstPM(CoordCas cord) {
 		return Pacman.personnagePresent(cord);
 	}
 
@@ -42,17 +41,17 @@ public class Primitives {
 	 *            : rayon de vision du Fantome a la position donnée
 	 * @return la liste des pacman de le champ de vision
 	 */
-	protected List<Pacman> pacmanEstDansRayon(CoordonneesFloat position,
+	protected List<Pacman> pacmanEstDansRayon(CoordCas position,
 			int rayon) {
 		List<Pacman> res = new LinkedList<Pacman>();
 
 		for (Iterator<Pacman> i = Pacman.liste.iterator(); i.hasNext();) {
 			Pacman pac = i.next();
-			if (position.CasCentre().distance(pac.getCoord().CasCentre()) <= rayon) {
+			if (position.distance(pac.coord.CasCentre()) <= rayon) {
 				res.add(pac);
 				if (Ghost.central.containsKey(pac)) {
 					Ghost.central.get(pac).majAvisDeRecherche(
-							pac.getCoord().CasCentre());
+							pac.coord.CasCentre());
 				} 
 				else
 				{
@@ -60,7 +59,7 @@ public class Primitives {
 					{
 						MusicManager.play_Reperer();
 					}
-					Ghost.central.put(pac,((Ghost) auto.getPersonnage()).new AvisDeRecherche(pac.getCoord().CasCentre()));
+					Ghost.central.put(pac,new AvisDeRecherche(pac.coord.CasCentre()));
 				}
 			}
 
@@ -69,67 +68,60 @@ public class Primitives {
 	}
 
 	/**
-	 * @param position
-	 *            : coordonner du fantome
-	 * @return vrai si un pacman est dans la croix et qu'il n'y a pas de mur
-	 *         entre les deux
+	 * @param position coordonnée du centre du fantomea croix 
+	 * @return vrai si il vois un pacman is la ligne et qu'il n'y a pas de mur entre les deux
+	 * @Action met tourne le fantome vers pac-man
 	 * @author rama/vivien
 	 */
-	protected boolean pacmanEstDansCroix(CoordonneesFloat position) {
+	protected boolean pacmanEstDansCroix(CoordCas position) {
 		int j = 0;
 		boolean res = false;
 
 		for (Iterator<Pacman> i = Pacman.liste.iterator(); i.hasNext();) {
 			Pacman pac = i.next();
-			CoordonneesFloat coordFC = position.CasCentre(); // coordonnée du
-																// centre du
-																// fantome
-			CoordonneesFloat coord = pac.getCoord().CasCentre();// on récupére
-																// la case dans
-																// lequel est le
-																// centre du
-																// pacman
-			if (coord.x == coordFC.x) {
-				if (coord.y < coordFC.y) {
-					while (mur(coordFC, j, Direction.haut)
-							&& coord.y != (coordFC.y - j)) {
+			
+			CoordCas coord = pac.coord.CasCentre();
+			if (coord.x == position.x) {
+				if (coord.y < position.y) {
+					while (mur(position, j, Direction.haut)
+							&& coord.y != (position.y - j)) {
 						j++;
 					}
-					if (mur(coordFC, j, Direction.haut)) {
+					if (mur(position, j, Direction.haut)) {
 						auto.getPersonnage().setDirection(Direction.haut);
 						return true;
 
 					}
 				} else {
-					while (mur(coordFC, j, Direction.bas)
-							&& coord.y != (coordFC.y + j)) {
+					while (mur(position, j, Direction.bas)
+							&& coord.y != (position.y + j)) {
 						j++;
 
 					}
-					if (mur(coordFC, j, Direction.bas)) {
+					if (mur(position, j, Direction.bas)) {
 						auto.getPersonnage().setDirection(Direction.bas);
 						return true;
 					}
 				}
 
-			} else if (coord.y == coordFC.y) {
-				if (coord.x < coordFC.x) {
-					while (mur(coordFC, j, Direction.gauche)
-							&& coord.x != (coordFC.x - j)) {
+			} else if (coord.y == position.y) {
+				if (coord.x < position.x) {
+					while (mur(position, j, Direction.gauche)
+							&& coord.x != (position.x - j)) {
 						j++;
 					}
-					if (mur(coordFC, j, Direction.gauche)) {
+					if (mur(position, j, Direction.gauche)) {
 						auto.getPersonnage().setDirection(Direction.gauche);
 						return true;
 					}
 				}
 
 				else {
-					while (mur(coordFC, j, Direction.droite)
-							&& coord.x != (coordFC.x + j)) {
+					while (mur(position, j, Direction.droite)
+							&& coord.x != (position.x + j)) {
 						j++;
 					}
-					if (mur(coordFC, j, Direction.droite)) {
+					if (mur(position, j, Direction.droite)) {
 						auto.getPersonnage().setDirection(Direction.droite);
 						return true;
 					}
@@ -146,8 +138,8 @@ public class Primitives {
 	 * @return boolean Vrai si il y a un mur faux sinon
 	 * @author vivien
 	 * */
-	private boolean mur(CoordonneesFloat test, int i, Direction d) {
-		return Personnage.getTerrain().caseAcessible(test.x, test.y, i, d);
+	private boolean mur(CoordCas test, int i, Direction d) {
+		return Personnage.terrain.caseAcessible(test, i, d);
 	}
 
 	/**
@@ -158,26 +150,9 @@ public class Primitives {
 	 * @param x
 	 * @param y
 	 */
-	public CoordonneesFloat positionDevant() {
-		CoordonneesFloat coord = new CoordonneesFloat(0, 0);
-		switch (auto.getPersonnage().getOrientation()) {
-		case haut:
-			coord.x = this.auto.getPersonnage().getCoord().CasCentre().x;
-			coord.y = this.auto.getPersonnage().getCoord().CasCentre().y - 1;
-			break;
-		case bas:
-			coord.x = this.auto.getPersonnage().getCoord().CasCentre().x;
-			coord.y = this.auto.getPersonnage().getCoord().CasCentre().y + 1;
-			break;
-		case gauche:
-			coord.x = this.auto.getPersonnage().getCoord().CasCentre().x - 1;
-			coord.y = this.auto.getPersonnage().getCoord().CasCentre().y;
-			break;
-		case droite:
-			coord.x = this.auto.getPersonnage().getCoord().CasCentre().x + 1;
-			coord.y = this.auto.getPersonnage().getCoord().CasCentre().y;
-			break;
-		}
+	public CoordCas positionDevant() {
+		CoordCas coord = this.auto.getPersonnage().coord.convertIntoCas();
+		coord.avancerDansDir(auto.getPersonnage().direction);
 		return coord;
 	}
 
@@ -186,73 +161,16 @@ public class Primitives {
 	 * 
 	 * @return Vrai si la case est une intersection
 	 */
-	public boolean estIntersection(CoordonneesFloat coord) {
+	public boolean estIntersection(CoordCas coord) {
 		int n = 0;
-		CoordonneesFloat coordo = new CoordonneesFloat(coord.CasCentre());
 		for (Direction d : Direction.values())
-			if (Personnage.getTerrain().caseAcessible(coordo.x, coordo.y, d))
+			if (Personnage.terrain.caseAcessible(coord, d))
 				n++;
 
 		return n > 2;
 	}
 
 	/**
-	 * Pas merci ? :(
-	 * 
-	 * @return Vrai si la case est une intersection
-	 */
-	public boolean estIntersectionCas(CoordonneesFloat coord) {
-		int n = 0;
-		for (Direction d : Direction.values())
-			if (Personnage.getTerrain().caseAcessible(coord.x, coord.y, d))
-				n++;
-
-		return n > 2;
-	}
-
-	/**
-	 * Renvoie les coordonnées de la case devant le robot selon sa direction
-	 * 
-	 * @param d
-	 * @return
-	 */
-	public CoordonneesFloat positionAdjacente(Direction d) {
-		CoordonneesFloat coord = new CoordonneesFloat(0, 0);
-		switch (d) {
-		case haut:
-			coord.x = this.auto.getPersonnage().getCoord().CasCentre().x;
-			coord.y = this.auto.getPersonnage().getCoord().CasCentre().y - 1;
-			break;
-		case bas:
-			coord.x = this.auto.getPersonnage().getCoord().CasCentre().x;
-			coord.y = this.auto.getPersonnage().getCoord().CasCentre().y + 1;
-			break;
-		case gauche:
-			coord.x = this.auto.getPersonnage().getCoord().CasCentre().x - 1;
-			coord.y = this.auto.getPersonnage().getCoord().CasCentre().y;
-			break;
-		case droite:
-			coord.x = this.auto.getPersonnage().getCoord().CasCentre().x + 1;
-			coord.y = this.auto.getPersonnage().getCoord().CasCentre().y;
-			break;
-		}
-		return coord;
-	}
-
-	public void pass() {
-
-	}
-
-	/**
-	 * Fait super attention aux transformations. Parfois tu parles en pixel
-	 * alors que tu veux parler de case et vice versa getCoord() te donne le
-	 * PIXEL en haut à gauche Attention aux transformations de Coordonnees à
-	 * CoordonneesFloat il vaut mieux uniformiser plûtot que de faire des
-	 * transformations invalides lorsqu'on changera le nom Les méthodes du genre
-	 * pixelFromCase case existe ou caseFromPixel existent déjà.(Nommées
-	 * différement ^^)
-	 * 
-	 * 
 	 * TODO A adapter lors de la disponibilité de l'algorithme A etoile Renvoie
 	 * les coordonnées de la prochaine case, afin d'atteindre la coordonnée c.
 	 * Le chemin est mis a jour tous les 3 couts. A eventuellement modifier afin
@@ -262,18 +180,16 @@ public class Primitives {
 	 * @param c
 	 * @author malek
 	 */
-	protected CoordonneesFloat prochaineCase(CoordonneesFloat c) {
+	protected CoordCas prochaineCase(CoordCas c) {
 		// Si nous somme deja sur la case demandé
-		if (auto.getPersonnage().getCoord().equals(c.CasCentre()))
+		if (auto.getPersonnage().coord.equals(c))
 			return c;
 
 		// On met a jour le chemin vers c, dans l'un des cas stipulé dans la
 		// condition
 		if (chemin == null || chemin.size() == 0 || nbCout > 3) {
-			Aetoile depart = new Aetoile(c.CasCentre());
-			chemin = depart.algo(auto.getPersonnage().getCoord().CasCentre()); // case
-																				// approximative
-																				// TODO
+			Aetoile depart = new Aetoile(c);
+			chemin = depart.algo(auto.getPersonnage().coord.CasCentre()); // case
 			nbCout = 0;
 		}
 
@@ -282,7 +198,7 @@ public class Primitives {
 				+ "N'existe-t-il pas de chemin vers la coordonnées donnée en parametre ?";
 
 		nbCout++;
-		CoordonneesFloat prochain = chemin.get(0);
+		CoordCas prochain = chemin.get(0);
 		chemin.remove(0);
 		return prochain;
 	}
@@ -294,6 +210,7 @@ public class Primitives {
 		}
 		return res;
 	}
+
 	/**
 	 * @return le Packnight le plus proche de la princesse
 	 * @author malek
@@ -305,7 +222,7 @@ public class Primitives {
 		int d_bestFound =Integer.MAX_VALUE;
 		
 		for(PacKnight knight : PacKnight.liste){
-			int d_candidat = knight.getCoord().CasCentre().distance(bitch.getCoord().CasCentre());
+			int d_candidat = knight.coord.CasCentre().distance(bitch.coord.CasCentre());
 			if(!knight.user() && d_candidat < d_bestFound && knight.ghostEnChasse ==null)
 			{
 				captain = knight;
@@ -325,11 +242,11 @@ public class Primitives {
 	 */
 	protected List<Ghost> fantomeEstDansRayon(int rayon) {
 		List<Ghost> res = new LinkedList<Ghost>();
-		CoordonneesFloat position = auto.getPersonnage().getCoord();
+		CoordCas position = auto.getPersonnage().coord.CasCentre();
 		
 		for(Ghost pac : Ghost.liste)
 		{
-			if(position.CasCentre().distance(pac.getCoord().CasCentre())<=rayon){
+			if(position.distance(pac.coord.CasCentre())<=rayon){
 				res.add(pac);
 			}
 		}
@@ -345,9 +262,8 @@ public class Primitives {
 	 */
 	protected boolean personnageEstDansRayon(int rayon, Personnage p1,
 			Personnage p2) {
-		CoordonneesFloat position = p1.getCoord();
 
-		if(p2.hitting() && position.CasCentre().distance(p2.getCoord().CasCentre())<=rayon)
+		if(p2.hitting() && p1.coord.CasCentre().distance(p2.coord.CasCentre())<=rayon)
 				return true;
 		return false;
 	}
@@ -363,39 +279,6 @@ public class Primitives {
 		return n;
 		}
 	
-	/**
-	 * fonction misterieuse qui renvoie la direction a prendre pour aller de la
-	 * case src vers la case dest
-	 * 
-	 * @param src
-	 *            : case source
-	 * @param dest
-	 *            : case destination
-	 * @return la direction a suivre pour aller a dest
-	 * @author Mysterious Guy
-	 */
-	public Direction mysteriousFunction(CoordonneesFloat src,
-			CoordonneesFloat dest) {
-		int x = src.x - dest.x;
-		int y = src.y - dest.y;
-
-		if (y == 0) {
-			if (x == -1)
-				return Direction.droite;
-			else
-				return Direction.gauche;
-		} else// y != 0
-		{
-			if (y == -1)
-				return Direction.bas;
-			else
-				return Direction.haut;
-		}
-	}
-
-	/**
-	 * TODO :( implanter tout les commentaires %)
-	 */
 	final int Value_pacgom = 15;
 	final int Value_distance = -1;
 	final int Value_ghost = Integer.MIN_VALUE;
@@ -420,6 +303,98 @@ public class Primitives {
 	final int ImportanceRacine = 4;
 	final int ImportanceBranche = 1;
 
+	public void avancerVers(CoordCas dest)
+	{
+		CoordCas src = this.auto.getPersonnage().coord.CasCentre();
+		Aetoile graph = new Aetoile(src);
+		List<CoordCas> l = graph.algo(new CoordCas(dest));
+		l.remove(0);
+		if(l.isEmpty())
+		{
+			System.out.println("Un personnage n'a trouvé aucun chemin");
+		}
+		else
+		{
+			follow(l);
+		}
+	}
+	
+	/**
+	 * fait avancer le personnage vers la case dest en évitant la liste renseigner
+	 * @param dest
+	 * @param CaseAEviter
+	 */
+	public void avancerVers(CoordCas dest, List<CoordCas> CaseAEviter)
+	{
+		CoordCas src = this.auto.getPersonnage().coord.CasCentre();
+		Aetoile graph = new Aetoile(src);
+		graph.blackList(CaseAEviter);
+		List<CoordCas> l = graph.algo(new CoordCas(dest));
+		l.remove(0);
+		if(l.isEmpty())
+		{
+			System.out.println("Un personnage n'a trouvé aucun chemin");
+		}
+		else
+		{
+			follow(l);
+		}
+	}
+	
+	public void avancerVers(CoordCas dest, CoordCas CaseAEviter)
+	{
+		CoordCas src = this.auto.getPersonnage().coord.CasCentre();
+		Aetoile graph = new Aetoile(src);
+		graph.blackCoord(CaseAEviter);
+		List<CoordCas> l = graph.algo(new CoordCas(dest));
+		l.remove(0);
+		if(l.isEmpty())
+		{
+			System.out.println("Un personnage n'a trouvé aucun chemin");
+		}
+		else
+		{
+			follow(l);
+		}
+	}
+	
+	private void follow(List<CoordCas> l)
+	{
+		CoordCas src = this.auto.getPersonnage().coord.CasCentre();
+		CoordCas c = l.get(0);
+		Direction d = src.directionPourAllerVers(c);
+		if(this.auto.getPersonnage().caseDisponible(d))
+			this.auto.getPersonnage().direction=d;
+		this.auto.getPersonnage().avancer();
+	}
+	
+
+	/**
+	 * renvoie les coordonée de la prochaine intersection dans la direction donnée
+	 */
+	public CoordCas prochaineInterCas(CoordCas cord, Direction dir)
+	{
+		CoordCas c=  new CoordCas(cord);
+		Direction dirEx =dir;
+		while(!estIntersection(c))
+		{
+			if(Personnage.terrain.caseAcessible(c, dirEx))
+			{
+			}
+			else if(Personnage.terrain.caseAcessible(c, dirEx.aDroite()))
+			{
+				dirEx = dirEx.aDroite();
+			}
+			else
+			{
+				dirEx = dirEx.aGauche();
+			}
+			c.avancerDansDir(dirEx);
+		}
+		return c;
+	}
+	
+	
 	/**
 	 * Fonction qui calcule le poids des toutes les intersection sauf celle de
 	 * la source
@@ -430,6 +405,7 @@ public class Primitives {
 	 *            : direction vers la source
 	 * @return un tableau de int contenant les valeurs pour chaque inter
 	 */
+	/*
 	public int[][] laFonctionQuiFaitPresqueTout(CoordonneesFloat coordo,
 			Direction src, int mode) {
 		// 0 : pac-gom
@@ -496,7 +472,7 @@ public class Primitives {
 		}
 		return tab;
 	}
-
+	*/
 	/**
 	 * Fonction qui calcul le poids de toutes les intersection
 	 * 
@@ -504,6 +480,7 @@ public class Primitives {
 	 *            : coord de l'intersection exprimer en case
 	 * @return un tableau de int contenant les valeurs pour chaque inter
 	 */
+	/*
 	public int[][] laFonctionQuiFaitTout(CoordonneesFloat cord, int mode) {
 		// 0 : pac-gom
 		// 1 : distance
@@ -580,61 +557,5 @@ public class Primitives {
 		}
 		return tab;
 	}
-
-	/**
-	 * renvoie les coordonée de la prochaine intersection dans la direction donnée
-	 */
-	public CoordonneesFloat prochaineInterCas(CoordonneesFloat cord, Direction dir)
-	{
-		CoordonneesFloat c=  new CoordonneesFloat(cord);
-		int debug = 0;
-		Direction dirEx =dir;
-		while(!estIntersectionCas(c))
-		{
-			boolean buf = true;
-			for(Direction d : Direction.values())
-				if(d != dirEx.opposer() && Personnage.getTerrain().caseAcessible(c.x, c.y, d))
-					{
-					dirEx = d;
-					c.avancerDansDir(d);
-					buf = false;
-					break;
-					}
-			debug++;
-			if(buf || debug >50)
-			{
-				return cord;
-			}
-		}
-		
-		return c;
-	}
-	
-	public CoordonneesFloat prochaineInterCasPRE(CoordonneesFloat cord, Direction dir)
-	{
-		CoordonneesFloat c=  new CoordonneesFloat(cord);
-		CoordonneesFloat res = new CoordonneesFloat(cord);
-		int debug = 0;
-		Direction dirEx =dir;
-		while(!estIntersectionCas(c))
-		{
-			res = new CoordonneesFloat(c);
-			boolean buf = true;
-			for(Direction d : Direction.values())
-				if(d != dirEx.opposer() && Personnage.getTerrain().caseAcessible(c.x, c.y, d))
-					{
-					dirEx = d;
-					c.avancerDansDir(d);
-					buf = false;
-					break;
-					}
-			debug++;
-			if(buf || debug >50)
-			{
-				return cord;
-			}
-		}
-		
-		return res;
-	}
+	*/
 }

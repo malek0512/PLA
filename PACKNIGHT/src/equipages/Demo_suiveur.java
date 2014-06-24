@@ -8,7 +8,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 import personnages.*;
-import structure_terrain.CoordonneesFloat;
+import structure_terrain.CoordCas;
 import structure_terrain.Direction;
 
 public class Demo_suiveur extends Equipage {
@@ -22,7 +22,7 @@ public class Demo_suiveur extends Equipage {
 	}
 
 	public void init() throws SlickException {
-		PACMAN_1 = new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(17, 17), true);
+		PACMAN_1 = new PacKnight("J1",new CoordCas(15,17),Direction.droite,new CoordCas(15, 17), true);
 		GHOST_1 = new Ghost("1");
 		Ghost.tempsPasserEnPrison = 0;
 		this.joueurFleche =  PACMAN_1;

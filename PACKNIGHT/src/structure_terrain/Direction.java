@@ -16,5 +16,29 @@ public enum Direction {
 		}
 		return opp;
 	}
+	
+	public Direction aDroite()
+	{
+		switch(this)
+		{
+		case haut : return droite;
+		case droite : return bas;
+		case bas : return gauche;
+		case gauche : return haut;
+		default : return null;
+		}
+	}
+	
+	public Direction aGauche()
+	{
+		switch(this)
+		{
+		case haut : return gauche;
+		case droite : return haut;
+		case bas : return droite;
+		case gauche : return bas;
+		default : return null;
+		}
+	}
 
 }

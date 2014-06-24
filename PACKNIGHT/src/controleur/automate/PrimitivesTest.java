@@ -24,7 +24,7 @@ public class PrimitivesTest extends Primitives {
 	 * @return True si un ou plusieurs pacman sont dans le rayon 
 	 */
 	protected boolean dansRayon(int d) {
-		List<Pacman> res=pacmanEstDansRayon(auto.getPersonnage().getCoord(),d);
+		List<Pacman> res=pacmanEstDansRayon(auto.getPersonnage().coord.CasCentre(),d);
 		return res.size()!=0;
 		
 	}
@@ -56,19 +56,19 @@ public class PrimitivesTest extends Primitives {
 	 * Ne s'applique qu'au personnage de l'automate en cours d'utilisation*/
 	public boolean estIntersection(){
 		
-		return estIntersection(auto.getPersonnage().getCoord());
+		return estIntersection(auto.getPersonnage().coord.CasCentre());
 	}
 	/**
 	 * utilise la méthode pacman est dans croix de primitive avec déjà l'argument personnage.
 	 * 
 	 * */
 	public boolean dansCroix(){
-		return pacmanEstDansCroix(auto.getPersonnage().getCoord());
+		return pacmanEstDansCroix(auto.getPersonnage().coord.CasCentre());
 	}
 	/**
 	 * @return : Vrai si le déplacment du fantôme s'est fait d'une case*/
 	public boolean caseAtteinte(){
-		return auto.getPersonnage().getCoord().CasHG().equals(auto.getPersonnage().getCoord().CasBD());
+		return auto.getPersonnage().coord.estSurUneCase();
 	}
 	
 	/**
