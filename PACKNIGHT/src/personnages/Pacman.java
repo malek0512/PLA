@@ -27,9 +27,10 @@ public abstract class Pacman extends Personnage {
 	
 	/**
 	 * Construit le pacman en initialisant son point de spawn*/
-	public Pacman(String nom, CoordCas starter, Direction d, CoordCas spawn){
-		super(nom,starter,d);
-		this.pointDeRespawn = new CoordPix(spawn,position.hg);
+	public Pacman(String nom, int x,int y, Direction d){
+		super(nom,x,y,d);
+		this.pointDeRespawn = new CoordPix(x*32,y*32,position.hg);
+		System.out.println(pointDeRespawn);
 		Pacman.liste.add((Pacman) this);
 	}
 	

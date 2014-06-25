@@ -232,7 +232,6 @@ public class WindowGame extends BasicGameState {
 				}
 				Ghost.disparitionPacman();
 			}
-			MusicManager.UpDate();
 		}
 	}
 

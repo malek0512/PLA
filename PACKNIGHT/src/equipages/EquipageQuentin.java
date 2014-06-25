@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 import personnages.Ghost;
 import personnages.PacKnight;
 import personnages.PacPrincess;
-import structure_terrain.CoordonneesFloat;
+import structure_terrain.CoordCas;
 import structure_terrain.Direction;
 
 public class EquipageQuentin extends equipages.Equipage {
@@ -117,7 +117,7 @@ public class EquipageQuentin extends equipages.Equipage {
 				break;
 			
 			}
-			PACMAN_1= new PacKnight("J1",13,17,Direction.droite,new CoordonneesFloat(13, 17), true);
+			PACMAN_1= new PacKnight("J1",13,17,Direction.droite, true);
 			Joueur PM_1 = new Joueur(this.g.SPRITE_PACMAN_1,this.g, PACMAN_1);
 			
 			
@@ -132,16 +132,16 @@ public class EquipageQuentin extends equipages.Equipage {
 			GHOST_3 = new Ghost("3");
 			GHOST_4 = new Ghost("4");
 			
-			if (SelectionPerso.Perso_1 == 1 ) PACMAN_1= new PacKnight("J1",1,2,Direction.droite,new CoordonneesFloat(1, 2), true);
-			else PACMAN_1= new PacKnight("J1",1,2,Direction.droite,new CoordonneesFloat(1, 2), false);
+			if (SelectionPerso.Perso_1 == 1 ) PACMAN_1= new PacKnight("J1",1,2,Direction.droite, true);
+			else PACMAN_1= new PacKnight("J1",1,2,Direction.droite, false);
 			
-			if (SelectionPerso.Perso_2 == 1 )PACMAN_2 = new PacKnight("J2",2,1,Direction.droite,new CoordonneesFloat(2, 1), true);
-			else PACMAN_2 = new PacKnight("J2",2,1,Direction.droite,new CoordonneesFloat(2, 1), false);	
+			if (SelectionPerso.Perso_2 == 1 )PACMAN_2 = new PacKnight("J2",2,1,Direction.droite, true);
+			else PACMAN_2 = new PacKnight("J2",2,1,Direction.droite, false);	
 				
-			if (SelectionPerso.Perso_3 == 1 )PACMAN_3 = new PacKnight("J3",1,3,Direction.droite,new CoordonneesFloat(1, 3), true);	
-			else PACMAN_3 = new PacKnight("J3",1,3,Direction.droite,new CoordonneesFloat(1, 3), false);	
+			if (SelectionPerso.Perso_3 == 1 )PACMAN_3 = new PacKnight("J3",1,3,Direction.droite, true);	
+			else PACMAN_3 = new PacKnight("J3",1,3,Direction.droite, false);	
 			
-			PACMAN_4 = new PacPrincess("J4",1,1,Direction.droite,new CoordonneesFloat(1, 1));
+			PACMAN_4 = new PacPrincess("J4",1,1,Direction.droite);
 				
 				
 			if (SelectionPerso.Perso_1 == 1 ){	

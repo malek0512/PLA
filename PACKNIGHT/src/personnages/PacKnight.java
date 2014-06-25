@@ -43,8 +43,8 @@ public class PacKnight extends Pacman{
 	//Contient le fantome apres lequel le knight est a la recherche
 	public Ghost ghostEnChasse = null;
 	
-	public PacKnight(String name, CoordCas starter, Direction d, CoordCas respawn, boolean userPlaing) {
-		super(name,starter,d,respawn);
+	public PacKnight(String name, int x, int y, Direction d, boolean userPlaing) {
+		super(name,x,y,d);
 		PacKnight.liste.add(this);
 		this.user = userPlaing;
 	}
@@ -134,7 +134,6 @@ public class PacKnight extends Pacman{
 			{
 				this.timerAnimation=0;
 				this.agonise=false;
-				PacKnight.Dead.stop();
 				this.respawnWOA();
 			}
 		}

@@ -8,7 +8,6 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 import personnages.*;
-import structure_terrain.CoordonneesFloat;
 import structure_terrain.Direction;
 
 public class Demo_Berserk extends Equipage {
@@ -20,9 +19,12 @@ public class Demo_Berserk extends Equipage {
 
 	}
 
+	/**
+	 * opérationel
+	 */
 	public void init() throws SlickException {
 		Ghost.vision = 100;
-		PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(17, 17), true);
+		PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite, true);
 		Ghost GHOST_1 = new Ghost("1");
 		this.joueurFleche =  PACMAN_1;
 		this.joueurCamera = PACMAN_1;

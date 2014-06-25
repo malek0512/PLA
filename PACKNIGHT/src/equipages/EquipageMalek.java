@@ -15,7 +15,6 @@ import personnages.Ghost;
 import personnages.PacKnight;
 import personnages.PacPrincess;
 import personnages.Personnage;
-import structure_terrain.CoordonneesFloat;
 import structure_terrain.Direction;
 import structure_terrain.Terrain;
 import controleur.automate.Automate;
@@ -23,10 +22,10 @@ import controleur.automate.Automate;
 public class EquipageMalek extends Equipage{
 	
 
-	PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(1, 1), true);
-	PacKnight PACMAN_2 = new PacKnight("J2",25,15,Direction.droite,new CoordonneesFloat(25, 15), false);
-	PacKnight PACMAN_3 = new PacKnight("J3",6,15,Direction.droite,new CoordonneesFloat(6, 15), false);
-	PacPrincess PACMAN_4 = new PacPrincess("J4",5,15,Direction.droite,new CoordonneesFloat(1, 1));
+	PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite, true);
+	PacKnight PACMAN_2 = new PacKnight("J2",25,15,Direction.droite, false);
+	PacKnight PACMAN_3 = new PacKnight("J3",6,15,Direction.droite, false);
+	PacPrincess PACMAN_4 = new PacPrincess("J4",5,15,Direction.droite);
 
 	Ghost GHOST_1 = new Ghost("1");
 //	Ghost GHOST_2 = new Ghost("2", 1, 1, Direction.droite,new CoordonneesFloat(1, 1));

@@ -15,7 +15,6 @@ import personnages.Ghost;
 import personnages.PacKnight;
 import personnages.PacPrincess;
 import personnages.Personnage;
-import structure_terrain.CoordonneesFloat;
 import structure_terrain.Direction;
 import structure_terrain.Terrain;
 import controleur.automate.Automate;
@@ -27,10 +26,10 @@ public class Equipage_test_princesse extends Equipage {
 	}
 
 	public void init() throws SlickException {
-		PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(17, 17), true);
-		PacKnight PACMAN_2 = new PacKnight("J2",5,15,Direction.droite,new CoordonneesFloat(5, 15), false);
-		PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite,new CoordonneesFloat(1, 1), false);
-		PacPrincess PACMAN_4 = new PacPrincess("J4",17,17,Direction.droite,new CoordonneesFloat(1, 1));
+		PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite, true);
+		PacKnight PACMAN_2 = new PacKnight("J2",5,15,Direction.droite, false);
+		PacKnight PACMAN_3 = new PacKnight("J3",5,10,Direction.droite, false);
+		PacPrincess PACMAN_4 = new PacPrincess("J4",17,17,Direction.droite);
 
 		Ghost GHOST_1 = new Ghost("1");
 		Ghost GHOST_2 = new Ghost("2");

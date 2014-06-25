@@ -161,7 +161,7 @@ public class Ghost extends Personnage {
 	}
 	
 	public Ghost(String nom) {
-		super(nom, new CoordCas(0,0) , Direction.droite);
+		super(nom,0,0, Direction.droite);
 		this.agonise=false;
 		Ghost.liste.add(this);
 		Ghost.fantomeUp++;

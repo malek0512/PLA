@@ -31,8 +31,8 @@ public class PacPrincess extends Pacman{
 	static private Music dead;
 	static public int perimetreSecurite2 = 10;
 	
-	public PacPrincess(String name, CoordCas start, Direction d, CoordCas respawn) {
-		super(name,start,d,respawn);
+	public PacPrincess(String name, int x, int y, Direction d) {
+		super(name,x,y,d);
 		PacPrincess.liste.add(this);
 		violeurs = new LinkedList<Ghost>();
 	}

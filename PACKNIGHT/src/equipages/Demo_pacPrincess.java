@@ -9,7 +9,6 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 import personnages.*;
-import structure_terrain.CoordonneesFloat;
 import structure_terrain.Direction;
 
 public class Demo_pacPrincess extends Equipage {
@@ -21,10 +20,14 @@ public class Demo_pacPrincess extends Equipage {
 
 	}
 
+	/**
+	 * non opérationel
+	 */
+	
 	public void init() throws SlickException {
 		Ghost.vision = 100;
 		MusicManager.mute=true;
-		PacPrincess PACMAN_1= new PacPrincess("J1",17,17,Direction.droite,new CoordonneesFloat(17, 17));
+		PacPrincess PACMAN_1= new PacPrincess("J1",17,17,Direction.droite);
 		Ghost GHOST_1 = new Ghost("1");
 		Ghost GHOST_3 = new Ghost("3");
 		this.joueurFleche =  PACMAN_1;

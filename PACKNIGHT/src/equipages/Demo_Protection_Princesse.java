@@ -9,7 +9,6 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 import personnages.*;
-import structure_terrain.CoordonneesFloat;
 import structure_terrain.Direction;
 
 public class Demo_Protection_Princesse extends Equipage {
@@ -21,12 +20,16 @@ public class Demo_Protection_Princesse extends Equipage {
 
 	}
 
+	/**
+	 * ne protege pas, fait que run sur moi :(
+	 */
+	
 	public void init() throws SlickException {
 		Ghost.vision = 100;
 		Ghost.tempsPasserEnPrison=0;
 		MusicManager.mute=true;
-		PacKnight PACMAN_1= new PacKnight("J1",26,29,Direction.droite,new CoordonneesFloat(26, 29),false);
-		PacPrincess PACMAN_2= new PacPrincess("J2",1,1,Direction.droite,new CoordonneesFloat(18, 17));
+		PacKnight PACMAN_1= new PacKnight("J1",26,29,Direction.droite,false);
+		PacPrincess PACMAN_2= new PacPrincess("J2",1,1,Direction.droite);
 		Ghost GHOST_1 = new Ghost("1");
 		this.joueurFleche =  GHOST_1;
 		this.joueurCamera = PACMAN_1;

@@ -21,8 +21,12 @@ public class Demo_suiveur extends Equipage {
 		super();
 	}
 
+	/**
+	 * opérationel
+	 */
+	
 	public void init() throws SlickException {
-		PACMAN_1 = new PacKnight("J1",new CoordCas(15,17),Direction.droite,new CoordCas(15, 17), true);
+		PACMAN_1 = new PacKnight("J1",15,17,Direction.droite, true);
 		GHOST_1 = new Ghost("1");
 		Ghost.tempsPasserEnPrison = 0;
 		this.joueurFleche =  PACMAN_1;
