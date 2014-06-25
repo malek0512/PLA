@@ -413,6 +413,36 @@ public class Ghost extends Personnage {
 		return !(agonise) && !(prisonner) && !(sortiePrison);
 	}
 
+	public static void dieuxAParler()
+	{
+		/**
+		 * copier coller de donner des ordre
+		 */
+		if(Ghost.powerUp())
+		{
+			CoordCas caseDeLaCible = PacKnight.liste.get(0).coord.CasCentre();
+			
+			//reboot du graph
+			Graph g = new Graph();
+			
+			// calcule des intersection a occuper
+			List<CoordCas> listeDesInter = g.visiterLargeur(caseDeLaCible,nbInterChercher);
+			
+			//copie de la liste des fantomes
+			List<Ghost> listeDesGhost = new LinkedList<Ghost>(Ghost.liste);
+	
+			// pour chaque inter
+			Iterator<CoordCas> i = listeDesInter.iterator();
+			List<Ghost> l = new LinkedList<>(liste);
+			while(i.hasNext())
+			{
+				CoordCas inter = i.next();
+				Ghost candidat = listeDesGhost.remove(0);
+				candidat.coord = new CoordPix(inter.x*32,inter.y*32,position.hg);
+			}
+		}
+	}
+	
 	/**
 	 * donne des ordre au fantomes pour coincé un pacman donné
 	 */
@@ -423,7 +453,7 @@ public class Ghost extends Personnage {
 			CoordCas caseDeLaCible = ref.coord.CasCentre();
 			
 			//reboot du graph
-			Graph g = new Graph(Personnage.terrain);
+			Graph g = new Graph();
 			
 			// calcule des intersection a occuper
 			List<CoordCas> listeDesInter = g.visiterLargeur(caseDeLaCible,nbInterChercher);
@@ -443,76 +473,6 @@ public class Ghost extends Personnage {
 				// calcul de la distance max entre le fantome et l'inter
 				int dmax = interEnTraitement.distance(caseDeLaCible);
 				dmax += Ghost.powerRange; //parceque je suis sadic :3
-				
-				// calcul du fantome qui doit y aller
-				Iterator<Ghost> ig = listeDesGhost.iterator();
-				
-				int indice = 0; //index de la liste fantome
-				int cpt = 0; //cpt pour savoir l'index en cours de test
-				while(ig.hasNext())
-				{
-					//creation du candidat
-					Ghost actuelCandidat = ig.next();
-					//test si le candidat peut obtenir des ordres
-					if(actuelCandidat.parametrable())
-					{
-						int dactuelCandidat = interEnTraitement.distance(actuelCandidat.coord.CasCentre());
-						
-						if(dactuelCandidat < dmax && dactuelCandidat < distanceMeilleurCandidat)
-						{
-							//maj du candidat
-							meilleurCandidat = actuelCandidat;
-							distanceMeilleurCandidat = dactuelCandidat;
-							indice = cpt;
-						}
-					}
-					//on incremente notre compteur dans tout les cas !
-					cpt++;
-				}
-				if(meilleurCandidat != null)
-				{
-					//supprime le fantome de la liste
-					listeDesGhost.remove(indice);
-					//calcul de l'itinéraire
-					Aetoile ga = new Aetoile(meilleurCandidat.coord.CasCentre());
-					List<CoordCas> ordre = ga.algo(interEnTraitement);
-					meilleurCandidat.recoitOrdre(ordre);
-				}
-			}
-			MusicManager.play_GhostPower_Obey();
-		}
-	}
-	
-	static public void donnerDesOrdresGodMod()
-	{
-		if(Ghost.powerUp())
-		{
-			PacKnight ref = PacKnight.liste.get(0);
-			CoordCas refCasCentre = ref.coord.CasCentre();
-			
-			//reboot du graph
-			Graph g = new Graph(Personnage.terrain);
-			
-			// calcule des intersection a occuper
-			List<CoordCas> listeDesInter = g.visiterLargeur(ref.coord.CasCentre(),nbInterChercher);
-			
-			//copie de la liste des fantomes
-			List<Ghost> listeDesGhost = new LinkedList<Ghost>(Ghost.liste);
-	
-			// pour chaque inter
-			Iterator<CoordCas> i = listeDesInter.iterator();
-			while(i.hasNext())
-			{
-				CoordCas interEnTraitement = i.next();
-				// variable temporaire
-				Ghost meilleurCandidat = null;
-				int distanceMeilleurCandidat = Integer.MAX_VALUE;
-				
-				// calcul de la distance max entre le fantome et l'inter
-				int dmax = interEnTraitement.distance(refCasCentre);
-				
-				dmax += Ghost.powerRange; //parceque je suis sadic :3
-				//des fantomes se deplaceront meme si ils ne sont pas sur de le coincé, ca fiche le stress
 				
 				// calcul du fantome qui doit y aller
 				Iterator<Ghost> ig = listeDesGhost.iterator();

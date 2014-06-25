@@ -17,16 +17,19 @@ public class Graph {
 	private int largeur;
 	
 	
-	public Graph(Terrain terrain)
+	public Graph()
 	{
-		largeur =terrain.largeur;
-		hauteur =terrain.hauteur;
+		largeur =Personnage.terrain.largeur;
+		hauteur =Personnage.terrain.hauteur;
 		table = new Noeud[largeur][hauteur];
 		for(int i = 0;i<largeur;i++)
 		{
 			for(int j =0;j<hauteur;j++)
 			{
-				table[i][j] = new Noeud();
+				if(Personnage.terrain.caseAcessible(new CoordCas(i,j)))
+					table[i][j] = new Noeud(0);
+				else
+					table[i][j] = new Noeud(2);
 			}
 		}
 	}
@@ -35,13 +38,12 @@ public class Graph {
 	{
 		CoordCas tmp = new CoordCas(u);
 		tmp.avancerDansDir(d);
-		if(Personnage.terrain.caseAcessible(tmp))
-				return table[u.x][u.y+1].couleur;
-		System.out.println("Error 104");
+		if(Personnage.terrain.estDansLeTerrain(tmp))
+				return table[tmp.x][tmp.y].couleur;
 		return 2;
 	}
 	
-	private int nbAdjacent(CoordCas u)
+	private int nbBlanc(CoordCas u)
 	{
 		int adj = 0;
 		for(Direction d : Direction.values())
@@ -52,21 +54,23 @@ public class Graph {
 		return adj;
 	}
 	
-	/** Pour remettre en situation initiale chaque sommet **/
-    public void reset(){
-    	for(int i =0; i<largeur;i++)
-    	{
-    		for(int j=0;j<hauteur;j++)
-    			table[i][j].reset();
-    	}
-    }
+	private int nbGris(CoordCas u)
+	{
+		int adj = 0;
+		for(Direction d : Direction.values())
+		{
+			if(Personnage.terrain.caseAcessible(u, d) && couleur(u,d) == 1 )
+				adj++;
+		}
+		return adj;
+	}
     
     private void removeMG(List<CoordCas> res, CoordCas c)
     {
     	Iterator<CoordCas> i = res.iterator();
+    	int cpt = 0;
     	while(i.hasNext())
     	{
-    		int cpt = 0;
     		if(i.next().equals(c))
     		{
     			res.remove(cpt);
@@ -82,11 +86,10 @@ public class Graph {
      */
     public List<CoordCas> visiterLargeur(CoordCas noeud, int nbInter){
     
-    int nbInterFind=0;
-    int nbInterSearch = 0;
-    
-    Noeud init = table[noeud.x][noeud.y]; 
-	init.couleur = 2; // noir
+    int nbInterFind = 0;
+    int nbInterSearch = nbBlanc(noeud);
+    nbInter = 2;
+    table[noeud.x][noeud.y].couleur = 2; 
 	
 	List<CoordCas> res =  new LinkedList<CoordCas>();
 	List<CoordCas> file = new LinkedList<CoordCas>();
@@ -94,56 +97,41 @@ public class Graph {
 	file.add(noeud);
 	//algo de parcours
 	while (!file.isEmpty()){
-		CoordCas u = file.remove(0);
-	    Noeud ncourant = table[u.x][u.y];
+		CoordCas cordCasEnTraitement = file.remove(0);
 	    //calcule du nombre d'adjacent
-		int cptAdj = this.nbAdjacent(u);
-
-		if(cptAdj <= nbInter - nbInterFind - nbInterSearch)
+		int nbBlanc = nbBlanc(cordCasEnTraitement);
+		int nbGris = nbGris(cordCasEnTraitement);
+		boolean autorisationDeSearch = ((nbInterSearch-1) + (nbInterFind-nbGris) + nbBlanc <= nbInter);
+		nbInterSearch--;
+		if(autorisationDeSearch)
 		{
-			//mis a jours de interSearch
-			nbInterSearch = nbInterSearch - 1 + cptAdj;
-			//on ajoute tout les adjacent a la liste
 			for(Direction d : Direction.values())
 			{
-				if(Personnage.terrain.caseAcessible(u, d))
+				if(Personnage.terrain.caseAcessible(cordCasEnTraitement,d))
 				{
-					CoordCas v = new CoordCas(u);
-					v.avancerDansDir(d);
-					if(Personnage.terrain.caseAcessible(v))
+					CoordCas cordVoisine = new CoordCas(cordCasEnTraitement);
+					cordVoisine.avancerDansDir(d);
+					if(table[cordVoisine.x][cordVoisine.y].couleur == 0)
 					{
-					Noeud adj = table[v.x][v.y];
-					if (adj.couleur==0) //blanc
-					{
-					    // adj.pere = ncourant;
-					    adj.couleur=1; // gris 
-					    file.add(v);
-				    }
-					else if (adj.couleur==1) //gris
-					{
-						//remove le adj gris trouver
-						removeMG(res,v);
-						//mis a jour du nombre d'inter trouver
-						nbInterFind--;
-						adj.couleur=2; //noir
-						file.add(v);
+						file.add(cordVoisine);
+						nbInterSearch++;
 					}
+					else if(table[cordVoisine.x][cordVoisine.y].couleur == 1)
+					{
+						file.add(cordVoisine);
+						removeMG(res, cordVoisine);
+						nbInterFind--;
+						table[cordVoisine.x][cordVoisine.y].couleur=2;
 					}
 				}
 			}
-			//fini avec ce noeud
-			ncourant.couleur = 2;
+			table[cordCasEnTraitement.x][cordCasEnTraitement.y].couleur = 2;
 		}
 		else
 		{
-			//on passe l'état a gris
-			ncourant.couleur = 1; //gris
-			//on ajoute les coordone au resultat
-			res.add(u);
-			//on arrete de chercher une intersection
-			nbInterSearch--;
-			//on a trouver une intersectio
+			table[cordCasEnTraitement.x][cordCasEnTraitement.y].couleur = 1;
 			nbInterFind++;
+			nbInterSearch--;
 		}
 	}
     return res;

@@ -118,7 +118,7 @@ public class Terrain {
 	 * @return vraie si les coordonnée sont dans le terrain
 	 *
 	 */
-	protected boolean estDansLeTerrain(CoordCas c){
+	public boolean estDansLeTerrain(CoordCas c){
 		return c.x>-1 && c.x <largeur && c.y>-1 && c.y<hauteur;
 	}
 	

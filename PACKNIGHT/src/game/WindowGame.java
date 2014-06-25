@@ -243,7 +243,7 @@ public class WindowGame extends BasicGameState {
 			{
 				switch(key)
 				{
-				case Input.KEY_SPACE : Ghost.donnerDesOrdresGodMod();
+				case Input.KEY_SPACE : Ghost.dieuxAParler();
 				break;
 				}
 			}

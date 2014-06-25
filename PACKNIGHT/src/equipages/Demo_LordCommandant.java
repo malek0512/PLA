@@ -9,7 +9,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 import personnages.*;
-import structure_terrain.CoordonneesFloat;
+import structure_terrain.CoordCas;
 import structure_terrain.Direction;
 
 public class Demo_LordCommandant extends Equipage {
@@ -26,7 +26,7 @@ public class Demo_LordCommandant extends Equipage {
 		Ghost.powerRange = 100;
 		Ghost.tempsPasserEnPrison = 0;
 		
-		PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite,new CoordonneesFloat(17, 17), true);
+		PacKnight PACMAN_1= new PacKnight("J1",new CoordCas(17,17),Direction.droite,new CoordCas(17, 17), true);
 		Ghost GHOST_1 = new Ghost("1");
 		Ghost GHOST_2 = new Ghost("2");
 		Ghost GHOST_3 = new Ghost("3");
