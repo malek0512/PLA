@@ -131,11 +131,6 @@ public class PacKnight extends Pacman{
 			}
 		}
 	}
-
-	//Renvoie vrai s'il peut être touché
-	public boolean hitting() {
-		return !(agonise) && !(godMode) && !(isInvincible);
-	}
 	
 	public boolean peutProteger(){
 		return ghostEnChasse==null;

@@ -115,5 +115,8 @@ public abstract class Pacman extends Personnage {
 		}
 		
 	}
+	public boolean hitting() {
+		return !(agonise) && !(godMode) && !(isInvincible);
+	}
 
 }

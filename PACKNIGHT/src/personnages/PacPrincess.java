@@ -103,11 +103,6 @@ public class PacPrincess extends Pacman{
 				this.respawnWOA();
 			}
 		}
-	}
-
-	public boolean hitting() {
-		return !(agonise) && !(godMode) && !(isInvincible);
-	}
-	
+	}	
 
 }
