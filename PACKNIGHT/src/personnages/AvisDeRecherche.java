@@ -12,11 +12,11 @@ public class AvisDeRecherche {
 
 	public AvisDeRecherche(CoordCas c) {
 		coord = new CoordCas(c);
-		timer=150;
+		timer=180;
 	}
 	
 	public void majAvisDeRecherche(CoordCas c){
-		timer=150;
+		timer=180;
 		coord=c;
 	}
 }
