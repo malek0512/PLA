@@ -137,6 +137,7 @@ public class Ghost extends Personnage {
 	
 	static public void initMap0()
 	{
+		Ghost.tempsPasserEnPrison = 230;
 		Iterator<Ghost> i= Ghost.liste.iterator();
 		int timer = 0;
 		int cpt=1;
