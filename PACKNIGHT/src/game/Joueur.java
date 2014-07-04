@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import controleur.automate.Automate;
-
+import personnages.Pacman;
 import personnages.Personnage;
 import personnages.Ghost;
 
@@ -26,6 +26,7 @@ public class Joueur {
 	SpriteSheet spriteSheet; 
 	Personnage p;
 	Automate auto=null;
+	private int i=0;
 	
 	public Joueur(String SPRITE, WindowGame g, Personnage p) throws SlickException {
 		super();
@@ -57,8 +58,22 @@ public class Joueur {
 		if ((p instanceof Ghost)){
 			if(((Ghost) p).getisAlive()) 
 				g.drawAnimation(animations[direction + (moving ? 4 : 0)], p.coord.x+WindowGame.largueur_map*WindowGame.taille_minimap, p.coord.y);
-		} else
-			g.drawAnimation(animations[direction + (moving ? 4 : 0)], p.coord.x+WindowGame.largueur_map*WindowGame.taille_minimap, p.coord.y);
+		} 
+		else{
+			if(!((Pacman) p).isInvicible){
+				g.drawAnimation(animations[direction + (moving ? 4 : 0)], p.coord.x+WindowGame.largueur_map*WindowGame.taille_minimap, p.coord.y);
+			i=0;}
+			else{
+				if(i<10){
+					g.drawAnimation(animations[direction + (moving ? 4 : 0)], p.coord.x+WindowGame.largueur_map*WindowGame.taille_minimap, p.coord.y);
+					i++;
+				}
+				else{
+					i++;
+					i=i%20;
+				}
+			}
+		}
 	}
 	
 	public void sprite(){
