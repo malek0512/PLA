@@ -184,7 +184,7 @@ public class PrimitivesAction extends Primitives {
 		while (i.hasNext()) {
 			Pacman perso = i.next();
 			CoordCas next= perso.coord.CasCentre();
-			if(perso.parametrable()){
+			if(perso.parametrable() && !perso.isInvincible){
 				if(bestChallenger == null)
 				{
 					bestChallenger = next;
@@ -213,7 +213,7 @@ public class PrimitivesAction extends Primitives {
 		while (i.hasNext()) {
 			Pacman perso = i.next();
 			CoordCas next= perso.coord.CasCentre();
-			if(perso.parametrable()){
+			if(perso.parametrable() && !perso.isInvincible){
 				if(bestChallenger == null)
 				{
 					bestChallenger = next;
