@@ -3,7 +3,6 @@ package controleur.automate;
 
 
 import java.util.Iterator;
-
 import java.util.Random;
 
 import personnages.*;
@@ -185,14 +184,16 @@ public class PrimitivesAction extends Primitives {
 		while (i.hasNext()) {
 			Pacman perso = i.next();
 			CoordCas next= perso.coord.CasCentre();
-			if(bestChallenger == null)
-			{
-				bestChallenger = next;
-			}
-			else if (next.distance(auto.getPersonnage().coord.CasCentre()) 
+			if(perso.parametrable()){
+				if(bestChallenger == null)
+				{
+					bestChallenger = next;
+				}
+				else if (next.distance(auto.getPersonnage().coord.CasCentre()) 
 					< next.distance(bestChallenger))
-			{
-				bestChallenger = next;
+				{
+					bestChallenger = next;
+				}
 			}
 		}
 		if(bestChallenger == null)
@@ -207,24 +208,40 @@ public class PrimitivesAction extends Primitives {
 	
 	public void intercepter() {
 		Iterator<Pacman> i = Ghost.central.keySet().iterator();
-		if (i.hasNext()) {
-			Pacman min = i.next();
-			while (i.hasNext()) {
-				Pacman next = i.next();
-				if (next.coord.CasCentre()
-						.distance(auto.getPersonnage().coord.CasCentre()) < next
-						.coord.CasCentre()
-						.distance(min.coord.CasCentre()))
-					min = next;
+		CoordCas bestChallenger = null;
+		Pacman min = null;
+		while (i.hasNext()) {
+			Pacman perso = i.next();
+			CoordCas next= perso.coord.CasCentre();
+			if(perso.parametrable()){
+				if(bestChallenger == null)
+				{
+					bestChallenger = next;
+					min=perso;
+				}
+				else if (next.distance(auto.getPersonnage().coord.CasCentre()) 
+					< next.distance(bestChallenger))
+				{
+					bestChallenger = next;
+					min=perso;
+				}
 			}
-			CoordCas minCord = min.coord.CasCentre();
+		}
+		if(bestChallenger == null)
+		{
+			System.out.println("pas trouvé de pacman a suivre");
+		}
+		else {
+			CoordCas minCord = bestChallenger;
 			CoordCas inter = prochaineCasAvantInter(minCord, min.direction.opposer());
+			
 			if(inter == null)
 				avancerVers(minCord);
 			else
 				avancerVers(minCord,inter);
 		}
 	}
+	
 	
 	
 	/**
