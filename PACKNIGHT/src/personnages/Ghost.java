@@ -196,6 +196,7 @@ public class Ghost extends Personnage {
 				else{ 
 					central.get(pac).timer--;
 				}
+			
 			}
 		
 		}

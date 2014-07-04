@@ -73,8 +73,7 @@ public class CoordCas extends Coord {
 	{return "Cordonnée en case (x/y) : "+ x + " " + y;}
 
 	public int distance(CoordCas c) {
-		// TODO Auto-generated method stub
-		return 0;
+		return Math.abs(this.x-c.x)+Math.abs(this.y-c.y);
 	}
 	
 	/**

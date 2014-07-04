@@ -11,9 +11,6 @@ import java.util.List;
 
 import music.MusicManager;
 
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
-
 import structure_terrain.CoordCas;
 import structure_terrain.CoordPix;
 import structure_terrain.Direction;
@@ -25,12 +22,8 @@ public class PacKnight extends Pacman{
 	 * liste des PacKnight sur le terrain
 	 */
 	static public List<PacKnight> liste = new LinkedList<PacKnight>();
-	public static int vie = 10;
-	
-	public static boolean godMode=false;
-	
+	public static int vie = 10;	
 	private boolean user;
-	private static Sound Dead;
 	/**
 	 * @return the controlable
 	 */
@@ -141,7 +134,7 @@ public class PacKnight extends Pacman{
 
 	//Renvoie vrai s'il est vivant
 	public boolean hitting() {
-		return !(agonise) && !(godMode);
+		return !(agonise) && !(godMode) && !(isInvicible);
 	}
 	
 	public boolean peutProteger(){

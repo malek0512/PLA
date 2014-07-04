@@ -11,8 +11,6 @@
 
 package structure_terrain;
 
-import personnages.Personnage;
-import game.WindowGame;
 
 public class CoordPix extends Coord {
 

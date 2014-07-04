@@ -143,7 +143,7 @@ public class PrimitivesAction extends Primitives {
 	 * Patrouille autour de la princesse*/
 	public void patrouiller(){
 		
-		if(((PacKnight)auto.getPersonnage()).princesseEnDetresse!=null && ((PacKnight)auto.getPersonnage()).hitting()){
+		if(((PacKnight)auto.getPersonnage()).princesseEnDetresse!=null && ((PacKnight)auto.getPersonnage()).parametrable()){
 			PacPrincess bitch =((PacKnight)auto.getPersonnage()).princesseEnDetresse;
 			if(!personnageEstDansRayon(bitch.perimetreSecurite,bitch,((PacKnight)auto.getPersonnage())))
 				avancerVers(bitch.coord.CasCentre());
@@ -163,12 +163,12 @@ public class PrimitivesAction extends Primitives {
 		{
 			((PacPrincess) auto.getPersonnage()).protecteur=PacKnight.liste.get(0);
 			PacKnight p = this.whichHero(bitch);
-			if( p!=null && p.hitting()) 
+			if( p!=null && p.parametrable()) 
 			{
 	//			System.out.println("trouver");
 				if(p!=((PacPrincess) auto.getPersonnage()).protecteur){
-				p.princesseEnDetresse = bitch;//on parametre le packnight
-				((PacPrincess) auto.getPersonnage()).protecteur.princesseEnDetresse=null;
+					p.princesseEnDetresse = bitch;//on parametre le packnight
+					((PacPrincess) auto.getPersonnage()).protecteur.princesseEnDetresse=null;
 				}
 				
 				else
@@ -196,7 +196,7 @@ public class PrimitivesAction extends Primitives {
 		}
 		if(bestChallenger == null)
 		{
-			System.out.println("pas trouver de pacman a suivre");
+			System.out.println("pas trouvé de pacman a suivre");
 		}
 		else
 		{

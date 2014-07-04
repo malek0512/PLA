@@ -9,7 +9,6 @@ import org.newdawn.slick.SlickException;
 import personnages.Ghost;
 import personnages.PacKnight;
 import personnages.PacPrincess;
-import structure_terrain.CoordCas;
 import structure_terrain.Direction;
 
 public class EquipageQuentin extends equipages.Equipage {

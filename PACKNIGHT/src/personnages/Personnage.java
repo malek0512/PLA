@@ -256,7 +256,6 @@ public abstract class Personnage {
 	 * author : alex
 	 */
 	public abstract boolean hitting();
-
 	
 	/**
 	 * @return String contenant le terrain et le personnage

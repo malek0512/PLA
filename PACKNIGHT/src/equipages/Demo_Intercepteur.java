@@ -29,7 +29,7 @@ public class Demo_Intercepteur extends Equipage {
 		Ghost.vision = 100;
 		Ghost.tempsPasserEnPrison = 0;
 		PacKnight.godMode=true;
-		MusicManager.mute = true;
+		//MusicManager.mute = true;
 		PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite, true);
 		Ghost GHOST_1 = new Ghost("1");
 		this.joueurFleche =  PACMAN_1;

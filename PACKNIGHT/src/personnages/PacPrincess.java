@@ -10,9 +10,6 @@ import java.util.List;
 
 import music.MusicManager;
 
-import org.newdawn.slick.Music;
-import org.newdawn.slick.SlickException;
-
 import structure_terrain.CoordCas;
 import structure_terrain.CoordPix;
 import structure_terrain.Direction;
@@ -28,7 +25,6 @@ public class PacPrincess extends Pacman{
 	public List<Ghost> violeurs; //Les fantomes qui ose toucher a la princesse. Pour l'instant un violeur a la fois ^^. Par la suite pk pas une liste :D
 	static public CoordCas cordDeFuite = new CoordCas(1, 1);
 	public PacKnight protecteur=null;
-	static private Music dead;
 	static public int perimetreSecurite2 = 10;
 	
 	public PacPrincess(String name, int x, int y, Direction d) {
@@ -102,7 +98,6 @@ public class PacPrincess extends Pacman{
 			}
 			else
 			{
-				dead.stop();
 				this.timerAnimation=0;
 				this.agonise=false;
 				this.respawnWOA();
@@ -111,7 +106,7 @@ public class PacPrincess extends Pacman{
 	}
 
 	public boolean hitting() {
-		return !(agonise);
+		return !(agonise) && !(godMode) && !(isInvicible);
 	}
 	
 

@@ -1,6 +1,5 @@
 package controleur.automate;
 
-import game.Accueil;
 import graph.Aetoile;
 
 import java.util.Iterator;
@@ -47,7 +46,7 @@ public class Primitives {
 
 		for (Iterator<Pacman> i = Pacman.liste.iterator(); i.hasNext();) {
 			Pacman pac = i.next();
-			if (position.distance(pac.coord.CasCentre()) <= rayon) {
+			if (position.distance(pac.coord.CasCentre()) <= rayon && !pac.isInvicible) {
 				res.add(pac);
 				if (Ghost.central.containsKey(pac)) {
 					Ghost.central.get(pac).majAvisDeRecherche(
@@ -163,10 +162,10 @@ public class Primitives {
 	 */
 	public boolean estIntersection(CoordCas coord) {
 		int n = 0;
-		for (Direction d : Direction.values())
+		for (Direction d : Direction.values()){
 			if (Personnage.terrain.caseAcessible(coord, d))
 				n++;
-
+		}
 		return n > 2;
 	}
 
@@ -263,7 +262,7 @@ public class Primitives {
 	protected boolean personnageEstDansRayon(int rayon, Personnage p1,
 			Personnage p2) {
 
-		if(p2.hitting() && p1.coord.CasCentre().distance(p2.coord.CasCentre())<=rayon)
+		if(p2.parametrable() && p1.coord.CasCentre().distance(p2.coord.CasCentre())<=rayon)
 				return true;
 		return false;
 	}
@@ -356,6 +355,7 @@ public class Primitives {
 		if(l.isEmpty())
 		{
 			System.out.println("Un personnage n'a trouvé aucun chemin 3");
+			avancerVers(dest);
 		}
 		else
 		{

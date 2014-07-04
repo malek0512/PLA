@@ -1,8 +1,6 @@
 package game;
 
 
-import java.sql.Time;
-import java.util.Timer;
 
 import music.MusicManager;
 
@@ -231,6 +229,7 @@ public class WindowGame extends BasicGameState {
 					System.out.println(e);
 				}
 				Ghost.disparitionPacman();
+				Pacman.majTempsInvincible();
 			}
 		}
 	}
