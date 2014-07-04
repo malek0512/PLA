@@ -26,7 +26,7 @@ public class Joueur {
 	SpriteSheet spriteSheet; 
 	Personnage p;
 	Automate auto=null;
-	private final int NombreClignotement=20;
+	private final int NombreClignotement=20;//pair
 	
 	public Joueur(String SPRITE, WindowGame g, Personnage p) throws SlickException {
 		super();
