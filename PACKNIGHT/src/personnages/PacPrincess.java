@@ -64,9 +64,9 @@ public class PacPrincess extends Pacman{
 
 	public void meurtDansDatroceSouffrance() {
 		vie--;
-		this.coord = new CoordPix(this.pointDeRespawn);
 		if(vie != 0)
 		{
+			respawn();
 			MusicManager.play_Dead_Princess();
 		}
 	}
