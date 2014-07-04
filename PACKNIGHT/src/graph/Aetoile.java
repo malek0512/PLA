@@ -7,7 +7,7 @@ import java.util.List;
 import personnages.Personnage;
 import structure_terrain.CoordCas;
 import structure_terrain.Direction;
-import structure_terrain.Terrain;
+
 
 public class Aetoile {
 

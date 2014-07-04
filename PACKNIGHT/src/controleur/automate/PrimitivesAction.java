@@ -1,15 +1,15 @@
 package controleur.automate;
 
-import graph.Aetoile;
+
 
 import java.util.Iterator;
-import java.util.List;
+
 import java.util.Random;
 
 import personnages.*;
 import structure_terrain.CoordCas;
 import structure_terrain.Direction;
-import structure_terrain.Terrain;
+
 
 /**
  * Classe contenant l'ensemble des primitives d'action
