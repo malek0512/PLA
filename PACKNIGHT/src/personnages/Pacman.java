@@ -96,7 +96,6 @@ public abstract class Pacman extends Personnage {
 	protected void respawnWOA() {
 		this.coord = new CoordPix(this.pointDeRespawn);
 		this.isInvincible=true;
-		Ghost.central.remove(this);//La mort efface de la centrale
 	}
 	
 	public static void majTempsInvincible(){

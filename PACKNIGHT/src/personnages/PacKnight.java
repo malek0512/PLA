@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import music.MusicManager;
-
 import structure_terrain.CoordCas;
 import structure_terrain.CoordPix;
 import structure_terrain.Direction;
@@ -76,6 +75,7 @@ public class PacKnight extends Pacman{
 		if(vie > 0)
 		{
 			respawn();
+			Ghost.central.remove(this);//La mort efface de la centrale
 			MusicManager.play_Dead_Knight();
 		}
 	}

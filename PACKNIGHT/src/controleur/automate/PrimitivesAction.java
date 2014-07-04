@@ -183,7 +183,8 @@ public class PrimitivesAction extends Primitives {
 		Iterator<Pacman> i = Ghost.central.keySet().iterator();
 		CoordCas bestChallenger = null;
 		while (i.hasNext()) {
-			CoordCas next= i.next().coord.CasCentre();
+			Pacman perso = i.next();
+			CoordCas next= perso.coord.CasCentre();
 			if(bestChallenger == null)
 			{
 				bestChallenger = next;
