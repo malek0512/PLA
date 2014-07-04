@@ -75,7 +75,7 @@ public class PacKnight extends Pacman{
 		if(vie > 0)
 		{
 			respawn();
-			Ghost.central.remove(this);//La mort efface de la centrale
+			//Ghost.central.remove(this);//La mort efface de la centrale
 			MusicManager.play_Dead_Knight();
 		}
 	}
