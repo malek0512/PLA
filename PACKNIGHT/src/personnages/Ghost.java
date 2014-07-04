@@ -220,10 +220,10 @@ public class Ghost extends Personnage {
 		Iterator<PacPrincess> j = PacPrincess.liste.iterator();
 		while(this.hitting() && i.hasNext())
 		{
-			PacPrincess g = j.next();
-			if(hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
+			PacPrincess p = j.next();
+			if(hitBoxManager.HitBoxManager.personnageHittingPersonnage(this.coord, p.coord))
 			{
-				g.meurtDansDatroceSouffrance();
+				p.meurtDansDatroceSouffrance();
 				break;
 			}
 		}
