@@ -106,7 +106,7 @@ public class PacPrincess extends Pacman{
 	}
 
 	public boolean hitting() {
-		return !(agonise) && !(godMode) && !(isInvicible);
+		return !(agonise) && !(godMode) && !(isInvincible);
 	}
 	
 

@@ -26,7 +26,7 @@ public class Joueur {
 	SpriteSheet spriteSheet; 
 	Personnage p;
 	Automate auto=null;
-	private int i=0;
+	private final int NombreClignotement=20;
 	
 	public Joueur(String SPRITE, WindowGame g, Personnage p) throws SlickException {
 		super();
@@ -60,17 +60,19 @@ public class Joueur {
 				g.drawAnimation(animations[direction + (moving ? 4 : 0)], p.coord.x+WindowGame.largueur_map*WindowGame.taille_minimap, p.coord.y);
 		} 
 		else{
-			if(!((Pacman) p).isInvicible){
+			if(!((Pacman) p).isInvincible){
 				g.drawAnimation(animations[direction + (moving ? 4 : 0)], p.coord.x+WindowGame.largueur_map*WindowGame.taille_minimap, p.coord.y);
-			i=0;}
+				((Pacman) p).compteurClignotement=0;
+			}
 			else{
-				if(i<10){
+				//On dessine le pacman un certain nombre de frame
+				if(((Pacman) p).compteurClignotement<(NombreClignotement/2)){
 					g.drawAnimation(animations[direction + (moving ? 4 : 0)], p.coord.x+WindowGame.largueur_map*WindowGame.taille_minimap, p.coord.y);
-					i++;
+					((Pacman) p).compteurClignotement++;
 				}
 				else{
-					i++;
-					i=i%20;
+					((Pacman) p).compteurClignotement++;
+					((Pacman) p).compteurClignotement=((Pacman) p).compteurClignotement%NombreClignotement;
 				}
 			}
 		}

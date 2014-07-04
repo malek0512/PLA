@@ -25,8 +25,9 @@ public abstract class Pacman extends Personnage {
 	static public List<Pacman> liste = new LinkedList<Pacman>();
 	static final protected int tempsPasserMort = 40;
 	public int tempsInvincible = 100;
-	public boolean isInvicible=false;
+	public boolean isInvincible=false;
 	public static boolean godMode=false;
+	public int compteurClignotement=0;
 	/**
 	 * Construit le pacman en initialisant son point de spawn*/
 	public Pacman(String nom, int x,int y, Direction d){
@@ -94,7 +95,7 @@ public abstract class Pacman extends Personnage {
 	 */
 	protected void respawnWOA() {
 		this.coord = new CoordPix(this.pointDeRespawn);
-		this.isInvicible=true;
+		this.isInvincible=true;
 		Ghost.central.remove(this);//La mort efface de la centrale
 	}
 	
@@ -103,11 +104,11 @@ public abstract class Pacman extends Personnage {
 		Iterator<Pacman> i = Pacman.liste.iterator();
 		while(i.hasNext()){
 			Pacman next = i.next();
-			if(next.isInvicible){
+			if(next.isInvincible){
 				if(next.tempsInvincible != 0)
 					next.tempsInvincible--;
 				else{
-					next.isInvicible = false;
+					next.isInvincible = false;
 					next.tempsInvincible=100;
 					}
 			}	

@@ -46,7 +46,7 @@ public class Primitives {
 
 		for (Iterator<Pacman> i = Pacman.liste.iterator(); i.hasNext();) {
 			Pacman pac = i.next();
-			if (position.distance(pac.coord.CasCentre()) <= rayon && !pac.isInvicible) {
+			if (position.distance(pac.coord.CasCentre()) <= rayon && !pac.isInvincible) {
 				res.add(pac);
 				if (Ghost.central.containsKey(pac)) {
 					Ghost.central.get(pac).majAvisDeRecherche(
