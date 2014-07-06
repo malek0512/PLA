@@ -26,16 +26,16 @@ public class HighscoreTable extends BasicGameState{
 	
 	private Image Highscore;
 	private boolean dejaDansTable=false;
-	private TrueTypeFont font2;
+	private TrueTypeFont font;
 	private boolean antiAlias = true;
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
 		try {
 			InputStream inputStream = ResourceLoader.getResourceAsStream("src/graphisme/main/ressources/map/HighscoreHero.ttf");
-			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-			awtFont2 = awtFont2.deriveFont(32f); // set font size
-			font2 = new TrueTypeFont(awtFont2, antiAlias);
+			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+			awtFont = awtFont.deriveFont(32f); // set font size
+			font = new TrueTypeFont(awtFont, antiAlias);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,7 +52,7 @@ public class HighscoreTable extends BasicGameState{
 				hm.addScore(HighscoreEnter.res, Score.CalculateScoreFinal());
 				dejaDansTable=true;
 		  }
-		  font2.drawString(300, 45,"High Scores",Color.yellow);
+		  font.drawString(260, 45,"High Scores",Color.yellow);
 	      g.drawString(hm.getHighscoreString(), 300, 100);
 	      g.drawString("Main Menu (SPACE)", 300, 350);
 	      

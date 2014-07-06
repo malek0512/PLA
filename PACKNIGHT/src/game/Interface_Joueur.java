@@ -26,11 +26,11 @@ public class Interface_Joueur {
         g.drawString("Time : " + WindowGame.time/1000, -WindowGame.resolution_x/2 + WindowGame.xCamera, -WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap+5*WindowGame.tuile_size);
         
         g.drawString("Pac-gum left", -WindowGame.resolution_x/2 + WindowGame.xCamera, -WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap+6*WindowGame.tuile_size);
-        g.drawString(""+ Terrain.nb_pacgum +"\n", -WindowGame.resolution_x/2 + WindowGame.xCamera, -WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap+6*WindowGame.tuile_size+20);
+        g.drawString(""+ Terrain.nb_pacgum, -WindowGame.resolution_x/2 + WindowGame.xCamera, -WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap+6*WindowGame.tuile_size+20);
         
-        if(WindowGame.Choix_Map_Solo!=4){
-        g.drawString("Score", -WindowGame.resolution_x/2 + WindowGame.xCamera, -WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap+7*WindowGame.tuile_size);
-        g.drawString(""+ Score.ScoreToString(), -WindowGame.resolution_x/2 + WindowGame.xCamera, -WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap+7*WindowGame.tuile_size+20);
+        if(WindowGame.Choix_Map != 4){
+        g.drawString("Score", -WindowGame.resolution_x/2 + WindowGame.xCamera, -WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap+7*WindowGame.tuile_size+WindowGame.tuile_size/2);
+        g.drawString(""+ Score.ScoreToString(), -WindowGame.resolution_x/2 + WindowGame.xCamera, -WindowGame.resolution_y/2 + WindowGame.yCamera+WindowGame.hauteur_map*WindowGame.taille_minimap+7*WindowGame.tuile_size+WindowGame.tuile_size/2+20);
         }
 	}
 	

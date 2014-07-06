@@ -61,7 +61,7 @@ public class Choix extends BasicGameState
 		      			if (quit)Menu.container.exit(); 
 		      			else  
 		      			{
-		      				if(WindowGame.Choix_Map == 0 || WindowGame.Choix_Map == 1 || WindowGame.Choix_Map == 2 || WindowGame.Choix_Map == 3)
+		      				if(WindowGame.Choix_Map == 0)
 		      				{
 		      				game.enterState(SelectionMapSolo.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 		      				}
