@@ -43,8 +43,6 @@ public class Win extends BasicGameState {
 		      g.drawString("You Win", 250, 100);
 		      g.drawString("Main Menu (SPACE)", 250, 150);
 		      
-		     
-
 	   }
 
 	   
@@ -60,7 +58,6 @@ public class Win extends BasicGameState {
 
 	      }
 	   }
-
 
 
 	public static void Pause_Game(Graphics g, Image PAUSE_IMAGE)

@@ -57,8 +57,6 @@ public class HighscoreTable extends BasicGameState{
 		  font.drawString(260, 45,"High Scores",Color.yellow);
 	      g.drawString(hm.getHighscoreString(), 300, 100);
 	      g.drawString("Main Menu (SPACE)", 300, 350);
-	      
-		
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class Choix extends BasicGameState
 	   public int getID() 
 	   {
 		      return ID;
-	 }
+	   }
 	   
     public void init(GameContainer container, StateBasedGame game) throws SlickException { 
     	this.game = game;
@@ -50,6 +50,7 @@ public class Choix extends BasicGameState
         Multi.draw(300, 350);
         Mouse.draw(PG_X,PG_Y);
     } 
+    
     public void enter(GameContainer container, StateBasedGame game) throws SlickException 
 	{
     	Personnage.init_personnage();
