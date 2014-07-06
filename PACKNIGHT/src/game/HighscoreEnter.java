@@ -1,5 +1,6 @@
 package game;
 
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -27,7 +28,7 @@ public class HighscoreEnter extends BasicGameState{
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
-		fontTest = new UnicodeFont(new java.awt.Font("DejaVu Serif", java.awt.Font.PLAIN, 13));
+		fontTest = new UnicodeFont(new java.awt.Font("DejaVu Serif", java.awt.Font.PLAIN, 14));
 		fontTest.addAsciiGlyphs();
 		fontTest.addGlyphs(400,600);
 		fontTest.getEffects().add(new ColorEffect(java.awt.Color.white));
@@ -36,6 +37,11 @@ public class HighscoreEnter extends BasicGameState{
 		nomPerso.setMaxLength(10);
 		nomPerso.setBackgroundColor(Color.black);		
 		Highscore=new Image("src/graphisme/main/ressources/map/image/Win.jpeg");
+	}
+	
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException 
+	{
+		nomPerso.setText("");
 	}
 
 	@Override
@@ -63,7 +69,7 @@ public class HighscoreEnter extends BasicGameState{
 	      switch (key) {
 	      		case Input.KEY_SPACE: Accueil.Music_Choix.loop();
 	      		game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
-	      		case Input.KEY_ENTER: //Accueil.Music_Win.loop();
+	      		case Input.KEY_ENTER:
 	      		game.enterState(HighscoreTable.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	      		//case Input.KEY_M: if(Accueil.Music_Win.playing()) Accueil.Music_Win.pause() ;else Accueil.Music_Win.resume(); break;
 	      		case Input.KEY_ESCAPE:Menu.container.exit(); break;

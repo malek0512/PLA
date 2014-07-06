@@ -30,6 +30,12 @@ public class Dead extends BasicGameState {
 		   	DEAD = new Image("src/graphisme/main/ressources/map/image/Dead.jpg");
 
 	   }
+	   
+	   public void enter(GameContainer container, StateBasedGame game) throws SlickException 
+	 		{
+	 		   Joueur.liste.clear();
+	 		   Personnage.init_personnage();
+	 		}
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		   
@@ -39,12 +45,7 @@ public class Dead extends BasicGameState {
 		      g.drawString("You Lost", 250, 100);
 		      g.drawString("Highscore Table (ENTER)", 250, 150);
 		      g.drawString("Main Menu (SPACE)", 250, 200);
-		      Joueur.liste.clear();
-		      Personnage.init_personnage();
 		      
-
-
-
 	   }
 
 	   
