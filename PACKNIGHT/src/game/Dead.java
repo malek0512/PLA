@@ -37,7 +37,8 @@ public class Dead extends BasicGameState {
 		      DEAD.draw(0,0);
 		      g.setColor(Color.white);
 		      g.drawString("You Lost", 250, 100);
-		      g.drawString("Main Menu (SPACE)", 250, 150);
+		      g.drawString("Highscore Table (ENTER)", 250, 150);
+		      g.drawString("Main Menu (SPACE)", 250, 200);
 		      Joueur.liste.clear();
 		      Personnage.init_personnage();
 		      
@@ -55,6 +56,8 @@ public class Dead extends BasicGameState {
 	      		
 	      		case Input.KEY_SPACE: Accueil.Music_Choix.loop();
 	      		game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
+	      		case Input.KEY_ENTER: Accueil.Music_Win.loop();
+	      		game.enterState(HighscoreTable.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	      		case Input.KEY_M: if(Accueil.Music_Dead.playing()) Accueil.Music_Dead.pause() ;else Accueil.Music_Dead.resume(); break;
 	      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
 

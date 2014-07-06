@@ -9,6 +9,7 @@ public class Terrain {
 	public int hauteur;
 	public int largeur;
 	static public int nb_pacgum;
+	static public int nb_pacgum_init; 
 	
 	/**
 	 * Alloue la mémoire pour un terrain de haut largeur donnée
@@ -22,6 +23,7 @@ public class Terrain {
 		this.hauteur = hauteur;
 		this.largeur = largeur;
 		Terrain.nb_pacgum = nb_pacgum;
+		Terrain.nb_pacgum_init=nb_pacgum;
 	}
 	
 	/**

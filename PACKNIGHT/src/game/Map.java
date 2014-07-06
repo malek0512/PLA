@@ -24,6 +24,7 @@ public class Map {
 				        	{
 				        	terrain.terrain[i][j] = new Case(2);
 				        	Terrain.nb_pacgum++;
+				        	Terrain.nb_pacgum_init++;
 				        	}
 				        else terrain.terrain[i][j] = new Case(1);
 		        }

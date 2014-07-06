@@ -52,7 +52,7 @@ public class WindowGame extends BasicGameState {
 	protected static float xCamera = resolution_x / 2;
 	protected static float yCamera = resolution_y / 2;
 
-	static int time;
+	public static int time;
 	private StateBasedGame game;
 	protected static GameContainer container;
 	private TiledMap map;

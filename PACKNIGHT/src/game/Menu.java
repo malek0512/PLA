@@ -28,6 +28,8 @@ public class Menu extends StateBasedGame {
       addState(new Difficulte());
       addState(new Free());
       addState(new SelectionMapSolo());
+      addState(new HighscoreTable());
+      addState(new HighscoreEnter());
 
    }
    
