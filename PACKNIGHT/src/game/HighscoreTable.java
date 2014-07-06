@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.io.InputStream;
 
 import highscores.HighscoreManager;
+import music.MusicManager;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -46,7 +47,7 @@ public class HighscoreTable extends BasicGameState{
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException 
 	{
 		if(HighscoreEnter.res!="")
-			hm.addScore(HighscoreEnter.res, HighscoreEnter.score);
+			hm.addScore(Win.res, Win.score);
 	}
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -70,9 +71,9 @@ public class HighscoreTable extends BasicGameState{
 	
 	public void keyReleased(int key, char c) {
 	      switch (key) {
-	      		case Input.KEY_SPACE: Accueil.Music_Choix.loop();
+	      		case Input.KEY_SPACE: Accueil.Music_Choix.loop(); if(MusicManager.mute) Accueil.Music_Choix.pause();
 	      		game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
-	      		case Input.KEY_M: if(Accueil.Music_Win.playing()) Accueil.Music_Win.pause() ;else Accueil.Music_Win.resume(); break;
+	      		case Input.KEY_M: if(Accueil.Music_Win.playing()){Accueil.Music_Win.pause(); MusicManager.mute=true;} else{Accueil.Music_Win.resume(); MusicManager.mute=false;}break;
 	      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
 
 	      }

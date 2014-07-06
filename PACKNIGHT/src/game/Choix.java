@@ -1,6 +1,8 @@
 package game;
 
 
+import music.MusicManager;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -74,7 +76,7 @@ public class Choix extends BasicGameState
 		      				
 		      			
 		      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
-		      		case Input.KEY_M: if(Accueil.Music_Choix.playing()) Accueil.Music_Choix.pause() ;else Accueil.Music_Choix.resume(); break;
+		      		case Input.KEY_M: if(Accueil.Music_Choix.playing()){ Accueil.Music_Choix.pause(); MusicManager.mute=true; }else {Accueil.Music_Choix.resume(); MusicManager.mute=false;}break;
 
 		      		case Input.KEY_RIGHT:
 		      			if(PG_X < 250)

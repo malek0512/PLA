@@ -2,6 +2,8 @@ package game;
 
 
 
+import music.MusicManager;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -113,12 +115,12 @@ public class Free extends BasicGameState
 		      			if (quit)Menu.container.exit(); 
 		      			else  
 		      			{
-		      				Accueil.Music_WindowGame.loop();
+		      				Accueil.Music_WindowGame.loop();if(MusicManager.mute) Accueil.Music_WindowGame.pause();
 		      				game.enterState(WindowGame.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 		      			}
 		      				
 		      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
-		      		case Input.KEY_M: if(Accueil.Music_Choix.playing()) Accueil.Music_Choix.pause() ;else Accueil.Music_Choix.resume(); break;
+		      		case Input.KEY_M: if(Accueil.Music_Choix.playing()){ Accueil.Music_Choix.pause(); MusicManager.mute=true; }else {Accueil.Music_Choix.resume(); MusicManager.mute=false;}break;
 
 		      		case Input.KEY_DOWN:
 		      			if(PG_Y < WindowGame.resolution_y/2+100)

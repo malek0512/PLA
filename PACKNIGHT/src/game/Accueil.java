@@ -1,5 +1,7 @@
 package game;
 
+import music.MusicManager;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -27,7 +29,7 @@ public class Accueil extends BasicGameState {
 	   protected static Music Music_Accueil;
 	   public static Music Music_WindowGame;
 	   protected static Music Music_Choix;
-	   protected static Music Music_Win;
+	   public static Music Music_Win;
 	   public static Music Music_Dead;
 
 		
@@ -64,10 +66,10 @@ public class Accueil extends BasicGameState {
 	      switch (key) {
 	    	  case Input.KEY_ENTER: 
 	    	  {
-	    	      Music_Choix.loop();
+	    		  Music_Choix.loop(); if(MusicManager.mute) Music_Choix.pause(); 
 	    		  game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	    	  }
-	    	  case Input.KEY_M: if(Music_Accueil.playing()) Music_Accueil.pause() ;else Music_Accueil.resume(); break;
+	    	  case Input.KEY_M: if(Music_Accueil.playing()){ Music_Accueil.pause(); MusicManager.mute=true;}else {Music_Accueil.resume(); MusicManager.mute=false;}break;
 	    	  case Input.KEY_ESCAPE:Menu.container.exit(); break;
 
 	      }

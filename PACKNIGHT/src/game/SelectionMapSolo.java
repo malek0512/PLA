@@ -2,6 +2,8 @@ package game;
 
 
 
+import music.MusicManager;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -65,7 +67,7 @@ public class SelectionMapSolo extends BasicGameState
 	      				game.enterState(Difficulte.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 		      				
 		      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
-		      		case Input.KEY_M: if(Accueil.Music_Choix.playing()) Accueil.Music_Choix.pause() ;else Accueil.Music_Choix.resume(); break;
+		      		case Input.KEY_M: if(Accueil.Music_Choix.playing()){ Accueil.Music_Choix.pause(); MusicManager.mute=true; }else {Accueil.Music_Choix.resume(); MusicManager.mute=false;}break;
 
 		      		case Input.KEY_DOWN:
 		      			if(PG_Y < 350)

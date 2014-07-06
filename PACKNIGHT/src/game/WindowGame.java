@@ -322,10 +322,13 @@ public class WindowGame extends BasicGameState {
 	
 			switch (key) {
 			case Input.KEY_M:
-				if (Accueil.Music_WindowGame.playing())
+				if (Accueil.Music_WindowGame.playing()){
 					Accueil.Music_WindowGame.pause();
-				else
+					MusicManager.mute=true;}
+				else{
 					Accueil.Music_WindowGame.resume();
+					MusicManager.mute=false;
+				}
 				break;
 			case Input.KEY_ESCAPE: /* RunExternal.launch("make clean"); */
 				Menu.container.exit();
@@ -339,11 +342,11 @@ public class WindowGame extends BasicGameState {
 		else 
 		{
 		      switch (key) {
-	      		case Input.KEY_SPACE: Accueil.Music_Dead.loop();
+	      		case Input.KEY_SPACE: Accueil.Music_Dead.loop(); if(MusicManager.mute) Accueil.Music_Dead.pause();
 	      		if (pause) pause = false;else pause =true;
 	      		game.enterState(Dead.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	      		case Input.KEY_P: if (pause) pause = false;else pause =true;break;
-	      		case Input.KEY_M: if(Accueil.Music_WindowGame.playing()) Accueil.Music_WindowGame.pause() ;else Accueil.Music_WindowGame.resume(); break;
+	      		case Input.KEY_M: if(Accueil.Music_WindowGame.playing()) {Accueil.Music_WindowGame.pause(); MusicManager.mute=true;}else {Accueil.Music_WindowGame.resume(); MusicManager.mute=false;}break;
 	      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
 		      }
 		}
