@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.io.InputStream;
 
 import highscores.HighscoreManager;
-import highscores.Score;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -47,7 +46,7 @@ public class HighscoreTable extends BasicGameState{
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException 
 	{
 		if(HighscoreEnter.res!="")
-			hm.addScore(HighscoreEnter.res, Score.CalculateScoreFinal());
+			hm.addScore(HighscoreEnter.res, HighscoreEnter.score);
 	}
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {

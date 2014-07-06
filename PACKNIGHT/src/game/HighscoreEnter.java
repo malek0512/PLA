@@ -1,6 +1,8 @@
 package game;
 
 
+import highscores.Score;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -24,6 +26,7 @@ public class HighscoreEnter extends BasicGameState{
 	private TextField nomPerso;
 	private Image Highscore;
 	public static String res="";
+	public static int score;
 	@SuppressWarnings("unchecked")
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -42,6 +45,7 @@ public class HighscoreEnter extends BasicGameState{
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException 
 	{
 		nomPerso.setText("");
+		score=Score.CalculateScoreFinal();
 	}
 
 	@Override
@@ -51,6 +55,7 @@ public class HighscoreEnter extends BasicGameState{
 		  nomPerso.render(container, g);
 		  res=nomPerso.getText();
 		  g.drawString("Enter you name", 250, 50);
+		  g.drawString(Integer.toString(score), 500, 100);
 		  g.drawString("Highscore Table (ENTER)", 250, 170);
 	      g.drawString("Main Menu (SPACE)", 250, 220);
 	}
