@@ -46,7 +46,7 @@ public class HighscoreTable extends BasicGameState{
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException 
 	{
-		if(HighscoreEnter.res!="")
+		if(Win.res!="")
 			hm.addScore(Win.res, Win.score);
 	}
 	@Override

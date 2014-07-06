@@ -70,6 +70,7 @@ public class MusicManager {
 		if(mute)
 			Accueil.Music_Win.pause();
 	}
+	
 	static public void play_Game_over(){
 
 		Accueil.Music_Dead.loop();
