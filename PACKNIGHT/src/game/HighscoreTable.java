@@ -27,7 +27,8 @@ public class HighscoreTable extends BasicGameState{
 	private Image Highscore;
 	private TrueTypeFont font;
 	private boolean antiAlias = true;
-	private HighscoreManager hm;
+	private static HighscoreManager hm = new HighscoreManager();
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
@@ -42,9 +43,11 @@ public class HighscoreTable extends BasicGameState{
 			}
 		 Highscore=new Image("src/graphisme/main/ressources/map/image/fond_highscores_etoiles.jpg");
 	}
+	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException 
 	{
-		 hm.addScore(HighscoreEnter.res, Score.CalculateScoreFinal());
+		if(HighscoreEnter.res!="")
+			hm.addScore(HighscoreEnter.res, Score.CalculateScoreFinal());
 	}
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
