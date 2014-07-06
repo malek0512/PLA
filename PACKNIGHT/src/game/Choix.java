@@ -49,8 +49,11 @@ public class Choix extends BasicGameState
         Solo.draw(50, 350);
         Multi.draw(300, 350);
         Mouse.draw(PG_X,PG_Y);
-		Personnage.init_personnage();         
     } 
+    public void enter(GameContainer container, StateBasedGame game) throws SlickException 
+	{
+    	Personnage.init_personnage();
+	}
  
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {}
  

@@ -35,11 +35,11 @@ public class HighscoreEnter extends BasicGameState{
 		nomPerso = new TextField(container, fontTest, 250, 100, 200, 30);
 		nomPerso.setMaxLength(10);
 		nomPerso.setBackgroundColor(Color.black);		
+		Highscore=new Image("src/graphisme/main/ressources/map/image/Win.jpeg");
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		  Highscore=new Image("src/graphisme/main/ressources/map/image/Win.jpeg");
 		  Highscore.draw(0,0);
 		  g.setColor(Color.white);
 		  nomPerso.render(container, g);
@@ -65,7 +65,7 @@ public class HighscoreEnter extends BasicGameState{
 	      		game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	      		case Input.KEY_ENTER: //Accueil.Music_Win.loop();
 	      		game.enterState(HighscoreTable.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
-	      		case Input.KEY_M: if(Accueil.Music_Win.playing()) Accueil.Music_Win.pause() ;else Accueil.Music_Win.resume(); break;
+	      		//case Input.KEY_M: if(Accueil.Music_Win.playing()) Accueil.Music_Win.pause() ;else Accueil.Music_Win.resume(); break;
 	      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
 
 	      }

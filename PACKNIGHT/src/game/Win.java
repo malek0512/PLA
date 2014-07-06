@@ -26,11 +26,12 @@ public class Win extends BasicGameState {
 
 	   public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		   	this.game = game;
+		   	WIN = new Image("src/graphisme/main/ressources/map/image/Win.jpeg");
 
 	   }
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		   		WIN = new Image("src/graphisme/main/ressources/map/image/Win.jpeg");
+		   		
 		      WIN.draw(0,0);
 		      g.setColor(Color.white);
 		      g.drawString("You Win", 250, 100);

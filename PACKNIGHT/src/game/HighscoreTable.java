@@ -25,9 +25,9 @@ public class HighscoreTable extends BasicGameState{
 	private StateBasedGame game;
 	
 	private Image Highscore;
-	private boolean dejaDansTable=false;
 	private TrueTypeFont font;
 	private boolean antiAlias = true;
+	private HighscoreManager hm;
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
@@ -40,18 +40,17 @@ public class HighscoreTable extends BasicGameState{
 		} catch (Exception e) {
 			e.printStackTrace();
 			}
+		 Highscore=new Image("src/graphisme/main/ressources/map/image/fond_highscores_etoiles.jpg");
 	}
-
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException 
+	{
+		 hm.addScore(HighscoreEnter.res, Score.CalculateScoreFinal());
+	}
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		  Highscore=new Image("src/graphisme/main/ressources/map/image/fond_highscores_etoiles.jpg");
+		 
 		  Highscore.draw(0,0);
 		  g.setColor(Color.white);
-		  HighscoreManager hm = new HighscoreManager();
-		  if(HighscoreEnter.res!="" && !dejaDansTable){
-				hm.addScore(HighscoreEnter.res, Score.CalculateScoreFinal());
-				dejaDansTable=true;
-		  }
 		  font.drawString(260, 45,"High Scores",Color.yellow);
 	      g.drawString(hm.getHighscoreString(), 300, 100);
 	      g.drawString("Main Menu (SPACE)", 300, 350);
@@ -72,13 +71,13 @@ public class HighscoreTable extends BasicGameState{
 	public void keyReleased(int key, char c) {
 	      switch (key) {
 	      		case Input.KEY_SPACE: Accueil.Music_Choix.loop();
-	      		game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black)); dejaDansTable=false;break;
+	      		game.enterState(Choix.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));break;
 	      		case Input.KEY_M: if(Accueil.Music_Win.playing()) Accueil.Music_Win.pause() ;else Accueil.Music_Win.resume(); break;
 	      		case Input.KEY_ESCAPE:Menu.container.exit(); break;
 
 	      }
 	}
-
+	
 	
 	
 }
