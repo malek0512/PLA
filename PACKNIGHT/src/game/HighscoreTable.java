@@ -2,8 +2,10 @@ package game;
 
 import java.awt.Font;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import highscores.HighscoreManager;
+import highscores.Score;
 import music.MusicManager;
 
 import org.newdawn.slick.Color;
@@ -28,6 +30,7 @@ public class HighscoreTable extends BasicGameState{
 	private TrueTypeFont font;
 	private boolean antiAlias = true;
 	private static HighscoreManager hm = new HighscoreManager();
+	private static ArrayList<Score> scores;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -48,6 +51,7 @@ public class HighscoreTable extends BasicGameState{
 	{
 		if(Win.res!="")
 			hm.addScore(Win.res, Win.score);
+		scores=hm.getScores();
 	}
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -55,7 +59,7 @@ public class HighscoreTable extends BasicGameState{
 		  Highscore.draw(0,0);
 		  g.setColor(Color.white);
 		  font.drawString(260, 45,"High Scores",Color.yellow);
-	      g.drawString(hm.getHighscoreString(), 300, 100);
+	      g.drawString(hm.getHighscoreString(scores), 300, 100);
 	      g.drawString("Main Menu (SPACE)", 300, 350);
 	}
 

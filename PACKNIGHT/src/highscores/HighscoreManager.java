@@ -89,12 +89,8 @@ public class HighscoreManager {
 	}
 	
 	
-	public String getHighscoreString() {
+	public String getHighscoreString(ArrayList<Score> scores) {
         String highscoreString = "";
-        
-
-        ArrayList<Score> scores;
-        scores = getScores();
 
         int i = 0;
         int x = scores.size();
