@@ -37,7 +37,7 @@ public class Dead extends BasicGameState {
 	 		{
 	 		   Joueur.liste.clear();
 	 		   Personnage.init_personnage();
-	 		   HighscoreEnter.res="";
+	 		   Win.res="";
 	 		}
 
 	   public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
