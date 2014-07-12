@@ -21,7 +21,9 @@ public class HighscoreManager {
 	 
 	        scores = new ArrayList<Score>();
 	     }
-	 
+	  public int getMax(){
+		  return max;
+	  }
 	 
 	 public ArrayList<Score> getScores() {
 	        loadScoreFile();

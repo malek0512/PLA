@@ -28,6 +28,7 @@ public class HighscoreTable extends BasicGameState{
 	
 	private Image Highscore;
 	private TrueTypeFont font;
+	private TrueTypeFont fontTable;
 	private boolean antiAlias = true;
 	private static HighscoreManager hm = new HighscoreManager();
 	private static ArrayList<Score> scores;
@@ -35,15 +36,8 @@ public class HighscoreTable extends BasicGameState{
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
-		try {
-			InputStream inputStream = ResourceLoader.getResourceAsStream("src/graphisme/main/ressources/map/HighscoreHero.ttf");
-			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-			awtFont = awtFont.deriveFont(32f); // set font size
-			font = new TrueTypeFont(awtFont, antiAlias);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			}
+		font=initFont(38f);
+		fontTable=initFont(24f);
 		 Highscore=new Image("src/graphisme/main/ressources/map/image/fond_highscores_etoiles.jpg");
 	}
 	
@@ -58,9 +52,9 @@ public class HighscoreTable extends BasicGameState{
 		 
 		  Highscore.draw(0,0);
 		  g.setColor(Color.white);
-		  font.drawString(260, 45,"High Scores",Color.yellow);
-	      g.drawString(hm.getHighscoreString(scores), 300, 100);
-	      g.drawString("Main Menu (SPACE)", 300, 350);
+		  font.drawString(270, 45,"High Scores",Color.yellow);
+		  drawHighscoreTable(scores, fontTable, 260, 100);
+	      g.drawString("Main Menu (SPACE)", 310, 430);
 	}
 
 	@Override
@@ -82,7 +76,37 @@ public class HighscoreTable extends BasicGameState{
 
 	      }
 	}
-	
+	 private void drawHighscoreTable(ArrayList<Score> scores, TrueTypeFont font,float x, float y){
+		 
+		 int i = 0;
+		 float t=0;
+	        int j = scores.size();
+	        if (j > hm.getMax()) {
+	            j = hm.getMax();
+	        }
+	        while (i < j) {
+	        	font.drawString(x, y + t, i+1 + ".", Color.blue);
+	        	font.drawString(x+70, y + t, scores.get(i).getName(), Color.green);
+	        	font.drawString(x+220, y + t, String.valueOf(scores.get(i).getScore()), Color.orange);
+	        	t+=30;
+	        	i++;}
+	        
+	 }
+	 
+	 private TrueTypeFont initFont(float size){
+		 try {
+				InputStream inputStream = ResourceLoader.getResourceAsStream("src/graphisme/main/ressources/map/HighscoreHero.ttf");
+				Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+				awtFont = awtFont.deriveFont(size); // set font size
+				return new TrueTypeFont(awtFont, antiAlias);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				}
+		return null;
+		 
+			
+	 }
 	
 	
 }
