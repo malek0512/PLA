@@ -1,6 +1,9 @@
 package view;
 
+import model.personnages.Personnage;
+import model.structure_terrain.Case;
 import model.structure_terrain.CoordPix;
+import model.structure_terrain.Terrain;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -15,62 +18,76 @@ public class Map {
     //Map
     public static TiledMap map;
     public static TiledMapRenderer tiledMapRenderer;
+    public static int tuileSize = 32;
+    public static int collisionLayer = 0;
     public static int gumLayer = 1;
 	public static int wallLayer = 2;
 	public static float unitScale = 0.75f;
 	
 	public static void create (){
-		map = new TmxMapLoader().load("assets/maps/FATMAP.tmx");
-		mapToTerrainInit(map);
+		map = new TmxMapLoader().load("assets/maps/PACMAN.tmx"); //Charge la Map 
+		Personnage.terrain = new Terrain( mapToTerrainInit(map) ); //Initialise le terrain (virtuelle) de personnage
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(map, unitScale);
 	}
 
 	public static void renderer(OrthographicCamera camera){
 		tiledMapRenderer.setView(camera);
-//		deletePacgumsRenderer(null);
-		tiledMapRenderer.render(new int[] {wallLayer, gumLayer});
+		deletePacgumsRender();
+		tiledMapRenderer.render(new int[] {wallLayer, gumLayer, collisionLayer});
 	}
 	
 	public static void dispose (){
 		map.dispose();
 	}
 	
-	public static int[][] mapToTerrainInit(TiledMap map){
-		int Mur = 0, Gum = 1;
+	public static Case[][] mapToTerrainInit(TiledMap map){
+		int Mur = Case.Mur, Gum = Case.Pacgum;
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("logic");
-		int[][] terrain = new int[layer.getWidth()][layer.getHeight()];
-		
-		for (int x = 0; x < layer.getWidth(); x++) {
-	         for (int y = 0; y < layer.getHeight(); y++) {
+		Case[][] terrain = new Case[layer.getHeight()][layer.getWidth()];
+		String res = "";
+		for (int y = 0; y < layer.getHeight() ; y++) {
+	         for (int x = 0; x < layer.getWidth(); x++) {
 	            TiledMapTileLayer.Cell cell = layer.getCell(x, y);
-	            if (cell == null)
-	            	terrain[x][y] = Gum;
-	            else
-	            	terrain[x][y] = Mur;
+	            terrain[y][x] = new Case(0);
+	            if (cell == null){
+	            	terrain[y][x].setAcessCase(Gum);
+	            	res += " . ";
+	            }else {
+	            	terrain[y][x].setAcessCase(Mur);
+	            	res += " X ";
+	            }
 	         }
+	         res += "\n";
 	    }
+		System.out.println(res);
+		System.out.println("----------------------------------------------------------------");
+		
+		String res2 = "";
+		for(int i=0; i<terrain.length; i++){
+			for(int j=0; j<terrain[i].length; j++){
+				res2 += terrain[i][j].isAccessable()? "." : "X";
+			}
+	         res2 += "\n";
+		}
+		System.out.println(res);
+		System.out.println("Heiht"+ layer.getHeight() + "Wodht" + layer.getWidth());
 		return terrain;
 	}
 	
-	public static void deletePacgumsRenderer(int[][] terrain) {
-		int gum = 1;
+	public static void deletePacgumsRender() {
+		Case[][] terrain = Personnage.terrain.terrain;
 		TiledMapTileLayer gumLayer = (TiledMapTileLayer) map.getLayers().get("GUM");
 		for (int x = 0; x < terrain.length; x++) {
 	         for (int y = 0; y < terrain[x].length; y++) {
-	            TiledMapTileLayer.Cell gumCell = gumLayer.getCell(x, y);
-	            if (gumCell == null || terrain[x][y]==gum) {
+	            TiledMapTileLayer.Cell gumCell = gumLayer.getCell(y, x);
+	            if (gumCell == null || terrain[x][y].getAccessCase()==Case.Pacgum) {
 	            	continue; // There is no cell
 	            }
-	            gumLayer.setCell(x, y, null);
+	            gumLayer.setCell(y, x, null);
 	         }
 	    }
 	}
 	
-	static public boolean personnageHittingPersonnage(float x, float y) {
-		Vector2 cordf=cord1.PixCentre();
-		Vector2 cordp=cord2.PixCentre();
-		return (Math.abs(cordf.x - cordp.x) < 2*hitBox) && (Math.abs(cordf.y - cordp.y) < 2*hitBox);
-	}
 	
 	public boolean can_move(int[][] terrain, float move_x, float move_y){
 		int tuileWidth = 32, tuileHeight = 32;
@@ -91,7 +108,7 @@ public class Map {
 //	      }   
 	      
 	      return next_move_allowed;
-	      return (Math.abs(cordf.x - cordp.x) < 2*hitBox) && (Math.abs(cordf.y - cordp.y) < 2*hitBox)
+//	      return (Math.abs(cordf.x - cordp.x) < 2*hitBox) && (Math.abs(cordf.y - cordp.y) < 2*hitBox)
 	   }
 	
 }

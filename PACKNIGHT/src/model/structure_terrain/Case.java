@@ -13,6 +13,10 @@ package model.structure_terrain;
 
 public class Case {
 	
+	public static int Mur = 0;
+	public static int Vide = 1;
+	public static int Pacgum = 2;
+	
 	// 2 == Pac-gomm // 1 == Vide // 0 == Mur
 	private int accessible; 
 	
@@ -20,12 +24,16 @@ public class Case {
 		this.accessible = a;
 	}
 	
-	protected void setAcessCase(int a){
+	public void setAcessCase(int a){
 		this.accessible = a;
 	}
 	
 	public boolean isAccessable(){
 		return (accessible!=0);
+	}
+	
+	public int getAccessCase(){
+		return accessible;
 	}
 	
 	public int caseValeur(){

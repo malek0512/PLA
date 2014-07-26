@@ -2,11 +2,7 @@ package view;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 
@@ -16,41 +12,26 @@ public class Jeu extends ApplicationAdapter {
 	public static final int HEIGHT = WIDTH * 9 / 16;
 	public static final String TITLE = "PACK-NIGHT : THE RETURN";
 	public static final boolean USE_GL30 = false;
+	public static final int tuile_size = 32;
 	static float posX = 50f, posY = 50f;
 	
-	SpriteBatch batch;
-	static Animation pacman ;
-	static Sprites pacmanSprite ;
-	SpriteBatch spriteBatch;        // #6
-
-	float stateTime;    
-	    
-	
-	// Camera --------------------- /
-	OrthographicCamera camera;
-	private Rectangle glViewport;
-    private float rotationSpeed;
-
+	public Equipage equip;
 
 	@Override
 	public void create() {
 		super.create();
 		Gdx.input.setInputProcessor(new InputHandler());
-		batch = new SpriteBatch();
-	    stateTime = 0f;
-	    pacmanSprite = new Sprites("sprites/Pacman.png");
-
-	    //Camera
-	    camera = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.update();
+		
+		//Sprite
+		equip = new EquipageMalek();
+		
 		
 		//Map
 		Map.create();
 		
-		//A conserver
-        glViewport = new Rectangle(0, 0, Jeu.WIDTH-20, Jeu.HEIGHT); //dimension du rectagle de vision != fenetre si menu
-	    
+		//Camera
+		Camera.create();
+		
 	}
 
 	@Override
@@ -66,24 +47,18 @@ public class Jeu extends ApplicationAdapter {
 
 	public void render() {
 		super.render();
-		handleInput();
+		
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);  
 		
-		pacman = pacmanSprite.loadAnimation();
-        stateTime += Gdx.graphics.getDeltaTime();
-		
         // Camera --------------------- /
-        Gdx.graphics.getGL20().glViewport((int) glViewport.x, (int) glViewport.y,(int) glViewport.width, (int) glViewport.height);
-        camera.update();
-        
-        //Map : voir le detail dans la classe Map
-        Map.renderer(camera);
+		Camera.render();
 		
-		batch.begin();
-			batch.draw(pacman.getKeyFrame(stateTime, true), posX, posY); 
-    
-		batch.end();
+        //Map : voir le detail dans la classe Map
+        Map.renderer(Camera.camera);
+		
+        //Sprite : voir le detail dans la classe Joueur
+        equip.suivant();
 
 	}
 
@@ -98,43 +73,5 @@ public class Jeu extends ApplicationAdapter {
 	public void resume() {
 		super.resume();
 	}
-
-	private void handleInput() {
-		int pas = InputHandler.tauxDeplacement*2;
-		int boundWidth = WIDTH / 3, boundHeight = HEIGHT / 3;
-		
-        if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-            camera.zoom += 0.02;
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            camera.zoom -= 0.02;
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-            camera.rotate(-rotationSpeed, 0, 0, 1);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.E)) {
-            camera.rotate(rotationSpeed, 0, 0, 1);
-        }
-//////////////////////////////////////        
-//        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && Jeu.posX<=boundWidth) {
-////            	camera.translate(-pas, 0, 0);
-//        	
-//	    }
-//	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && Jeu.posX>=boundWidth) {
-//	            camera.translate(pas, 0, 0);
-//	    }
-//	    if(Gdx.input.isKeyPressed(Input.Keys.DOWN) && Jeu.posY<=boundHeight) {
-//	            camera.translate(0, -pas, 0);
-//	    }
-//	    if(Gdx.input.isKeyPressed(Input.Keys.UP) && Jeu.posY>=boundHeight) {
-//	            camera.translate(0, pas, 0);
-//	    }
-
-        camera.position.x = posX;
-    	camera.position.y = posY;
-    }
-	
-
 
 }

@@ -28,6 +28,7 @@ public abstract class Pacman extends Personnage {
 	public boolean isInvincible=false;
 	public static boolean godMode=false;
 	public int compteurClignotement=0;
+	
 	/**
 	 * Construit le pacman en initialisant son point de spawn*/
 	public Pacman(String nom, int x,int y, Direction d){
@@ -46,7 +47,7 @@ public abstract class Pacman extends Personnage {
 		Iterator<Pacman> i= Pacman.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coord.CasCentre()))
+			if(position.equals(i.next().coordPix.CasCentre()))
 				return true;
 		}
 		return false;
@@ -56,7 +57,7 @@ public abstract class Pacman extends Personnage {
 	{
 		Iterator<Pacman> i= Pacman.liste.iterator();
 		while (i.hasNext()) {
-			if (HitBoxManager.personnageHittingPersonnage(i.next().coord,position))
+			if (HitBoxManager.personnageHittingPersonnage(i.next().coordPix,position))
 				return true;
 		}
 		return false;
@@ -68,7 +69,7 @@ public abstract class Pacman extends Personnage {
 		Iterator<Pacman> i = Pacman.liste.iterator();
 		while(i.hasNext())
 		{
-			int aux = i.next().coord.CasCentre().distance(c);
+			int aux = i.next().coordPix.CasCentre().distance(c);
 			if( aux < min)
 				min = aux;
 		}
@@ -94,7 +95,7 @@ public abstract class Pacman extends Personnage {
 	 * effectuer une fois que l'animation est fini
 	 */
 	protected void respawnWOA() {
-		this.coord = new CoordPix(this.pointDeRespawn);
+		this.coordPix = new CoordPix(this.pointDeRespawn);
 		this.isInvincible=true;
 	}
 	

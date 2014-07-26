@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import view.music.MusicManager;
 import model.personnages.*;
 import model.structure_terrain.*;
 
@@ -46,19 +45,19 @@ public class Primitives {
 
 		for (Iterator<Pacman> i = Pacman.liste.iterator(); i.hasNext();) {
 			Pacman pac = i.next();
-			if (position.distance(pac.coord.CasCentre()) <= rayon && !pac.isInvincible && pac.parametrable()) {
+			if (position.distance(pac.coordPix.CasCentre()) <= rayon && !pac.isInvincible && pac.parametrable()) {
 				res.add(pac);
 				if (Ghost.central.containsKey(pac)) {
 					Ghost.central.get(pac).majAvisDeRecherche(
-							pac.coord.CasCentre());
+							pac.coordPix.CasCentre());
 				} 
 				else
 				{
 					if(Ghost.central.isEmpty())
 					{
-						MusicManager.play_Reperer();
+//						MusicManager.play_Reperer();
 					}
-					Ghost.central.put(pac,new AvisDeRecherche(pac.coord.CasCentre()));
+					Ghost.central.put(pac,new AvisDeRecherche(pac.coordPix.CasCentre()));
 				}
 			}
 
@@ -79,7 +78,7 @@ public class Primitives {
 		for (Iterator<Pacman> i = Pacman.liste.iterator(); i.hasNext();) {
 			Pacman pac = i.next();
 			
-			CoordCas coord = pac.coord.CasCentre();
+			CoordCas coord = pac.coordPix.CasCentre();
 			if (coord.x == position.x) {
 				if (coord.y < position.y) {
 					while (mur(position, j, Direction.haut)
@@ -150,7 +149,7 @@ public class Primitives {
 	 * @param y
 	 */
 	public CoordCas positionDevant() {
-		CoordCas coord = this.auto.getPersonnage().coord.convertIntoCas();
+		CoordCas coord = this.auto.getPersonnage().coordPix.convertIntoCas();
 		coord.avancerDansDir(auto.getPersonnage().direction);
 		return coord;
 	}
@@ -181,14 +180,14 @@ public class Primitives {
 	 */
 	protected CoordCas prochaineCase(CoordCas c) {
 		// Si nous somme deja sur la case demandé
-		if (auto.getPersonnage().coord.equals(c))
+		if (auto.getPersonnage().coordPix.equals(c))
 			return c;
 
 		// On met a jour le chemin vers c, dans l'un des cas stipulé dans la
 		// condition
 		if (chemin == null || chemin.size() == 0 || nbCout > 3) {
 			Aetoile depart = new Aetoile(c);
-			chemin = depart.algo(auto.getPersonnage().coord.CasCentre()); // case
+			chemin = depart.algo(auto.getPersonnage().coordPix.CasCentre()); // case
 			nbCout = 0;
 		}
 
@@ -221,7 +220,7 @@ public class Primitives {
 		int d_bestFound =Integer.MAX_VALUE;
 		
 		for(PacKnight knight : PacKnight.liste){
-			int d_candidat = knight.coord.CasCentre().distance(bitch.coord.CasCentre());
+			int d_candidat = knight.coordPix.CasCentre().distance(bitch.coordPix.CasCentre());
 			if(!knight.user() && d_candidat < d_bestFound && knight.ghostEnChasse ==null)
 			{
 				captain = knight;
@@ -241,11 +240,11 @@ public class Primitives {
 	 */
 	protected List<Ghost> fantomeEstDansRayon(int rayon) {
 		List<Ghost> res = new LinkedList<Ghost>();
-		CoordCas position = auto.getPersonnage().coord.CasCentre();
+		CoordCas position = auto.getPersonnage().coordPix.CasCentre();
 		
 		for(Ghost pac : Ghost.liste)
 		{
-			if(position.distance(pac.coord.CasCentre())<=rayon){
+			if(position.distance(pac.coordPix.CasCentre())<=rayon){
 				res.add(pac);
 			}
 		}
@@ -262,7 +261,7 @@ public class Primitives {
 	protected boolean personnageEstDansRayon(int rayon, Personnage p1,
 			Personnage p2) {
 
-		if(p2.parametrable() && p1.coord.CasCentre().distance(p2.coord.CasCentre())<=rayon)
+		if(p2.parametrable() && p1.coordPix.CasCentre().distance(p2.coordPix.CasCentre())<=rayon)
 				return true;
 		return false;
 	}
@@ -304,9 +303,9 @@ public class Primitives {
 
 	public void avancerVers(CoordCas dest)
 	{
-		if(this.auto.getPersonnage().coord.estSurUneCase())
+		if(this.auto.getPersonnage().coordPix.estSurUneCase())
 		{
-			CoordCas src = this.auto.getPersonnage().coord.CasCentre();
+			CoordCas src = this.auto.getPersonnage().coordPix.CasCentre();
 			Aetoile graph = new Aetoile(src);
 			List<CoordCas> l = graph.algo(new CoordCas(dest));
 			l.remove(0);
@@ -330,7 +329,7 @@ public class Primitives {
 	 */
 	public void avancerVers(CoordCas dest, List<CoordCas> CaseAEviter)
 	{
-		CoordCas src = this.auto.getPersonnage().coord.CasCentre();
+		CoordCas src = this.auto.getPersonnage().coordPix.CasCentre();
 		Aetoile graph = new Aetoile(src);
 		graph.blackList(CaseAEviter);
 		List<CoordCas> l = graph.algo(new CoordCas(dest));
@@ -347,7 +346,7 @@ public class Primitives {
 	
 	public void avancerVers(CoordCas dest, CoordCas CaseAEviter)
 	{
-		CoordCas src = this.auto.getPersonnage().coord.CasCentre();
+		CoordCas src = this.auto.getPersonnage().coordPix.CasCentre();
 		Aetoile graph = new Aetoile(src);
 		graph.blackCoord(CaseAEviter);
 		List<CoordCas> l = graph.algo(new CoordCas(dest));
@@ -365,7 +364,7 @@ public class Primitives {
 	
 	private void follow(List<CoordCas> l)
 	{
-		CoordCas src = this.auto.getPersonnage().coord.CasCentre();
+		CoordCas src = this.auto.getPersonnage().coordPix.CasCentre();
 		CoordCas c = l.get(0);
 		Direction d = src.directionPourAllerVers(c);
 		if(this.auto.getPersonnage().caseDisponible(d))

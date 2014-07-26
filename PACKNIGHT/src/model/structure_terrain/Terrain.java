@@ -1,6 +1,6 @@
 package model.structure_terrain;
 
-import view.game.WindowGame;
+import view.*;
 
 
 public class Terrain {
@@ -27,6 +27,21 @@ public class Terrain {
 	}
 	
 	/**
+	 * Alloue la mémoire pour un terrain de haut largeur donnée
+	 * @param hauteur
+	 * @param largeur
+	 * @require les paramètre sont >= a 1
+	 * author : alex
+	 */
+	public Terrain(Case[][] terrain){
+		this.terrain = terrain;
+		this.hauteur = terrain.length;
+		this.largeur = terrain[0].length;
+		Terrain.nb_pacgum = nbPacgum();
+		Terrain.nb_pacgum_init=nb_pacgum;
+	}
+	
+	/**
 	 * ajoute l'objet au coordonée donnée
 	 * @param ligne
 	 * @param colonne
@@ -38,6 +53,16 @@ public class Terrain {
 			terrain[c.x][c.y]=new Case(elt);
 	}
 
+	private int nbPacgum(){
+		int cpt = 0;
+		for(Case[] i : terrain){
+			for(Case j : i){
+				if (j.caseValeur()==Case.Pacgum) 
+					cpt++;
+			}
+		}
+		return cpt;
+	}
 	/**
 	 * affiche le terrain
 	 * fonction a ameliorer pour pouvoir voir quelque chose
@@ -93,6 +118,7 @@ public class Terrain {
 	 */
 	public boolean caseAcessible(CoordCas c, int distance, Direction direction)
 	{
+//		if (c.x>terrain.length || c.y>terrain[0].length)
 			switch(direction)
 			{
 			case haut :
@@ -153,7 +179,7 @@ public class Terrain {
 	 */
 	public int pixelBordDroit()
 	{
-		return WindowGame.tuile_size * this.largeur;
+		return Jeu.tuile_size * this.largeur;
 	}
 	
 	/**
@@ -162,7 +188,7 @@ public class Terrain {
 	 */
 	public int pixelBordBas()
 	{
-		return WindowGame.tuile_size * this.hauteur;
+		return Jeu.tuile_size * this.hauteur;
 	}
 	
 	public int ValueCase(CoordCas c)

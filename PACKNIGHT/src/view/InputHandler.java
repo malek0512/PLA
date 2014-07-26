@@ -1,6 +1,7 @@
 package view;
 
-import my.work.jeu.Sprites.Direction;
+import model.personnages.Personnage;
+import view.Sprites.Direction;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -8,29 +9,33 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
 
 public class InputHandler implements InputProcessor {
-	static public int tauxDeplacement = 4;
+	static public int tauxDeplacement = Personnage.tauxDeDeplacement;
 	
 	@Override
 	public boolean keyDown(int arg0) {
 		switch (arg0) {
 			case Keys.ESCAPE : Gdx.app.exit(); break;
 			case Keys.UP :
-				Jeu.posY = Jeu.posY + (float) tauxDeplacement;
+				Equipage.joueurCamera.direction = model.structure_terrain.Direction.haut;
+//				Jeu.posY = Jeu.posY + (float) tauxDeplacement;
 //				Jeu.pacman.setY(Jeu.pacman.getY()+tauxDeplacement);
 				Sprites.direction = Direction.UP;
 				break;
 			case Keys.RIGHT :
-				Jeu.posX = Jeu.posX + (float) tauxDeplacement;
+				Equipage.joueurCamera.direction = model.structure_terrain.Direction.droite;
+//				Jeu.posX = Jeu.posX + (float) tauxDeplacement;
 //				Jeu.pacman.setX(Jeu.pacman.getX()+tauxDeplacement); 
 				Sprites.direction = Direction.RIGHT;
 				break;
 			case Keys.LEFT :
-				Jeu.posX = Jeu.posX - (float) tauxDeplacement;
+				Equipage.joueurCamera.direction = model.structure_terrain.Direction.gauche;
+//				Jeu.posX = Jeu.posX - (float) tauxDeplacement;
 //				Jeu.pacman.setX(Jeu.pacman.getX()-tauxDeplacement); 
 				Sprites.direction = Direction.LEFT;
 				break;
 			case Keys.DOWN :  
-				Jeu.posY = Jeu.posY - (float) tauxDeplacement;
+				Equipage.joueurCamera.direction = model.structure_terrain.Direction.bas;
+//				Jeu.posY = Jeu.posY - (float) tauxDeplacement;
 //				Jeu.pacman.setY(Jeu.pacman.getY()-tauxDeplacement);
 				Sprites.direction = Direction.DOWN;
 				break;
@@ -63,12 +68,13 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-	 	Vector3 clickCoordinates = new Vector3(screenX,screenY,0);
-        Vector3 position = camera.unproject(clickCoordinates);
-        TextureMapObject character = (TextureMapObject)tiledMap.getLayers().get("objects").getObjects().get(0);
-        character.setX((float)position.x);
-        character.setY((float)position.y);
-        return true;
+//	 	Vector3 clickCoordinates = new Vector3(screenX,screenY,0);
+//        Vector3 position = camera.unproject(clickCoordinates);
+//        TextureMapObject character = (TextureMapObject)tiledMap.getLayers().get("objects").getObjects().get(0);
+//        character.setX((float)position.x);
+//        character.setY((float)position.y);
+//        return true;
+		return false;
 	}
 
 	@Override

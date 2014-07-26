@@ -6,39 +6,20 @@ import java.util.List;
 
 import model.structure_terrain.*;
 import model.structure_terrain.CoordPix.position;
-import view.game.WindowGame;
+import view.Jeu;
 import model.hitBoxManager.*;
 
 public abstract class Personnage {
 
-	protected static int tauxDeDeplacement = 4; // taille deplacement en pixel
-
-
-	/**
-	 * Initialise le terrain static pour tous les personnages. A NE FAIRE QU'UNE
-	 * SEULE FOIS
-	 * 
-	 * @author malek
-	 */
-	static public void initTerrain(Terrain terrain) {
-		Personnage.terrain = terrain;
-	}
-
+	public static int tauxDeDeplacement = 4; // taille deplacement en pixel
 	public static Terrain terrain;
 	public static List<Personnage> liste = new LinkedList<Personnage>();
-	public static void init_personnage()
-	{
-		Personnage.liste.clear();
-		Ghost.liste.clear();
-		Pacman.liste.clear();
-		PacKnight.liste.clear();
-		PacPrincess.liste.clear();
-		Ghost.central.clear();
-	}
+	
+
 	
 	// coordonne du personnage en pixel
 	// La coordonne corespond au pixel Haut-Gauche !!!
-	public CoordPix coord;
+	public CoordPix coordPix;
 	public String nom; // nom du personnage
 	public Direction direction; // direction actuelle du personnage
 	
@@ -57,7 +38,7 @@ public abstract class Personnage {
 	 */
 	public Personnage(String nom, int x, int y, Direction d) {
 		this.nom = new String(nom);
-		this.coord = new CoordPix(x*32,y*32,position.hg);
+		this.coordPix = new CoordPix(x*32,y*32,position.hg);
 		this.direction = d;
 		this.nextDirectionSet = false;
 		Personnage.liste.add(this);
@@ -72,20 +53,20 @@ public abstract class Personnage {
 	 * Ne fait pas de test, et avance Utiliser par les automates et c'est tout
 	 */
 	public void avancerAux() {
-		if(!Personnage.terrain.estCore(coord.CasCentre(), direction))
+		if(!Personnage.terrain.estCore(coordPix.CasCentre(), direction))
 		switch (this.direction) {
 		case droite:
-			this.coord.x += tauxDeDeplacement;
+			this.coordPix.x += tauxDeDeplacement;
 			break;
 		case gauche:
-			this.coord.x -= tauxDeDeplacement;
+			this.coordPix.x -= tauxDeDeplacement;
 			break;
 		case haut:
-			this.coord.y -= tauxDeDeplacement;
+			this.coordPix.y += tauxDeDeplacement;
 			break;
 
 		case bas:
-			this.coord.y += tauxDeDeplacement;
+			this.coordPix.y -= tauxDeDeplacement;
 			break;
 
 		default:
@@ -96,16 +77,16 @@ public abstract class Personnage {
 			switch (this.direction)
 			{
 			case droite :
-				this.coord.x = 0;
+				this.coordPix.x = 0;
 				break;
 			case gauche :
-				this.coord.x = Personnage.terrain.pixelBordDroit() - WindowGame.tuile_size;
+				this.coordPix.x = Personnage.terrain.pixelBordDroit() - Jeu.tuile_size;
 				break;
 			case bas :
-				this.coord.y = 0;
+				this.coordPix.y = 0;
 				break;
 			case haut :
-				this.coord.y = Personnage.terrain.pixelBordBas() - WindowGame.tuile_size;
+				this.coordPix.y = Personnage.terrain.pixelBordBas() - Jeu.tuile_size;
 				break;
 			}
 		}
@@ -175,17 +156,17 @@ public abstract class Personnage {
 
 		switch (direction) {
 		case haut:
-			return Personnage.terrain.caseAcessible(coord.CasBD(), direction) &&
-					Personnage.terrain.caseAcessible(coord.CasBG(), direction);
+			return Personnage.terrain.caseAcessible(coordPix.CasBD(), direction) &&
+					Personnage.terrain.caseAcessible(coordPix.CasBG(), direction);
 		case bas:
-			return (Personnage.terrain.caseAcessible(coord.CasHG(), direction))
-					&& (Personnage.terrain.caseAcessible(coord.CasHD(), direction));
+			return (Personnage.terrain.caseAcessible(coordPix.CasHG(), direction))
+					&& (Personnage.terrain.caseAcessible(coordPix.CasHD(), direction));
 		case droite:
-			return (Personnage.terrain.caseAcessible(coord.CasBG(), direction))
-					&& (Personnage.terrain.caseAcessible(coord.CasHG(), direction));
+			return (Personnage.terrain.caseAcessible(coordPix.CasBG(), direction))
+					&& (Personnage.terrain.caseAcessible(coordPix.CasHG(), direction));
 		case gauche:
-			return (Personnage.terrain.caseAcessible(coord.CasBD(), direction))
-					&& (Personnage.terrain.caseAcessible(coord.CasHD(), direction));
+			return (Personnage.terrain.caseAcessible(coordPix.CasBD(), direction))
+					&& (Personnage.terrain.caseAcessible(coordPix.CasHD(), direction));
 		default:
 			return false;
 		}
@@ -212,7 +193,7 @@ public abstract class Personnage {
 	static public boolean hittingPerso(CoordPix position) {
 		Iterator<Personnage> i = Personnage.liste.iterator();
 		while (i.hasNext()) {
-			if (HitBoxManager.personnageHittingPersonnage(i.next().coord,position))
+			if (HitBoxManager.personnageHittingPersonnage(i.next().coordPix,position))
 				return true;
 		}
 		return false;
@@ -228,7 +209,7 @@ public abstract class Personnage {
 		Iterator<Ghost> i= Ghost.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coord.CasCentre()))
+			if(position.equals(i.next().coordPix.CasCentre()))
 				return true;
 		}
 		return false;
@@ -258,42 +239,16 @@ public abstract class Personnage {
 	public abstract boolean hitting();
 	
 	/**
-	 * @return String contenant le terrain et le personnage
-	 * @author malek
-	 * 
-	public String toString() {
-		String res = " Personnage \n"; // + ((c instanceof Automate)?
-										// "automatisé \n" :
-										// "non automatisé \n");
-		for (int i = 0; i < terrain.hauteur; i++) {
-			for (int j = 0; j < terrain.largeur; j++) {
-				if (i == this.coord.y && j == this.coord.x) {
-					switch (this.direction) {
-					case haut:
-						res += "^";
-						break;
-					case bas:
-						res += "v";
-						break;
-					case gauche:
-						res += "<";
-						break;
-					case droite:
-						res += ">";
-						break;
-					}
-				} else {
-					if (terrain.getCase(i, j).isAccessable()) {
-						res += "-";
-					} else {
-						res += "X";
-					}
-				}
-			}
-			res += "\n";
-		}
-		res += "\n";
-		return res;
+	 * Reinitialise l'ensemble des listes de personnages 
+	 */
+	public static void init_personnage()
+	{
+		Personnage.liste.clear();
+		Ghost.liste.clear();
+		Pacman.liste.clear();
+		PacKnight.liste.clear();
+		PacPrincess.liste.clear();
+		Ghost.central.clear();
 	}
-	*/
+	
 }

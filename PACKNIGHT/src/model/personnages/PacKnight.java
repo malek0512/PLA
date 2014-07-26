@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import view.music.MusicManager;
 import model.structure_terrain.CoordCas;
 import model.structure_terrain.CoordPix;
 import model.structure_terrain.Direction;
@@ -35,10 +34,10 @@ public class PacKnight extends Pacman{
 	//Contient le fantome apres lequel le knight est a la recherche
 	public Ghost ghostEnChasse = null;
 	
-	public PacKnight(String name, int x, int y, Direction d, boolean userPlaing) {
+	public PacKnight(String name, int x, int y, Direction d, boolean userPlaying) {
 		super(name,x,y,d);
 		PacKnight.liste.add(this);
-		this.user = userPlaing;
+		this.user = userPlaying;
 	}
 	
 	/**
@@ -50,7 +49,7 @@ public class PacKnight extends Pacman{
 		Iterator<PacKnight> i= PacKnight.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coord.CasCentre()))
+			if(position.equals(i.next().coordPix.CasCentre()))
 				return true;
 		}
 		return false;
@@ -60,7 +59,7 @@ public class PacKnight extends Pacman{
 	{
 		Iterator<PacKnight> i= PacKnight.liste.iterator();
 		while (i.hasNext()) {
-			if (HitBoxManager.personnageHittingPersonnage(i.next().coord,position))
+			if (HitBoxManager.personnageHittingPersonnage(i.next().coordPix,position))
 				return true;
 		}
 		return false;
@@ -76,7 +75,7 @@ public class PacKnight extends Pacman{
 		{
 			respawn();
 			//Ghost.central.remove(this);//La mort efface de la centrale
-			MusicManager.play_Dead_Knight();
+//			MusicManager.play_Dead_Knight();
 		}
 	}
 
@@ -85,14 +84,14 @@ public class PacKnight extends Pacman{
 		while(this.hitting() && i.hasNext())
 		{
 			Ghost g = i.next();
-			if(g.hitting() && HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
+			if(g.hitting() && HitBoxManager.personnageHittingPersonnage(this.coordPix, g.coordPix))
 			{
 				this.meurtDansDatroceSouffrance();
 				g.meurtDansDatroceSouffrance(); //vengeance !!!
 				break;
 			}
 		}
-		if(Personnage.terrain.ValueCase(this.coord.CasCentre()) == 2)
+		if(Personnage.terrain.ValueCase(this.coordPix.CasCentre()) == 2)
 		{
 			this.mangePacGomm();
 		}
@@ -100,7 +99,7 @@ public class PacKnight extends Pacman{
 	
 	private void mangePacGomm()
 	{
-		Personnage.terrain.SetCase(this.coord.CasCentre(),1);
+		Personnage.terrain.SetCase(this.coordPix.CasCentre(),1);
 		Terrain.nb_pacgum--;
 	}
 	

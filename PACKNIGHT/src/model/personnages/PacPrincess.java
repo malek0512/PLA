@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import view.music.MusicManager;
 import model.hitBoxManager.HitBoxManager;
 import model.structure_terrain.CoordCas;
 import model.structure_terrain.CoordPix;
@@ -42,7 +41,7 @@ public class PacPrincess extends Pacman{
 		Iterator<PacPrincess> i= PacPrincess.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coord.CasCentre()))
+			if(position.equals(i.next().coordPix.CasCentre()))
 				return true;
 		}
 		return false;
@@ -52,7 +51,7 @@ public class PacPrincess extends Pacman{
 	{
 		Iterator<PacPrincess> i= PacPrincess.liste.iterator();
 		while (i.hasNext()) {
-			if (i.next().coord.equals(position))
+			if (i.next().coordPix.equals(position))
 				return true;
 		}
 		return false;
@@ -68,7 +67,7 @@ public class PacPrincess extends Pacman{
 		{
 			respawn();
 			//Ghost.central.remove(this);//La mort efface de la centrale
-			MusicManager.play_Dead_Princess();
+//			MusicManager.play_Dead_Princess();
 		}
 	}
 
@@ -77,7 +76,7 @@ public class PacPrincess extends Pacman{
 		while(this.hitting() && i.hasNext())
 		{
 			Ghost g = i.next();
-			if(g.hitting()&& HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
+			if(g.hitting()&& HitBoxManager.personnageHittingPersonnage(this.coordPix, g.coordPix))
 			{
 				this.meurtDansDatroceSouffrance();
 				break;

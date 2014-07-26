@@ -132,7 +132,7 @@ public class PrimitivesAction extends Primitives {
 		
 		if(knight.ghostEnChasse != null)
 		{
-			avancerVers((knight.ghostEnChasse.coord.CasCentre()));;
+			avancerVers((knight.ghostEnChasse.coordPix.CasCentre()));;
 		}
 
 	}
@@ -145,7 +145,7 @@ public class PrimitivesAction extends Primitives {
 		if(((PacKnight)auto.getPersonnage()).princesseEnDetresse!=null && ((PacKnight)auto.getPersonnage()).parametrable()){
 			PacPrincess bitch =((PacKnight)auto.getPersonnage()).princesseEnDetresse;
 			if(!personnageEstDansRayon(bitch.perimetreSecurite,bitch,((PacKnight)auto.getPersonnage())))
-				avancerVers(bitch.coord.CasCentre());
+				avancerVers(bitch.coordPix.CasCentre());
 			//else
 				//fetch();
 		}
@@ -183,13 +183,13 @@ public class PrimitivesAction extends Primitives {
 		CoordCas bestChallenger = null;
 		while (i.hasNext()) {
 			Pacman perso = i.next();
-			CoordCas next= perso.coord.CasCentre();
+			CoordCas next= perso.coordPix.CasCentre();
 			if(perso.parametrable() && !perso.isInvincible){
 				if(bestChallenger == null)
 				{
 					bestChallenger = next;
 				}
-				else if (next.distance(auto.getPersonnage().coord.CasCentre()) 
+				else if (next.distance(auto.getPersonnage().coordPix.CasCentre()) 
 					< next.distance(bestChallenger))
 				{
 					bestChallenger = next;
@@ -212,14 +212,14 @@ public class PrimitivesAction extends Primitives {
 		Pacman min = null;
 		while (i.hasNext()) {
 			Pacman perso = i.next();
-			CoordCas next= perso.coord.CasCentre();
+			CoordCas next= perso.coordPix.CasCentre();
 			if(perso.parametrable() && !perso.isInvincible){
 				if(bestChallenger == null)
 				{
 					bestChallenger = next;
 					min=perso;
 				}
-				else if (next.distance(auto.getPersonnage().coord.CasCentre()) 
+				else if (next.distance(auto.getPersonnage().coordPix.CasCentre()) 
 					< next.distance(bestChallenger))
 				{
 					bestChallenger = next;

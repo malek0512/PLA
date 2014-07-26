@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import view.music.MusicManager;
 import model.structure_terrain.CoordCas;
 import model.structure_terrain.CoordPix;
 import model.structure_terrain.Direction;
@@ -68,7 +67,7 @@ public class Ghost extends Personnage {
 	static public boolean hittingPerso(CoordPix position) {
 		Iterator<Ghost> i = Ghost.liste.iterator();
 		while (i.hasNext()) {
-			if (HitBoxManager.personnageHittingPersonnage(i.next().coord,position))
+			if (HitBoxManager.personnageHittingPersonnage(i.next().coordPix,position))
 				return true;
 		}
 		return false;
@@ -79,7 +78,7 @@ public class Ghost extends Personnage {
 		Iterator<Ghost> i= Ghost.liste.iterator();
 		while(i.hasNext())
 		{
-			if(position.equals(i.next().coord.CasCentre()))
+			if(position.equals(i.next().coordPix.CasCentre()))
 				return true;
 		}
 		return false;
@@ -90,7 +89,7 @@ public class Ghost extends Personnage {
 		List<CoordCas> listRes = new LinkedList<CoordCas>();
 		Iterator<Ghost> i= Ghost.liste.iterator();
 		while (i.hasNext()) {
-				listRes.add(i.next().coord.CasCentre());
+				listRes.add(i.next().coordPix.CasCentre());
 		}
 		return listRes;
 	}
@@ -106,7 +105,7 @@ public class Ghost extends Personnage {
 		Iterator<Ghost> i = Ghost.liste.iterator();
 		while(i.hasNext())
 		{
-			int aux = i.next().coord.CasCentre().distance(c);
+			int aux = i.next().coordPix.CasCentre().distance(c);
 			if( aux < min)
 				min = aux;
 		}
@@ -148,8 +147,8 @@ public class Ghost extends Personnage {
 			g.prisonner=true;
 			g.timerAnimation -= timer*timerSepareSortiePrison;
 			g.pointDeRespawn = new CoordPix(12*32,14*32,position.hg);
-			g.coord.x = x;
-			g.coord.y = y;
+			g.coordPix.x = x;
+			g.coordPix.y = y;
 			g.direction=Direction.droite;
 			timer++;
 			if(cpt==4)
@@ -201,8 +200,8 @@ public class Ghost extends Personnage {
 			}
 		
 		}
-		if(!etaitvide && central.isEmpty())
-			MusicManager.play_PerduDeVue();
+//		if(!etaitvide && central.isEmpty())
+//			MusicManager.play_PerduDeVue();
 	}
 	/**
 	 * Gère la collision avec les pacmans*/
@@ -211,7 +210,7 @@ public class Ghost extends Personnage {
 		while(this.hitting() && i.hasNext() )
 		{
 			PacKnight g = i.next();
-			if(g.hitting() && HitBoxManager.personnageHittingPersonnage(this.coord, g.coord))
+			if(g.hitting() && HitBoxManager.personnageHittingPersonnage(this.coordPix, g.coordPix))
 			{
 				this.meurtDansDatroceSouffrance();
 				g.meurtDansDatroceSouffrance();
@@ -222,7 +221,7 @@ public class Ghost extends Personnage {
 		while(this.hitting() && j.hasNext())
 		{
 			PacPrincess p = j.next();
-			if(HitBoxManager.personnageHittingPersonnage(this.coord, p.coord) && p.hitting())
+			if(HitBoxManager.personnageHittingPersonnage(this.coordPix, p.coordPix) && p.hitting())
 			{
 				p.meurtDansDatroceSouffrance();
 				break;
@@ -257,7 +256,7 @@ public class Ghost extends Personnage {
 	protected void respawnWOA() {
 		if(!Ghost.modeMulti)
 		{
-			this.coord = new CoordPix(this.pointDeRespawn);
+			this.coordPix = new CoordPix(this.pointDeRespawn);
 			this.direction = Direction.droite;
 			this.prisonner = true;
 		}
@@ -271,7 +270,7 @@ public class Ghost extends Personnage {
 			c.x = r.nextInt(t.largeur);
 			c.y = r.nextInt(t.hauteur);
 			}while(!(t.caseAcessible(c) && (Pacman.distance(c))>(vision+rangeMinRespawnMultiMode)));
-			this.coord = new CoordPix(c.x*32, c.y*32,position.hg);
+			this.coordPix = new CoordPix(c.x*32, c.y*32,position.hg);
 		}
 	}
 	
@@ -368,12 +367,12 @@ public class Ghost extends Personnage {
 			this.entendEtObei = true;
 			fantomeUp--;
 			this.caseDOrdre = l.get(0);
-			this.coord = new CoordPix(caseDOrdre,position.hg);
+			this.coordPix = new CoordPix(caseDOrdre,position.hg);
 			ordre.remove(0);
 			if(!ordre.isEmpty())
 			{
 				this.caseDOrdre = l.get(0);
-				this.direction = coord.CasCentre().directionPourAllerVers(caseDOrdre);
+				this.direction = coordPix.CasCentre().directionPourAllerVers(caseDOrdre);
 				this.avancer();
 			}
 		}
@@ -388,11 +387,11 @@ public class Ghost extends Personnage {
 	{
 		if(!ordre.isEmpty())
 		{
-			if(coord.estSurUneCase())
+			if(coordPix.estSurUneCase())
 			{
 				caseDOrdre = ordre.get(0);
 				ordre.remove(0);
-				direction = coord.CasCentre().directionPourAllerVers(caseDOrdre);
+				direction = coordPix.CasCentre().directionPourAllerVers(caseDOrdre);
 				avancer();
 			}
 			else
@@ -403,7 +402,7 @@ public class Ghost extends Personnage {
 		else
 		{
 			this.avancer();
-			if(coord.estSurUneCase())
+			if(coordPix.estSurUneCase())
 			{
 				entendEtObei = false;
 				fantomeUp++;
@@ -422,7 +421,7 @@ public class Ghost extends Personnage {
 	{
 		if(Ghost.powerUp())
 		{
-			CoordCas caseDeLaCible = ref.coord.CasCentre();
+			CoordCas caseDeLaCible = ref.coordPix.CasCentre();
 			
 			//reboot du graph
 			Graph g = new Graph(Personnage.terrain);
@@ -458,7 +457,7 @@ public class Ghost extends Personnage {
 					//test si le candidat peut obtenir des ordres
 					if(actuelCandidat.parametrable())
 					{
-						int dactuelCandidat = interEnTraitement.distance(actuelCandidat.coord.CasCentre());
+						int dactuelCandidat = interEnTraitement.distance(actuelCandidat.coordPix.CasCentre());
 						
 						if(dactuelCandidat < dmax && dactuelCandidat < distanceMeilleurCandidat)
 						{
@@ -476,12 +475,12 @@ public class Ghost extends Personnage {
 					//supprime le fantome de la liste
 					listeDesGhost.remove(indice);
 					//calcul de l'itinéraire
-					Aetoile ga = new Aetoile(meilleurCandidat.coord.CasCentre());
+					Aetoile ga = new Aetoile(meilleurCandidat.coordPix.CasCentre());
 					List<CoordCas> ordre = ga.algo(interEnTraitement);
 					meilleurCandidat.recoitOrdre(ordre);
 				}
 			}
-			MusicManager.play_GhostPower_Obey();
+//			MusicManager.play_GhostPower_Obey();
 		}
 	}
 	
@@ -490,13 +489,13 @@ public class Ghost extends Personnage {
 		if(Ghost.powerUp())
 		{
 			PacKnight ref = PacKnight.liste.get(0);
-			CoordCas refCasCentre = ref.coord.CasCentre();
+			CoordCas refCasCentre = ref.coordPix.CasCentre();
 			
 			//reboot du graph
 			Graph g = new Graph(Personnage.terrain);
 			
 			// calcule des intersection a occuper
-			List<CoordCas> listeDesInter = g.visiterLargeur(ref.coord.CasCentre(),nbInterChercher);
+			List<CoordCas> listeDesInter = g.visiterLargeur(ref.coordPix.CasCentre(),nbInterChercher);
 			
 			//copie de la liste des fantomes
 			List<Ghost> listeDesGhost = new LinkedList<Ghost>(Ghost.liste);
@@ -528,7 +527,7 @@ public class Ghost extends Personnage {
 					//test si le candidat peut obtenir des ordres
 					if(actuelCandidat.parametrable())
 					{
-						int dactuelCandidat = interEnTraitement.distance(actuelCandidat.coord.CasCentre());
+						int dactuelCandidat = interEnTraitement.distance(actuelCandidat.coordPix.CasCentre());
 						
 						if(dactuelCandidat < dmax && dactuelCandidat < distanceMeilleurCandidat)
 						{
@@ -546,12 +545,12 @@ public class Ghost extends Personnage {
 					//supprime le fantome de la liste
 					listeDesGhost.remove(indice);
 					//calcul de l'itinéraire
-					Aetoile ga = new Aetoile(meilleurCandidat.coord.CasCentre());
+					Aetoile ga = new Aetoile(meilleurCandidat.coordPix.CasCentre());
 					List<CoordCas> ordre = ga.algo(interEnTraitement);
 					meilleurCandidat.recoitOrdre(ordre);
 				}
 			}
-			MusicManager.play_GhostPower_Obey();
+//			MusicManager.play_GhostPower_Obey();
 		}
 	}
 }
