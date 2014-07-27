@@ -1,7 +1,7 @@
 package view;
 
 import model.personnages.Personnage;
-import view.Sprites.Direction;
+import model.structure_terrain.Direction;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
 
 public class InputHandler implements InputProcessor {
+	public static Personnage p = Equipage.joueurCamera;
 	static public int tauxDeplacement = Personnage.tauxDeDeplacement;
 	
 	@Override
@@ -19,25 +20,25 @@ public class InputHandler implements InputProcessor {
 				Equipage.joueurCamera.direction = model.structure_terrain.Direction.haut;
 //				Jeu.posY = Jeu.posY + (float) tauxDeplacement;
 //				Jeu.pacman.setY(Jeu.pacman.getY()+tauxDeplacement);
-				Sprites.direction = Direction.UP;
+//				Sprites.direction = Direction.haut;
 				break;
 			case Keys.RIGHT :
 				Equipage.joueurCamera.direction = model.structure_terrain.Direction.droite;
 //				Jeu.posX = Jeu.posX + (float) tauxDeplacement;
 //				Jeu.pacman.setX(Jeu.pacman.getX()+tauxDeplacement); 
-				Sprites.direction = Direction.RIGHT;
+//				Sprites.direction = Direction.droite;
 				break;
 			case Keys.LEFT :
 				Equipage.joueurCamera.direction = model.structure_terrain.Direction.gauche;
 //				Jeu.posX = Jeu.posX - (float) tauxDeplacement;
 //				Jeu.pacman.setX(Jeu.pacman.getX()-tauxDeplacement); 
-				Sprites.direction = Direction.LEFT;
+//				Sprites.direction = Direction.gauche;
 				break;
 			case Keys.DOWN :  
 				Equipage.joueurCamera.direction = model.structure_terrain.Direction.bas;
 //				Jeu.posY = Jeu.posY - (float) tauxDeplacement;
 //				Jeu.pacman.setY(Jeu.pacman.getY()-tauxDeplacement);
-				Sprites.direction = Direction.DOWN;
+//				Sprites.direction = Direction.bas;
 				break;
 		}
 		return false;
@@ -94,22 +95,22 @@ public class InputHandler implements InputProcessor {
         // Les directions principales
         if(Gdx.input.getAccelerometerY()>1)
         {
-               Jeu.posX+=tauxDeplacement;
+        	p.coordPix.x+=tauxDeplacement;
 //               type_animation=7;
         }
         if(Gdx.input.getAccelerometerY()<-1)
         {
-               Jeu.posX-=tauxDeplacement;
+        	p.coordPix.x-=tauxDeplacement;
 //               type_animation=3;
         }
         if(Gdx.input.getAccelerometerX()>1)
         {
-               Jeu.posY-=tauxDeplacement;
+        	p.coordPix.y-=tauxDeplacement;
 //               type_animation=0;
         }
         if(Gdx.input.getAccelerometerX()<-1)
         {
-               Jeu.posY+=tauxDeplacement;
+        	p.coordPix.y+=tauxDeplacement;
 //               type_animation=4;
         }
        

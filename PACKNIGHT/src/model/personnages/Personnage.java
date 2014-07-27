@@ -156,11 +156,11 @@ public abstract class Personnage {
 
 		switch (direction) {
 		case haut:
-			return Personnage.terrain.caseAcessible(coordPix.CasBD(), direction) &&
-					Personnage.terrain.caseAcessible(coordPix.CasBG(), direction);
+			return Personnage.terrain.caseAcessible(coordPix.CasHD(), direction) &&
+					Personnage.terrain.caseAcessible(coordPix.CasHG(), direction);
 		case bas:
-			return (Personnage.terrain.caseAcessible(coordPix.CasHG(), direction))
-					&& (Personnage.terrain.caseAcessible(coordPix.CasHD(), direction));
+			return (Personnage.terrain.caseAcessible(coordPix.CasBG(), direction))
+					&& (Personnage.terrain.caseAcessible(coordPix.CasBD(), direction));
 		case droite:
 			return (Personnage.terrain.caseAcessible(coordPix.CasBG(), direction))
 					&& (Personnage.terrain.caseAcessible(coordPix.CasHG(), direction));
@@ -249,6 +249,46 @@ public abstract class Personnage {
 		PacKnight.liste.clear();
 		PacPrincess.liste.clear();
 		Ghost.central.clear();
+	}
+	
+	/**
+	 * @return String contenant le terrain et le personnage
+	 * @author malek
+	 */ 
+	public String toString() {
+		String res = " Personnage \n"; // + ((c instanceof Automate)?
+										// "automatisé \n" :
+										// "non automatisé \n");
+		for (int i = 0; i < terrain.hauteur; i++) {
+			for (int j = 0; j < terrain.largeur; j++) {
+				if (i == this.coordPix.CasCentre().y && j == this.coordPix.CasCentre().x) {
+					switch (this.direction) {
+					case haut:
+						res += " v ";
+						break;
+					case bas:
+						res += " ^ ";
+						break;
+					case gauche:
+						res += " < ";
+						break;
+					case droite:
+						res += " > ";
+						break;
+					}
+				} else {
+					if (terrain.caseAcessible(new CoordCas(i, j))) {
+						if (terrain.terrain[i][j].caseValeur() == Case.Pacgum)
+							res += " . ";
+					} else {
+						res += " X ";
+					}
+				}
+			}
+			res += "\n";
+		}
+		res += "\n";
+		return res;
 	}
 	
 }

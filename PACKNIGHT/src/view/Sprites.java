@@ -1,5 +1,7 @@
 package view;
 
+import model.structure_terrain.Direction;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -7,21 +9,28 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Sprites {
 
-	enum Direction {UP, RIGHT, DOWN, LEFT};
+	public static final String Pacman = "sprites/Pacman.png";
+	public static final String Princess = "sprites/Princess.png";
+	public static final String Aleatoire = "sprites/Aleatoire.png";
+	public static final String Berserk = "sprites/Berserk.png";
+	public static final String Intercepteur = "sprites/Intercepteur.png";
+	public static final String Spectrum = "sprites/Spectrum.png";
+	public static final String Suiveur = "sprites/Suiveur.png";
+	public static final String animation_sheet = "sprites/animation_sheet.gif";
 	
-	static Direction direction = Direction.UP;
+	model.structure_terrain.Direction direction = Direction.haut;
     private static final int FRAME_COLS = 2;     
     private static final int FRAME_ROWS = 4;  
-    static float vitesseAnimation = 0.25f;
+    public static float vitesseAnimation = 0.25f;
 
-    Animation           walkAnimationRight, walkAnimationDown, walkAnimationLeft, walkAnimationUp;      // #3
-    Texture             walkSheet;      // #4
-    TextureRegion[]     walkFrames, walkFramesUp, walkFramesLeft, walkFramesDown, walkFramesRight;     // #5
+    Animation           walkAnimationRight, walkAnimationDown, walkAnimationLeft, walkAnimationUp;
+    Texture             walkSheet;
+    TextureRegion[]     walkFrames, walkFramesUp, walkFramesLeft, walkFramesDown, walkFramesRight;
     TextureRegion[][] 	tmp;
 
     public Sprites(String pngPath){
     	walkSheet = new Texture(Gdx.files.internal(pngPath));
-        tmp = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);              // #10
+        tmp = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);
         
         walkFramesRight= new TextureRegion[] {tmp[0][0], tmp[0][1]};
         walkFramesDown = new TextureRegion[] {tmp[1][0], tmp[1][1]};
@@ -33,19 +42,26 @@ public class Sprites {
         walkAnimationLeft = new Animation(vitesseAnimation, walkFramesLeft);
         walkAnimationUp = new Animation(vitesseAnimation, walkFramesUp);
         
-        direction = Direction.UP;
+        direction = Direction.haut;
     }
     
     public Animation loadAnimation() {
 
     	switch (direction){
-	        case RIGHT : return walkAnimationRight;
-	        case DOWN : return walkAnimationDown;
-	        case LEFT : return walkAnimationLeft;
-	        case UP : return walkAnimationUp;
+	        case droite : return walkAnimationRight;
+	        case bas : return walkAnimationDown;
+	        case gauche : return walkAnimationLeft;
+	        case haut : return walkAnimationUp;
         }
 		return null;
     	
     }
 
+    public float getWidth(){
+    	return walkSheet.getWidth()/FRAME_COLS;
+    }
+    
+    public float getHeight(){
+    	return walkSheet.getHeight()/FRAME_ROWS;
+    }
 }

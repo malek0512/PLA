@@ -31,6 +31,7 @@ public class PacKnight extends Pacman{
 
 	//La princesse aurait une action, qui permet de signaler sa detresse, en mettant son referenceur dans cette variable
 	public PacPrincess princesseEnDetresse = null;
+	
 	//Contient le fantome apres lequel le knight est a la recherche
 	public Ghost ghostEnChasse = null;
 	

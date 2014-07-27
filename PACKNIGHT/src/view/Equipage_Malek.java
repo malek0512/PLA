@@ -1,0 +1,30 @@
+package view;
+
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+
+import model.personnages.PacKnight;
+import model.structure_terrain.Direction;
+
+public class Equipage_Malek extends Equipage{
+	
+	
+	public Equipage_Malek() {
+		super();
+	}
+	
+	public static void main(String[] args) {
+	    new LwjglApplication(new Jeu(new Equipage_Malek()),Jeu.TITLE,Jeu.WIDTH,Jeu.HEIGHT);
+		new Jeu(new Equipage_Malek());
+	}
+
+	@Override
+	public void create() {
+		PacKnight PACMAN_1= new PacKnight("J1",1,1,Direction.droite, true);
+//		PacKnight PACMAN_2= new PacKnight("J1",2,2,Direction.droite, true);
+		Joueur PM1 = new Joueur(Sprites.Pacman, PACMAN_1);
+//		Joueur PM2 = new Joueur(Sprites.Princess, PACMAN_2);
+		Equipage.joueurCamera =  PACMAN_1;
+		Equipage.joueurFleche =  PACMAN_1;
+	}
+}
+

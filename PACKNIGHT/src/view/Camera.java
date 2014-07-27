@@ -55,17 +55,17 @@ public class Camera {
             camera.rotate(rotationSpeed, 0, 0, 1);
         }
 //////////////////////////////////////        
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && Jeu.posX<=boundWidth) {
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && joueurCamera.x<=boundWidth) {
             	camera.translate(-pas, 0, 0);
         	
 	    }
-	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && Jeu.posX>=boundWidth) {
+	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && joueurCamera.x>=boundWidth) {
 	            camera.translate(pas, 0, 0);
 	    }
-	    if(Gdx.input.isKeyPressed(Input.Keys.DOWN) && Jeu.posY<=boundHeight) {
+	    if(Gdx.input.isKeyPressed(Input.Keys.DOWN) && joueurCamera.y<=boundHeight) {
 	            camera.translate(0, -pas, 0);
 	    }
-	    if(Gdx.input.isKeyPressed(Input.Keys.UP) && Jeu.posY>=boundHeight) {
+	    if(Gdx.input.isKeyPressed(Input.Keys.UP) && joueurCamera.y>=boundHeight) {
 	            camera.translate(0, pas, 0);
 	    }
 

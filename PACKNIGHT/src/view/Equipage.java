@@ -1,6 +1,8 @@
 package view;
 
+import model.personnages.PacKnight;
 import model.personnages.Personnage;
+import model.structure_terrain.Direction;
 
 public abstract class Equipage {
 
@@ -12,8 +14,14 @@ public abstract class Equipage {
 	public static Personnage joueur8456;
 
 	
-	public void suivant() {
+	public void render() {
 		for(Joueur j:Joueur.liste)
 				j.render();
 	}
+	
+	public void draw(){
+		for(Joueur j : Joueur.liste)
+			j.draw();
+	}
+	public abstract void create();
 }

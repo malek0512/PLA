@@ -151,11 +151,11 @@ public class Terrain {
 	}
 	
 	/**
-	 * renvoie vrai si les coordonné (x,y) et dans la direction d est dans un core
+	 * Renvoie vrai si les prochaine coordonnées actuelles sont dans le terrain, et les suivante ne le sont pas (tore)
 	 * @param x
 	 * @param y
 	 * @param d
-	 * @return
+	 * @return !estDansLeTerrain(new CoordCas(tmpX, tmpY)) && estDansLeTerrain(c)
 	 */
 	public boolean estCore(CoordCas c, Direction d)
 	{
@@ -164,8 +164,8 @@ public class Terrain {
 		int tmpY = c.y;
 		switch (d)
 		{
-		case haut : tmpY-= 1; break;
-		case bas : tmpY+= 1; break;
+		case haut : tmpY+= 1; break;
+		case bas : tmpY-= 1; break;
 		case droite : tmpX+=1; break;
 		case gauche : tmpX-=1; break;
 		default : break;

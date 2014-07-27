@@ -30,7 +30,7 @@ public class Map {
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(map, unitScale);
 	}
 
-	public static void renderer(OrthographicCamera camera){
+	public static void render(OrthographicCamera camera){
 		tiledMapRenderer.setView(camera);
 		deletePacgumsRender();
 		tiledMapRenderer.render(new int[] {wallLayer, gumLayer, collisionLayer});
@@ -80,7 +80,8 @@ public class Map {
 		for (int x = 0; x < terrain.length; x++) {
 	         for (int y = 0; y < terrain[x].length; y++) {
 	            TiledMapTileLayer.Cell gumCell = gumLayer.getCell(y, x);
-	            if (gumCell == null || terrain[x][y].getAccessCase()==Case.Pacgum) {
+	            if (gumCell == null || terrain[x][y].getAccessCase()==Case.Pacgum
+	            		|| terrain[x][y].getAccessCase()==Case.Mur) {
 	            	continue; // There is no cell
 	            }
 	            gumLayer.setCell(y, x, null);
@@ -92,9 +93,9 @@ public class Map {
 	public boolean can_move(int[][] terrain, float move_x, float move_y){
 		int tuileWidth = 32, tuileHeight = 32;
 	      boolean next_move_allowed = true;
-	      float playerX = Jeu.posX + move_x, playerY = Jeu.posY + move_y;
-	      float playerXcase = playerX / tuileWidth;
-	      float playerYcase = playerY / tuileHeight;
+//	      float playerX = Jeu.posX + move_x, playerY = Jeu.posY + move_y;
+//	      float playerXcase = playerX / tuileWidth;
+//	      float playerYcase = playerY / tuileHeight;
 	      
 //	      ArrayList<Collision> objArray = renderer.objArray;
 //	      Rectangle player = hero.getHitbox();

@@ -3,6 +3,8 @@ package view;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.math.Rectangle;
 
 
@@ -13,24 +15,39 @@ public class Jeu extends ApplicationAdapter {
 	public static final String TITLE = "PACK-NIGHT : THE RETURN";
 	public static final boolean USE_GL30 = false;
 	public static final int tuile_size = 32;
-	static float posX = 50f, posY = 50f;
+	public static SpriteBatch batch;
+	public static float stateTime;
 	
-	public Equipage equip;
+//	Sprites pacmanSprite;
+//	com.badlogic.gdx.graphics.g2d.Animation mama;
+	public Equipage equipe;
 
+	public Jeu(Equipage equipe){
+		super();
+		this.equipe = equipe;
+	}
+	
 	@Override
 	public void create() {
 		super.create();
+		
+		
 		Gdx.input.setInputProcessor(new InputHandler());
 		
 		//Sprite
-		equip = new EquipageMalek();
+		batch = new SpriteBatch(); //Feuille sur laquelle les sprites sont dessinés
 		
-		
+	    stateTime = 0f;
+//	    pacmanSprite = new Sprites(Sprites.Princess);
+	    
 		//Map
 		Map.create();
 		
+		equipe.create();
+		
 		//Camera
 		Camera.create();
+		
 		
 	}
 
@@ -55,10 +72,21 @@ public class Jeu extends ApplicationAdapter {
 		Camera.render();
 		
         //Map : voir le detail dans la classe Map
-        Map.renderer(Camera.camera);
+        Map.render(Camera.camera);
 		
-        //Sprite : voir le detail dans la classe Joueur
-        equip.suivant();
+        //Sprite
+        stateTime += Gdx.graphics.getDeltaTime(); //Calcul de decalage Delta entre chaque rafraichissement du sprite
+
+        equipe.render(); //Voir Joueur.render()
+        batch.setProjectionMatrix(Camera.camera.combined); //Colle le sprit a la map (ou camera je sais plus)
+//        mama = pacmanSprite.loadAnimation();
+        
+		batch.begin();
+			equipe.draw();
+//			batch.draw(mama.getKeyFrame(stateTime, true), 50, 50); 
+			
+		batch.end();
+		
 
 	}
 
