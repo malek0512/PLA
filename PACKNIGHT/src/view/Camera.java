@@ -41,17 +41,17 @@ public class Camera {
 		
 		int boundWidth = Jeu.WIDTH / 3, boundHeight = Jeu.HEIGHT / 3;
 		
-        if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.Z)) {
             camera.zoom += 0.02;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.Q)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.E)) {
             camera.zoom -= 0.02;
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.W)) {
             camera.rotate(-rotationSpeed, 0, 0, 1);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.E)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.X)) {
             camera.rotate(rotationSpeed, 0, 0, 1);
         }
 //////////////////////////////////////        

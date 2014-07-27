@@ -70,7 +70,7 @@ public class Map {
 	         res2 += "\n";
 		}
 		System.out.println(res);
-		System.out.println("Heiht"+ layer.getHeight() + "Wodht" + layer.getWidth());
+		System.out.println("Heiht"+ layer.getHeight() + " Wodht" + layer.getWidth());
 		return terrain;
 	}
 	
