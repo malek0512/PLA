@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.structure_terrain.Case;
 import model.structure_terrain.CoordCas;
 import model.structure_terrain.CoordPix;
 import model.structure_terrain.Direction;
@@ -92,7 +93,7 @@ public class PacKnight extends Pacman{
 				break;
 			}
 		}
-		if(Personnage.terrain.ValueCase(this.coordPix.CasCentre()) == 2)
+		if(Personnage.terrain.ValueCase(this.coordPix.CasCentre()) == Case.Pacgum)
 		{
 			this.mangePacGomm();
 		}
@@ -100,7 +101,7 @@ public class PacKnight extends Pacman{
 	
 	private void mangePacGomm()
 	{
-		Personnage.terrain.SetCase(this.coordPix.CasCentre(),1);
+		Personnage.terrain.SetCase(this.coordPix.CasCentre(),Case.Vide);
 		Terrain.nb_pacgum--;
 	}
 	

@@ -7,6 +7,7 @@ import java.util.List;
 import model.structure_terrain.*;
 import model.structure_terrain.CoordPix.position;
 import view.Jeu;
+import view.Map;
 import model.hitBoxManager.*;
 
 public abstract class Personnage {
@@ -53,7 +54,7 @@ public abstract class Personnage {
 	 * Ne fait pas de test, et avance Utiliser par les automates et c'est tout
 	 */
 	public void avancerAux() {
-		if(!Personnage.terrain.estCore(coordPix.CasCentre(), direction))
+//		if(!Personnage.terrain.estCore(coordPix.CasCentre(), direction))
 		switch (this.direction) {
 		case droite:
 			this.coordPix.x += tauxDeDeplacement;
@@ -72,34 +73,28 @@ public abstract class Personnage {
 		default:
 			break;
 		}
-		else
-		{
-			switch (this.direction)
-			{
-			case droite :
-				this.coordPix.x = 0;
-				break;
-			case gauche :
-				this.coordPix.x = Personnage.terrain.pixelBordDroit() - Jeu.tuile_size;
-				break;
-			case bas :
-				this.coordPix.y = 0;
-				break;
-			case haut :
-				this.coordPix.y = Personnage.terrain.pixelBordBas() - Jeu.tuile_size;
-				break;
-			}
-		}
+//		else
+//		{
+//			switch (this.direction)
+//			{
+//			case droite :
+//				this.coordPix.x = 0;
+//				break;
+//			case gauche :
+//				this.coordPix.x = Personnage.terrain.pixelBordDroit() - Jeu.tuile_size;
+//				break;
+//			case bas :
+//				this.coordPix.y = 0;
+//				break;
+//			case haut :
+//				this.coordPix.y = Personnage.terrain.pixelBordBas() - Jeu.tuile_size;
+//				break;
+//			}
+//		}
 		this.gererCollision();
 	}
 
-	/**
-	 * Change la direction du personnage Utiliser par les automates uniquement !
-	 * author : alex
-	 */
-	public void setDirection(Direction direction) {
-		this.direction = direction;
-	}
+
 
 	/* METHODE POUR USER */
 	/**
@@ -110,24 +105,28 @@ public abstract class Personnage {
 	 */
 	public void avancer() 
 	{
-		if (this.nextDirectionSet) 
-		{
-			if(caseDisponible(this.nextDirection))
-			{
-				this.direction = nextDirection;
-				this.nextDirectionSet = false;
-				this.avancerAux();
-			}
-			else if(caseDevantDisponible())
-			{
-				this.avancerAux();
-			}
-		} 
-		else 
+//		if (this.nextDirectionSet) 
+//		{
+//			if(caseDisponible(this.nextDirection))
+//			{
+//				this.direction = nextDirection;
+//				this.nextDirectionSet = false;
+//				this.avancerAux();
+//			}
+//			else if(caseDevantDisponible())
+//			{
+//				this.avancerAux();
+//			}
+//		} 
+//		else 
 			if (caseDevantDisponible())
 				this.avancerAux();
 	}
 
+	
+	
+	
+	
 	/**
 	 * Change la prochaine direction du personnage Utiliser par les utilisateur
 	 * uniquement ! author : alex
@@ -136,7 +135,14 @@ public abstract class Personnage {
 		this.nextDirection = dir;
 		this.nextDirectionSet = true;
 	}
-
+	
+	/**
+	 * Change la direction du personnage Utiliser par les automates uniquement !
+	 * author : alex
+	 */
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
 	/* RESTE */
 	/**
 	 * renvoie vrai si la case devant this est disponible author : alex
@@ -162,11 +168,11 @@ public abstract class Personnage {
 			return (Personnage.terrain.caseAcessible(coordPix.CasBG(), direction))
 					&& (Personnage.terrain.caseAcessible(coordPix.CasBD(), direction));
 		case droite:
-			return (Personnage.terrain.caseAcessible(coordPix.CasBG(), direction))
-					&& (Personnage.terrain.caseAcessible(coordPix.CasHG(), direction));
-		case gauche:
 			return (Personnage.terrain.caseAcessible(coordPix.CasBD(), direction))
 					&& (Personnage.terrain.caseAcessible(coordPix.CasHD(), direction));
+		case gauche:
+			return (Personnage.terrain.caseAcessible(coordPix.CasBG(), direction))
+					&& (Personnage.terrain.caseAcessible(coordPix.CasHG(), direction));
 		default:
 			return false;
 		}
@@ -261,7 +267,7 @@ public abstract class Personnage {
 										// "non automatisé \n");
 		for (int i = 0; i < terrain.hauteur; i++) {
 			for (int j = 0; j < terrain.largeur; j++) {
-				if (i == this.coordPix.CasCentre().y && j == this.coordPix.CasCentre().x) {
+				if (i == (int) this.coordPix.y/Map.tuileSize && j == (int) this.coordPix.x/Map.tuileSize) {
 					switch (this.direction) {
 					case haut:
 						res += " v ";
@@ -277,10 +283,11 @@ public abstract class Personnage {
 						break;
 					}
 				} else {
-					if (terrain.caseAcessible(new CoordCas(i, j))) {
-						if (terrain.terrain[i][j].caseValeur() == Case.Pacgum)
+					if (terrain.terrain[i][j].caseValeur()==Case.Vide) {
+						res += "   ";
+					} else if (terrain.terrain[i][j].caseValeur() == Case.Pacgum){
 							res += " . ";
-					} else {
+					} else if (terrain.terrain[i][j].caseValeur() == Case.Mur) {
 						res += " X ";
 					}
 				}

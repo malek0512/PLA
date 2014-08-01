@@ -15,21 +15,39 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Map {
 
+	/** REMARQUE
+	 * Toute les fonction static ont pour but d'alleger la classe Jeu.java principale. Pour ainsi séparer la gestion de
+	 * la camera et celle de la map etc...
+	 */
+	
     //Map
     public static TiledMap map;
     public static TiledMapRenderer tiledMapRenderer;
     public static int tuileSize = 32;
+    public static int mapWidth = -1;
+    public static int mapHeight = -1;
     public static int collisionLayer = 0;
     public static int gumLayer = 1;
 	public static int wallLayer = 2;
-	public static float unitScale = 0.75f;
+	public static float unitScale = 1f;
 	
+	/**
+	 * Initialise tout ce qui est relatif a la map
+	 * Fonction appellée dans la classe princiaple Jeu.ajava
+	 */
 	public static void create (){
-		map = new TmxMapLoader().load("assets/maps/PACMAN.tmx"); //Charge la Map 
+		map = new TmxMapLoader().load("assets/maps/FATMAP.tmx"); //Charge la Map
+		mapWidth = ((TiledMapTileLayer) map.getLayers().get(wallLayer)).getWidth()*32;
+		mapHeight = ((TiledMapTileLayer) map.getLayers().get(wallLayer)).getWidth()*32;
 		Personnage.terrain = new Terrain( mapToTerrainInit(map) ); //Initialise le terrain (virtuelle) de personnage
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(map, unitScale);
 	}
 
+	/**
+	 * Fonction 
+	 * @param camera
+	 * @author malek
+	 */
 	public static void render(OrthographicCamera camera){
 		tiledMapRenderer.setView(camera);
 		deletePacgumsRender();
@@ -40,13 +58,38 @@ public class Map {
 		map.dispose();
 	}
 	
+//	public static int[][] mapToTerrainInit(TiledMap map){
+//		int Mur = 0, Gum = 1;
+//		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("logic");
+//		int[][] terrain = new int[layer.getHeight()][layer.getWidth()];
+//		
+//		for (int x = 0; x < layer.getWidth(); x++) {
+//	         for (int y = 0; y < layer.getHeight(); y++) {
+//	            TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+//	            if (cell == null)
+//	            	terrain[y][x] = Gum;
+//	            else
+//	            	terrain[y][x] = Mur;
+//	         }
+//	    }
+//		return terrain;
+//	}
+
+	/**
+	 * Convertie la map.tmx en un terrain. Vous remarquerez que dans ma conception je fais
+	 * terrain[y][x] <-- layer.getCell(x, y); Ce qui je pense a la source principale de l'incapatibilité avec la 
+	 * fonction avancer()
+	 * @param map
+	 * @return terrain
+	 * @author malek
+	 */
 	public static Case[][] mapToTerrainInit(TiledMap map){
 		int Mur = Case.Mur, Gum = Case.Pacgum;
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("logic");
 		Case[][] terrain = new Case[layer.getHeight()][layer.getWidth()];
 		String res = "";
-		for (int y = 0; y < layer.getHeight() ; y++) {
-	         for (int x = 0; x < layer.getWidth(); x++) {
+		for (int x = 0; x < layer.getWidth(); x++) {
+	         for (int y = 0; y < layer.getHeight(); y++) {
 	            TiledMapTileLayer.Cell cell = layer.getCell(x, y);
 	            terrain[y][x] = new Case(0);
 	            if (cell == null){
@@ -70,10 +113,14 @@ public class Map {
 	         res2 += "\n";
 		}
 		System.out.println(res);
-		System.out.println("Heiht"+ layer.getHeight() + " Wodht" + layer.getWidth());
+		System.out.println("Height"+ layer.getHeight() + " Width" + layer.getWidth());
 		return terrain;
 	}
 	
+	/**
+	 * Syncronise les pacgum mangé entre le terrain et la fenetre graphique
+	 * @author malek 
+	 */
 	public static void deletePacgumsRender() {
 		Case[][] terrain = Personnage.terrain.terrain;
 		TiledMapTileLayer gumLayer = (TiledMapTileLayer) map.getLayers().get("GUM");

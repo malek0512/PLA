@@ -44,7 +44,7 @@ public class Joueur {
         
         System.out.println(p.toString());
 //        try {
-//			Thread.sleep(3000);
+//			Thread.sleep(1000);
 //		} catch (InterruptedException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
@@ -55,7 +55,7 @@ public class Joueur {
 	 * Methode dessinant le sprite du personnage, selon les coordones coordPix du personnage
 	 */
 	public void draw(){
-		Jeu.batch.draw(pacmanAnimation.getKeyFrame(Jeu.stateTime, true), p.coordPix.PixBG().x - pacmanSprite.getWidth()/2, p.coordPix.PixBG().y - pacmanSprite.getHeight()/2);
+		Jeu.batch.draw(pacmanAnimation.getKeyFrame(Jeu.stateTime, true), p.coordPix.PixCentre().x - pacmanSprite.getWidth()/2, p.coordPix.PixCentre().y - pacmanSprite.getHeight()/2);
 	}
 	
 	

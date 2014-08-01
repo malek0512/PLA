@@ -122,6 +122,7 @@ public class CoordPix extends Coord {
 			case centre : return new CoordCas((this.x + (size/2))/size, (y - (size/2))/size);
 			}
 			return null;
+			
 		}
 		
 		/**
@@ -159,6 +160,7 @@ public class CoordPix extends Coord {
 		/**
 		 * @return la case sur laquel est le pixel centrale de l'image de ce pixel
 		 */
+		//TODO Truc bizarre (this.x + (size/2))/size <=> (this.x / size) + 0.5  pk 0.5 et pase size/2=16
 		public CoordCas CasCentre()
 		{
 			switch(this.posPix)

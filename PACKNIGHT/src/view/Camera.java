@@ -1,5 +1,6 @@
 package view;
 
+import model.personnages.Personnage;
 import model.structure_terrain.CoordPix;
 
 import com.badlogic.gdx.Gdx;
@@ -10,6 +11,11 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Camera {
 
+	/** REMARQUE
+	 * Toute les fonction static ont pour but d'alleger la classe Jeu.java principale. Pour ainsi séparer la gestion de
+	 * la camera et celle de la map etc...
+	 */
+	
 	public static OrthographicCamera camera;
 	public static Rectangle glViewport;
     private static float rotationSpeed;
@@ -19,15 +25,22 @@ public class Camera {
     private static float largeur_map = ((TiledMapTileLayer) Map.map.getLayers().get(Map.wallLayer)).getWidth();
     private static float hauteur_map = ((TiledMapTileLayer) Map.map.getLayers().get(Map.wallLayer)).getHeight();
     
+    static int pas = Personnage.tauxDeDeplacement;
+	static int boundWidth = Jeu.WIDTH / 2 + 32;
+	static int boundHeight = Jeu.HEIGHT / 2 + 32;
+	static int boundWidthComplementaire = Jeu.WIDTH - boundWidth;
+	static int boundHeightComplementaire = Jeu.HEIGHT - boundHeight;
+	
 	public static void create(){
 	    camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
 
-		xCamera = camera.position.x;
-		yCamera = camera.position.y;
+		camera.position.x = Jeu.WIDTH/2;
+		camera.position.y = Jeu.HEIGHT/2;
+
 		//A conserver
-        glViewport = new Rectangle(0, 0, Jeu.WIDTH-20, Jeu.HEIGHT); //dimension du rectangle de vision != fenetre si menu
+        glViewport = new Rectangle(0, 0, Jeu.WIDTH - 0, Jeu.HEIGHT); //dimension du rectangle de vision != fenetre si menu
 	}
 	
 	public static void render(){
@@ -37,9 +50,6 @@ public class Camera {
 	}
 	
 	private static void handleInput() {
-		int pas = InputHandler.tauxDeplacement*2;
-		
-		int boundWidth = Jeu.WIDTH / 3, boundHeight = Jeu.HEIGHT / 3;
 		
         if(Gdx.input.isKeyPressed(Input.Keys.Z)) {
             camera.zoom += 0.02;
@@ -54,49 +64,34 @@ public class Camera {
         if(Gdx.input.isKeyPressed(Input.Keys.X)) {
             camera.rotate(rotationSpeed, 0, 0, 1);
         }
-//////////////////////////////////////        
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && joueurCamera.x<=boundWidth) {
-            	camera.translate(-pas, 0, 0);
-        	
-	    }
-	    if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && joueurCamera.x>=boundWidth) {
-	            camera.translate(pas, 0, 0);
-	    }
-	    if(Gdx.input.isKeyPressed(Input.Keys.DOWN) && joueurCamera.y<=boundHeight) {
-	            camera.translate(0, -pas, 0);
-	    }
-	    if(Gdx.input.isKeyPressed(Input.Keys.UP) && joueurCamera.y>=boundHeight) {
-	            camera.translate(0, pas, 0);
-	    }
 
+        
+
+/** Scrolling mis en commentaire en periode de test 
+ * */ 
         camera.position.x = joueurCamera.x;
     	camera.position.y = joueurCamera.y;
-    	
-//    	if(joueurCamera!=null)
-//    	{
-//
-//    	float w = Jeu.WIDTH / 4;
-//    	if (! (joueurCamera.x - xCamera > resolution_x / 2 || joueurCamera.x - xCamera < -resolution_x / 2)) {
-//    		if (joueurCamera.x + largeur_map* taille_minimap > (xCamera + w)&& (joueurCamera.x + w < largeur_map* Map.tuileSize))
-//    			xCamera = joueurCamera.x - w+ largeur_map * taille_minimap;
-//    		if (joueurCamera.x < (xCamera - w)&& (joueurCamera.x > w))
-//    			xCamera = joueurCamera.x + w;
-//    	} else if ((joueurCamera.x - xCamera > resolution_x / 2))
-//    		xCamera = largeur_map * Map.tuileSize - resolution_x / 2+ largeur_map * taille_minimap;
-//    	else if ((joueurCamera.x - xCamera < -resolution_x / 2))
-//    		xCamera = resolution_x / 2;
-//
-//    	float h = Jeu.HEIGHT / 4;
-//    	if (!(joueurCamera.y - yCamera > resolution_y / 2 || joueurCamera.y - yCamera < -resolution_y / 2)) {
-//    		if (joueurCamera.y > (yCamera + h)&& (joueurCamera.y + h < hauteur_map* Map.tuileSize))
-//    			yCamera = joueurCamera.y - h;
-//    		if (joueurCamera.y < (yCamera - h)&& (joueurCamera.y > h))
-//    			yCamera = joueurCamera.y + h;
-//    	} else if ((joueurCamera.y - yCamera > resolution_y / 2))
-//    		yCamera = hauteur_map * Map.tuileSize - resolution_y / 2;
-//    	else if ((joueurCamera.y - yCamera < -resolution_y / 2))
-//    		yCamera = resolution_y / 2;
-//    	}
+//        if (camera.position.x - 0 >= Jeu.WIDTH/2 && camera.position.x <= Map.mapWidth - Jeu.WIDTH/2){
+//        	//La camera n'affiche jamais la surface hors terrain
+//        	System.out.println(Math.abs(camera.position.x - joueurCamera.x) + " " + boundWidthComplementaire );
+//        	if (camera.position.x - joueurCamera.x >= 0 && Math.abs(camera.position.x - joueurCamera.x) > boundWidthComplementaire ){
+//        		//Si pacman est a gauche du centre de la camera, et uea.position.x - posX >= 0  la distance(camera_centre, pacman) depasse pas la lmite
+//        		camera.translate(-InputHandler.tauxDeplacement, 0, 0);
+//        	} else if (camera.position.x - joueurCamera.x <= 0 && Math.abs(camera.position.x - joueurCamera.x) > boundWidthComplementaire ){
+//        		//Si pacman est a droite du centre de la camera, et que la distance(camera_centre, pacman) depasse la limite
+//        		camera.translate(InputHandler.tauxDeplacement, 0, 0);
+//        	}
+//        }
+//        
+//        if (camera.position.y - 0 >= Jeu.HEIGHT/2 && camera.position.y <= Map.mapHeight - Jeu.HEIGHT/2){
+//        	if (camera.position.y - joueurCamera.y >= 0 && Math.abs(camera.position.y - joueurCamera.y) > boundHeightComplementaire ){ 
+//        		//Si pacman est en dessous du centre de la camera, et que la distance(camera_centre, pacman) depasse pas la lmite
+//        		camera.translate(0,-InputHandler.tauxDeplacement, 0);
+//        	} else if (camera.position.y - joueurCamera.y <= 0 && Math.abs(camera.position.y - joueurCamera.y) > boundHeightComplementaire ){
+//        		//Si pacman est au dessus du centre de la camera, et que la distance(camera_centre, pacman) depasse la limite
+//        		camera.translate(0,InputHandler.tauxDeplacement, 0);
+//        	}
+//        }
     }
 
 
