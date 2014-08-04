@@ -14,7 +14,6 @@ public class Equipage_Malek extends Equipage{
 	
 	public static void main(String[] args) {
 	    new LwjglApplication(new Jeu(new Equipage_Malek()),Jeu.TITLE,Jeu.WIDTH,Jeu.HEIGHT);
-		new Jeu(new Equipage_Malek());
 	}
 
 	@Override

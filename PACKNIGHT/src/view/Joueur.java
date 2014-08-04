@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 
 import controller.Automate;
 import model.personnages.*;
+import model.structure_terrain.Direction;
 
 public class Joueur {
 	public static List<Joueur> liste = new LinkedList<Joueur>();
@@ -24,6 +25,18 @@ public class Joueur {
 		liste.add(this);
 	}
 
+	public Joueur(String sprite, Personnage p, String automate) {
+		
+		try{
+    		this.auto = new Automate("Automate/"+automate, p);
+    	}catch(Exception e)  { System.out.println(e); }
+		
+		this.p = p;
+		pacmanSprite = new Sprites(sprite);
+		
+    	liste.add(this);
+	}
+
 		
 	/**
 	 * Methode a executer avant le bach.begin() dans Jeu.java
@@ -37,18 +50,13 @@ public class Joueur {
 		}
 		
 		//Permet de choisir l'annimation de pacman parmis les 4 directions possible
-		pacmanSprite.direction = p.direction;
+		if (p.direction==Direction.haut) pacmanSprite.direction =  Direction.bas;
+		else if (p.direction==Direction.bas) pacmanSprite.direction =  Direction.haut;
+		else pacmanSprite.direction = p.direction;
 		
 		//Charge l'annimation de pacman
         pacmanAnimation = pacmanSprite.loadAnimation();
         
-        System.out.println(p.toString());
-//        try {
-//			Thread.sleep(1000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 	
 	/**
@@ -76,16 +84,5 @@ public class Joueur {
 //	liste.add(this);
 //}
 //
-//	public Joueur(String sprite, Personnage p, String automate) {
-//		
-//		try{
-//    		this.auto = new Automate("Automate/"+automate, p);
-//    	}catch(Exception e)  { System.out.println(e); }
-//		
-//		this.p = p;
-//		create(sprite);
-//		
-//    	liste.add(this);
-//	}
 
 }

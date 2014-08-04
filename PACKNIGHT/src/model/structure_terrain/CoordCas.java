@@ -28,6 +28,7 @@ public class CoordCas extends Coord {
 	 * edit : prend en compte le tore 
 	 * @param d
 	 */
+	//coorigé y++ et y--
 	public void avancerDansDir(Direction d)
 	{
 		Terrain t = Personnage.terrain;
@@ -54,10 +55,10 @@ public class CoordCas extends Coord {
 			switch(d)
 			{
 			case haut:
-				y--;
+				y++;
 				break;
 			case bas:
-				y++;
+				y--;
 				break;
 			case droite:
 				x++;

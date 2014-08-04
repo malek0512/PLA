@@ -48,10 +48,9 @@ public class Terrain {
 	 * @param elt l'objet a mettre
 	 * @require : les coordonée sont juste et l'objet est initialiser
 	 */
-	//corr
 	public void setCase(CoordCas c, int elt){
 		if(estDansLeTerrain(c))
-			terrain[c.y][c.x]=new Case(elt);
+			terrain[c.x][c.y]=new Case(elt);
 	}
 
 	private int nbPacgum(){
@@ -89,11 +88,10 @@ public class Terrain {
 	 * @param x : cord.x de la case
 	 * @param y : cord.y de la case
 	 */
-	//corr
 	public boolean caseAcessible(CoordCas c)
 	{
 		if(estDansLeTerrain(c))
-			return terrain[c.y][c.x].isAccessable();
+			return terrain[c.x][c.y].isAccessable();
 		else
 			return false;
 	}
@@ -119,28 +117,26 @@ public class Terrain {
 	 * @param direction : direction vers ou on veut connaitre la case
 	 * @return vraie si la case de distance distance et dans la direction donné est accessible
 	 */
-	//corr
 	public boolean caseAcessible(CoordCas c, int distance, Direction direction)
 	{
-//		if (c.x>terrain.length || c.y>terrain[0].length)
-			switch(direction)
-			{
-			case haut :
-				if(estDansLeTerrain(new CoordCas(c.x, c.y+distance)))
-					return terrain[c.x][c.y+distance].isAccessable();
-			case bas :
-				if(estDansLeTerrain(new CoordCas(c.x, c.y-distance)))
-					return terrain[c.x][c.y-distance].isAccessable();
-			case droite :
-				if(estDansLeTerrain(new CoordCas(c.x+distance, c.y)))
-					return terrain[(c.x+distance)][c.y].isAccessable();
-			case gauche : 
-				if(estDansLeTerrain(new CoordCas(c.x-distance, c.y)))
-					return terrain[(c.x-distance)][c.y].isAccessable();
-			default:
-				break; 
-			}
-		return false;
+		switch(direction)
+		{
+		case haut :
+			if(estDansLeTerrain(new CoordCas(c.x, c.y-distance)))
+				return terrain[c.x][c.y-distance].isAccessable();
+		case bas :
+			if(estDansLeTerrain(new CoordCas(c.x, c.y+distance)))
+				return terrain[c.x][c.y+distance].isAccessable();
+		case droite :
+			if(estDansLeTerrain(new CoordCas(c.x+distance, c.y)))
+				return terrain[(c.x+distance)][c.y].isAccessable();
+		case gauche : 
+			if(estDansLeTerrain(new CoordCas(c.x-distance, c.y)))
+				return terrain[(c.x-distance)][c.y].isAccessable();
+		default:
+			break; 
+		}
+	return false;
 	}
 	
 	/**
@@ -151,7 +147,7 @@ public class Terrain {
 	 *
 	 */
 	protected boolean estDansLeTerrain(CoordCas c){
-		return c.x>-1 && c.x <largeur && c.y>-1 && c.y<hauteur;
+		return c.x>-1 && c.x <hauteur && c.y>-1 && c.y<largeur;
 	}
 	
 	/**
@@ -168,8 +164,8 @@ public class Terrain {
 		int tmpY = c.y;
 		switch (d)
 		{
-		case haut : tmpY+= 1; break;
-		case bas : tmpY-= 1; break;
+		case haut : tmpY-= 1; break;
+		case bas : tmpY+= 1; break;
 		case droite : tmpX+=1; break;
 		case gauche : tmpX-=1; break;
 		default : break;
@@ -195,19 +191,17 @@ public class Terrain {
 		return Jeu.tuile_size * this.hauteur;
 	}
 	
-	//corrige
 	public int ValueCase(CoordCas c)
 	{
 		if(estDansLeTerrain(c))
-			return terrain[c.y][c.x].caseValeur();
+			return terrain[c.x][c.y].caseValeur();
 		return 0;
 	}
 	
-	//corrige
 	public void SetCase(CoordCas c, int v)
 	{
 		if(estDansLeTerrain(c))
-			terrain[c.y][c.x].setAcessCase(v);
+			terrain[c.x][c.y].setAcessCase(v);
 	}
 
 	/**

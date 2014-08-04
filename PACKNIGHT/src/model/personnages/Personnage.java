@@ -1,8 +1,10 @@
 package model.personnages;
 
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 
 import model.structure_terrain.*;
 import model.structure_terrain.CoordPix.position;
@@ -54,7 +56,7 @@ public abstract class Personnage {
 	 * Ne fait pas de test, et avance Utiliser par les automates et c'est tout
 	 */
 	public void avancerAux() {
-//		if(!Personnage.terrain.estCore(coordPix.CasCentre(), direction))
+		if(!Personnage.terrain.estCore(coordPix.CasCentre(), direction))
 		switch (this.direction) {
 		case droite:
 			this.coordPix.x += tauxDeDeplacement;
@@ -63,34 +65,34 @@ public abstract class Personnage {
 			this.coordPix.x -= tauxDeDeplacement;
 			break;
 		case haut:
-			this.coordPix.y += tauxDeDeplacement;
+			this.coordPix.y -= tauxDeDeplacement;
 			break;
 
 		case bas:
-			this.coordPix.y -= tauxDeDeplacement;
+			this.coordPix.y += tauxDeDeplacement;
 			break;
 
 		default:
 			break;
 		}
-//		else
-//		{
-//			switch (this.direction)
-//			{
-//			case droite :
-//				this.coordPix.x = 0;
-//				break;
-//			case gauche :
-//				this.coordPix.x = Personnage.terrain.pixelBordDroit() - Jeu.tuile_size;
-//				break;
-//			case bas :
-//				this.coordPix.y = 0;
-//				break;
-//			case haut :
-//				this.coordPix.y = Personnage.terrain.pixelBordBas() - Jeu.tuile_size;
-//				break;
-//			}
-//		}
+		else
+		{
+			switch (this.direction)
+			{
+			case droite :
+				this.coordPix.x = 0;
+				break;
+			case gauche :
+				this.coordPix.x = Personnage.terrain.pixelBordDroit() - Jeu.tuile_size;
+				break;
+			case bas :
+				this.coordPix.y = 0;
+				break;
+			case haut :
+				this.coordPix.y = Personnage.terrain.pixelBordBas() - Jeu.tuile_size;
+				break;
+			}
+		}
 		this.gererCollision();
 	}
 
@@ -105,20 +107,20 @@ public abstract class Personnage {
 	 */
 	public void avancer() 
 	{
-//		if (this.nextDirectionSet) 
-//		{
-//			if(caseDisponible(this.nextDirection))
-//			{
-//				this.direction = nextDirection;
-//				this.nextDirectionSet = false;
-//				this.avancerAux();
-//			}
-//			else if(caseDevantDisponible())
-//			{
-//				this.avancerAux();
-//			}
-//		} 
-//		else 
+		if (this.nextDirectionSet) 
+		{
+			if(caseDisponible(this.nextDirection))
+			{
+				this.direction = nextDirection;
+				this.nextDirectionSet = false;
+				this.avancerAux();
+			}
+			else if(caseDevantDisponible())
+			{
+				this.avancerAux();
+			}
+		} 
+		else 
 			if (caseDevantDisponible())
 				this.avancerAux();
 	}
@@ -162,17 +164,17 @@ public abstract class Personnage {
 
 		switch (direction) {
 		case haut:
-			return Personnage.terrain.caseAcessible(coordPix.CasHD(), direction) &&
-					Personnage.terrain.caseAcessible(coordPix.CasHG(), direction);
+			return Personnage.terrain.caseAcessible(coordPix.CasBD(), direction) &&
+					Personnage.terrain.caseAcessible(coordPix.CasBG(), direction);
 		case bas:
-			return (Personnage.terrain.caseAcessible(coordPix.CasBG(), direction))
-					&& (Personnage.terrain.caseAcessible(coordPix.CasBD(), direction));
-		case droite:
-			return (Personnage.terrain.caseAcessible(coordPix.CasBD(), direction))
+			return (Personnage.terrain.caseAcessible(coordPix.CasHG(), direction))
 					&& (Personnage.terrain.caseAcessible(coordPix.CasHD(), direction));
-		case gauche:
+		case droite:
 			return (Personnage.terrain.caseAcessible(coordPix.CasBG(), direction))
 					&& (Personnage.terrain.caseAcessible(coordPix.CasHG(), direction));
+		case gauche:
+			return (Personnage.terrain.caseAcessible(coordPix.CasBD(), direction))
+					&& (Personnage.terrain.caseAcessible(coordPix.CasHD(), direction));
 		default:
 			return false;
 		}
@@ -267,7 +269,7 @@ public abstract class Personnage {
 										// "non automatisé \n");
 		for (int i = 0; i < terrain.hauteur; i++) {
 			for (int j = 0; j < terrain.largeur; j++) {
-				if (i == (int) this.coordPix.y/Map.tuileSize && j == (int) this.coordPix.x/Map.tuileSize) {
+				if (i == (int) this.coordPix.x/Map.tuileSize && j == (int) this.coordPix.y/Map.tuileSize) {
 					switch (this.direction) {
 					case haut:
 						res += " v ";

@@ -36,7 +36,7 @@ public class Map {
 	 * Fonction appellée dans la classe princiaple Jeu.ajava
 	 */
 	public static void create (){
-		map = new TmxMapLoader().load("assets/maps/FATMAP.tmx"); //Charge la Map
+		map = new TmxMapLoader().load("assets/maps/PACMAN.tmx"); //Charge la Map
 		mapWidth = ((TiledMapTileLayer) map.getLayers().get(wallLayer)).getWidth()*32;
 		mapHeight = ((TiledMapTileLayer) map.getLayers().get(wallLayer)).getWidth()*32;
 		Personnage.terrain = new Terrain( mapToTerrainInit(map) ); //Initialise le terrain (virtuelle) de personnage
@@ -86,22 +86,24 @@ public class Map {
 	public static Case[][] mapToTerrainInit(TiledMap map){
 		int Mur = Case.Mur, Gum = Case.Pacgum;
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("logic");
-		Case[][] terrain = new Case[layer.getHeight()][layer.getWidth()];
+		Case[][] terrain = new Case[layer.getWidth()][layer.getHeight()];
 		String res = "";
 		for (int x = 0; x < layer.getWidth(); x++) {
 	         for (int y = 0; y < layer.getHeight(); y++) {
 	            TiledMapTileLayer.Cell cell = layer.getCell(x, y);
-	            terrain[y][x] = new Case(0);
+	            terrain[x][y] = new Case(0);
 	            if (cell == null){
-	            	terrain[y][x].setAcessCase(Gum);
+	            	terrain[x][y].setAcessCase(Gum);
 	            	res += " . ";
 	            }else {
-	            	terrain[y][x].setAcessCase(Mur);
+	            	terrain[x][y].setAcessCase(Mur);
 	            	res += " X ";
 	            }
 	         }
 	         res += "\n";
 	    }
+
+
 		System.out.println(res);
 		System.out.println("----------------------------------------------------------------");
 		
@@ -126,12 +128,12 @@ public class Map {
 		TiledMapTileLayer gumLayer = (TiledMapTileLayer) map.getLayers().get("GUM");
 		for (int x = 0; x < terrain.length; x++) {
 	         for (int y = 0; y < terrain[x].length; y++) {
-	            TiledMapTileLayer.Cell gumCell = gumLayer.getCell(y, x);
+	            TiledMapTileLayer.Cell gumCell = gumLayer.getCell(x, y);
 	            if (gumCell == null || terrain[x][y].getAccessCase()==Case.Pacgum
 	            		|| terrain[x][y].getAccessCase()==Case.Mur) {
 	            	continue; // There is no cell
 	            }
-	            gumLayer.setCell(y, x, null);
+	            gumLayer.setCell(x, y, null);
 	         }
 	    }
 	}

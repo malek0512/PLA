@@ -17,28 +17,20 @@ public class InputHandler implements InputProcessor {
 		switch (arg0) {
 			case Keys.ESCAPE : Gdx.app.exit(); break;
 			case Keys.UP :
-				Equipage.joueurCamera.direction = model.structure_terrain.Direction.haut;
-//				Jeu.posY = Jeu.posY + (float) tauxDeplacement;
-//				Jeu.pacman.setY(Jeu.pacman.getY()+tauxDeplacement);
-//				Sprites.direction = Direction.haut;
+				Equipage.joueurFleche.setNextDirection(model.structure_terrain.Direction.bas);
+				Equipage.joueurCamera.setNextDirection(model.structure_terrain.Direction.bas);
 				break;
 			case Keys.RIGHT :
-				Equipage.joueurCamera.direction = model.structure_terrain.Direction.droite;
-//				Jeu.posX = Jeu.posX + (float) tauxDeplacement;
-//				Jeu.pacman.setX(Jeu.pacman.getX()+tauxDeplacement); 
-//				Sprites.direction = Direction.droite;
+				Equipage.joueurFleche.setNextDirection(model.structure_terrain.Direction.droite);
+				Equipage.joueurCamera.setNextDirection(model.structure_terrain.Direction.droite);
 				break;
 			case Keys.LEFT :
-				Equipage.joueurCamera.direction = model.structure_terrain.Direction.gauche;
-//				Jeu.posX = Jeu.posX - (float) tauxDeplacement;
-//				Jeu.pacman.setX(Jeu.pacman.getX()-tauxDeplacement); 
-//				Sprites.direction = Direction.gauche;
+				Equipage.joueurFleche.setNextDirection(model.structure_terrain.Direction.gauche);
+				Equipage.joueurCamera.setNextDirection(model.structure_terrain.Direction.gauche);
 				break;
 			case Keys.DOWN :  
-				Equipage.joueurCamera.direction = model.structure_terrain.Direction.bas;
-//				Jeu.posY = Jeu.posY - (float) tauxDeplacement;
-//				Jeu.pacman.setY(Jeu.pacman.getY()-tauxDeplacement);
-//				Sprites.direction = Direction.bas;
+				Equipage.joueurFleche.setNextDirection(model.structure_terrain.Direction.haut);
+				Equipage.joueurCamera.setNextDirection(model.structure_terrain.Direction.haut);
 				break;
 		}
 		return false;

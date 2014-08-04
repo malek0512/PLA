@@ -69,8 +69,8 @@ public class Camera {
 
 /** Scrolling mis en commentaire en periode de test 
  * */ 
-        camera.position.x = joueurCamera.x;
-    	camera.position.y = joueurCamera.y;
+        camera.position.x = joueurCamera.PixCentre().x;
+    	camera.position.y = joueurCamera.PixCentre().y;
 //        if (camera.position.x - 0 >= Jeu.WIDTH/2 && camera.position.x <= Map.mapWidth - Jeu.WIDTH/2){
 //        	//La camera n'affiche jamais la surface hors terrain
 //        	System.out.println(Math.abs(camera.position.x - joueurCamera.x) + " " + boundWidthComplementaire );
