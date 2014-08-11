@@ -10,17 +10,14 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Jeu extends ApplicationAdapter {
 	
-	public static final int WIDTH = 680;
-	public static final int HEIGHT = WIDTH * 9 / 16;
+	public static final int WIDTH = 1080;
+	public static final int HEIGHT = 720; //WIDTH * 9 / 16;
 	public static final String TITLE = "PACK-NIGHT : THE RETURN";
 	public static final boolean USE_GL30 = false;
 	public static final int tuile_size = 32;
 	public static SpriteBatch batch;
 	public static float stateTime;
-	
-//	Sprites pacmanSprite;
-//	com.badlogic.gdx.graphics.g2d.Animation mama;
-	public Equipage equipe;
+	public static Equipage equipe;
 
 	public Jeu(Equipage equipe){
 		super();
@@ -38,7 +35,7 @@ public class Jeu extends ApplicationAdapter {
 		batch = new SpriteBatch(); //Feuille sur laquelle les sprites sont dessinés
 		
 	    stateTime = 0f;
-//	    pacmanSprite = new Sprites(Sprites.Princess);
+//	    pacmanSprite = new S		prites(Sprites.Princess);
 	    
 		//Map
 		Map.create();
@@ -55,6 +52,7 @@ public class Jeu extends ApplicationAdapter {
 	public void dispose() {
 		super.dispose();
 		Map.dispose();
+		Jeu.batch.dispose();
 	}
 
 	@Override
@@ -101,5 +99,6 @@ public class Jeu extends ApplicationAdapter {
 	public void resume() {
 		super.resume();
 	}
+
 
 }

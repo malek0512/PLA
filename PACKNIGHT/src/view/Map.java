@@ -36,7 +36,7 @@ public class Map {
 	 * Fonction appellée dans la classe princiaple Jeu.ajava
 	 */
 	public static void create (){
-		map = new TmxMapLoader().load("assets/maps/PACMAN.tmx"); //Charge la Map
+		map = new TmxMapLoader().load("maps/PACMAN.tmx"); //Charge la Map
 		mapWidth = ((TiledMapTileLayer) map.getLayers().get(wallLayer)).getWidth()*32;
 		mapHeight = ((TiledMapTileLayer) map.getLayers().get(wallLayer)).getWidth()*32;
 		Personnage.terrain = new Terrain( mapToTerrainInit(map) ); //Initialise le terrain (virtuelle) de personnage

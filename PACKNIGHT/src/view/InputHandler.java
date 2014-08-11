@@ -61,12 +61,7 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//	 	Vector3 clickCoordinates = new Vector3(screenX,screenY,0);
-//        Vector3 position = camera.unproject(clickCoordinates);
-//        TextureMapObject character = (TextureMapObject)tiledMap.getLayers().get("objects").getObjects().get(0);
-//        character.setX((float)position.x);
-//        character.setY((float)position.y);
-//        return true;
+
 		return false;
 	}
 
@@ -78,44 +73,39 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
-  private void ManipulerLapin_accelerometre() // => destinée Android
-  {
-        // Les directions principales
+	// => destinée Android
+	public static void manipulerAccelerometre() {
         if(Gdx.input.getAccelerometerY()>1)
         {
-        	p.coordPix.x+=tauxDeplacement;
-//               type_animation=7;
+        	Equipage.joueurFleche.setNextDirection(model.structure_terrain.Direction.droite);
         }
         if(Gdx.input.getAccelerometerY()<-1)
         {
-        	p.coordPix.x-=tauxDeplacement;
-//               type_animation=3;
+        	Equipage.joueurFleche.setNextDirection(model.structure_terrain.Direction.gauche);
         }
         if(Gdx.input.getAccelerometerX()>1)
         {
-        	p.coordPix.y-=tauxDeplacement;
-//               type_animation=0;
+        	Equipage.joueurFleche.setNextDirection(model.structure_terrain.Direction.bas);
         }
         if(Gdx.input.getAccelerometerX()<-1)
         {
-        	p.coordPix.y+=tauxDeplacement;
-//               type_animation=4;
+        	Equipage.joueurFleche.setNextDirection(model.structure_terrain.Direction.haut);
         }
        
-        // La direction initial du Lapin
-        if(Gdx.input.getAccelerometerX()<1 && Gdx.input.getAccelerometerY()<1 && Gdx.input.getAccelerometerX()>-1 && Gdx.input.getAccelerometerY()>-1 )
-        {
-//               animation_stop = true;
-//               regionCourante = regionInitial ;
-        }else
-        {
-//               animation_stop = false;
-        }
+//        // La direction initial du Lapin
+//        if(Gdx.input.getAccelerometerX()<1 && Gdx.input.getAccelerometerY()<1 && Gdx.input.getAccelerometerX()>-1 && Gdx.input.getAccelerometerY()>-1 )
+//        {
+////	               animation_stop = true;
+////	               regionCourante = regionInitial ;
+//        }else
+//        {
+////	               animation_stop = false;
+//        }
   }
-     
-//****************** Manipulation entrées accéléromètre***********************************//
+	
+
 }
