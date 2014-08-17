@@ -1,10 +1,9 @@
 package view.screen;
 
 import view.Jeu;
-import view.LauncherScreen;
 import view.MusicManager;
-import view.LauncherScreen.typeScreen;
 import view.MusicManager.typeSong;
+import view.screen.LauncherScreen.typeScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -42,7 +41,7 @@ public class AccueilScreen implements Screen{
 	public void show() {
 //		Gdx.app.log("Accueil", "Je suis dans l'accueil");
 		System.out.println("SHOWWWW_ACCUEIL");
-		MusicManager.play(typeSong.accueil);
+		MusicManager.playLoop(typeSong.accueil);
 		fond = new Texture(Gdx.files.internal("pictures/Accueil.jpeg"));
 		batch = new SpriteBatch();
 		Gdx.input.setInputProcessor(this.inputHandler());
@@ -91,7 +90,7 @@ public class AccueilScreen implements Screen{
 			
 			@Override
 			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//				LauncherScreen.setNextScreen(typeScreen.MENU);
+				LauncherScreen.setNextScreen(typeScreen.MENU);
 				return false;
 			}
 			
@@ -132,13 +131,4 @@ public class AccueilScreen implements Screen{
 			}
 		};
 	}
-	
-//	public void handleInput2() {
-//		if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-//			LauncherScreen.setNextScreen(typeScreen.MENU); 
-//		}
-//		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) { 
-//			Gdx.app.exit(); 
-//		}
-//	}
-}
+	}

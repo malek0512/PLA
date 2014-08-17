@@ -1,10 +1,7 @@
-package view;
+package view.screen;
 
 import java.util.HashMap;
 
-import view.screen.AccueilScreen;
-import view.screen.ChoixMultiJoueurScreen;
-import view.screen.MenuScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -18,7 +15,12 @@ public class LauncherScreen extends Game {
 		ACCUEIL (new AccueilScreen()), 
 		CHOIX (new ChoixMultiJoueurScreen()),
 		MENU (new MenuScreen()), 
-//		JEU, PERDU, GAGNER, PAUSE;
+		REGLAGE (new ReglageScreen()),
+		JEU (null), //Initialisé par MenuScreen
+		PERDU (new PerduScreen()), 
+		GAGNER (new GagnerScreen()),
+		DIFFICULTE (new DifficulteScreen()),
+		PAUSE (null);
 		;
 		private Screen value; 
 		private typeScreen (Screen s) {
@@ -29,9 +31,9 @@ public class LauncherScreen extends Game {
 			this.value.dispose();
 		}
 
-//		public void changeScreen(Screen t){
-//			this.value=t;
-//		}
+		public void setScreen(Screen t){
+			this.value=t;
+		}
 	}; 
 	
 	private static typeScreen screenCourant;
@@ -39,7 +41,7 @@ public class LauncherScreen extends Game {
 	
 	@Override
 	public void create() {
-		screenCourant = typeScreen.ACCUEIL;
+		screenCourant = typeScreen.DIFFICULTE;
 		screenPrecedent = screenCourant;
 		setScreen(screenCourant.value);
 	}

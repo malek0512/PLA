@@ -34,9 +34,8 @@ public abstract class Personnage {
 
 	
 	/**
-	 * Donne un nom, une poisition et une direction au personnage Ajoute le
+	 * Donne un nom, une position et une direction au personnage Ajoute le
 	 * personnage a la liste des perso
-	 * 
 	 * @author malek
 	 */
 	public Personnage(String nom, int x, int y, Direction d) {

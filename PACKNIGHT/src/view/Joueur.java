@@ -20,7 +20,6 @@ public class Joueur {
 
 	public Joueur(String sprite, Personnage p) {
 		this.p = p;
-//		pacmanSprite = new Sprites(Sprites.Princess);
 		pacmanSprite = new Sprites(sprite);
 		liste.add(this);
 	}
@@ -56,16 +55,13 @@ public class Joueur {
 		
 		//Charge l'annimation de pacman
         pacmanAnimation = pacmanSprite.loadAnimation();
+
+        //Dessine le pacman
+        Jeu.batch.draw(pacmanAnimation.getKeyFrame(Jeu.stateTime, true), 
+        		p.coordPix.PixCentre().x - pacmanSprite.getWidth()/2, 
+        		p.coordPix.PixCentre().y - pacmanSprite.getHeight()/2);
         
 	}
-	
-	/**
-	 * Methode dessinant le sprite du personnage, selon les coordones coordPix du personnage
-	 */
-	public void draw(){
-		Jeu.batch.draw(pacmanAnimation.getKeyFrame(Jeu.stateTime, true), p.coordPix.PixCentre().x - pacmanSprite.getWidth()/2, p.coordPix.PixCentre().y - pacmanSprite.getHeight()/2);
-	}
-	
 	
 	private void suivant () throws Exception{
 		if(this.auto != null){
@@ -78,11 +74,4 @@ public class Joueur {
 		}
 	}
 	
-//	public Joueur(String sprite) {
-//	this.p = new PacKnight("mainJoueur", 1, 1, Direction.gauche, true);
-//	create(sprite);
-//	liste.add(this);
-//}
-//
-
 }

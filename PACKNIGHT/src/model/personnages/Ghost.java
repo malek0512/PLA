@@ -256,7 +256,7 @@ public class Ghost extends Personnage {
 	protected void respawnWOA() {
 		if(!Ghost.modeMulti)
 		{
-			this.coordPix = new CoordPix(this.pointDeRespawn);
+			this.coordPix.setCoord(this.pointDeRespawn);
 			this.direction = Direction.droite;
 			this.prisonner = true;
 		}

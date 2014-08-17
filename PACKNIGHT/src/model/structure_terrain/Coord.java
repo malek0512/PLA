@@ -26,4 +26,8 @@ public abstract class Coord {
 	public int x;
 	public int y;
 	
+	public void setCoord(Coord c){
+		this.x = c.x;
+		this.y = c.y;
+	}
 }

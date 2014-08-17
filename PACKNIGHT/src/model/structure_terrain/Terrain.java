@@ -179,7 +179,7 @@ public class Terrain {
 	 */
 	public int pixelBordDroit()
 	{
-		return Jeu.tuile_size * this.largeur;
+		return Jeu.tuile_size * this.hauteur;
 	}
 	
 	/**
@@ -188,7 +188,7 @@ public class Terrain {
 	 */
 	public int pixelBordBas()
 	{
-		return Jeu.tuile_size * this.hauteur;
+		return Jeu.tuile_size * this.largeur;
 	}
 	
 	public int ValueCase(CoordCas c)

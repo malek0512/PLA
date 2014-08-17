@@ -32,12 +32,21 @@ public class MusicManager {
 		
 	}
 
-	static public void play(typeSong t) {
+	static public void playLoop(typeSong t) {
 		if(!mute) {
 			if (! songList.containsKey(t))
 				songList.put(t, Gdx.audio.newSound(Gdx.files.internal(t.value)));	
 			
 			songList.get(t).loop();
+		}
+	}
+	
+	static public void playOnce(typeSong t) {
+		if(!mute) {
+			if (! songList.containsKey(t))
+				songList.put(t, Gdx.audio.newSound(Gdx.files.internal(t.value)));	
+			
+			songList.get(t).play();
 		}
 	}
 	

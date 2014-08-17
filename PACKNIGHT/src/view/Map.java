@@ -21,6 +21,9 @@ public class Map {
 	 */
 	
     //Map
+	public static final String map1 = "maps/FATMAP.tmx";
+	public static final String map2 = "maps/PACMAN.tmx";
+	public static String loadedMap = map2;
     public static TiledMap map;
     public static TiledMapRenderer tiledMapRenderer;
     public static int tuileSize = 32;
@@ -36,7 +39,7 @@ public class Map {
 	 * Fonction appellée dans la classe princiaple Jeu.ajava
 	 */
 	public static void create (){
-		map = new TmxMapLoader().load("maps/PACMAN.tmx"); //Charge la Map
+		map = new TmxMapLoader().load(loadedMap); //Charge la Map
 		mapWidth = ((TiledMapTileLayer) map.getLayers().get(wallLayer)).getWidth()*32;
 		mapHeight = ((TiledMapTileLayer) map.getLayers().get(wallLayer)).getWidth()*32;
 		Personnage.terrain = new Terrain( mapToTerrainInit(map) ); //Initialise le terrain (virtuelle) de personnage
@@ -86,16 +89,20 @@ public class Map {
 	public static Case[][] mapToTerrainInit(TiledMap map){
 		int Mur = Case.Mur, Gum = Case.Pacgum;
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("logic");
+		TiledMapTileLayer gumlayer = (TiledMapTileLayer) map.getLayers().get("GUM");
 		Case[][] terrain = new Case[layer.getWidth()][layer.getHeight()];
 		String res = "";
 		for (int x = 0; x < layer.getWidth(); x++) {
 	         for (int y = 0; y < layer.getHeight(); y++) {
-	            TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+	            TiledMapTileLayer.Cell wallcell = layer.getCell(x, y);
+	            TiledMapTileLayer.Cell gumcell = gumlayer.getCell(x, y);
 	            terrain[x][y] = new Case(0);
-	            if (cell == null){
+	            terrain[x][y].setAcessCase(Case.Vide);
+	            if (gumcell != null){
 	            	terrain[x][y].setAcessCase(Gum);
 	            	res += " . ";
-	            }else {
+	            }
+	            if (wallcell != null) {
 	            	terrain[x][y].setAcessCase(Mur);
 	            	res += " X ";
 	            }
@@ -139,26 +146,8 @@ public class Map {
 	}
 	
 	
-	public boolean can_move(int[][] terrain, float move_x, float move_y){
-		int tuileWidth = 32, tuileHeight = 32;
-	      boolean next_move_allowed = true;
-//	      float playerX = Jeu.posX + move_x, playerY = Jeu.posY + move_y;
-//	      float playerXcase = playerX / tuileWidth;
-//	      float playerYcase = playerY / tuileHeight;
-	      
-//	      ArrayList<Collision> objArray = renderer.objArray;
-//	      Rectangle player = hero.getHitbox();
-//	      player.y = player.y + move_y;
-//	      player.x = player.x + move_x;
-//	            
-//	      for (Collision obj : objArray) {      
-//	         if (obj.getBounds().overlaps(player) && obj.isSolid()){
-//	            next_move_allowed = false;      
-//	         }   
-//	      }   
-	      
-	      return next_move_allowed;
-//	      return (Math.abs(cordf.x - cordp.x) < 2*hitBox) && (Math.abs(cordf.y - cordp.y) < 2*hitBox)
-	   }
+	public static void setMap(String m){
+		loadedMap = m;
+	}
 	
 }

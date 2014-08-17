@@ -1,75 +1,49 @@
 package view.screen;
 
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 
-import javax.swing.plaf.basic.BasicBorders.ButtonBorder;
-
-import model.personnages.Ghost;
-import model.personnages.PacKnight;
-import model.structure_terrain.Direction;
-
-import sun.awt.image.PixelConverter;
 import view.Equipage;
 import view.Jeu;
-import view.Joueur;
-import view.Map;
 import view.MusicManager;
-import view.Sprites;
 import view.MusicManager.typeSong;
-import view.screen.LauncherScreen.typeScreen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
-import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.MyScrolling;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.sun.org.apache.regexp.internal.recompile;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 
-public class MenuScreen implements Screen {
-
+public class ReglageScreen implements Screen {
 	private Stage stage; // Contiens l'ensemble des acteur (boutons, fond)
-	private Equipage equipe;
-	private List<MyScrolling> players = new LinkedList<>();
-	MyScrolling player1;
-	MyScrolling player2;
-	MyScrolling player3;
-	MyScrolling player4;
+
+	private HashMap<String, TextButton> automate ;
+	Equipage equip;
+	Table table;
 	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		stage.act(Gdx.graphics.getDeltaTime());
-		stage.draw(); 
+		stage.draw();
+		Table.drawDebug(stage);
 	}
 
 	@Override
@@ -87,9 +61,18 @@ public class MenuScreen implements Screen {
 
 		// Chargement de l'image de fond
 		final Image fond = new Image(new Texture(Gdx.files.internal("pictures/SelectionPerso.jpeg")));
-		fond.setCenterPosition(Jeu.WIDTH / 2, Jeu.HEIGHT / 2);
-		stage.addActor(fond);
 
+		table = new Table();
+		table.setBackground(fond.getDrawable());
+		table .setFillParent(true);
+		
+		table.debug();
+		table.debugTable();
+		
+		
+		stage.addActor(table);
+		
+		
 		// Chargement du Skin des boutons
 		TextureAtlas buttonsAtlas = new TextureAtlas("pictures/output/buttons.atlas"); // ** charge l'image creer avec GDX TEXTURE PACKER **//
 		Skin buttonSkin = new Skin();
@@ -99,47 +82,31 @@ public class MenuScreen implements Screen {
 		// Definition d'un style de bouton
 		final TextButtonStyle style = new TextButtonStyle(); // ** Button properties **//
 		style.up = buttonSkin.getDrawable("down");
-		style.down = buttonSkin.getDrawable("up");
 		style.font = font;
 
-		
-		
-		ArrayList<String> listeAutomates = (ArrayList<String>) Equipage.getListOfPersonnage();
-		
+//		automate = new HashMap<String, TextButton>() {
+//			{put("Berserk", new TextButton("Berserk", style));}
+//			{put("Berserk", new TextButton("Berserk", style));}
+//		};
+
 		//Dessiner les choix d'automate
-		player1 = new MyScrolling(listeAutomates, 
-				Jeu.WIDTH / 2 + fond.getWidth()/4, Jeu.HEIGHT / 2 + fond.getHeight()/4, 100, 25, "Player 1");
-		player1.addToStage(stage);
-		players.add(player1);
+		MyScrolling mm1 = new MyScrolling(new ArrayList<>(Arrays.asList("Berserk", "Suiveur", "Intercepteur")) , 
+				Jeu.WIDTH / 2 + fond.getWidth()/4, Jeu.HEIGHT / 2 - fond.getHeight()*(2/4), 100, 25, "Player 1");
+		mm1.addToStage(stage);
 		
-		player2 = new MyScrolling(listeAutomates, 
-				Jeu.WIDTH / 2 + fond.getWidth()/4, Jeu.HEIGHT / 2 + fond.getHeight()/8, 100, 25, "Player 2");
-		player2.addToStage(stage);
-		players.add(player2);
+//		MyScrolling mm2 = new MyScrolling(new ArrayList<>(Arrays.asList("Berserk", "Suiveur", "Intercepteur")) , 
+//				Jeu.WIDTH / 2 + fond.getWidth()/4, Jeu.HEIGHT / 2 - fond.getHeight()*(2/4), 100, 25, "Player 2");
+//		mm2.addToStage(stage);
+//		
+//		MyScrolling mm3 = new MyScrolling(new ArrayList<>(Arrays.asList("Berserk", "Suiveur", "Intercepteur")) , 
+//				Jeu.WIDTH / 2 + fond.getWidth()/4, Jeu.HEIGHT / 2 - fond.getHeight()*(2/4), 100, 25, "Player 3");
+//		mm3.addToStage(stage);
+//		
+//		MyScrolling mm4 = new MyScrolling(new ArrayList<>(Arrays.asList("Berserk", "Suiveur", "Intercepteur")) , 
+//				Jeu.WIDTH / 2 + fond.getWidth()/4, Jeu.HEIGHT / 2 - fond.getHeight()*(2/4), 100, 25, "Player 4");
+//		mm4.addToStage(stage);
 		
-		player3 = new MyScrolling(listeAutomates, 
-				Jeu.WIDTH / 2 + fond.getWidth()/4, Jeu.HEIGHT / 2 - fond.getHeight()/8, 100, 25, "Player 3");
-		player3.addToStage(stage);
-		players.add(player3);
-		
-		player4 = new MyScrolling(listeAutomates, 
-				Jeu.WIDTH / 2 + fond.getWidth()/4, Jeu.HEIGHT / 2 - fond.getHeight()/4, 100, 25, "Player 4");
-		player4.addToStage(stage);
-		players.add(player4);
-		
-		//Dessiner bouton Suivant
-		TextButton suivant = new TextButton("Suivant", style);
-		suivant.setBounds(Jeu.WIDTH - 150, 50, 100, 50);
-		suivant.addListener(new InputListener(){
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				initializeEquipe();
-				typeScreen.JEU.setScreen(new Jeu(equipe));
-				LauncherScreen.setNextScreen(typeScreen.JEU);
-				return true;
-			}
-		});
-		stage.addActor(suivant);
-		
+//		mm.setPosition(50, 50);
 		
 		//Dessiner un rectangle autour de la map
 		final Actor rectMap = new Image(){
@@ -162,37 +129,45 @@ public class MenuScreen implements Screen {
 		map1.setCenterPosition(Jeu.WIDTH / 2 - fond.getWidth()/4, Jeu.HEIGHT / 2 + fond.getHeight()/4);
 		map1.addCaptureListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					Map.setMap(Map.map1);
 //					map1.addAction(Actions.sequence(Actions.fadeOut(0.1f)));
-					rectMap.setBounds(map1.getX()-1, map1.getY()-1, map1.getWidth()+2, map1.getHeight()+2);
+					rectMap.setBounds(map1.getX(), map1.getY()-1, map1.getWidth()+2, map1.getHeight()+2);
 					return true;
 				}
-//				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-//				super.touchUp(event, x, y, pointer, button);
-//				map1.addAction(Actions.sequence(Actions.fadeIn(0.1f)));
-//				}
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				map1.addAction(Actions.sequence(Actions.fadeIn(0.1f)));
+				}
 		});
 		
-		stage.addActor(map1);
+		
+//		stage.addActor(map1);
 
 		
 		final Image map2 = new Image(new Texture(Gdx.files.internal("pictures/Map2.png")));
 		map2.setCenterPosition(Jeu.WIDTH / 2 - fond.getWidth()/4, Jeu.HEIGHT / 2 - fond.getHeight()/4);
 		map2.addCaptureListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				Map.setMap(Map.map2);
 //				map2.addAction(Actions.sequence(Actions.fadeOut(0.1f)));
-				rectMap.setBounds(map2.getX()-1, map2.getY()-1, map2.getWidth()+2, map2.getHeight()+2);
+				rectMap.setBounds(map2.getX()-1, map2.getY()-1, map2.getWidth()+1, map2.getHeight()+1);
 				return true;
 			}
-//			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-//				super.touchUp(event, x, y, pointer, button);
-//				map2.addAction(Actions.sequence(Actions.fadeIn(0.1f)));
-//			}
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				map2.addAction(Actions.sequence(Actions.fadeIn(0.1f)));
+			}
 		});
 		
-		stage.addActor(map2);
+//		stage.addActor(map2);
+
+		table.add(map1).expand();
+		table.add(mm1).width(400);
+		table.row();
 		
+		table.add(mm2).pad(20);
+		table.row();
+		
+		table.add(map2).pad(50);
+		table.add(mm3);
 		
 	}
 
@@ -219,23 +194,4 @@ public class MenuScreen implements Screen {
 		stage.dispose();
 	}
 
-	private void initializeEquipe() {
-		equipe = new Equipage() {
-			
-			public void create() {
-				Ghost.vision = 100;
-				PacKnight.vie = 1;
-				PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite, true);
-				Joueur PM_1 = new Joueur(Sprites.Pacman, PACMAN_1);
-				this.joueurFleche = PACMAN_1;
-				this.joueurCamera = PACMAN_1;
-				
-//				for(MyScrolling p : players){
-//					if (p.getEC() != "None")
-//						new Joueur(Sprites.Aleatoire, new Ghost(""),Equipage.automate.get(player1.getEC()));
-//				}
-				new Joueur(Sprites.Aleatoire, new Ghost(""),Equipage.automate.get(player1.getEC()));
-			}
-		};
-	}
 }

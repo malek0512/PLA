@@ -1,5 +1,6 @@
 package view;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 
 import model.personnages.PacKnight;
@@ -13,7 +14,7 @@ public class Equipage_Malek extends Equipage{
 	}
 	
 	public static void main(String[] args) {
-	    new LwjglApplication(new Jeu(new Equipage_Malek()),Jeu.TITLE,Jeu.WIDTH,Jeu.HEIGHT);
+	    new LwjglApplication((ApplicationListener) new Jeu(new Equipage_Malek()),Jeu.TITLE,Jeu.WIDTH,Jeu.HEIGHT);
 	}
 
 	@Override

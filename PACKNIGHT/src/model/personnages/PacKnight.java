@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import view.MusicManager;
+import view.MusicManager.typeSong;
+
 import model.structure_terrain.Case;
 import model.structure_terrain.CoordCas;
 import model.structure_terrain.CoordPix;
@@ -23,6 +26,7 @@ public class PacKnight extends Pacman{
 	static public List<PacKnight> liste = new LinkedList<PacKnight>();
 	public static int vie = 10;	
 	private boolean user;
+	
 	/**
 	 * @return the controlable
 	 */
@@ -76,8 +80,8 @@ public class PacKnight extends Pacman{
 		if(vie > 0)
 		{
 			respawn();
-			//Ghost.central.remove(this);//La mort efface de la centrale
-//			MusicManager.play_Dead_Knight();
+			Ghost.central.remove(this);//La mort efface de la centrale
+			MusicManager.playOnce(typeSong.Dead_Knigth);
 		}
 	}
 

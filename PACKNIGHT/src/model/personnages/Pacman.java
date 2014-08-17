@@ -95,7 +95,7 @@ public abstract class Pacman extends Personnage {
 	 * effectuer une fois que l'animation est fini
 	 */
 	protected void respawnWOA() {
-		this.coordPix = new CoordPix(this.pointDeRespawn);
+		this.coordPix.setCoord(this.pointDeRespawn);
 		this.isInvincible=true;
 	}
 	
