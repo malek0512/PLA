@@ -2,6 +2,7 @@ package view;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import model.personnages.Ghost;
@@ -9,13 +10,13 @@ import model.personnages.Personnage;
 
 public abstract class Equipage {
 
-	public static HashMap<String, String> automate = new HashMap<String, String>() {
-		{put("Berserk", "fm_berserk.xml");}
-		{put("Aleatoire", "fm_aleatoire.xml");}
-		{put("Intercepteur", "fm_intersepteur.xml");}
-		{put("Spectrum", "fm_lord.xml");}
-		{put("Suiveur", "fm_suiveur.xml");}
+	public static HashMap<String, String[]> automate = new LinkedHashMap<String, String[]>() {
 		{put("None", null);}
+		{put("Berserk", 	new String[] {"fm_berserk.xml", 	Sprites.Berserk});}
+		{put("Aleatoire", 	new String[] {"fm_aleatoire.xml", 	Sprites.Aleatoire});}
+		{put("Intercepteur",new String[] {"fm_intersepteur.xml",Sprites.Intercepteur});}
+		{put("Spectrum", 	new String[] {"fm_lord.xml", 		Sprites.Spectrum});}
+		{put("Suiveur", 	new String[] {"fm_suiveur.xml", 	Sprites.Suiveur});}
 	};
 	
 	public static Personnage joueurCamera;
@@ -38,5 +39,20 @@ public abstract class Equipage {
 				j.render();
 	}
 	
+	public void suivant() {
+		for(Joueur j:Joueur.liste)
+			try {
+				j.suivant();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+	}
+	
+	public static void clear(){
+		Joueur.liste.clear();
+	}
+	
 	public abstract void create();
+	
+	
 }

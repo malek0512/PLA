@@ -11,6 +11,7 @@ import javax.swing.plaf.basic.BasicBorders.ButtonBorder;
 
 import model.personnages.Ghost;
 import model.personnages.PacKnight;
+import model.personnages.Personnage;
 import model.structure_terrain.Direction;
 
 import sun.awt.image.PixelConverter;

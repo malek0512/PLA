@@ -1,11 +1,8 @@
 package view.screen;
 
-import java.util.HashMap;
-
-
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Game;
 
 public class LauncherScreen extends Game {
 
@@ -13,14 +10,14 @@ public class LauncherScreen extends Game {
 	
 	public static enum typeScreen { //Les referenceur des screen sont implictement static et final
 		ACCUEIL (new AccueilScreen()), 
-		CHOIX (new ChoixMultiJoueurScreen()),
+		CHOIX (new ChoixMultiJoueurScreen()), //Aucun interet tant que le multiplayer n'est pas géré
 		MENU (new MenuScreen()), 
-		REGLAGE (new ReglageScreen()),
+		REGLAGE (new ReglageScreen()), //A faire
 		JEU (null), //Initialisé par MenuScreen
 		PERDU (new PerduScreen()), 
 		GAGNER (new GagnerScreen()),
-		DIFFICULTE (new DifficulteScreen()),
-		PAUSE (null);
+		DIFFICULTE (new DifficulteScreen()), //A terminer
+		PAUSE (new PauseScreen());
 		;
 		private Screen value; 
 		private typeScreen (Screen s) {
@@ -41,7 +38,7 @@ public class LauncherScreen extends Game {
 	
 	@Override
 	public void create() {
-		screenCourant = typeScreen.DIFFICULTE;
+		screenCourant = typeScreen.ACCUEIL;
 		screenPrecedent = screenCourant;
 		setScreen(screenCourant.value);
 	}

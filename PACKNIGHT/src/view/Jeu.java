@@ -72,25 +72,28 @@ public class Jeu implements Screen, ApplicationListener {
 		batch.begin();
 			equipe.render();
 		batch.end();
-System.out.println(Terrain.nb_pacgum);
+
+//		System.out.println(Terrain.nb_pacgum);
 		if (Terrain.nb_pacgum == 0) {
 			Personnage.init_personnage();
+			Equipage.clear();
 			LauncherScreen.setNextScreen(typeScreen.GAGNER);
 		}
 
 		if (PacKnight.vie == 0 || PacPrincess.vie == 0) {
 			Personnage.init_personnage();
+			Equipage.clear();
 			LauncherScreen.setNextScreen(typeScreen.PERDU);
 		}
 		
-		time = (int) stateTime;
-		if (!(time < 3000)) 
+		time ++;
+		if (!(time < 30)) 
 		{
-//			try {
-//				equipe.render();
-//			} catch (Exception e) {
-//				System.out.println(e);
-//			}
+			try {
+				equipe.suivant();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 			model.personnages.Ghost.disparitionPacman();
 			model.personnages.Pacman.majTempsInvincible();
 		}

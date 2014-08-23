@@ -77,13 +77,13 @@ public class DifficulteScreen implements Screen {
 
 	@Override
 	public void show() {
-		MusicManager.playLoop(typeSong.gameOver); // Musiques
+//		MusicManager.playLoop(typeSong.gameOver); // Musiques
 
 		stage = new Stage(); // Contiens l'ensemble des boutons : multiplexeur des inputs
 		Gdx.input.setInputProcessor(stage); // ** stage is responsive **//
 
 		// Chargement de l'image de fond
-		final Image fond = new Image(new Texture(Gdx.files.internal("pictures/Dead.jpg")));
+		final Image fond = new Image(new Texture(Gdx.files.internal("pictures/SelectionPerso.jpeg")));
 
 		table = new Table();
 		table.setBackground(fond.getDrawable());
@@ -146,14 +146,14 @@ public class DifficulteScreen implements Screen {
 		table.row();
 		table.add(hard).expand();
 		table.row();
-		table.add(suivant).bottom().right().pad(20);
+		table.add(suivant).bottom().right().pad(10);
 		
 		
 	}
 
 	@Override
 	public void hide() {
-		MusicManager.pause(typeSong.gameOver);
+//		MusicManager.pause(typeSong.gameOver);
 	}
 
 	@Override

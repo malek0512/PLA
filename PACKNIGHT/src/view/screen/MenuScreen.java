@@ -102,8 +102,6 @@ public class MenuScreen implements Screen {
 		style.down = buttonSkin.getDrawable("up");
 		style.font = font;
 
-		
-		
 		ArrayList<String> listeAutomates = (ArrayList<String>) Equipage.getListOfPersonnage();
 		
 		//Dessiner les choix d'automate
@@ -224,18 +222,21 @@ public class MenuScreen implements Screen {
 			
 			public void create() {
 				Ghost.vision = 100;
-				PacKnight.vie = 1;
+//				PacKnight.vie = 1;
 				PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite, true);
-				Joueur PM_1 = new Joueur(Sprites.Pacman, PACMAN_1);
+				new Joueur(Sprites.Pacman, PACMAN_1);
 				this.joueurFleche = PACMAN_1;
 				this.joueurCamera = PACMAN_1;
 				
-//				for(MyScrolling p : players){
-//					if (p.getEC() != "None")
-//						new Joueur(Sprites.Aleatoire, new Ghost(""),Equipage.automate.get(player1.getEC()));
-//				}
-				new Joueur(Sprites.Aleatoire, new Ghost(""),Equipage.automate.get(player1.getEC()));
+				for(MyScrolling p : players){
+					if (p.getEC() != "None")
+						new Joueur(Equipage.automate.get(player1.getEC())[1], new Ghost(""), Equipage.automate.get(player1.getEC())[0]);
+				}
+				
+				
+				
 			}
 		};
+		System.out.println("YOLOOOOOOO");
 	}
 }
