@@ -14,6 +14,6 @@ public class LancerDesktop {
 //	Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
 	
 	public static void main(String[] args) {
-        new LwjglApplication(new LauncherScreen(),Jeu.TITLE,Jeu.WIDTH,Jeu.HEIGHT);
+        new LwjglApplication(new GestureDetectorTest(),Jeu.TITLE,Jeu.WIDTH,Jeu.HEIGHT);
 	}
 }

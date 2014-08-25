@@ -5,6 +5,7 @@ import model.structure_terrain.Case;
 import model.structure_terrain.CoordPix;
 import model.structure_terrain.Terrain;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -21,8 +22,8 @@ public class Map {
 	 */
 	
     //Map
-	public static final String map1 = "maps/FATMAP.tmx";
-	public static final String map2 = "maps/PACMAN.tmx";
+	public static final String map1 = "assets/maps/FATMAP.tmx";
+	public static final String map2 = "assets/maps/PACMAN.tmx";
 	public static String loadedMap = map2;
     public static TiledMap map;
     public static TiledMapRenderer tiledMapRenderer;
@@ -111,8 +112,8 @@ public class Map {
 	    }
 
 
-		System.out.println(res);
-		System.out.println("----------------------------------------------------------------");
+//		System.out.println(res);
+//		System.out.println("----------------------------------------------------------------");
 		
 		String res2 = "";
 		for(int i=0; i<terrain.length; i++){
@@ -121,8 +122,8 @@ public class Map {
 			}
 	         res2 += "\n";
 		}
-		System.out.println(res);
-		System.out.println("Height"+ layer.getHeight() + " Width" + layer.getWidth());
+//		System.out.println(res);
+//		System.out.println("Height"+ layer.getHeight() + " Width" + layer.getWidth());
 		return terrain;
 	}
 	

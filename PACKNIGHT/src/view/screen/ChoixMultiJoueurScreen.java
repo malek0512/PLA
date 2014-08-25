@@ -52,12 +52,12 @@ public class ChoixMultiJoueurScreen implements Screen {
 		Gdx.input.setInputProcessor(stage); // ** stage is responsive **//
 
 		// Chargement de l'image de fond
-		Image fond = new Image(new Texture(Gdx.files.internal("pictures/Choix.jpg")));
+		Image fond = new Image(new Texture(Gdx.files.internal(LauncherScreen.choix)));
 		fond.setCenterPosition(Jeu.WIDTH / 2, Jeu.HEIGHT / 2);
 		stage.addActor(fond);
 
 		// Chargement du Skin des boutons
-		TextureAtlas buttonsAtlas = new TextureAtlas("pictures/output/button.atlas"); // ** charge l'image creer avec GDX TEXTURE PACKER **//
+		TextureAtlas buttonsAtlas = new TextureAtlas(LauncherScreen.buttons); // ** charge l'image creer avec GDX TEXTURE PACKER **//
 		Skin buttonSkin = new Skin();
 		buttonSkin.addRegions(buttonsAtlas); // ** La decoupe en up et down**//
 		BitmapFont font = new BitmapFont(); // ** font, avec possibilité de renseigner une font ". **//

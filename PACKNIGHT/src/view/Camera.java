@@ -20,7 +20,7 @@ public class Camera {
 	public static OrthographicCamera camera;
 	public static Rectangle glViewport;
     private static float rotationSpeed;
-    private static CoordPix joueurCamera = Equipage.joueurCamera.coordPix;
+    private static CoordPix joueurCamera;
 //    private static float xCamera, yCamera;
 //    private static float resolution_x = Jeu.WIDTH, resolution_y = Jeu.HEIGHT;
 //    private static float largeur_map = ((TiledMapTileLayer) Map.map.getLayers().get(Map.wallLayer)).getWidth();
@@ -45,6 +45,8 @@ public class Camera {
 
 		//A conserver
         glViewport = new Rectangle(0, 0, Jeu.WIDTH - 0, Jeu.HEIGHT); //dimension du rectangle de vision != fenetre si menu
+        
+        joueurCamera = Equipage.joueurCamera.coordPix;
 	}
 	
 	public static void render(){

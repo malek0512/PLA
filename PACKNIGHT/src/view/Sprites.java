@@ -9,14 +9,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Sprites {
 
-	public static final String Pacman = "sprites/Pacman.png";
-	public static final String Princess = "sprites/Princess.png";
-	public static final String Aleatoire = "sprites/Aleatoire.png";
-	public static final String Berserk = "sprites/Berserk.png";
-	public static final String Intercepteur = "sprites/Intercepteur.png";
-	public static final String Spectrum = "sprites/Spectrum.png";
-	public static final String Suiveur = "sprites/Suiveur.png";
-	public static final String animation_sheet = "sprites/animation_sheet.gif";
+	public static final String Pacman = 		"assets/sprites/Pacman.png";
+	public static final String Princess = 		"assets/sprites/Princess.png";
+	public static final String Aleatoire =		"assets/sprites/Aleatoire.png";
+	public static final String Berserk = 		"assets/sprites/Berserk.png";
+	public static final String Intercepteur = 	"assets/sprites/Intercepteur.png";
+	public static final String Spectrum = 		"assets/sprites/Spectrum.png";
+	public static final String Suiveur = 		"assets/sprites/Suiveur.png";
+	public static final String animation_sheet ="assets/sprites/animation_sheet.gif";
 	
 	model.structure_terrain.Direction direction = Direction.haut;
     private static final int FRAME_COLS = 2;     

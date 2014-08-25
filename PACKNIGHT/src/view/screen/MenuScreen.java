@@ -12,7 +12,6 @@ import javax.swing.plaf.basic.BasicBorders.ButtonBorder;
 import model.personnages.Ghost;
 import model.personnages.PacKnight;
 import model.structure_terrain.Direction;
-
 import sun.awt.image.PixelConverter;
 import view.Equipage;
 import view.Jeu;
@@ -59,11 +58,11 @@ public class MenuScreen implements Screen {
 
 	private Stage stage; // Contiens l'ensemble des acteur (boutons, fond)
 	private Equipage equipe;
-	private List<MyScrolling> players = new LinkedList<>();
-	MyScrolling player1;
-	MyScrolling player2;
-	MyScrolling player3;
-	MyScrolling player4;
+	private List<MyScrolling> fantomes = new LinkedList<>();
+	MyScrolling auto1;
+	MyScrolling auto2;
+	MyScrolling auto3;
+	MyScrolling auto4;
 	
 	@Override
 	public void render(float delta) {
@@ -86,12 +85,12 @@ public class MenuScreen implements Screen {
 		Gdx.input.setInputProcessor(stage); // ** stage is responsive **//
 
 		// Chargement de l'image de fond
-		final Image fond = new Image(new Texture(Gdx.files.internal("pictures/SelectionPerso.jpeg")));
+		final Image fond = new Image(new Texture(Gdx.files.internal(LauncherScreen.selectionPersonnage)));
 		fond.setCenterPosition(Jeu.WIDTH / 2, Jeu.HEIGHT / 2);
 		stage.addActor(fond);
 
 		// Chargement du Skin des boutons
-		TextureAtlas buttonsAtlas = new TextureAtlas("pictures/output/buttons.atlas"); // ** charge l'image creer avec GDX TEXTURE PACKER **//
+		TextureAtlas buttonsAtlas = new TextureAtlas(LauncherScreen.buttons); // ** charge l'image creer avec GDX TEXTURE PACKER **//
 		Skin buttonSkin = new Skin();
 		buttonSkin.addRegions(buttonsAtlas); // ** La decoupe en up et down**//
 		BitmapFont font = new BitmapFont(); // ** font, avec possibilité de renseigner une font ". **//
@@ -105,35 +104,37 @@ public class MenuScreen implements Screen {
 		ArrayList<String> listeAutomates = (ArrayList<String>) Equipage.getListOfPersonnage();
 		
 		//Dessiner les choix d'automate
-		player1 = new MyScrolling(listeAutomates, 
+		auto1 = new MyScrolling(listeAutomates, 
 				Jeu.WIDTH / 2 + fond.getWidth()/4, Jeu.HEIGHT / 2 + fond.getHeight()/4, 100, 25, "Player 1");
-		player1.addToStage(stage);
-		players.add(player1);
+		auto1.addToStage(stage);
+		fantomes.add(auto1);
 		
-		player2 = new MyScrolling(listeAutomates, 
+		auto2 = new MyScrolling(listeAutomates, 
 				Jeu.WIDTH / 2 + fond.getWidth()/4, Jeu.HEIGHT / 2 + fond.getHeight()/8, 100, 25, "Player 2");
-		player2.addToStage(stage);
-		players.add(player2);
+		auto2.addToStage(stage);
+		fantomes.add(auto2);
 		
-		player3 = new MyScrolling(listeAutomates, 
+		auto3 = new MyScrolling(listeAutomates, 
 				Jeu.WIDTH / 2 + fond.getWidth()/4, Jeu.HEIGHT / 2 - fond.getHeight()/8, 100, 25, "Player 3");
-		player3.addToStage(stage);
-		players.add(player3);
+		auto3.addToStage(stage);
+		fantomes.add(auto3);
 		
-		player4 = new MyScrolling(listeAutomates, 
+		auto4 = new MyScrolling(listeAutomates, 
 				Jeu.WIDTH / 2 + fond.getWidth()/4, Jeu.HEIGHT / 2 - fond.getHeight()/4, 100, 25, "Player 4");
-		player4.addToStage(stage);
-		players.add(player4);
+		auto4.addToStage(stage);
+		fantomes.add(auto4);
 		
 		//Dessiner bouton Suivant
 		TextButton suivant = new TextButton("Suivant", style);
 		suivant.setBounds(Jeu.WIDTH - 150, 50, 100, 50);
 		suivant.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+			public void touchUp(InputEvent event, float x, float y,	int pointer, int button) {
 				initializeEquipe();
 				typeScreen.JEU.setScreen(new Jeu(equipe));
 				LauncherScreen.setNextScreen(typeScreen.JEU);
-				return true;
 			}
 		});
 		stage.addActor(suivant);
@@ -156,7 +157,7 @@ public class MenuScreen implements Screen {
 		stage.addActor(rectMap);
 				
 		//Chargment du choix des Maps
-		final Image map1 = new Image(new Texture(Gdx.files.internal("pictures/Map1.png")));
+		final Image map1 = new Image(new Texture(Gdx.files.internal(LauncherScreen.map1)));
 		map1.setCenterPosition(Jeu.WIDTH / 2 - fond.getWidth()/4, Jeu.HEIGHT / 2 + fond.getHeight()/4);
 		map1.addCaptureListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -174,7 +175,7 @@ public class MenuScreen implements Screen {
 		stage.addActor(map1);
 
 		
-		final Image map2 = new Image(new Texture(Gdx.files.internal("pictures/Map2.png")));
+		final Image map2 = new Image(new Texture(Gdx.files.internal(LauncherScreen.map2)));
 		map2.setCenterPosition(Jeu.WIDTH / 2 - fond.getWidth()/4, Jeu.HEIGHT / 2 - fond.getHeight()/4);
 		map2.addCaptureListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -197,6 +198,8 @@ public class MenuScreen implements Screen {
 	@Override
 	public void hide() {
 		MusicManager.pause(typeSong.selection);
+//		System.out.println("ahh clear");
+//		fantomes.clear();
 	}
 
 	@Override
@@ -222,21 +225,23 @@ public class MenuScreen implements Screen {
 			
 			public void create() {
 				Ghost.vision = 100;
-//				PacKnight.vie = 1;
-				PacKnight PACMAN_1= new PacKnight("J1",17,17,Direction.droite, true);
+				PacKnight.vie = 1;
+				PacKnight PACMAN_1 = new PacKnight("J1",17,17,Direction.droite, true);
+				Joueur.liste.clear();
 				new Joueur(Sprites.Pacman, PACMAN_1);
 				this.joueurFleche = PACMAN_1;
 				this.joueurCamera = PACMAN_1;
 				
-				for(MyScrolling p : players){
-					if (p.getEC() != "None")
-						new Joueur(Equipage.automate.get(player1.getEC())[1], new Ghost(""), Equipage.automate.get(player1.getEC())[0]);
+				for(MyScrolling p : fantomes){
+					if (p.getEC() != "None") {
+						System.out.println(p.getEC()+"\n");
+						new Joueur(Equipage.automate.get(p.getEC())[1], new Ghost(""), Equipage.automate.get(p.getEC())[0]);
+					}
 				}
-				
-				
+
+				fantomes.clear(); // A ne faire qu'ici et non pas dans suivant listener ou hide
 				
 			}
 		};
-		System.out.println("YOLOOOOOOO");
 	}
 }

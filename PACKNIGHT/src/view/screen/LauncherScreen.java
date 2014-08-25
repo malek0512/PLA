@@ -7,17 +7,27 @@ import com.badlogic.gdx.Screen;
 public class LauncherScreen extends Game {
 
 //	public static HashMap<typeScreen, Screen> screenList = new HashMap<typeScreen,Screen>();
+	public static final String buttons =		 	"assets/pictures/output/buttons.atlas";
+	public static final String accueil = 			"assets/pictures/Accueil.jpeg";
+	public static final String choix = 				"assets/pictures/Choix.jpg";
+	public static final String dead = 				"assets/pictures/Dead.jpg";
+	public static final String pause = 				"assets/pictures/Pause.jpeg";
+	public static final String win = 				"assets/pictures/Win.jpeg";
+	public static final String selectionPersonnage ="assets/pictures/SelectionPerso.jpeg";
+	public static final String map1 =				"assets/pictures/Map1.png";
+	public static final String map2 =				"assets/pictures/Map2.png";
 	
 	public static enum typeScreen { //Les referenceur des screen sont implictement static et final
 		ACCUEIL (new AccueilScreen()), 
-		CHOIX (new ChoixMultiJoueurScreen()), //Aucun interet tant que le multiplayer n'est pas g√©r√©
+		CHOIX (new ChoixMultiJoueurScreen()), //Aucun interet tant que le multiplayer n'est pas gÈrÈ
 		MENU (new MenuScreen()), 
-		REGLAGE (new ReglageScreen()), //A faire
+		REGLAGE (new ReglageScreen()), //TODO
 		JEU (null), //Initialis√© par MenuScreen
 		PERDU (new PerduScreen()), 
 		GAGNER (new GagnerScreen()),
-		DIFFICULTE (new DifficulteScreen()), //A terminer
-		PAUSE (new PauseScreen());
+		DIFFICULTE (new DifficulteScreen()), //TODO
+		PAUSE (new PauseScreen()),
+		CHARGEMENT (new LoadingScreen());
 		;
 		private Screen value; 
 		private typeScreen (Screen s) {
@@ -38,7 +48,7 @@ public class LauncherScreen extends Game {
 	
 	@Override
 	public void create() {
-		screenCourant = typeScreen.ACCUEIL;
+		screenCourant = typeScreen.CHARGEMENT;
 		screenPrecedent = screenCourant;
 		setScreen(screenCourant.value);
 	}

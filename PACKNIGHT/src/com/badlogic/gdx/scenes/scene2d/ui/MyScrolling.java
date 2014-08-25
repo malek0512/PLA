@@ -1,6 +1,9 @@
 package com.badlogic.gdx.scenes.scene2d.ui;
 
 import java.util.ArrayList;
+
+import view.screen.LauncherScreen;
+
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -37,7 +40,7 @@ public class MyScrolling extends WidgetGroup{
 		yGauche = y;
 		
 		// Chargement du Skin des boutons
-		TextureAtlas buttonsAtlas = new TextureAtlas("pictures/output/buttons.atlas"); // ** charge l'image creer avec GDX TEXTURE PACKER **//
+		TextureAtlas buttonsAtlas = new TextureAtlas(LauncherScreen.buttons); // ** charge l'image creer avec GDX TEXTURE PACKER **//
 		buttonSkin = new Skin();
 		buttonSkin.addRegions(buttonsAtlas); // ** La decoupe en up et down**//
 		BitmapFont font = new BitmapFont(); // ** font, avec possibilité de renseigner une font ". **//

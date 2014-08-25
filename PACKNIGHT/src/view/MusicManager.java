@@ -1,77 +1,71 @@
 package view;
 
-import java.util.HashMap;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
 
 public class MusicManager {
 
-	private static HashMap<typeSong, Sound> songList= new HashMap<typeSong, Sound>();
 	public static boolean mute = false;
 	
 	static public enum typeSong {
-		selection	    ("songs/Selection.ogg"),
-		win			    ("songs/Win.ogg"),      
-		gameOver	    ("songs/Game_Over.ogg"),
-		accueil		    ("songs/Batman.ogg"),   
-		frozen		    ("songs/Frozen.ogg"),   
-		allBeat		    ("songs/AllBeat.ogg"),  
-		game		    ("songs/Game.ogg"),     
-		Reperer     	("songs/Bruitage_Reperer.ogg"),
-		PerduDeVue     	("songs/Bruitage_PerduDeVue.ogg"),
-		Dead_Knigth    	("songs/Bruitage_Dead_Knigth.ogg"),
-		Dead_Princess   ("songs/Bruitage_Dead_Princess.ogg"),
-		GhostPower_Obey ("songs/Bruitage_GhostPower_Obey.ogg");
+		accueil		    ("assets/songs/Batman.ogg"),
+		win			    ("assets/songs/Win.ogg"),      
+		gameOver	    ("assets/songs/Game_Over.ogg"),
+		allBeat		    ("assets/songs/AllBeat.ogg"),
+		selection	    ("assets/songs/Selection.ogg"),
+//		frozen		    ("assets/songs/Frozen.ogg"),
+//		game		    ("assets/songs/Game.ogg"),     
+		Reperer     	("assets/songs/Bruitage_Reperer.ogg"),
+		PerduDeVue     	("assets/songs/Bruitage_PerduDeVue.ogg"),
+		Dead_Knigth    	("assets/songs/Bruitage_Dead_Knigth.ogg"),
+		Dead_Princess   ("assets/songs/Bruitage_Dead_Princess.ogg"),
+		GhostPower_Obey ("assets/songs/Bruitage_GhostPower_Obey.ogg");
 		
 		private String value;
 		private typeSong(String value) {
 			this.value = value;
 		}
-		
+		public String getValue() {
+			return value;
+		}
 	}
 
+	static public void loadSongs() {
+		for(typeSong s : typeSong.values()) {
+			Jeu.assets.load(s.getValue(), Sound.class);
+		}	
+	}
+	
 	static public void playLoop(typeSong t) {
 		if(!mute) {
-			if (! songList.containsKey(t))
-				songList.put(t, Gdx.audio.newSound(Gdx.files.internal(t.value)));	
+			if (! Jeu.assets.isLoaded(t.value)) {
+				Jeu.assets.load(t.getValue(), Sound.class);
+				Jeu.assets.finishLoading();
+			}
 			
-			songList.get(t).loop();
+			Jeu.assets.get(t.value, Sound.class).loop();
 		}
 	}
 	
 	static public void playOnce(typeSong t) {
 		if(!mute) {
-			if (! songList.containsKey(t))
-				songList.put(t, Gdx.audio.newSound(Gdx.files.internal(t.value)));	
+			if (! Jeu.assets.isLoaded(t.value)) {
+				Jeu.assets.load(t.getValue(), Sound.class);
+				Jeu.assets.finishLoading();
+			}
 			
-			songList.get(t).play();
+			Jeu.assets.get(t.value, Sound.class).play();
 		}
 	}
 	
 	static public void dispose(typeSong t) {
-		if (songList.containsKey(t))
-			songList.remove(t).dispose();	
+		if (Jeu.assets.isLoaded(t.value))
+			Jeu.assets.unload(t.value);	
 	}
 	
 	static public void pause(typeSong t) {
-		if (songList.containsKey(t))
-			songList.get(t).pause();	
+		if (Jeu.assets.isLoaded(t.value))
+			Jeu.assets.get(t.value, Sound.class).pause();;
 	}
-	
-//	static public void play_Win(){
-//		
-//		Accueil.Music_Win.loop();
-//		if(mute)
-//			Accueil.Music_Win.pause();
-//	}
-//	
-//	static public void play_Game_over(){
-//
-//		Accueil.Music_Dead.loop();
-//		if(mute)
-//			Accueil.Music_Dead.pause();
-//	}
 	
 }

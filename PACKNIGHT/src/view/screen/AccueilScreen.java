@@ -42,7 +42,7 @@ public class AccueilScreen implements Screen{
 //		Gdx.app.log("Accueil", "Je suis dans l'accueil");
 		System.out.println("SHOWWWW_ACCUEIL");
 		MusicManager.playLoop(typeSong.accueil);
-		fond = new Texture(Gdx.files.internal("pictures/Accueil.jpeg"));
+		fond = new Texture(Gdx.files.internal(LauncherScreen.accueil));
 		batch = new SpriteBatch();
 		Gdx.input.setInputProcessor(this.inputHandler());
 	}

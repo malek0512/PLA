@@ -11,15 +11,22 @@ import view.screen.LauncherScreen.typeScreen;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.model.Animation;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 
 public class Jeu implements Screen, ApplicationListener {
-	
+	static public AssetManager assets = new AssetManager();
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600; //WIDTH * 9 / 16;
 	public static final String TITLE = "PACK-NIGHT : THE RETURN";
@@ -29,6 +36,8 @@ public class Jeu implements Screen, ApplicationListener {
 	public static float stateTime;
 	public static int time;
 	public Equipage equipe;
+	static String message = "";
+	private BitmapFont font;
 	
 
 	public Jeu(Equipage equipe){
@@ -37,8 +46,11 @@ public class Jeu implements Screen, ApplicationListener {
 	}
 
 	public void create() {
-		Gdx.input.setInputProcessor(new InputHandler());
+		InputHandler inputHandler = new InputHandler();
+		InputMultiplexer inputMultiplexer = new InputMultiplexer(inputHandler, new GestureDetector(inputHandler));
+		Gdx.input.setInputProcessor(inputMultiplexer);
 		
+		 font = new BitmapFont();
 		//Sprite
 		batch = new SpriteBatch(); //Feuille sur laquelle les sprites sont dessinés
 		
@@ -71,6 +83,11 @@ public class Jeu implements Screen, ApplicationListener {
         batch.setProjectionMatrix(Camera.camera.combined); //Colle le sprit a la map (ou camera je sais plus)
 		batch.begin();
 			equipe.render();
+			TextBounds tb = font.getBounds(message);
+	        float x = WIDTH/2 - tb.width/2;
+	        float y = HEIGHT/2 + tb.height/2;
+	        
+	        font.drawMultiLine(batch, message, x, y);
 		batch.end();
 
 //		System.out.println(Terrain.nb_pacgum);
